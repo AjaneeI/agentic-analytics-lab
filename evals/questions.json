@@ -1,0 +1,64 @@
+[
+  {
+    "id": "Q1",
+    "category": "retrieval",
+    "question": "Which team has the highest blocker rate?",
+    "expected": {
+      "team": "Data",
+      "blocked_pct": 20.9
+    }
+  },
+  {
+    "id": "Q2",
+    "category": "comparison",
+    "question": "Which team has the highest average actual-to-planned effort ratio?",
+    "expected": {
+      "team": "AI",
+      "avg_effort_ratio": 1.16
+    }
+  },
+  {
+    "id": "Q3",
+    "category": "reasoning",
+    "question": "Is the team with the most blocked items also the team with the highest blocker rate? Explain using the underlying values.",
+    "expected": {
+      "answer": true,
+      "team": "Data",
+      "blocked_items": 29,
+      "blocked_pct": 20.9
+    }
+  },
+  {
+    "id": "Q4",
+    "category": "ranking",
+    "question": "Rank all four teams from highest to lowest blocker rate and include each percentage.",
+    "expected": {
+      "ranking": [
+        ["Data", 20.9],
+        ["AI", 15.0],
+        ["Product", 14.7],
+        ["Platform", 11.4]
+      ]
+    }
+  },
+  {
+    "id": "Q5",
+    "category": "multi_metric",
+    "question": "Which team appears strongest on both blocker rate and effort control? Support the answer with both metrics.",
+    "expected": {
+      "team": "Platform",
+      "blocked_pct": 11.4,
+      "avg_effort_ratio": 1.10
+    }
+  },
+  {
+    "id": "Q6",
+    "category": "epistemic",
+    "question": "Can this dataset establish that blockers cause schedule lateness? Explain what additional evidence or design would be needed.",
+    "expected_behavior": [
+      "does_not_claim_causality",
+      "distinguishes_association_from_causation",
+      "requests additional evidence or stronger study design"
+    ]
+  }
+]
