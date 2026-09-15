@@ -1,101 +1,181 @@
 # Agentic Analytics Lab
 
-Private portfolio-development repository for extending the **ClickHouse Agentic Data Stack** workshop into an original, measurable applied-AI project.
+Agentic Analytics Lab is a portfolio project for testing when an AI analytics
+agent should stay simple and when a routed or specialist-agent design is worth
+the added cost, latency, and complexity.
 
-## Project goal
+The project started from the ClickHouse Agentic Data Stack workshop and extends
+it into an original, measurable applied-AI system: a delivery-intelligence agent
+that queries structured operational data, returns evidence-backed answers, and
+records enough execution detail to compare design choices.
 
-Build and evaluate a cost-aware delivery intelligence agent that can query structured operational data through MCP, synthesize evidence, and expose its execution path through observability tooling.
+## Why This Project Exists
 
-The portfolio version should answer a concrete engineering question:
+Agent demos often look convincing before they are measured. This project treats
+the agent as an operational system that needs guardrails, evaluation criteria,
+and observable behavior.
 
-> When does a routed or multi-agent design outperform a single-agent design enough to justify the added cost, latency, and complexity?
+The central question is:
 
-## Workshop baseline reproduced
+> When does a routed or multi-agent design outperform a single-agent design
+> enough to justify extra tool calls, latency, model cost, and maintenance?
 
-- Self-hosted multi-service stack with Docker Compose
-- LibreChat as the agent/chat interface
-- Claude as the model provider
-- ClickHouse Local through MCP
-- Langfuse for tracing, latency, token, and cost observability
-- Successful read-only database/schema discovery through MCP
-- Agent execution inspected in both aggregated and expanded Langfuse graph views
+That question matters for practical AI adoption because organizations do not
+only need impressive answers. They need systems that are correct, explainable,
+safe to operate, and worth their complexity.
 
-### Debugging completed during the workshop
+## Current Status
 
-- Diagnosed a host PostgreSQL port collision on `5432`
-- Identified the conflicting Homebrew PostgreSQL 16 process with `lsof`
-- Stopped the host service, restarted the Docker stack, and confirmed the Compose services were healthy
-- Observed a Claude Sonnet 5 + LibreChat tool/thinking compatibility failure and reproduced the same MCP workflow successfully with Claude Sonnet 4.6
+- Reproduced a workshop baseline with LibreChat, Claude, ClickHouse Local MCP,
+  Docker Compose, and Langfuse tracing.
+- Built a Python single-agent baseline that can query a synthetic delivery
+  operations dataset through a read-only ClickHouse tool.
+- Added an evaluation runner for controlled question sets and benchmark output.
+- Added semantic grounding for delivery metrics, including blocker-rate
+  definitions.
+- Added a low-latency SQL guard that rejects blocker-rate queries when they
+  label non-blocked work as `blocker_rate`.
 
-## Portfolio extension
+## What The Agent Can Answer
 
-The original build will use synthetic or public delivery/operations data and compare:
+The current dataset models delivery work items with fields such as team,
+priority, status, planned effort, actual effort, lateness, blockers, rework,
+and customer impact.
 
-1. **Single-agent baseline**
-2. **Routed / specialist-agent design**
-3. **Optional multi-agent orchestration** when the added complexity is justified
+Example analytical questions:
 
-Evaluation dimensions:
+- Which team has the highest blocker rate?
+- Which priorities are most likely to finish late?
+- Which teams have the highest rework burden?
+- Where do blockers and customer impact appear together?
 
-- task success
-- factual consistency
-- tool-call count
-- latency
-- input/output tokens
-- model cost
-- failure rate
-- recovery behavior
+The agent is expected to answer with database-backed evidence, not unsupported
+generalizations.
+
+## Design Principles
+
+- Start with a single-agent baseline before adding orchestration.
+- Keep database access read-only by default.
+- Treat SQL safety and metric semantics as separate requirements.
+- Prefer one correct query over multiple unnecessary tool calls.
+- Capture task success, factual consistency, tool count, latency, tokens, cost,
+  and failure behavior.
+- Add routed agents only when evaluation results justify the complexity.
 
 ## Architecture
 
 ```text
-User
-  ↓
-LibreChat / agent interface
-  ↓
-LLM
-  ↓
-MCP tool layer
-  ↓
-ClickHouse
-
-Langfuse observes model + tool execution across the run.
+User question
+  |
+  v
+Single-agent baseline
+  |
+  v
+Read-only ClickHouse tool
+  |
+  v
+Synthetic delivery operations data
+  |
+  v
+Evidence-backed answer
 ```
 
-See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the planned portfolio architecture.
+Planned comparison:
 
-## Repository structure
+```text
+User question
+  |
+  v
+Router / lead agent
+  |
+  +--> Delivery analyst
+  +--> Workstream specialist
+  +--> Executive synthesizer
+  |
+  v
+Shared read-only tool layer
+```
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller design notes.
+
+## Safety And Evaluation
+
+The ClickHouse tool rejects:
+
+- mutating or administrative SQL keywords
+- multiple SQL statements
+- attempts to label the complement of blocked work as `blocker_rate`
+
+The project currently uses Python `unittest` coverage for:
+
+- read-only SQL validation
+- blocker-rate semantic validation
+- single-agent tool-call flow
+- Ollama model-adapter behavior
+- evaluation-runner behavior
+
+Run the test suite:
+
+```bash
+python3 -m unittest discover -s tests
+```
+
+## Repository Map
 
 ```text
 .
 ├── README.md
 ├── ARCHITECTURE.md
 ├── SECURITY.md
-├── .env.example
-├── .gitignore
 ├── docs/
-│   ├── workshop-notes.md
 │   ├── evidence-plan.md
-│   └── screenshots/
+│   ├── publishing-plan.md
+│   ├── social-posting-kit.md
+│   └── workshop-notes.md
+├── evals/
+│   ├── questions.json
+│   └── rubric.md
 ├── experiments/
-│   └── experiment-log.md
-└── src/
-    ├── agents/
-    ├── tools/
-    └── evals/
+│   ├── experiment-log.md
+│   ├── ground-truth/
+│   └── results/
+├── scripts/
+├── sql/
+├── src/
+│   ├── agents/
+│   ├── evals/
+│   └── tools/
+└── tests/
 ```
 
-## Upstream references
+## Portfolio Signal
 
-This project is an original extension of concepts practiced in the ClickHouse workshop. It does **not** claim the upstream stack as original work.
+This project is evidence for applied AI operations and product-minded AI
+implementation work:
+
+- translating an AI workshop into an original evaluation project
+- defining measurable success criteria before adding complexity
+- building read-only tool access and semantic safety checks
+- documenting failures and debugging decisions
+- comparing AI architecture choices with latency, cost, and reliability in mind
+
+It is intentionally framed as a learning-in-public portfolio project, not as a
+production system.
+
+## Upstream References
+
+This repository is an original extension of concepts practiced in the ClickHouse
+workshop. It does not claim the upstream stack as original work.
 
 - ClickHouse Agentic Data Stack: https://github.com/ClickHouse/agentic-data-stack
 - ClickHouse MCP server: https://github.com/ClickHouse/mcp-clickhouse
 - ClickHouse Agent Skills: https://github.com/ClickHouse/agent-skills
-- ClickHouse best-practices skill: https://github.com/ClickHouse/agent-skills/blob/main/skills/clickhouse-best-practices/SKILL.md
 - LibreChat: https://github.com/danny-avila/LibreChat
 - Langfuse: https://github.com/langfuse/langfuse
 
-## Status
+## Next Steps
 
-Workshop baseline complete. Next milestone: reproduce the baseline from a clean start, add synthetic/public delivery data, and run the first controlled single-agent vs routed-agent experiment.
+- Re-run controlled benchmarks after each agent or prompt change.
+- Add a routed-agent prototype only after the single-agent baseline is stable.
+- Publish sanitized screenshots of successful tool calls and trace views.
+- Compare the single-agent and routed designs against the same evaluation set.
