@@ -29,6 +29,35 @@ _MUTATING = re.compile(
     re.IGNORECASE,
 )
 
+_BLOCKER_RATE_ALIAS = re.compile(
+    r"\bAS\s+(?:`blocker_rate`|\"blocker_rate\"|blocker_rate\b)",
+    re.IGNORECASE,
+)
+
+_COUNT_ALL = r"count\s*\(\s*(?:\*)?\s*\)"
+_SUM_BLOCKED = r"sum\s*\(\s*(?:`blocked`|\"blocked\"|blocked)\s*\)"
+
+_BLOCKER_RATE_COMPLEMENT = re.compile(
+    rf"""
+    (?:
+        \(\s*{_COUNT_ALL}\s*-\s*{_SUM_BLOCKED}\s*\)
+        |
+        {_COUNT_ALL}\s*-\s*{_SUM_BLOCKED}
+    )
+    \s*/\s*
+    {_COUNT_ALL}
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+_BLOCKER_RATE_AVG_COMPLEMENT = re.compile(
+    r"""
+    \b(?:1(?:\.0)?|100(?:\.0)?)\s*-\s*
+    avg\s*\(\s*(?:`blocked`|"blocked"|blocked)\s*\)
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
 
 class QueryRejected(ValueError):
     pass
@@ -38,6 +67,41 @@ def _strip_comments(sql: str) -> str:
     sql = re.sub(r"/\*.*?\*/", " ", sql, flags=re.DOTALL)
     sql = re.sub(r"--[^\n]*", " ", sql)
     return sql.strip()
+
+
+def _expression_before_alias(sql: str, alias_start: int) -> str:
+    depth = 0
+
+    for index in range(alias_start - 1, -1, -1):
+        char = sql[index]
+
+        if char == ")":
+            depth += 1
+        elif char == "(" and depth > 0:
+            depth -= 1
+        elif char == "," and depth == 0:
+            return sql[index + 1 : alias_start].strip()
+
+    prefix = sql[:alias_start]
+    select_matches = list(re.finditer(r"\bSELECT\b", prefix, re.IGNORECASE))
+
+    if select_matches:
+        return prefix[select_matches[-1].end() :].strip()
+
+    return prefix.strip()
+
+
+def _validate_metric_semantics(sql: str) -> None:
+    for match in _BLOCKER_RATE_ALIAS.finditer(sql):
+        expression = _expression_before_alias(sql, match.start())
+
+        if (
+            _BLOCKER_RATE_COMPLEMENT.search(expression)
+            or _BLOCKER_RATE_AVG_COMPLEMENT.search(expression)
+        ):
+            raise QueryRejected(
+                "blocker_rate must measure blocked items, not non-blocked items."
+            )
 
 
 def validate_read_only(sql: str) -> str:
@@ -56,6 +120,8 @@ def validate_read_only(sql: str) -> str:
     statement = cleaned.rstrip().rstrip(";").strip()
     if ";" in statement:
         raise QueryRejected("Multiple SQL statements are not allowed.")
+
+    _validate_metric_semantics(statement)
 
     return statement
 

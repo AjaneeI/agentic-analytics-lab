@@ -38,6 +38,48 @@ class TestReadOnlyValidation(unittest.TestCase):
         with self.assertRaises(QueryRejected):
             validate_read_only("SELECT 1; SELECT 2")
 
+    def test_blocker_rate_complement_rejected(self):
+        sql = (
+            "SELECT (COUNT(*) - SUM(blocked)) / COUNT(*) AS blocker_rate "
+            "FROM agentic_analytics.delivery_work_items"
+        )
+
+        with self.assertRaisesRegex(QueryRejected, "blocker_rate"):
+            validate_read_only(sql)
+
+    def test_blocker_rate_avg_complement_rejected(self):
+        sql = (
+            "SELECT 1 - AVG(blocked) AS blocker_rate "
+            "FROM agentic_analytics.delivery_work_items"
+        )
+
+        with self.assertRaisesRegex(QueryRejected, "blocker_rate"):
+            validate_read_only(sql)
+
+    def test_blocker_rate_avg_allowed(self):
+        sql = (
+            "SELECT AVG(blocked) AS blocker_rate "
+            "FROM agentic_analytics.delivery_work_items"
+        )
+
+        self.assertEqual(validate_read_only(sql), sql)
+
+    def test_blocker_rate_sum_over_count_allowed(self):
+        sql = (
+            "SELECT SUM(blocked) / COUNT(*) AS blocker_rate "
+            "FROM agentic_analytics.delivery_work_items"
+        )
+
+        self.assertEqual(validate_read_only(sql), sql)
+
+    def test_blocker_rate_scaled_safe_expression_allowed(self):
+        sql = (
+            "SELECT ROUND(1.0 * SUM(blocked) / COUNT(*), 4) AS blocker_rate "
+            "FROM agentic_analytics.delivery_work_items"
+        )
+
+        self.assertEqual(validate_read_only(sql), sql)
+
 
 if __name__ == "__main__":
     unittest.main()
