@@ -120,6 +120,10 @@ Run the test suite:
 python3 -m unittest discover -s tests
 ```
 
+Current proof artifact:
+
+- [Test suite proof - 2026-09-15](docs/test-suite-proof-2026-09-15.md)
+
 ## Repository Map
 
 ```text
