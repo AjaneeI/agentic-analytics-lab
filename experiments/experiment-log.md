@@ -65,3 +65,46 @@ Capture:
 - tokens
 - cost
 - failure modes
+
+---
+
+## EXP-005 — Qwen semantic grounding correction
+
+**Model:** qwen2.5:7b via Ollama  
+**Cost:** $0  
+**Status:** Successful SQL generation after schema-semantic grounding
+
+### Change
+
+The system prompt was expanded with:
+
+- the exact ClickHouse table
+- column meanings
+- the distinction between `status` and the `blocked` indicator
+- explicit guidance that rates require a numerator and denominator
+
+No ground-truth benchmark values were supplied.
+
+### Result
+
+For:
+
+> Which team has the highest blocker rate?
+
+The model generated a read-only query that:
+
+- used `blocked = 1`
+- divided blocked work items by total work items
+- grouped by team
+- ordered by calculated blocker rate
+- selected the highest-rate team
+
+### Finding
+
+The earlier failure was caused by insufficient semantic grounding, not an inability to use tools.
+
+This demonstrates three separate agent requirements:
+
+1. tool-call capability
+2. execution safety
+3. semantic grounding for correct analytical reasoning
