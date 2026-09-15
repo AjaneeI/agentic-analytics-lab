@@ -23,6 +23,8 @@ Schema semantics:
 - created_at: creation timestamp
 - due_at: planned due timestamp
 - completed_at: completion timestamp when finished
+- for completed work, schedule lateness can be derived by comparing
+  completed_at with due_at; completed_at > due_at means the item finished late
 - planned_hours: planned effort
 - actual_hours: observed effort
 - blocked: 1 if the work item experienced a blocker, otherwise 0

@@ -92,6 +92,12 @@ class OllamaModelClient:
         payload = {
             "model": self.model,
             "stream": False,
+            "keep_alive": "30m",
+            "options": {
+                "temperature": 0,
+                "num_predict": 192,
+                "num_ctx": 4096,
+            },
             "messages": self._convert_messages(messages),
             "tools": self._convert_tools(tools),
         }
