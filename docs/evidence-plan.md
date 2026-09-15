@@ -15,6 +15,10 @@ secrets, private identifiers, or unverified benchmark claims.
 - test-suite output showing the current code is green
 - small SQL examples that demonstrate valid and rejected metric definitions
 
+Current proof artifact:
+
+- [test-suite-proof-2026-09-15.md](test-suite-proof-2026-09-15.md)
+
 ## Do Not Publish
 
 - screenshot containing the workshop Anthropic API key
