@@ -30,7 +30,12 @@ exports/
 *.log
 logs/
 
+# Local benchmark outputs
+experiments/results/*.json
+!experiments/results/README.md
+
 # Private evidence - keep screenshots out by default
 # Add only sanitized/redacted screenshots intentionally.
 docs/screenshots/*
 !docs/screenshots/.gitkeep
+!docs/screenshots/docker-service-health.png

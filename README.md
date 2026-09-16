@@ -124,6 +124,24 @@ Current proof artifact:
 
 - [Test suite proof - 2026-09-15](docs/test-suite-proof-2026-09-15.md)
 
+Evidence screenshot:
+
+![Docker service health screenshot](docs/screenshots/docker-service-health.png)
+
+## Limitations
+
+- The current dataset is synthetic, so findings are useful for evaluating agent
+  behavior but should not be treated as real operational conclusions.
+- The routed-agent design is planned but has not yet been evaluated against the
+  single-agent baseline.
+- Local benchmark JSON files are kept out of the public repository until they
+  are reviewed and labeled as current benchmark results or historical failure
+  cases.
+- The project is not production-ready. It is a portfolio lab for testing tool
+  safety, metric semantics, and agent-design tradeoffs.
+- Cost and latency claims should be refreshed after each model, prompt, or
+  tool-layer change.
+
 ## Repository Map
 
 ```text
@@ -134,6 +152,7 @@ Current proof artifact:
 ├── docs/
 │   ├── evidence-plan.md
 │   ├── publishing-plan.md
+│   ├── screenshots/
 │   ├── social-posting-kit.md
 │   └── workshop-notes.md
 ├── evals/

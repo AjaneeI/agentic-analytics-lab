@@ -19,6 +19,10 @@ Current proof artifact:
 
 - [test-suite-proof-2026-09-15.md](test-suite-proof-2026-09-15.md)
 
+Current screenshot artifact:
+
+- [docker-service-health.png](screenshots/docker-service-health.png)
+
 ## Do Not Publish
 
 - screenshot containing the workshop Anthropic API key
@@ -27,6 +31,8 @@ Current proof artifact:
 - raw `.env` values
 - benchmark claims from older code without a fresh run
 - screenshots that expose local usernames, paths, or private project names unless intentionally approved
+- raw benchmark JSON from `experiments/results/` until it has been reviewed and
+  labeled as a current result or historical failure case
 
 ## Strong Portfolio Evidence Sequence
 

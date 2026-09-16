@@ -28,6 +28,12 @@ Schema semantics:
 - planned_hours: planned effort
 - actual_hours: observed effort
 - blocked: 1 if the work item experienced a blocker, otherwise 0
+- canonical blocker-rate formula:
+  blocker_rate = SUM(blocked) / COUNT(*)
+  or equivalently AVG(blocked)
+- when reporting blocker percentage, use 100 * AVG(blocked)
+- COUNT(*) - SUM(blocked) measures NON-BLOCKED work items and must never be
+  labeled or interpreted as blocker rate
 - blocker_type: blocker category, or none
 - rework_count: number of rework cycles
 - customer_impact: synthetic impact score from 1 to 5
@@ -36,11 +42,18 @@ Rules:
 1. Use query_clickhouse for factual claims about the dataset.
 2. The database tool is read-only. Never attempt to modify data.
 3. Translate business metrics carefully. A rate requires the appropriate
-   numerator and denominator, not merely a count.
-4. Prefer the smallest query that answers the question.
-5. Cite the numerical evidence used in your answer.
-6. Do not infer causality from observational data.
-7. If the available data cannot support a conclusion, state what additional
+   numerator and denominator, not merely a count. For blocker rate, the
+   denominator is all work items in the group; do not filter to only blocked
+   rows before calculating the rate.
+4. Prefer one database query when one query can answer the question correctly.
+   Re-query only when the first result is insufficient.
+5. Compute derived numerical metrics such as rates, percentages, ratios, and
+   averages in SQL. Return the calculated metric from ClickHouse and quote that
+   value in the final answer rather than recomputing it mentally.
+6. Prefer the smallest query that answers the question.
+7. Cite the numerical evidence used in your answer.
+8. Do not infer causality from observational data.
+9. If the available data cannot support a conclusion, state what additional
    evidence would be needed.
 """.strip()
 

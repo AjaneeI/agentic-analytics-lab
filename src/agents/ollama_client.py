@@ -95,8 +95,8 @@ class OllamaModelClient:
             "keep_alive": "30m",
             "options": {
                 "temperature": 0,
-                "num_predict": 192,
-                "num_ctx": 4096,
+                "num_predict": 128,
+                "num_ctx": 2048,
             },
             "messages": self._convert_messages(messages),
             "tools": self._convert_tools(tools),
