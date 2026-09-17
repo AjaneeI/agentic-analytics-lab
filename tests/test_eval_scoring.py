@@ -29,6 +29,50 @@ class TestEvalScoring(unittest.TestCase):
         self.assertTrue(score.tool_grounded)
         self.assertEqual(score.evidence_quality, "grounded_single_query")
 
+    def test_numeric_scoring_accepts_more_precise_query_values(self):
+        case = {
+            "id": "Q1",
+            "category": "retrieval",
+            "question": "Which team has the highest blocker rate?",
+            "expected": {"team": "Data", "blocked_pct": 20.9},
+            "requires_tool": True,
+        }
+        calls = [
+            ToolCallRecord(
+                name="query_clickhouse",
+                arguments={"sql": "SELECT ..."},
+                row_count=1,
+                result_rows=[{"team": "Data", "blocked_pct": 20.86}],
+            )
+        ]
+
+        score = score_case(case, "Data is highest at approximately 20.86%.", calls)
+
+        self.assertTrue(score.correct)
+        self.assertTrue(score.factual_consistency)
+
+    def test_evidence_scoring_accepts_rate_fraction_for_expected_percentage(self):
+        case = {
+            "id": "Q1",
+            "category": "retrieval",
+            "question": "Which team has the highest blocker rate?",
+            "expected": {"team": "Data", "blocked_pct": 20.9},
+            "requires_tool": True,
+        }
+        calls = [
+            ToolCallRecord(
+                name="query_clickhouse",
+                arguments={"sql": "SELECT team, AVG(blocked) AS blocker_rate"},
+                row_count=1,
+                result_rows=[{"team": "Data", "blocker_rate": 0.208633}],
+            )
+        ]
+
+        score = score_case(case, "Data is highest at approximately 20.86%.", calls)
+
+        self.assertTrue(score.correct)
+        self.assertTrue(score.factual_consistency)
+
     def test_execution_answer_is_not_correct_just_because_it_exists(self):
         case = {
             "id": "Q1",
@@ -119,6 +163,28 @@ class TestEvalScoring(unittest.TestCase):
         self.assertTrue(score.correct)
         self.assertIsNone(score.factual_consistency)
         self.assertIsNone(score.tool_grounded)
+
+    def test_epistemic_case_accepts_observational_rct_language(self):
+        case = {
+            "id": "Q6",
+            "category": "epistemic",
+            "question": "Can this establish causality?",
+            "expected_behavior": [
+                "does_not_claim_causality",
+                "distinguishes_association_from_causation",
+                "requests additional evidence or stronger study design",
+            ],
+            "requires_tool": False,
+        }
+        answer = (
+            "The current dataset does not provide direct evidence of causality "
+            "because it is observational. A longitudinal study or randomized "
+            "controlled trial would be needed."
+        )
+
+        score = score_case(case, answer, [])
+
+        self.assertTrue(score.correct)
 
 
 if __name__ == "__main__":

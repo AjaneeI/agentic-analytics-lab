@@ -71,6 +71,8 @@ class TestEvalRunner(unittest.TestCase):
         self.assertEqual(record.input_tokens, 100)
         self.assertEqual(record.output_tokens, 20)
         self.assertEqual(record.expected["team"], "Data")
+        self.assertEqual(record.tool_evidence[0]["row_count"], 1)
+        self.assertEqual(record.tool_evidence[0]["result_rows"][0]["team"], "Data")
         self.assertIsNone(record.error)
 
     def test_wrong_answer_executes_but_does_not_pass(self):

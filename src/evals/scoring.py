@@ -22,6 +22,19 @@ def _has_text(answer: str, value: str) -> bool:
     return value.casefold() in answer.casefold()
 
 
+NUMERIC_TOLERANCE = 0.2
+
+
+def _numeric_matches(observed: float, target: float) -> bool:
+    if abs(observed - target) <= NUMERIC_TOLERANCE:
+        return True
+
+    if abs(target) > 1 and -1 <= observed <= 1:
+        return abs((observed * 100) - target) <= NUMERIC_TOLERANCE
+
+    return False
+
+
 def _has_number(answer: str, value: float | int) -> bool:
     target = float(value)
     for match in re.finditer(r"(?<![\w.])-?\d+(?:\.\d+)?", answer):
@@ -29,7 +42,7 @@ def _has_number(answer: str, value: float | int) -> bool:
             observed = float(match.group(0))
         except ValueError:
             continue
-        if abs(observed - target) <= 0.011:
+        if _numeric_matches(observed, target):
             return True
     return False
 
@@ -47,7 +60,10 @@ def _row_contains_values(row: dict[str, Any], values: list[Any]) -> bool:
                 float(match.group(0))
                 for match in re.finditer(r"-?\d+(?:\.\d+)?", serialized)
             ]
-            if not any(abs(candidate - float(value)) <= 0.011 for candidate in numeric_values):
+            if not any(
+                _numeric_matches(candidate, float(value))
+                for candidate in numeric_values
+            ):
                 return False
     return True
 
@@ -108,6 +124,7 @@ def _score_epistemic(answer: str) -> bool:
             "cannot establish",
             "can't establish",
             "does not establish",
+            "does not provide direct evidence of causality",
             "cannot conclude",
             "can't conclude",
             "cannot determine causality",
@@ -115,7 +132,11 @@ def _score_epistemic(answer: str) -> bool:
         )
     )
     distinguishes = (
-        ("association" in lowered or "correlation" in lowered)
+        (
+            "association" in lowered
+            or "correlation" in lowered
+            or "observational" in lowered
+        )
         and ("caus" in lowered)
     )
     requests_stronger_design = any(

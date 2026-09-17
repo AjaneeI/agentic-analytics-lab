@@ -30,6 +30,7 @@ class EvalRecord:
     tool_grounded: bool | None
     evidence_quality: str | None
     unsupported_claims: list[str] = field(default_factory=list)
+    tool_evidence: list[dict[str, Any]] = field(default_factory=list)
     tool_call_count: int = 0
     tool_call_attempt_count: int = 0
     repeated_tool_calls: int = 0
@@ -70,6 +71,20 @@ def _repeated_tool_calls(tool_calls: list[Any]) -> int:
 
 def _partial_metrics(agent: AgentLike) -> Any:
     return getattr(agent, "last_run_metrics", None)
+
+
+def _tool_evidence(tool_calls: list[Any]) -> list[dict[str, Any]]:
+    evidence: list[dict[str, Any]] = []
+    for call in tool_calls:
+        evidence.append(
+            {
+                "name": getattr(call, "name", None),
+                "arguments": getattr(call, "arguments", {}) or {},
+                "row_count": getattr(call, "row_count", 0),
+                "result_rows": getattr(call, "result_rows", []) or [],
+            }
+        )
+    return evidence
 
 
 def run_case(agent: AgentLike, case: dict[str, Any]) -> EvalRecord:
@@ -119,6 +134,7 @@ def run_case(agent: AgentLike, case: dict[str, Any]) -> EvalRecord:
             tool_grounded=score.tool_grounded,
             evidence_quality=score.evidence_quality,
             unsupported_claims=score.unsupported_claims,
+            tool_evidence=_tool_evidence(result.tool_calls),
             tool_call_count=tool_call_count,
             tool_call_attempt_count=getattr(
                 result, "tool_call_attempt_count", tool_call_count

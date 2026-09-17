@@ -37,6 +37,8 @@ safe to operate, and worth their complexity.
   answer correctness.
 - Added deterministic answer/evidence scoring, model/tool-call accounting, and
   native Ollama token/timing capture.
+- Fresh local Qwen + ClickHouse benchmark result: 6/6 execution success and
+  4/6 task success for the single-agent baseline.
 - The routed-agent architecture is still planned and has not been implemented or
   benchmarked.
 
@@ -45,9 +47,9 @@ Current stabilization notes:
 - [Single-agent benchmark status - 2026-09-17](docs/single-agent-benchmark-status-2026-09-17.md)
 - [Test suite proof - 2026-09-17](docs/test-suite-proof-2026-09-17.md)
 
-A fresh end-to-end Qwen + ClickHouse benchmark JSON still needs to be run in a
-local environment that has both runtimes available. Pre-correction raw benchmark
-JSON should not be interpreted as correctness evidence.
+The current benchmark summary is documented in the status note above. Raw local
+benchmark JSON remains ignored by default; publish only reviewed summaries or
+sanitized artifacts.
 
 ## What The Agent Can Answer
 
@@ -176,9 +178,8 @@ Evidence screenshot:
   behavior but should not be treated as real operational conclusions.
 - The routed-agent design is planned but has not yet been evaluated against the
   single-agent baseline.
-- A fresh end-to-end Qwen + ClickHouse benchmark has not yet been produced with
-  the corrected evaluator. Historical raw output may be stale or use the older
-  execution-only success semantics.
+- The current single-agent benchmark is a local run on one model/runtime setup;
+  repeat runs may vary because the model is non-deterministic.
 - Automatic unsupported-claim detection is intentionally conservative. A human
   review is still required before a benchmark artifact is published.
 - Local benchmark JSON files are kept out of the public repository until they
