@@ -1,6 +1,7 @@
 # Agentic Analytics Lab
 
 [![Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
+[![CodeQL](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml)
 
 Agentic Analytics Lab is a portfolio project for testing when an AI analytics
 agent should stay simple and when a routed or specialist-agent design is worth
@@ -20,10 +21,12 @@ semantic metric guards, and a reproducible evaluation runner.
 **What this demonstrates:** Python, SQL/tool integration, AI evaluation,
 guardrail design, debugging/documentation, and architecture tradeoff reasoning.
 
-**Current proof:** 34 automated tests pass across SQL safety, dataset-scope and
-transport validation, blocker-rate semantics, the single-agent tool-call flow,
-Ollama adapter behavior, and the evaluation runner. GitHub Actions runs the
-full suite on pull requests and pushes to `main` across Python 3.11 and 3.12.
+**Current proof:** 42 automated tests pass across SQL safety, dataset-scope and
+transport validation, blocker-rate semantics, deterministic answer scoring,
+tool-grounding checks, the single-agent tool-call flow, Ollama adapter behavior,
+and the evaluation runner. GitHub Actions runs the full suite on pull requests
+and pushes to `main` across Python 3.11 and 3.12, and CodeQL runs extended
+Python security analysis.
 
 **Current phase:** stabilizing and benchmarking the single-agent baseline before
 any routed or multi-agent implementation. The project is a work sample for
@@ -51,7 +54,8 @@ safe to operate, and worth their complexity.
   Docker Compose, and Langfuse tracing.
 - Built a Python single-agent baseline that can query a synthetic delivery
   operations dataset through a read-only ClickHouse tool.
-- Added an evaluation runner for controlled question sets and benchmark output.
+- Added a deterministic evaluation runner that separates execution success from
+  task correctness, factual consistency, and tool grounding.
 - Added semantic grounding for delivery metrics, including blocker-rate
   definitions.
 - Added a low-latency SQL guard that rejects blocker-rate queries when they
@@ -61,6 +65,8 @@ safe to operate, and worth their complexity.
   access rejected in code.
 - Added transport and query resource safeguards for the ClickHouse tool.
 - Added GitHub Actions CI for the full unit suite on Python 3.11 and 3.12.
+- Added CodeQL `security-extended` analysis on pull requests, pushes to `main`,
+  and a weekly schedule.
 
 ## What The Agent Can Answer
 
@@ -146,7 +152,9 @@ The project currently uses Python `unittest` coverage for:
 - blocker-rate semantic validation
 - single-agent tool-call flow
 - Ollama model-adapter behavior
-- evaluation-runner behavior
+- deterministic answer scoring and evaluation-runner behavior
+- factual-consistency and tool-grounding checks
+- model-call, tool-call, token, and timing accounting
 
 Run the test suite:
 
@@ -157,6 +165,8 @@ python3 -m unittest discover -s tests
 Current automated proof:
 
 - [GitHub Actions: Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
+- [GitHub Actions: CodeQL](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml)
+- [Single-agent benchmark status](docs/single-agent-benchmark-status-2026-09-17.md)
 
 Historical local proof artifact:
 
@@ -177,6 +187,9 @@ Evidence screenshot:
   cases.
 - The project is not production-ready. It is a portfolio lab for testing tool
   safety, metric semantics, and agent-design tradeoffs.
+- The earlier 6/6 execution-success, 4/6 task-success local benchmark predates
+  the hardened model/tool contract. It is retained as historical failure
+  evidence, not the current comparison anchor.
 - Cost and latency claims should be refreshed after each model, prompt, or
   tool-layer change.
 
@@ -186,12 +199,14 @@ Evidence screenshot:
 .
 ├── .github/
 │   └── workflows/
+│       ├── codeql.yml
 │       └── tests.yml
 ├── README.md
 ├── ARCHITECTURE.md
 ├── SECURITY.md
 ├── docs/
 │   ├── evidence-plan.md
+│   ├── single-agent-benchmark-status-2026-09-17.md
 │   ├── publishing-plan.md
 │   ├── screenshots/
 │   ├── social-posting-kit.md
@@ -204,10 +219,13 @@ Evidence screenshot:
 │   ├── ground-truth/
 │   └── results/
 ├── scripts/
+│   ├── run_single_agent_eval.py
+│   └── verify_ground_truth.py
 ├── sql/
 ├── src/
 │   ├── agents/
 │   ├── evals/
+│   │   └── scoring.py
 │   └── tools/
 └── tests/
 ```
@@ -240,10 +258,11 @@ workshop. It does not claim the upstream stack as original work.
 
 ## Next Steps
 
-- Repeat the frozen single-agent benchmark under the same configuration to
-  characterize run-to-run variability before changing prompts or architecture.
-- Protect `main` so required CI checks cannot be bypassed by a direct push.
-- Add a lightweight security-scanning layer without duplicating existing checks.
+- Re-run the frozen Q1-Q6 single-agent benchmark on the current hardened
+  `main` branch before changing prompts or architecture, then repeat it under
+  the same configuration to characterize run-to-run variability.
+- Protect `main` so the Python CI and CodeQL checks cannot be bypassed by a
+  direct push.
 - Choose an explicit repository license if reuse is intended.
 - Add a routed-agent prototype only after the single-agent baseline is stable.
 - Compare the single-agent and routed designs against the same evaluation set.
