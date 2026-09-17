@@ -19,7 +19,7 @@ class FakeResponse:
 
 class TestOllamaModelClient(unittest.TestCase):
     @patch("src.agents.ollama_client.urllib.request.urlopen")
-    def test_tool_call_response(self, mock_urlopen):
+    def test_tool_call_response_includes_usage_metrics(self, mock_urlopen):
         mock_urlopen.return_value = FakeResponse(
             {
                 "message": {
@@ -32,7 +32,10 @@ class TestOllamaModelClient(unittest.TestCase):
                             }
                         }
                     ],
-                }
+                },
+                "prompt_eval_count": 42,
+                "eval_count": 7,
+                "total_duration": 1_500_000_000,
             }
         )
 
@@ -54,6 +57,9 @@ class TestOllamaModelClient(unittest.TestCase):
         self.assertEqual(result["type"], "tool_call")
         self.assertEqual(result["name"], "query_clickhouse")
         self.assertEqual(result["arguments"]["sql"], "SELECT 1")
+        self.assertEqual(result["_metrics"]["input_tokens"], 42)
+        self.assertEqual(result["_metrics"]["output_tokens"], 7)
+        self.assertEqual(result["_metrics"]["total_duration_seconds"], 1.5)
 
     @patch("src.agents.ollama_client.urllib.request.urlopen")
     def test_final_response(self, mock_urlopen):
@@ -80,10 +86,7 @@ class TestOllamaModelClient(unittest.TestCase):
             ]
         )
 
-        self.assertEqual(
-            converted[0]["function"]["name"],
-            "query_clickhouse",
-        )
+        self.assertEqual(converted[0]["function"]["name"], "query_clickhouse")
         self.assertEqual(
             converted[0]["function"]["parameters"],
             {"type": "object"},
