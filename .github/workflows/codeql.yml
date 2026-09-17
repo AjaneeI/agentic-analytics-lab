@@ -12,9 +12,13 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyze:
-    name: Analyze Python
+    name: CodeQL / Python
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -32,6 +36,7 @@ jobs:
         with:
           languages: python
           build-mode: none
+          queries: security-extended
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v4
