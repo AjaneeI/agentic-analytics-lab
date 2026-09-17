@@ -40,7 +40,9 @@ Schema semantics:
 
 Rules:
 1. Use query_clickhouse for factual claims about the dataset.
-2. The database tool is read-only. Never attempt to modify data.
+2. The database tool is read-only and restricted to
+   agentic_analytics.delivery_work_items. Never attempt to modify data, access
+   other tables, or use ClickHouse table functions.
 3. Translate business metrics carefully. A rate requires the appropriate
    numerator and denominator, not merely a count. For blocker rate, the
    denominator is all work items in the group; do not filter to only blocked
@@ -61,8 +63,11 @@ Rules:
 TOOL_SPEC = {
     "name": "query_clickhouse",
     "description": (
-        "Run a read-only analytical SQL query against the local ClickHouse "
-        "database. Only SELECT/WITH/SHOW/DESCRIBE/EXPLAIN queries are allowed."
+        "Run a read-only analytical SQL query against the approved local "
+        "ClickHouse dataset. SELECT/WITH/EXPLAIN queries may reference only "
+        "agentic_analytics.delivery_work_items (or CTEs derived from it), and "
+        "DESCRIBE may target only that table. Other tables and table functions "
+        "are rejected."
     ),
     "input_schema": {
         "type": "object",
