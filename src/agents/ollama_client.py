@@ -84,6 +84,19 @@ class OllamaModelClient:
 
         return converted
 
+    @staticmethod
+    def _metrics(result: dict[str, Any]) -> dict[str, Any]:
+        total_duration_ns = result.get("total_duration")
+        return {
+            "input_tokens": result.get("prompt_eval_count"),
+            "output_tokens": result.get("eval_count"),
+            "total_duration_seconds": (
+                total_duration_ns / 1_000_000_000
+                if isinstance(total_duration_ns, (int, float))
+                else None
+            ),
+        }
+
     def respond(
         self,
         messages: list[dict[str, Any]],
@@ -117,6 +130,7 @@ class OllamaModelClient:
 
         message = result.get("message", {})
         tool_calls = message.get("tool_calls") or []
+        metrics = self._metrics(result)
 
         if tool_calls:
             function = tool_calls[0].get("function", {})
@@ -129,9 +143,11 @@ class OllamaModelClient:
                 "type": "tool_call",
                 "name": function.get("name"),
                 "arguments": arguments,
+                "_metrics": metrics,
             }
 
         return {
             "type": "final",
             "content": message.get("content", ""),
+            "_metrics": metrics,
         }

@@ -92,6 +92,16 @@ class ToolCallRecord:
     name: str
     arguments: dict[str, Any]
     row_count: int
+    result_rows: list[dict[str, Any]] = field(default_factory=list)
+
+
+@dataclass
+class RunMetrics:
+    model_call_count: int = 0
+    tool_call_attempt_count: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+    model_duration_seconds: float = 0.0
 
 
 @dataclass
@@ -99,14 +109,32 @@ class AgentResult:
     answer: str
     tool_calls: list[ToolCallRecord] = field(default_factory=list)
     transcript: list[dict[str, Any]] = field(default_factory=list)
+    model_call_count: int = 0
+    tool_call_attempt_count: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+    model_duration_seconds: float = 0.0
 
 
 class SingleAgent:
     def __init__(self, model: ModelClient, max_steps: int = 6):
         self.model = model
         self.max_steps = max_steps
+        self.last_run_metrics = RunMetrics()
+
+    def _record_model_metrics(self, response: dict[str, Any]) -> None:
+        self.last_run_metrics.model_call_count += 1
+        metrics = response.get("_metrics") or {}
+
+        self.last_run_metrics.input_tokens += int(metrics.get("input_tokens") or 0)
+        self.last_run_metrics.output_tokens += int(metrics.get("output_tokens") or 0)
+        self.last_run_metrics.model_duration_seconds += float(
+            metrics.get("total_duration_seconds") or 0.0
+        )
 
     def run(self, question: str) -> AgentResult:
+        self.last_run_metrics = RunMetrics()
+
         messages: list[dict[str, Any]] = [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": question},
@@ -116,6 +144,7 @@ class SingleAgent:
 
         for _ in range(self.max_steps):
             response = self.model.respond(messages, [TOOL_SPEC])
+            self._record_model_metrics(response)
 
             response_type = response.get("type")
 
@@ -125,12 +154,20 @@ class SingleAgent:
                 if not answer:
                     raise RuntimeError("Model returned an empty final answer.")
 
+                metrics = self.last_run_metrics
                 return AgentResult(
                     answer=answer,
                     tool_calls=tool_calls,
                     transcript=messages + [
                         {"role": "assistant", "content": answer}
                     ],
+                    model_call_count=metrics.model_call_count,
+                    tool_call_attempt_count=metrics.tool_call_attempt_count,
+                    input_tokens=metrics.input_tokens,
+                    output_tokens=metrics.output_tokens,
+                    model_duration_seconds=round(
+                        metrics.model_duration_seconds, 6
+                    ),
                 )
 
             if response_type != "tool_call":
@@ -149,6 +186,7 @@ class SingleAgent:
             if not isinstance(sql, str) or not sql.strip():
                 raise RuntimeError("query_clickhouse requires a non-empty SQL string.")
 
+            self.last_run_metrics.tool_call_attempt_count += 1
             rows = query_clickhouse(sql)
 
             tool_calls.append(
@@ -156,6 +194,7 @@ class SingleAgent:
                     name=tool_name,
                     arguments={"sql": sql},
                     row_count=len(rows),
+                    result_rows=rows,
                 )
             )
 

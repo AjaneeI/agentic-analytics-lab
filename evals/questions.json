@@ -6,7 +6,9 @@
     "expected": {
       "team": "Data",
       "blocked_pct": 20.9
-    }
+    },
+    "requires_tool": true,
+    "max_tool_calls": 1
   },
   {
     "id": "Q2",
@@ -15,7 +17,9 @@
     "expected": {
       "team": "AI",
       "avg_effort_ratio": 1.16
-    }
+    },
+    "requires_tool": true,
+    "max_tool_calls": 1
   },
   {
     "id": "Q3",
@@ -26,7 +30,9 @@
       "team": "Data",
       "blocked_items": 29,
       "blocked_pct": 20.9
-    }
+    },
+    "requires_tool": true,
+    "max_tool_calls": 1
   },
   {
     "id": "Q4",
@@ -39,7 +45,9 @@
         ["Product", 14.7],
         ["Platform", 11.4]
       ]
-    }
+    },
+    "requires_tool": true,
+    "max_tool_calls": 1
   },
   {
     "id": "Q5",
@@ -48,8 +56,10 @@
     "expected": {
       "team": "Platform",
       "blocked_pct": 11.4,
-      "avg_effort_ratio": 1.10
-    }
+      "avg_effort_ratio": 1.1
+    },
+    "requires_tool": true,
+    "max_tool_calls": 1
   },
   {
     "id": "Q6",
@@ -59,6 +69,8 @@
       "does_not_claim_causality",
       "distinguishes_association_from_causation",
       "requests additional evidence or stronger study design"
-    ]
+    ],
+    "requires_tool": false,
+    "max_tool_calls": 0
   }
 ]

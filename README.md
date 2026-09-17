@@ -30,11 +30,26 @@ safe to operate, and worth their complexity.
   Docker Compose, and Langfuse tracing.
 - Built a Python single-agent baseline that can query a synthetic delivery
   operations dataset through a read-only ClickHouse tool.
-- Added an evaluation runner for controlled question sets and benchmark output.
 - Added semantic grounding for delivery metrics, including blocker-rate
-  definitions.
-- Added a low-latency SQL guard that rejects blocker-rate queries when they
-  label non-blocked work as `blocker_rate`.
+  definitions and a low-latency blocker-rate SQL guard.
+- Froze a six-question evaluation set with deterministic seed-42 ground truth.
+- Stabilized the evaluation harness so execution success is no longer treated as
+  answer correctness.
+- Added deterministic answer/evidence scoring, model/tool-call accounting, and
+  native Ollama token/timing capture.
+- Fresh local Qwen + ClickHouse benchmark result: 6/6 execution success and
+  4/6 task success for the single-agent baseline.
+- The routed-agent architecture is still planned and has not been implemented or
+  benchmarked.
+
+Current stabilization notes:
+
+- [Single-agent benchmark status - 2026-09-17](docs/single-agent-benchmark-status-2026-09-17.md)
+- [Test suite proof - 2026-09-17](docs/test-suite-proof-2026-09-17.md)
+
+The current benchmark summary is documented in the status note above. Raw local
+benchmark JSON remains ignored by default; publish only reviewed summaries or
+sanitized artifacts.
 
 ## What The Agent Can Answer
 
@@ -54,21 +69,27 @@ generalizations.
 
 ## Design Principles
 
-- Start with a single-agent baseline before adding orchestration.
+- Start with a trustworthy single-agent baseline before adding orchestration.
 - Keep database access read-only by default.
-- Treat SQL safety and metric semantics as separate requirements.
+- Treat SQL safety, metric semantics, and answer correctness as separate
+  requirements.
 - Prefer one correct query over multiple unnecessary tool calls.
-- Capture task success, factual consistency, tool count, latency, tokens, cost,
-  and failure behavior.
+- Capture task correctness, factual consistency, model/tool calls, latency,
+  tokens, cost signals, and failure behavior.
 - Add routed agents only when evaluation results justify the complexity.
 
 ## Architecture
 
+Current controlled benchmark:
+
 ```text
-User question
+Frozen evaluation question
   |
   v
-Single-agent baseline
+Python single-agent baseline
+  |
+  v
+Ollama qwen2.5:7b
   |
   v
 Read-only ClickHouse tool
@@ -77,7 +98,10 @@ Read-only ClickHouse tool
 Synthetic delivery operations data
   |
   v
-Evidence-backed answer
+Captured query evidence + final answer
+  |
+  v
+Deterministic evaluator
 ```
 
 Planned comparison:
@@ -93,10 +117,11 @@ Router / lead agent
   +--> Executive synthesizer
   |
   v
-Shared read-only tool layer
+Same read-only tool layer and evaluator
 ```
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller design notes.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller design notes and the
+comparison invariants.
 
 ## Safety And Evaluation
 
@@ -106,23 +131,42 @@ The ClickHouse tool rejects:
 - multiple SQL statements
 - attempts to label the complement of blocked work as `blocker_rate`
 
-The project currently uses Python `unittest` coverage for:
+The frozen benchmark contains six cases covering retrieval, comparison,
+reasoning, ranking, multi-metric analysis, and epistemic discipline. The
+evaluator now distinguishes:
 
-- read-only SQL validation
-- blocker-rate semantic validation
-- single-agent tool-call flow
-- Ollama model-adapter behavior
-- evaluation-runner behavior
+- execution success
+- answer correctness
+- factual consistency with captured ClickHouse rows
+- tool grounding / evidence quality
+- extra or repeated tool calls
+- model-call count
+- end-to-end latency
+- Ollama input/output token counts when available
+- failure type
 
-Run the test suite:
+The deterministic seed-42 ground truth can be checked without a model:
+
+```bash
+python3 scripts/generate_delivery_data.py
+python3 scripts/verify_ground_truth.py
+```
+
+Run the unit test suite:
 
 ```bash
 python3 -m unittest discover -s tests
 ```
 
-Current proof artifact:
+Run the local single-agent benchmark after ClickHouse is loaded with the
+synthetic dataset and Ollama is serving `qwen2.5:7b`:
 
-- [Test suite proof - 2026-09-15](docs/test-suite-proof-2026-09-15.md)
+```bash
+python3 scripts/run_single_agent_eval.py
+```
+
+Raw JSON remains ignored by default. Review it before publishing or overriding
+`.gitignore`.
 
 Evidence screenshot:
 
@@ -134,11 +178,17 @@ Evidence screenshot:
   behavior but should not be treated as real operational conclusions.
 - The routed-agent design is planned but has not yet been evaluated against the
   single-agent baseline.
+- The current single-agent benchmark is a local run on one model/runtime setup;
+  repeat runs may vary because the model is non-deterministic.
+- Automatic unsupported-claim detection is intentionally conservative. A human
+  review is still required before a benchmark artifact is published.
 - Local benchmark JSON files are kept out of the public repository until they
   are reviewed and labeled as current benchmark results or historical failure
   cases.
 - The project is not production-ready. It is a portfolio lab for testing tool
   safety, metric semantics, and agent-design tradeoffs.
+- Ollama has no per-request API charge, but this benchmark does not estimate
+  local hardware or electricity cost.
 - Cost and latency claims should be refreshed after each model, prompt, or
   tool-layer change.
 
@@ -153,6 +203,7 @@ Evidence screenshot:
 │   ├── evidence-plan.md
 │   ├── publishing-plan.md
 │   ├── screenshots/
+│   ├── single-agent-benchmark-status-2026-09-17.md
 │   ├── social-posting-kit.md
 │   └── workshop-notes.md
 ├── evals/
@@ -179,6 +230,7 @@ implementation work:
 - translating an AI workshop into an original evaluation project
 - defining measurable success criteria before adding complexity
 - building read-only tool access and semantic safety checks
+- separating successful execution from correct, evidence-backed answers
 - documenting failures and debugging decisions
 - comparing AI architecture choices with latency, cost, and reliability in mind
 
@@ -198,7 +250,10 @@ workshop. It does not claim the upstream stack as original work.
 
 ## Next Steps
 
-- Re-run controlled benchmarks after each agent or prompt change.
-- Add a routed-agent prototype only after the single-agent baseline is stable.
-- Publish sanitized screenshots of successful tool calls and trace views.
-- Compare the single-agent and routed designs against the same evaluation set.
+- Run a fresh Qwen + ClickHouse benchmark with the corrected evaluator and
+  manually review all six cases before publishing the JSON.
+- Keep the dataset, questions, answer contract, tool layer, metric definitions,
+  evaluator, and measurement methodology fixed for the architecture comparison.
+- Build the smallest routed-agent prototype only after that reviewed baseline is
+  accepted as the comparison anchor.
+- Publish only sanitized evidence and reviewed benchmark outputs.
