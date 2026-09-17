@@ -9,6 +9,24 @@ it into an original, measurable applied-AI system: a delivery-intelligence agent
 that queries structured operational data, returns evidence-backed answers, and
 records enough execution detail to compare design choices.
 
+## Recruiter Quick Read
+
+**What I built:** a Python single-agent analytics baseline over synthetic
+delivery-operations data, with read-only ClickHouse access, semantic metric
+guards, and a reproducible evaluation runner.
+
+**What this demonstrates:** Python, SQL/tool integration, AI evaluation,
+guardrail design, debugging/documentation, and architecture tradeoff reasoning.
+
+**Current proof:** 24 automated tests pass across SQL safety, blocker-rate
+semantics, the single-agent tool-call flow, Ollama adapter behavior, and the
+evaluation runner.
+
+**Current phase:** stabilizing and benchmarking the single-agent baseline before
+any routed or multi-agent implementation. The project is a work sample for
+applied AI engineering and enterprise AI implementation, not a demo-only
+chatbot.
+
 ## Why This Project Exists
 
 Agent demos often look convincing before they are measured. This project treats
