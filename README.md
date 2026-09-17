@@ -165,6 +165,8 @@ python3 -m unittest discover -s tests
 Current automated proof:
 
 - [GitHub Actions: Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
+- [GitHub Actions: CodeQL](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml)
+- [Single-agent benchmark status](docs/single-agent-benchmark-status-2026-09-17.md)
 
 Historical local proof artifact:
 
@@ -185,6 +187,9 @@ Evidence screenshot:
   cases.
 - The project is not production-ready. It is a portfolio lab for testing tool
   safety, metric semantics, and agent-design tradeoffs.
+- The earlier 6/6 execution-success, 4/6 task-success local benchmark predates
+  the hardened model/tool contract. It is retained as historical failure
+  evidence, not the current comparison anchor.
 - Cost and latency claims should be refreshed after each model, prompt, or
   tool-layer change.
 
@@ -201,6 +206,7 @@ Evidence screenshot:
 ├── SECURITY.md
 ├── docs/
 │   ├── evidence-plan.md
+│   ├── single-agent-benchmark-status-2026-09-17.md
 │   ├── publishing-plan.md
 │   ├── screenshots/
 │   ├── social-posting-kit.md
@@ -213,10 +219,13 @@ Evidence screenshot:
 │   ├── ground-truth/
 │   └── results/
 ├── scripts/
+│   ├── run_single_agent_eval.py
+│   └── verify_ground_truth.py
 ├── sql/
 ├── src/
 │   ├── agents/
 │   ├── evals/
+│   │   └── scoring.py
 │   └── tools/
 └── tests/
 ```
@@ -249,9 +258,11 @@ workshop. It does not claim the upstream stack as original work.
 
 ## Next Steps
 
-- Repeat the frozen single-agent benchmark under the same configuration to
-  characterize run-to-run variability before changing prompts or architecture.
-- Protect `main` so required CI checks cannot be bypassed by a direct push.
+- Re-run the frozen Q1-Q6 single-agent benchmark on the current hardened
+  `main` branch before changing prompts or architecture, then repeat it under
+  the same configuration to characterize run-to-run variability.
+- Protect `main` so the Python CI and CodeQL checks cannot be bypassed by a
+  direct push.
 - Choose an explicit repository license if reuse is intended.
 - Add a routed-agent prototype only after the single-agent baseline is stable.
 - Compare the single-agent and routed designs against the same evaluation set.
