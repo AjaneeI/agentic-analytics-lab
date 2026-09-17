@@ -1,6 +1,6 @@
 # Agentic Analytics Lab
 
-[![Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
+[![Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)\n[![CodeQL](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml)
 
 Agentic Analytics Lab is a portfolio project for testing when an AI analytics
 agent should stay simple and when a routed or specialist-agent design is worth
@@ -51,7 +51,7 @@ safe to operate, and worth their complexity.
   Docker Compose, and Langfuse tracing.
 - Built a Python single-agent baseline that can query a synthetic delivery
   operations dataset through a read-only ClickHouse tool.
-- Added an evaluation runner for controlled question sets and benchmark output.
+- Added a deterministic evaluation runner that separates execution success from\n  task correctness, factual consistency, and tool grounding.
 - Added semantic grounding for delivery metrics, including blocker-rate
   definitions.
 - Added a low-latency SQL guard that rejects blocker-rate queries when they
@@ -60,7 +60,7 @@ safe to operate, and worth their complexity.
   `agentic_analytics.delivery_work_items`, with table-function and cross-table
   access rejected in code.
 - Added transport and query resource safeguards for the ClickHouse tool.
-- Added GitHub Actions CI for the full unit suite on Python 3.11 and 3.12.
+- Added GitHub Actions CI for the full unit suite on Python 3.11 and 3.12.\n- Added CodeQL `security-extended` analysis on pull requests, pushes to `main`,\n  and a weekly schedule.
 
 ## What The Agent Can Answer
 
@@ -146,7 +146,7 @@ The project currently uses Python `unittest` coverage for:
 - blocker-rate semantic validation
 - single-agent tool-call flow
 - Ollama model-adapter behavior
-- evaluation-runner behavior
+- deterministic answer scoring and evaluation-runner behavior\n- factual-consistency and tool-grounding checks\n- model-call, tool-call, token, and timing accounting
 
 Run the test suite:
 
@@ -186,7 +186,7 @@ Evidence screenshot:
 .
 ├── .github/
 │   └── workflows/
-│       └── tests.yml
+│       ├── codeql.yml\n│       └── tests.yml
 ├── README.md
 ├── ARCHITECTURE.md
 ├── SECURITY.md
