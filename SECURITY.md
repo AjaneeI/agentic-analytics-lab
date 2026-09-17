@@ -10,6 +10,21 @@
 - private Slack/Linear/customer data
 - local database volumes
 
+## Runtime query guardrails
+
+The ClickHouse tool is intentionally narrow. It enforces:
+
+- read-only analytical statements only
+- a single SQL statement per call
+- access only to `agentic_analytics.delivery_work_items` and CTEs derived from it
+- rejection of ClickHouse table functions
+- rejection of mutating and administrative SQL keywords
+- blocker-rate semantic validation
+- bounded query time, rows, bytes, memory, and thread count
+- HTTPS for non-local ClickHouse URLs; plain HTTP is allowed only for loopback hosts
+
+These application-level checks are defense in depth. A production deployment should also use a dedicated ClickHouse user with database-level read-only grants scoped to the approved dataset.
+
 ## Screenshots
 
 Before publishing any screenshot:

@@ -16,8 +16,10 @@ CLICKHOUSE_URL = os.getenv("CLICKHOUSE_URL", "http://127.0.0.1:8123")
 CLICKHOUSE_USER = os.getenv("CLICKHOUSE_USER", "default")
 CLICKHOUSE_PASSWORD = os.getenv("CLICKHOUSE_PASSWORD", "")
 
+_ALLOWED_TABLE = "agentic_analytics.delivery_work_items"
+
 _ALLOWED_START = re.compile(
-    r"^\s*(SELECT|WITH|SHOW|DESCRIBE|DESC|EXPLAIN)\b",
+    r"^\s*(SELECT|WITH|DESCRIBE|DESC|EXPLAIN)\b",
     re.IGNORECASE,
 )
 
@@ -26,6 +28,25 @@ _MUTATING = re.compile(
     r"INSERT|UPDATE|DELETE|ALTER|DROP|TRUNCATE|CREATE|RENAME|"
     r"OPTIMIZE|SYSTEM|GRANT|REVOKE|ATTACH|DETACH"
     r")\b",
+    re.IGNORECASE,
+)
+
+_IDENTIFIER_PART = r'(?:`[^`]+`|"[^"]+"|[A-Za-z_][\w$]*)'
+_IDENTIFIER = rf"{_IDENTIFIER_PART}(?:\s*\.\s*{_IDENTIFIER_PART})?"
+_TABLE_REFERENCE = re.compile(
+    rf"\b(?:FROM|JOIN)\s+({_IDENTIFIER})",
+    re.IGNORECASE,
+)
+_TABLE_FUNCTION_REFERENCE = re.compile(
+    r"\b(?:FROM|JOIN)\s+[A-Za-z_][\w$]*\s*\(",
+    re.IGNORECASE,
+)
+_CTE_NAME = re.compile(
+    rf"(?:\bWITH\b|,)\s*({_IDENTIFIER_PART})\s+AS\s*\(",
+    re.IGNORECASE,
+)
+_DESCRIBE_TARGET = re.compile(
+    rf"^\s*(?:DESCRIBE|DESC)\s+(?:TABLE\s+)?({_IDENTIFIER})\s*$",
     re.IGNORECASE,
 )
 
@@ -67,6 +88,60 @@ def _strip_comments(sql: str) -> str:
     sql = re.sub(r"/\*.*?\*/", " ", sql, flags=re.DOTALL)
     sql = re.sub(r"--[^\n]*", " ", sql)
     return sql.strip()
+
+
+def _normalize_identifier(identifier: str) -> str:
+    parts = re.split(r"\s*\.\s*", identifier)
+    normalized = [part.strip().strip('`"').lower() for part in parts]
+    return ".".join(normalized)
+
+
+def _validate_table_scope(sql: str) -> None:
+    describe_match = _DESCRIBE_TARGET.match(sql)
+    if describe_match:
+        target = _normalize_identifier(describe_match.group(1))
+        if target != _ALLOWED_TABLE:
+            raise QueryRejected(
+                f"Only {_ALLOWED_TABLE} may be described."
+            )
+        return
+
+    if re.match(r"^\s*(?:DESCRIBE|DESC)\b", sql, re.IGNORECASE):
+        raise QueryRejected(
+            f"DESCRIBE must target {_ALLOWED_TABLE}."
+        )
+
+    if _TABLE_FUNCTION_REFERENCE.search(sql):
+        raise QueryRejected("ClickHouse table functions are not allowed.")
+
+    cte_names = {
+        _normalize_identifier(match.group(1))
+        for match in _CTE_NAME.finditer(sql)
+    }
+
+    for match in _TABLE_REFERENCE.finditer(sql):
+        target = _normalize_identifier(match.group(1))
+        if target in cte_names:
+            continue
+        if target != _ALLOWED_TABLE:
+            raise QueryRejected(
+                f"Only {_ALLOWED_TABLE} may be queried."
+            )
+
+
+def _validate_clickhouse_url(url: str) -> None:
+    parsed = urllib.parse.urlparse(url)
+
+    if parsed.scheme == "https":
+        return
+
+    if parsed.scheme != "http":
+        raise RuntimeError("CLICKHOUSE_URL must use http or https.")
+
+    if parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
+        raise RuntimeError(
+            "Non-local CLICKHOUSE_URL values must use HTTPS."
+        )
 
 
 def _expression_before_alias(sql: str, alias_start: int) -> str:
@@ -111,7 +186,7 @@ def validate_read_only(sql: str) -> str:
         raise QueryRejected("Query is empty.")
 
     if not _ALLOWED_START.match(cleaned):
-        raise QueryRejected("Only read-only analytical statements are allowed.")
+        raise QueryRejected("Only approved read-only analytical statements are allowed.")
 
     if _MUTATING.search(cleaned):
         raise QueryRejected("Mutation or administrative keyword detected.")
@@ -121,6 +196,7 @@ def validate_read_only(sql: str) -> str:
     if ";" in statement:
         raise QueryRejected("Multiple SQL statements are not allowed.")
 
+    _validate_table_scope(statement)
     _validate_metric_semantics(statement)
 
     return statement
@@ -128,6 +204,7 @@ def validate_read_only(sql: str) -> str:
 
 def query_clickhouse(sql: str) -> list[dict[str, Any]]:
     statement = validate_read_only(sql)
+    _validate_clickhouse_url(CLICKHOUSE_URL)
 
     params = urllib.parse.urlencode(
         {
@@ -136,6 +213,10 @@ def query_clickhouse(sql: str) -> list[dict[str, Any]]:
             "max_execution_time": "10",
             "max_result_rows": "1000",
             "result_overflow_mode": "break",
+            "max_rows_to_read": "10000",
+            "max_bytes_to_read": str(10 * 1024 * 1024),
+            "max_memory_usage": str(128 * 1024 * 1024),
+            "max_threads": "2",
         }
     )
 
