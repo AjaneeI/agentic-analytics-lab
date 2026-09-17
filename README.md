@@ -1,5 +1,7 @@
 # Agentic Analytics Lab
 
+[![Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
+
 Agentic Analytics Lab is a portfolio project for testing when an AI analytics
 agent should stay simple and when a routed or specialist-agent design is worth
 the added cost, latency, and complexity.
@@ -12,15 +14,16 @@ records enough execution detail to compare design choices.
 ## Recruiter Quick Read
 
 **What I built:** a Python single-agent analytics baseline over synthetic
-delivery-operations data, with read-only ClickHouse access, semantic metric
-guards, and a reproducible evaluation runner.
+delivery-operations data, with dataset-scoped read-only ClickHouse access,
+semantic metric guards, and a reproducible evaluation runner.
 
 **What this demonstrates:** Python, SQL/tool integration, AI evaluation,
 guardrail design, debugging/documentation, and architecture tradeoff reasoning.
 
-**Current proof:** 24 automated tests pass across SQL safety, blocker-rate
-semantics, the single-agent tool-call flow, Ollama adapter behavior, and the
-evaluation runner.
+**Current proof:** 34 automated tests pass across SQL safety, dataset-scope and
+transport validation, blocker-rate semantics, the single-agent tool-call flow,
+Ollama adapter behavior, and the evaluation runner. GitHub Actions runs the
+full suite on pull requests and pushes to `main` across Python 3.11 and 3.12.
 
 **Current phase:** stabilizing and benchmarking the single-agent baseline before
 any routed or multi-agent implementation. The project is a work sample for
@@ -53,6 +56,11 @@ safe to operate, and worth their complexity.
   definitions.
 - Added a low-latency SQL guard that rejects blocker-rate queries when they
   label non-blocked work as `blocker_rate`.
+- Hardened the ClickHouse boundary so the agent can read only
+  `agentic_analytics.delivery_work_items`, with table-function and cross-table
+  access rejected in code.
+- Added transport and query resource safeguards for the ClickHouse tool.
+- Added GitHub Actions CI for the full unit suite on Python 3.11 and 3.12.
 
 ## What The Agent Can Answer
 
@@ -73,7 +81,7 @@ generalizations.
 ## Design Principles
 
 - Start with a single-agent baseline before adding orchestration.
-- Keep database access read-only by default.
+- Keep database access read-only and dataset-scoped by default.
 - Treat SQL safety and metric semantics as separate requirements.
 - Prefer one correct query over multiple unnecessary tool calls.
 - Capture task success, factual consistency, tool count, latency, tokens, cost,
@@ -89,7 +97,7 @@ User question
 Single-agent baseline
   |
   v
-Read-only ClickHouse tool
+Dataset-scoped read-only ClickHouse tool
   |
   v
 Synthetic delivery operations data
@@ -118,15 +126,23 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller design notes.
 
 ## Safety And Evaluation
 
-The ClickHouse tool rejects:
+The ClickHouse tool rejects or constrains:
 
 - mutating or administrative SQL keywords
 - multiple SQL statements
+- physical tables outside `agentic_analytics.delivery_work_items`
+- joins to out-of-scope tables
+- ClickHouse table functions
+- broad `SHOW` access and `DESCRIBE` of out-of-scope tables
+- non-loopback plain-HTTP ClickHouse connections
 - attempts to label the complement of blocked work as `blocker_rate`
+- excessive query execution through row, byte, memory, thread, and time caps
 
 The project currently uses Python `unittest` coverage for:
 
 - read-only SQL validation
+- dataset-scope and table-function validation
+- ClickHouse URL transport validation
 - blocker-rate semantic validation
 - single-agent tool-call flow
 - Ollama model-adapter behavior
@@ -138,7 +154,11 @@ Run the test suite:
 python3 -m unittest discover -s tests
 ```
 
-Current proof artifact:
+Current automated proof:
+
+- [GitHub Actions: Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
+
+Historical local proof artifact:
 
 - [Test suite proof - 2026-09-15](docs/test-suite-proof-2026-09-15.md)
 
@@ -164,6 +184,9 @@ Evidence screenshot:
 
 ```text
 .
+├── .github/
+│   └── workflows/
+│       └── tests.yml
 ├── README.md
 ├── ARCHITECTURE.md
 ├── SECURITY.md
@@ -196,7 +219,8 @@ implementation work:
 
 - translating an AI workshop into an original evaluation project
 - defining measurable success criteria before adding complexity
-- building read-only tool access and semantic safety checks
+- building dataset-scoped read-only tool access and semantic safety checks
+- turning those guardrails into continuously tested regression coverage
 - documenting failures and debugging decisions
 - comparing AI architecture choices with latency, cost, and reliability in mind
 
@@ -216,7 +240,10 @@ workshop. It does not claim the upstream stack as original work.
 
 ## Next Steps
 
-- Re-run controlled benchmarks after each agent or prompt change.
+- Repeat the frozen single-agent benchmark under the same configuration to
+  characterize run-to-run variability before changing prompts or architecture.
+- Protect `main` so required CI checks cannot be bypassed by a direct push.
+- Add a lightweight security-scanning layer without duplicating existing checks.
+- Choose an explicit repository license if reuse is intended.
 - Add a routed-agent prototype only after the single-agent baseline is stable.
-- Publish sanitized screenshots of successful tool calls and trace views.
 - Compare the single-agent and routed designs against the same evaluation set.
