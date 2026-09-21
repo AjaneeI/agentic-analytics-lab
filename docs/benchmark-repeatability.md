@@ -7,6 +7,32 @@ adding routing.
 This layer is intentionally descriptive. It does not change the agent, prompt,
 question set, evaluator, ClickHouse tool, or scorer.
 
+## Preflight the local benchmark environment
+
+The ClickHouse tool reads `CLICKHOUSE_URL`, `CLICKHOUSE_USER`, and
+`CLICKHOUSE_PASSWORD` from the process environment. It does not automatically
+load values from `.env`.
+
+If those variables are stored in a local, git-ignored `.env`, export them into
+the current shell before running the benchmark:
+
+```bash
+set -a
+source .env
+set +a
+```
+
+Then verify authenticated access to the frozen benchmark table:
+
+```bash
+python3 -m src.tools.clickhouse_readonly \
+  "SELECT count() AS n FROM agentic_analytics.delivery_work_items"
+```
+
+The preflight should return `500`. Treat authentication failures or an unexpected
+row count as an environment/setup failure, not model-performance evidence. Do not
+start the repeatability pass until this preflight succeeds.
+
 ## Run the frozen benchmark repeatedly
 
 Keep the local configuration fixed and save each raw JSON result separately.
