@@ -11,6 +11,13 @@ question set, evaluator, ClickHouse tool, or scorer.
 
 Keep the local configuration fixed and save each raw JSON result separately.
 
+Before the three unchanged runs, verify local ClickHouse auth and seed-42 table
+shape:
+
+```bash
+python3 scripts/preflight_benchmark_env.py
+```
+
 Example:
 
 ```bash
