@@ -21,10 +21,10 @@ semantic metric guards, and a reproducible evaluation runner.
 **What this demonstrates:** Python, SQL/tool integration, AI evaluation,
 guardrail design, debugging/documentation, and architecture tradeoff reasoning.
 
-**Current proof:** 42 automated tests pass across SQL safety, dataset-scope and
+**Current proof:** 49 automated tests pass across SQL safety, dataset-scope and
 transport validation, blocker-rate semantics, deterministic answer scoring,
 tool-grounding checks, the single-agent tool-call flow, Ollama adapter behavior,
-and the evaluation runner. GitHub Actions runs the full suite on pull requests
+benchmark reporting, repeatability analysis, and the evaluation runner. GitHub Actions runs the full suite on pull requests
 and pushes to `main` across Python 3.11 and 3.12, and CodeQL runs extended
 Python security analysis.
 
@@ -67,6 +67,8 @@ safe to operate, and worth their complexity.
 - Added GitHub Actions CI for the full unit suite on Python 3.11 and 3.12.
 - Added CodeQL `security-extended` analysis on pull requests, pushes to `main`,
   and a weekly schedule.
+- Added deterministic Markdown benchmark reporting plus a repeatability summary
+  that rejects mismatched run configurations before aggregation.
 
 ## What The Agent Can Answer
 
@@ -154,7 +156,8 @@ The project currently uses Python `unittest` coverage for:
 - Ollama model-adapter behavior
 - deterministic answer scoring and evaluation-runner behavior
 - factual-consistency and tool-grounding checks
-- model-call, tool-call, token, and timing accounting\n- deterministic benchmark-report rendering and repeated-run compatibility checks
+- model-call, tool-call, token, and timing accounting
+- deterministic benchmark-report rendering and repeated-run compatibility checks
 
 Run the test suite:
 
@@ -205,6 +208,8 @@ Evidence screenshot:
 ├── ARCHITECTURE.md
 ├── SECURITY.md
 ├── docs/
+│   ├── benchmark-reporting.md
+│   ├── benchmark-repeatability.md
 │   ├── evidence-plan.md
 │   ├── single-agent-benchmark-status-2026-09-17.md
 │   ├── publishing-plan.md
@@ -219,7 +224,9 @@ Evidence screenshot:
 │   ├── ground-truth/
 │   └── results/
 ├── scripts/
+│   ├── render_benchmark_report.py
 │   ├── run_single_agent_eval.py
+│   ├── summarize_repeatability.py
 │   └── verify_ground_truth.py
 ├── sql/
 ├── src/
