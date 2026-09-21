@@ -154,7 +154,7 @@ The project currently uses Python `unittest` coverage for:
 - Ollama model-adapter behavior
 - deterministic answer scoring and evaluation-runner behavior
 - factual-consistency and tool-grounding checks
-- model-call, tool-call, token, and timing accounting
+- model-call, tool-call, token, and timing accounting\n- deterministic benchmark-report rendering and repeated-run compatibility checks
 
 Run the test suite:
 
