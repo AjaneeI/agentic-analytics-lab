@@ -7,6 +7,32 @@ adding routing.
 This layer is intentionally descriptive. It does not change the agent, prompt,
 question set, evaluator, ClickHouse tool, or scorer.
 
+## GitHub-hosted reproducibility lane
+
+A manual GitHub Actions workflow can reproduce the same frozen experiment on an
+ephemeral Ubuntu runner without relying on a developer's local ClickHouse or
+Ollama process.
+
+The workflow is intentionally `workflow_dispatch` only:
+
+```text
+.github/workflows/repeatability-benchmark.yml
+```
+
+It provisions pinned ClickHouse and Ollama versions, regenerates and loads the
+existing seed-42 dataset, verifies the 500-row table with the merged preflight,
+pulls `qwen2.5:7b`, calls the existing one-command repeatability runner, and
+uploads the three raw runs, summary, environment manifest, and service logs as
+short-lived Actions artifacts.
+
+The GitHub-hosted lane is **supplemental reproducibility evidence**. Its latency
+must not be compared directly with Apple Silicon/local runs because the hardware
+and execution environment differ. Correctness, grounding, failure recurrence,
+model/tool-call counts, and other hardware-insensitive measurements remain useful
+for cross-environment inspection.
+
+No raw benchmark JSON is committed by this workflow.
+
 ## Run the frozen benchmark repeatedly
 
 Run the commands below from the repository root with the benchmark environment
