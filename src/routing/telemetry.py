@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from src.routing.control_plane import ReasonCode, RouteDecision
-from src.routing.validation import ValidationDisposition, ValidationResult
+from src.routing.validation import ValidationResult
 
 
 @dataclass(frozen=True)
@@ -21,6 +21,8 @@ class RouteTelemetry:
     router_output_tokens: int
     worker: str | None
     tool_calls: int
+    worker_input_tokens: int
+    worker_output_tokens: int
     validator_disposition: str | None
     validator_reason: str | None
     escalation_reason: str | None
@@ -41,6 +43,8 @@ class RouteTelemetry:
             "router_input_tokens": self.router_input_tokens,
             "router_output_tokens": self.router_output_tokens,
             "tool_calls": self.tool_calls,
+            "worker_input_tokens": self.worker_input_tokens,
+            "worker_output_tokens": self.worker_output_tokens,
             "total_model_calls": self.total_model_calls,
             "total_latency_seconds": self.total_latency_seconds,
         }
@@ -63,6 +67,8 @@ def build_route_telemetry(
     router_output_tokens: int = 0,
     worker: str | None = None,
     tool_calls: int = 0,
+    worker_input_tokens: int = 0,
+    worker_output_tokens: int = 0,
     escalation_reason: str | None = None,
     total_model_calls: int = 0,
     total_latency_seconds: float = 0.0,
@@ -82,6 +88,8 @@ def build_route_telemetry(
         router_output_tokens=router_output_tokens,
         worker=worker,
         tool_calls=tool_calls,
+        worker_input_tokens=worker_input_tokens,
+        worker_output_tokens=worker_output_tokens,
         validator_disposition=(
             validation.disposition.value if validation is not None else None
         ),
