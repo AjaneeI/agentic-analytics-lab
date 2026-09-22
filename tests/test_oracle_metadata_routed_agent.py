@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from src.agents.single_agent import AgentResult
 from src.routing.oracle_benchmark import (
@@ -74,6 +75,10 @@ class StubLocalWorker:
 
 
 class TestOracleMetadataRoutedAgent(unittest.TestCase):
+    def test_runner_script_is_syntactically_valid(self):
+        path = Path("scripts/run_oracle_metadata_routed_eval.py")
+        compile(path.read_text(), str(path), "exec")
+
     def test_specs_ignore_expected_answer_fields(self):
         altered = [dict(case) for case in QUESTIONS]
         altered[0]["expected"] = {"team": "Anything", "blocked_pct": -999}
