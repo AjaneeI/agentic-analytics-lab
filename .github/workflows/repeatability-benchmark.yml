@@ -1,0 +1,165 @@
+name: Repeatability benchmark
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/repeatability-benchmark.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repeatability-benchmark-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  benchmark:
+    name: Frozen Q1-Q6 repeatability
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      CLICKHOUSE_URL: http://127.0.0.1:8123
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: benchmark-ci-only
+      CLICKHOUSE_IMAGE: clickhouse/clickhouse-server:26.8.3.105
+      OLLAMA_VERSION: 0.34.2
+      OLLAMA_MODEL: qwen2.5:7b
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Record runner capacity
+        run: |
+          uname -a
+          python --version
+          df -h
+          free -h
+
+      - name: Start pinned ClickHouse
+        run: |
+          docker pull "$CLICKHOUSE_IMAGE"
+          docker run -d             --name benchmark-clickhouse             --ulimit nofile=262144:262144             -p 8123:8123             -p 9000:9000             -e CLICKHOUSE_PASSWORD="$CLICKHOUSE_PASSWORD"             "$CLICKHOUSE_IMAGE"
+
+          for attempt in $(seq 1 60); do
+            if curl -fsS               --user "$CLICKHOUSE_USER:$CLICKHOUSE_PASSWORD"               --data-binary "SELECT 1"               "$CLICKHOUSE_URL/" >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "ClickHouse did not become ready in time." >&2
+          docker logs benchmark-clickhouse || true
+          exit 1
+
+      - name: Generate and load seed-42 dataset
+        run: |
+          python scripts/generate_delivery_data.py
+
+          docker exec -i benchmark-clickhouse clickhouse-client             --user "$CLICKHOUSE_USER"             --password "$CLICKHOUSE_PASSWORD"             --multiquery < sql/001_create_delivery_work_items.sql
+
+          docker exec -i benchmark-clickhouse clickhouse-client             --user "$CLICKHOUSE_USER"             --password "$CLICKHOUSE_PASSWORD"             --query "INSERT INTO agentic_analytics.delivery_work_items FORMAT CSVWithNames"             < data/delivery_work_items.csv
+
+          row_count="$(docker exec benchmark-clickhouse clickhouse-client             --user "$CLICKHOUSE_USER"             --password "$CLICKHOUSE_PASSWORD"             --query "SELECT count() FROM agentic_analytics.delivery_work_items")"
+
+          echo "Seeded row count: $row_count"
+          test "$row_count" = "500"
+
+      - name: Install pinned Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | OLLAMA_VERSION="$OLLAMA_VERSION" sh
+          ollama --version
+
+          nohup ollama serve > "$RUNNER_TEMP/ollama.log" 2>&1 &
+
+          for attempt in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null; then
+              break
+            fi
+            sleep 2
+          done
+
+          curl -fsS http://127.0.0.1:11434/api/tags >/dev/null
+          ollama pull "$OLLAMA_MODEL"
+          ollama list
+          ollama list | grep -F "$OLLAMA_MODEL"
+
+      - name: Run benchmark preflight
+        run: python scripts/preflight_benchmark_env.py
+
+      - name: Run frozen three-pass repeatability benchmark
+        run: python scripts/run_repeatability_pass.py
+
+      - name: Write environment manifest
+        if: success()
+        run: |
+          mkdir -p experiments/artifacts
+          {
+            echo "execution_environment=github_actions_ubuntu_x64"
+            echo "git_commit_sha=$GITHUB_SHA"
+            echo "workflow_run_id=$GITHUB_RUN_ID"
+            echo "runner_os=$RUNNER_OS"
+            echo "runner_arch=$RUNNER_ARCH"
+            echo "python_version=$(python --version 2>&1)"
+            echo "clickhouse_image=$CLICKHOUSE_IMAGE"
+            echo "clickhouse_version=$(docker exec benchmark-clickhouse clickhouse-client --user "$CLICKHOUSE_USER" --password "$CLICKHOUSE_PASSWORD" --query 'SELECT version()')"
+            echo "ollama_version=$(ollama --version 2>&1)"
+            echo "model=$OLLAMA_MODEL"
+            echo "dataset=synthetic_delivery_seed_42"
+            echo "questions=evals/questions.json"
+            echo "benchmark_schema_version=2"
+            echo "run_at_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "comparability_note=Latency is comparable only with runs produced in the same GitHub-hosted runner workflow environment."
+          } > experiments/artifacts/environment-manifest.txt
+
+      - name: Capture diagnostics
+        if: always()
+        run: |
+          mkdir -p experiments/artifacts
+          docker logs benchmark-clickhouse > experiments/artifacts/clickhouse.log 2>&1 || true
+          cp "$RUNNER_TEMP/ollama.log" experiments/artifacts/ollama.log 2>/dev/null || true
+          {
+            echo "disk:"
+            df -h
+            echo
+            echo "memory:"
+            free -h
+          } > experiments/artifacts/runner-capacity.txt
+
+      - name: Upload repeatability evidence
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: single-agent-repeatability-github-runner-${{ github.sha }}
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            experiments/results/single_agent_qwen2.5_7b_run1.json
+            experiments/results/single_agent_qwen2.5_7b_run2.json
+            experiments/results/single_agent_qwen2.5_7b_run3.json
+            docs/generated/single-agent-repeatability-summary.md
+            experiments/artifacts/environment-manifest.txt
+            experiments/artifacts/runner-capacity.txt
+            experiments/artifacts/clickhouse.log
+            experiments/artifacts/ollama.log
+
+      - name: Upload failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: repeatability-benchmark-failure-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            experiments/artifacts/runner-capacity.txt
+            experiments/artifacts/clickhouse.log
+            experiments/artifacts/ollama.log
