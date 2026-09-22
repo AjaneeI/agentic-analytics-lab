@@ -21,12 +21,7 @@ semantic metric guards, and a reproducible evaluation runner.
 **What this demonstrates:** Python, SQL/tool integration, AI evaluation,
 guardrail design, debugging/documentation, and architecture tradeoff reasoning.
 
-**Current proof:** 61 automated tests pass across SQL safety, dataset-scope and
-transport validation, blocker-rate semantics, deterministic answer scoring,
-tool-grounding checks, the single-agent tool-call flow, Ollama adapter behavior,
-benchmark reporting, repeatability analysis, and the evaluation runner. GitHub Actions runs the full suite on pull requests
-and pushes to `main` across Python 3.11 and 3.12, and CodeQL runs extended
-Python security analysis.
+**Current proof:** The automated regression suite runs in GitHub Actions across Python 3.11 and 3.12, and CodeQL runs extended Python security analysis. Coverage includes SQL safety, dataset-scope and transport validation, semantic metric guards, single-agent and control-plane behavior, deterministic handlers, answer scoring, tool grounding, model-adapter behavior, benchmark reporting, repeatability analysis, and evaluation infrastructure.
 
 **Current phase:** benchmarking the single-agent baseline alongside a first
 oracle-metadata routed experiment that has now been implemented and evaluated
@@ -277,13 +272,7 @@ workshop. It does not claim the upstream stack as original work.
 
 ## Next Steps
 
-- Re-run the frozen Q1-Q6 single-agent benchmark on the current hardened
-  `main` branch before changing prompts or architecture, then repeat it under
-  the same configuration to characterize run-to-run variability.
-- Protect `main` so the Python CI and CodeQL checks cannot be bypassed by a
-  direct push.
+- Re-run the frozen Q1–Q6 single-agent benchmark on the current `main` branch without changing the benchmark contract, then use the produced artifact manifest to establish the exact benchmarked commit.
+- Preserve the evaluated oracle-metadata routed experiment as the current routed comparison anchor; do not treat it as a natural-language routing benchmark.
+- If natural-language routing is pursued, evaluate route inference separately against held-out or realistically phrased requests before making broader routing claims.
 - Choose an explicit repository license if reuse is intended.
-- Use the evaluated oracle-metadata routed experiment as the current routed
-  comparison anchor; do not treat it as a natural-language routing benchmark.
-- If pursuing learned or natural-language routing, evaluate it separately
-  against the same frozen set and matched environment.
