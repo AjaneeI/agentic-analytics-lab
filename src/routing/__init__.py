@@ -11,6 +11,14 @@ from src.routing.control_plane import (
     parse_execution_route,
     route_task,
 )
+from src.routing.telemetry import RouteTelemetry, build_route_telemetry
+from src.routing.validation import (
+    ValidationContext,
+    ValidationDisposition,
+    ValidationReason,
+    ValidationResult,
+    validate_execution,
+)
 
 __all__ = [
     "ExecutionRoute",
@@ -22,4 +30,11 @@ __all__ = [
     "extract_route_features",
     "parse_execution_route",
     "route_task",
+    "RouteTelemetry",
+    "build_route_telemetry",
+    "ValidationContext",
+    "ValidationDisposition",
+    "ValidationReason",
+    "ValidationResult",
+    "validate_execution",
 ]
