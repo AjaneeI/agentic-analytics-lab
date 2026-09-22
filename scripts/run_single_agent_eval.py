@@ -3,6 +3,9 @@
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.agents.ollama_client import OllamaModelClient
 from src.agents.single_agent import SingleAgent
