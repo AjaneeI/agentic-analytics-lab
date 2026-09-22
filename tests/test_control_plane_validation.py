@@ -17,6 +17,18 @@ class TestControlPlaneValidation(unittest.TestCase):
         self.assertEqual(result.disposition, ValidationDisposition.ACCEPT)
         self.assertEqual(result.reason, ValidationReason.VALIDATED)
 
+    def test_valid_output_without_required_evidence_is_accepted(self):
+        result = validate_execution(
+            ValidationContext(
+                output_valid=True,
+                evidence_satisfied=False,
+                evidence_required=False,
+            )
+        )
+
+        self.assertEqual(result.disposition, ValidationDisposition.ACCEPT)
+        self.assertEqual(result.reason, ValidationReason.VALIDATED)
+
     def test_security_boundary_violation_fails_closed_even_if_output_is_valid(self):
         result = validate_execution(
             ValidationContext(
@@ -68,9 +80,13 @@ class TestControlPlaneValidation(unittest.TestCase):
         self.assertEqual(result.disposition, ValidationDisposition.ESCALATE)
         self.assertEqual(result.reason, ValidationReason.OUTPUT_INVALID)
 
-    def test_missing_evidence_escalates(self):
+    def test_missing_required_evidence_escalates(self):
         result = validate_execution(
-            ValidationContext(output_valid=True, evidence_satisfied=False)
+            ValidationContext(
+                output_valid=True,
+                evidence_satisfied=False,
+                evidence_required=True,
+            )
         )
 
         self.assertEqual(result.disposition, ValidationDisposition.ESCALATE)
