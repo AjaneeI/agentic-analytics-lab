@@ -26,7 +26,7 @@ jobs:
       CLICKHOUSE_USER: benchmark_reader
       CLICKHOUSE_PASSWORD: benchmark-reader-local
       CH_ADMIN_PASSWORD: benchmark-admin-local
-      CLICKHOUSE_VERSION: "26.9.2.8"
+      CLICKHOUSE_VERSION: "26.8.6.5"
       OLLAMA_VERSION_PIN: "0.34.2"
       OLLAMA_HOST: 127.0.0.1:11434
       MODEL_NAME: qwen2.5:7b
@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          docker run --detach             --name clickhouse             --ulimit nofile=262144:262144             --publish 127.0.0.1:8123:8123             --env CLICKHOUSE_PASSWORD="$CH_ADMIN_PASSWORD"             --env CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1             "clickhouse/clickhouse-server:$CLICKHOUSE_VERSION"
+          docker run --detach             --name clickhouse             --ulimit nofile=262144:262144             --publish 127.0.0.1:8123:8123             --env CLICKHOUSE_PASSWORD="$CH_ADMIN_PASSWORD"             --env CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1             "clickhouse:$CLICKHOUSE_VERSION"
 
           for _ in $(seq 1 60); do
             if curl --fail --silent --show-error               --user "default:$CH_ADMIN_PASSWORD"               --data-binary "SELECT 1"               "$CLICKHOUSE_URL/" >/dev/null; then
