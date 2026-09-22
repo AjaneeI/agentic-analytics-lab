@@ -77,7 +77,12 @@ class TestOracleRoutedRepeatability(unittest.TestCase):
             self.assertEqual(
                 calls[4][1],
                 [str(path) for path in outputs]
-                + ["--output", str(summary)],
+                + [
+                    "--output",
+                    str(summary),
+                    "--title",
+                    "Oracle-Metadata Routed Repeatability Summary",
+                ],
             )
 
     def test_existing_runs_require_force(self):
