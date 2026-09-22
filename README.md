@@ -28,8 +28,10 @@ benchmark reporting, repeatability analysis, and the evaluation runner. GitHub A
 and pushes to `main` across Python 3.11 and 3.12, and CodeQL runs extended
 Python security analysis.
 
-**Current phase:** stabilizing and benchmarking the single-agent baseline before
-any routed or multi-agent implementation. The project is a work sample for
+**Current phase:** benchmarking the single-agent baseline alongside a first
+oracle-metadata routed experiment that has now been implemented and evaluated
+under matched conditions. The routed experiment uses frozen benchmark metadata
+rather than natural-language route inference. The project is a work sample for
 applied AI engineering and enterprise AI implementation, not a demo-only
 chatbot.
 
@@ -69,6 +71,9 @@ safe to operate, and worth their complexity.
   and a weekly schedule.
 - Added deterministic Markdown benchmark reporting plus a repeatability summary
   that rejects mismatched run configurations before aggregation.
+- Implemented and evaluated `oracle_metadata_routed_v0`, which routes frozen
+  benchmark cases from category and `requires_tool` metadata to deterministic
+  handlers or the existing local worker.
 
 ## What The Agent Can Answer
 
@@ -114,21 +119,27 @@ Synthetic delivery operations data
 Evidence-backed answer
 ```
 
-Planned comparison:
+Implemented oracle-metadata routed experiment:
 
 ```text
-User question
+Frozen benchmark question + routing metadata
   |
   v
-Router / lead agent
+Deterministic control plane
   |
-  +--> Delivery analyst
-  +--> Workstream specialist
-  +--> Executive synthesizer
+  +--> Deterministic handler
+  |
+  +--> Existing local worker
   |
   v
-Shared read-only tool layer
+Dataset-scoped read-only ClickHouse tool
+  |
+  v
+Validation + route telemetry
 ```
+
+This experiment isolates execution-layer routing value. It does not measure
+natural-language route inference.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller design notes.
 
@@ -183,8 +194,9 @@ Evidence screenshot:
 
 - The current dataset is synthetic, so findings are useful for evaluating agent
   behavior but should not be treated as real operational conclusions.
-- The routed-agent design is planned but has not yet been evaluated against the
-  single-agent baseline.
+- The oracle-metadata routed experiment has been implemented and evaluated
+  against matched baseline conditions, but it uses frozen benchmark metadata
+  and therefore does not measure natural-language route inference.
 - Local benchmark JSON files are kept out of the public repository until they
   are reviewed and labeled as current benchmark results or historical failure
   cases.
@@ -271,5 +283,7 @@ workshop. It does not claim the upstream stack as original work.
 - Protect `main` so the Python CI and CodeQL checks cannot be bypassed by a
   direct push.
 - Choose an explicit repository license if reuse is intended.
-- Add a routed-agent prototype only after the single-agent baseline is stable.
-- Compare the single-agent and routed designs against the same evaluation set.
+- Use the evaluated oracle-metadata routed experiment as the current routed
+  comparison anchor; do not treat it as a natural-language routing benchmark.
+- If pursuing learned or natural-language routing, evaluate it separately
+  against the same frozen set and matched environment.
