@@ -121,7 +121,12 @@ def run_oracle_routed_repeatability_pass(
         runner(
             SUMMARIZE_SCRIPT,
             [str(path) for path in preserved_outputs]
-            + ["--output", str(summary_output)],
+            + [
+                "--output",
+                str(summary_output),
+                "--title",
+                "Oracle-Metadata Routed Repeatability Summary",
+            ],
         )
     except subprocess.CalledProcessError as exc:
         output_fn(
