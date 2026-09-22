@@ -37,7 +37,9 @@ class TestRouteTelemetry(unittest.TestCase):
             validation=validation,
             worker="deterministic_aggregation",
             tool_calls=1,
-            total_model_calls=0,
+            worker_input_tokens=120,
+            worker_output_tokens=24,
+            total_model_calls=1,
             total_latency_seconds=0.012,
             estimated_cost_usd=0.0,
             task_success=True,
@@ -47,7 +49,9 @@ class TestRouteTelemetry(unittest.TestCase):
         self.assertEqual(record.route_reason_code, "DETERMINISTIC_HANDLER")
         self.assertEqual(record.validator_disposition, "accept")
         self.assertEqual(record.validator_reason, "VALIDATED")
-        self.assertEqual(record.total_model_calls, 0)
+        self.assertEqual(record.worker_input_tokens, 120)
+        self.assertEqual(record.worker_output_tokens, 24)
+        self.assertEqual(record.total_model_calls, 1)
         self.assertEqual(record.estimated_cost_usd, 0.0)
 
     def test_validation_can_be_absent_before_worker_finishes(self):
@@ -61,6 +65,8 @@ class TestRouteTelemetry(unittest.TestCase):
         self.assertIsNone(record.validator_disposition)
         self.assertIsNone(record.validator_reason)
         self.assertIsNone(record.task_success)
+        self.assertEqual(record.worker_input_tokens, 0)
+        self.assertEqual(record.worker_output_tokens, 0)
 
     def test_empty_task_id_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "task_id"):
@@ -78,6 +84,16 @@ class TestRouteTelemetry(unittest.TestCase):
                 router_version="rules-v0",
                 decision=self.decision,
                 router_latency_seconds=-0.001,
+            )
+
+    def test_negative_worker_tokens_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "worker_input_tokens"):
+            build_route_telemetry(
+                task_id="Q3b",
+                router_version="rules-v0",
+                decision=self.decision,
+                router_latency_seconds=0.001,
+                worker_input_tokens=-1,
             )
 
     def test_negative_cost_is_rejected(self):
