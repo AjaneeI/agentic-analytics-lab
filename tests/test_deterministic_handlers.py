@@ -8,34 +8,36 @@ from src.routing.deterministic_handlers import (
 )
 
 
+# Mirrors the accepted seed-42 grouped metrics closely enough to exercise
+# deterministic formatting and selection semantics.
 BASE_ROWS = [
     {
         "team": "AI",
         "total_items": 120,
         "blocked_items": 18,
         "blocker_rate": 15.0,
-        "avg_effort_ratio": 1.16,
+        "avg_effort_ratio": 1.1666802146,
     },
     {
         "team": "Data",
         "total_items": 139,
         "blocked_items": 29,
         "blocker_rate": 20.9,
-        "avg_effort_ratio": 1.14,
+        "avg_effort_ratio": 1.1387180739,
     },
     {
         "team": "Platform",
-        "total_items": 123,
-        "blocked_items": 14,
+        "total_items": 105,
+        "blocked_items": 12,
         "blocker_rate": 11.4,
-        "avg_effort_ratio": 1.10,
+        "avg_effort_ratio": 1.0982895688,
     },
     {
         "team": "Product",
-        "total_items": 118,
-        "blocked_items": 17,
+        "total_items": 136,
+        "blocked_items": 20,
         "blocker_rate": 14.7,
-        "avg_effort_ratio": 1.12,
+        "avg_effort_ratio": 1.1113253012,
     },
 ]
 
@@ -62,6 +64,7 @@ class TestDeterministicAnalyticsHandlers(unittest.TestCase):
         self.assertEqual(len(captured), 1)
         self.assertEqual(captured[0], GROUPED_TEAM_METRICS_SQL)
         self.assertIn("FROM agentic_analytics.delivery_work_items", captured[0])
+        self.assertIn("sum(actual_hours) / sum(planned_hours)", captured[0])
         self.assertNotIn("INSERT", captured[0].upper())
         self.assertEqual(result.query_count, 1)
 
@@ -75,7 +78,7 @@ class TestDeterministicAnalyticsHandlers(unittest.TestCase):
         self.assertIn("Data", result.answer)
         self.assertIn("20.9", result.answer)
 
-    def test_effort_ratio_leader_matches_q2_semantics(self):
+    def test_effort_ratio_leader_matches_q2_query_semantics(self):
         query_fn, _ = self.query()
         result = execute_deterministic_handler(
             HandlerKey.EFFORT_RATIO_LEADER,
@@ -83,7 +86,7 @@ class TestDeterministicAnalyticsHandlers(unittest.TestCase):
         )
 
         self.assertIn("AI", result.answer)
-        self.assertIn("1.16", result.answer)
+        self.assertIn("1.17", result.answer)
 
     def test_blocker_count_rate_consistency_matches_q3_semantics(self):
         query_fn, _ = self.query()
@@ -118,7 +121,10 @@ class TestDeterministicAnalyticsHandlers(unittest.TestCase):
             query_fn=query_fn,
         )
 
-        positions = [result.answer.index(team) for team in ["Data", "AI", "Product", "Platform"]]
+        positions = [
+            result.answer.index(team)
+            for team in ["Data", "AI", "Product", "Platform"]
+        ]
         self.assertEqual(positions, sorted(positions))
         for value in ("20.9", "15.0", "14.7", "11.4"):
             self.assertIn(value, result.answer)
@@ -134,9 +140,24 @@ class TestDeterministicAnalyticsHandlers(unittest.TestCase):
         self.assertIn("11.4", result.answer)
         self.assertIn("1.10", result.answer)
 
+    def test_effort_control_means_closest_ratio_to_one(self):
+        rows = [dict(row) for row in BASE_ROWS]
+        rows[2]["avg_effort_ratio"] = 0.80
+        rows[3]["avg_effort_ratio"] = 1.05
+        query_fn, _ = self.query(rows)
+
+        with self.assertRaisesRegex(
+            DeterministicHandlerDeclined,
+            "No single team",
+        ):
+            execute_deterministic_handler(
+                HandlerKey.DUAL_METRIC_LEADER,
+                query_fn=query_fn,
+            )
+
     def test_dual_metric_handler_declines_when_metrics_disagree(self):
         rows = [dict(row) for row in BASE_ROWS]
-        rows[3]["avg_effort_ratio"] = 1.05
+        rows[3]["avg_effort_ratio"] = 1.02
         query_fn, _ = self.query(rows)
 
         with self.assertRaisesRegex(
