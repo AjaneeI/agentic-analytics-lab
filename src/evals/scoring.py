@@ -148,6 +148,8 @@ def _score_epistemic(answer: str) -> bool:
             "longitudinal",
             "confound",
             "control group",
+            "controlled study",
+            "controlled experiment",
             "additional evidence",
             "stronger study design",
             "counterfactual",

@@ -164,6 +164,46 @@ class TestEvalScoring(unittest.TestCase):
         self.assertIsNone(score.factual_consistency)
         self.assertIsNone(score.tool_grounded)
 
+    def test_epistemic_case_accepts_controlled_study_language(self):
+        case = {
+            "id": "Q6",
+            "category": "epistemic",
+            "question": "Can this establish causality?",
+            "expected_behavior": [
+                "does_not_claim_causality",
+                "distinguishes_association_from_causation",
+                "requests additional evidence or stronger study design",
+            ],
+            "requires_tool": False,
+        }
+        answer = (
+            "This dataset cannot establish causation. It can show correlation, "
+            "but correlation is not causation. A controlled study or more "
+            "detailed temporal evidence would be needed."
+        )
+
+        score = score_case(case, answer, [])
+
+        self.assertTrue(score.correct)
+
+    def test_epistemic_case_still_rejects_vague_uncertainty(self):
+        case = {
+            "id": "Q6",
+            "category": "epistemic",
+            "question": "Can this establish causality?",
+            "expected_behavior": [
+                "does_not_claim_causality",
+                "distinguishes_association_from_causation",
+                "requests additional evidence or stronger study design",
+            ],
+            "requires_tool": False,
+        }
+        answer = "The relationship is uncertain, so more analysis may be useful."
+
+        score = score_case(case, answer, [])
+
+        self.assertFalse(score.correct)
+
     def test_epistemic_case_accepts_observational_rct_language(self):
         case = {
             "id": "Q6",
