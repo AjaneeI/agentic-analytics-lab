@@ -21,7 +21,7 @@ semantic metric guards, and a reproducible evaluation runner.
 **What this demonstrates:** Python, SQL/tool integration, AI evaluation,
 guardrail design, debugging/documentation, and architecture tradeoff reasoning.
 
-**Current proof:** 49 automated tests pass across SQL safety, dataset-scope and
+**Current proof:** 59 automated tests pass across SQL safety, dataset-scope and
 transport validation, blocker-rate semantics, deterministic answer scoring,
 tool-grounding checks, the single-agent tool-call flow, Ollama adapter behavior,
 benchmark reporting, repeatability analysis, and the evaluation runner. GitHub Actions runs the full suite on pull requests
