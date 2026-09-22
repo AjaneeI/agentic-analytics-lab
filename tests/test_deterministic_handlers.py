@@ -6,6 +6,7 @@ from src.routing.deterministic_handlers import (
     HandlerKey,
     execute_deterministic_handler,
 )
+from src.tools.clickhouse_readonly import validate_read_only
 
 
 # Mirrors the accepted seed-42 grouped metrics closely enough to exercise
@@ -52,6 +53,12 @@ class TestDeterministicAnalyticsHandlers(unittest.TestCase):
             return result_rows
 
         return query_fn, captured
+
+    def test_fixed_grouped_query_passes_existing_read_only_guard(self):
+        self.assertEqual(
+            validate_read_only(GROUPED_TEAM_METRICS_SQL),
+            GROUPED_TEAM_METRICS_SQL,
+        )
 
     def test_handlers_use_fixed_read_only_grouped_query(self):
         query_fn, captured = self.query()
