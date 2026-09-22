@@ -64,9 +64,13 @@ payload = json.loads(DESTINATION.read_text())
 
 for result in payload["results"]:
     telemetry = agent.route_telemetry_by_task.get(result["question_id"])
-    result["route_telemetry"] = (
-        asdict(telemetry) if telemetry is not None else None
-    )
+    if telemetry is None:
+        result["route_telemetry"] = None
+    else:
+        route_evidence = asdict(telemetry)
+        route_evidence["evaluated_correct"] = result["correct"]
+        route_evidence["evaluated_task_success"] = result["task_success"]
+        result["route_telemetry"] = route_evidence
 
 route_records = list(agent.route_telemetry_by_task.values())
 payload["routing_summary"] = {
@@ -75,7 +79,7 @@ payload["routing_summary"] = {
         route: sum(record.route == route for record in route_records)
         for route in ("deterministic", "local", "escalate")
     },
-    "pre_execution_escalations": sum(
+    "tasks_with_escalation_reason": sum(
         record.escalation_reason is not None for record in route_records
     ),
     "worker_input_tokens": sum(
