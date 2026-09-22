@@ -2,17 +2,6 @@ name: GitHub oracle-routed repeatability benchmark
 
 on:
   workflow_dispatch:
-  # Temporary PR-only validation trigger; remove before merge.
-  pull_request:
-    branches:
-      - main
-    paths:
-      - .github/workflows/oracle-routed-repeatability.yml
-      - scripts/run_oracle_metadata_routed_eval.py
-      - scripts/run_oracle_routed_repeatability.py
-      - src/routing/**
-      - src/evals/**
-      - evals/questions.json
 
 permissions:
   contents: read
