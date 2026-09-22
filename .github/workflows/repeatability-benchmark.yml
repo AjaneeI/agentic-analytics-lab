@@ -13,8 +13,6 @@ concurrency:
 env:
   CLICKHOUSE_URL: http://127.0.0.1:8123
   CLICKHOUSE_USER: benchmark_ro
-  CLICKHOUSE_PASSWORD: benchmark-readonly
-  CLICKHOUSE_ADMIN_PASSWORD: benchmark-admin
   OLLAMA_MODEL: qwen2.5:7b
 
 jobs:
@@ -33,6 +31,21 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.11"
+
+      - name: Generate ephemeral ClickHouse credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          admin_password="$(openssl rand -hex 24)"
+          readonly_password="$(openssl rand -hex 24)"
+
+          echo "::add-mask::${admin_password}"
+          echo "::add-mask::${readonly_password}"
+
+          {
+            echo "CLICKHOUSE_ADMIN_PASSWORD=${admin_password}"
+            echo "CLICKHOUSE_PASSWORD=${readonly_password}"
+          } >> "${GITHUB_ENV}"
 
       - name: Start ephemeral ClickHouse
         shell: bash
@@ -86,7 +99,7 @@ jobs:
             --user default \
             --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
             --multiquery \
-            --query "CREATE USER IF NOT EXISTS benchmark_ro IDENTIFIED WITH plaintext_password BY 'benchmark-readonly'; GRANT SELECT ON agentic_analytics.delivery_work_items TO benchmark_ro;"
+            --query "CREATE USER IF NOT EXISTS benchmark_ro IDENTIFIED WITH plaintext_password BY '${CLICKHOUSE_PASSWORD}'; GRANT SELECT ON agentic_analytics.delivery_work_items TO benchmark_ro;"
 
           loaded_rows="$(docker exec benchmark-clickhouse \
             clickhouse-client \
