@@ -30,6 +30,7 @@ jobs:
       OLLAMA_VERSION_PIN: "0.34.2"
       OLLAMA_HOST: 127.0.0.1:11434
       MODEL_NAME: qwen2.5:7b
+      PYTHONPATH: .
 
     steps:
       - name: Check out benchmark commit
