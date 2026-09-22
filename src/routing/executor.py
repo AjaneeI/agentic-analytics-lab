@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Any, Protocol
 
 from src.agents.single_agent import AgentResult, ToolCallRecord
 from src.routing.control_plane import (
@@ -143,6 +143,18 @@ def execute_control_plane_request(
                 worker=request.deterministic_handler.value,
                 execution_note=str(exc),
             )
+        except RuntimeError as exc:
+            return _terminal_without_result(
+                request=request,
+                decision=decision,
+                router_latency=router_latency,
+                total_latency=time.perf_counter() - started,
+                router_version=router_version,
+                escalation_reason="DETERMINISTIC_EXECUTION_ERROR",
+                requires_escalation=True,
+                worker=request.deterministic_handler.value,
+                execution_note=f"{type(exc).__name__}: {exc}",
+            )
 
         result = AgentResult(
             answer=handler_result.answer,
@@ -165,8 +177,31 @@ def execute_control_plane_request(
     else:
         if local_worker is None:
             raise RuntimeError("Local route selected without a local worker.")
-        result = local_worker.run(request.question)
         worker_name = type(local_worker).__name__
+        try:
+            result = local_worker.run(request.question)
+        except RuntimeError as exc:
+            partial = _partial_worker_metrics(local_worker)
+            return _terminal_without_result(
+                request=request,
+                decision=decision,
+                router_latency=router_latency,
+                total_latency=time.perf_counter() - started,
+                router_version=router_version,
+                escalation_reason="LOCAL_WORKER_ERROR",
+                requires_escalation=True,
+                worker=worker_name,
+                total_model_calls=int(
+                    getattr(partial, "model_call_count", 0) or 0
+                ),
+                worker_input_tokens=int(
+                    getattr(partial, "input_tokens", 0) or 0
+                ),
+                worker_output_tokens=int(
+                    getattr(partial, "output_tokens", 0) or 0
+                ),
+                execution_note=f"{type(exc).__name__}: {exc}",
+            )
 
     validation = validate_execution(validator(request, result))
     total_latency = time.perf_counter() - started
@@ -186,6 +221,8 @@ def execute_control_plane_request(
         validation=validation,
         worker=worker_name,
         tool_calls=len(result.tool_calls),
+        worker_input_tokens=result.input_tokens,
+        worker_output_tokens=result.output_tokens,
         escalation_reason=escalation_reason,
         total_model_calls=result.model_call_count,
         total_latency_seconds=total_latency,
@@ -206,6 +243,10 @@ def execute_control_plane_request(
     )
 
 
+def _partial_worker_metrics(worker: WorkerLike) -> Any:
+    return getattr(worker, "last_run_metrics", None)
+
+
 def _terminal_without_result(
     *,
     request: ExecutionRequest,
@@ -216,6 +257,9 @@ def _terminal_without_result(
     escalation_reason: str,
     requires_escalation: bool,
     worker: str | None = None,
+    total_model_calls: int = 0,
+    worker_input_tokens: int = 0,
+    worker_output_tokens: int = 0,
     execution_note: str | None = None,
 ) -> ExecutionOutcome:
     telemetry = build_route_telemetry(
@@ -224,7 +268,10 @@ def _terminal_without_result(
         decision=decision,
         router_latency_seconds=router_latency,
         worker=worker,
+        worker_input_tokens=worker_input_tokens,
+        worker_output_tokens=worker_output_tokens,
         escalation_reason=escalation_reason,
+        total_model_calls=total_model_calls,
         total_latency_seconds=total_latency,
     )
     return ExecutionOutcome(
