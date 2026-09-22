@@ -160,6 +160,11 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
           path: |
+            experiments/results/single_agent_qwen2.5_7b.json
+            experiments/results/single_agent_qwen2.5_7b_run1.json
+            experiments/results/single_agent_qwen2.5_7b_run2.json
+            experiments/results/single_agent_qwen2.5_7b_run3.json
+            docs/generated/single-agent-repeatability-summary.md
             experiments/artifacts/runner-capacity.txt
             experiments/artifacts/clickhouse.log
             experiments/artifacts/ollama.log
