@@ -1,0 +1,205 @@
+name: GitHub repeatability benchmark
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repeatability-benchmark-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CLICKHOUSE_URL: http://127.0.0.1:8123
+  CLICKHOUSE_USER: benchmark_ro
+  OLLAMA_MODEL: qwen2.5:7b
+
+jobs:
+  benchmark:
+    name: Frozen single-agent repeatability
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out exact benchmark commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Generate ephemeral ClickHouse credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          admin_password="$(openssl rand -hex 24)"
+          readonly_password="$(openssl rand -hex 24)"
+
+          echo "::add-mask::${admin_password}"
+          echo "::add-mask::${readonly_password}"
+
+          {
+            echo "CLICKHOUSE_ADMIN_PASSWORD=${admin_password}"
+            echo "CLICKHOUSE_PASSWORD=${readonly_password}"
+          } >> "${GITHUB_ENV}"
+
+      - name: Start ephemeral ClickHouse
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d \
+            --name benchmark-clickhouse \
+            --memory=768m \
+            -p 127.0.0.1:8123:8123 \
+            -e CLICKHOUSE_PASSWORD="${CLICKHOUSE_ADMIN_PASSWORD}" \
+            -e CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1 \
+            clickhouse/clickhouse-server:24.8
+
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent \
+              --user "default:${CLICKHOUSE_ADMIN_PASSWORD}" \
+              "${CLICKHOUSE_URL}/ping" >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          docker logs benchmark-clickhouse
+          exit 1
+
+      - name: Generate and load deterministic seed-42 dataset
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/generate_delivery_data.py
+
+          generated_rows=$(( $(wc -l < data/delivery_work_items.csv) - 1 ))
+          test "${generated_rows}" -eq 500
+
+          docker exec -i benchmark-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --multiquery \
+            < sql/001_create_delivery_work_items.sql
+
+          docker exec -i benchmark-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --query "INSERT INTO agentic_analytics.delivery_work_items FORMAT CSVWithNames" \
+            < data/delivery_work_items.csv
+
+          docker exec benchmark-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --multiquery \
+            --query "CREATE USER IF NOT EXISTS benchmark_ro IDENTIFIED WITH plaintext_password BY '${CLICKHOUSE_PASSWORD}'; GRANT SELECT ON agentic_analytics.delivery_work_items TO benchmark_ro;"
+
+          loaded_rows="$(docker exec benchmark-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --query "SELECT count() FROM agentic_analytics.delivery_work_items")"
+
+          test "${loaded_rows}" = "500"
+
+      - name: Start pinned Ollama runtime and pull frozen model
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d \
+            --name benchmark-ollama \
+            --memory=6g \
+            -p 127.0.0.1:11434:11434 \
+            -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_MAX_LOADED_MODELS=1 \
+            ollama/ollama:0.34.2
+
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:11434/api/tags >/dev/null; then
+              break
+            fi
+            if [ "${attempt}" -eq 60 ]; then
+              docker logs benchmark-ollama
+              exit 1
+            fi
+            sleep 2
+          done
+
+          docker exec benchmark-ollama ollama pull "${OLLAMA_MODEL}"
+          docker exec benchmark-ollama ollama show "${OLLAMA_MODEL}" >/dev/null
+
+      - name: Record benchmark environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p benchmark-artifacts
+
+          clickhouse_version="$(docker exec benchmark-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --query "SELECT version()")"
+          ollama_version="$(docker exec benchmark-ollama ollama --version)"
+
+          {
+            echo "execution_environment=github-hosted-runner"
+            echo "git_commit_sha=${GITHUB_SHA}"
+            echo "workflow_run_id=${GITHUB_RUN_ID}"
+            echo "workflow_run_attempt=${GITHUB_RUN_ATTEMPT}"
+            echo "runner_os=${RUNNER_OS}"
+            echo "runner_arch=${RUNNER_ARCH}"
+            echo "runner_image_os=${ImageOS:-unknown}"
+            echo "runner_image_version=${ImageVersion:-unknown}"
+            echo "python_version=$(python --version 2>&1)"
+            echo "clickhouse_version=${clickhouse_version}"
+            echo "ollama_version=${ollama_version}"
+            echo "model=${OLLAMA_MODEL}"
+            echo "dataset=synthetic_delivery_seed_42"
+            echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "latency_comparability=Compare latency only with runs from the same GitHub-hosted workflow/environment; the historical Mac/local lane uses different hardware."
+          } > benchmark-artifacts/environment-manifest.txt
+
+      - name: Run read-only benchmark preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/preflight_benchmark_env.py
+
+      - name: Run frozen three-pass repeatability benchmark
+        shell: bash
+        run: |
+          set -euo pipefail
+          set -o pipefail
+          python scripts/run_repeatability_pass.py --force \
+            2>&1 | tee benchmark-artifacts/repeatability-run.log
+
+          cp experiments/results/single_agent_qwen2.5_7b_run1.json benchmark-artifacts/
+          cp experiments/results/single_agent_qwen2.5_7b_run2.json benchmark-artifacts/
+          cp experiments/results/single_agent_qwen2.5_7b_run3.json benchmark-artifacts/
+          cp docs/generated/single-agent-repeatability-summary.md benchmark-artifacts/
+
+      - name: Collect non-secret diagnostic logs
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p benchmark-artifacts
+          docker logs benchmark-clickhouse > benchmark-artifacts/clickhouse.log 2>&1 || true
+          docker logs benchmark-ollama > benchmark-artifacts/ollama.log 2>&1 || true
+          cp experiments/results/single_agent_qwen2.5_7b_run*.json benchmark-artifacts/ 2>/dev/null || true
+          cp docs/generated/single-agent-repeatability-summary.md benchmark-artifacts/ 2>/dev/null || true
+
+      - name: Upload repeatability evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: single-agent-repeatability-github-runner-${{ github.sha }}
+          path: benchmark-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
