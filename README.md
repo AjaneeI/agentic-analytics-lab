@@ -239,7 +239,7 @@ Evidence screenshot:
 
 ## Portfolio Signal
 
-This project is evidence for applied AI operations and product-minded AI
+This project is evidence for applied AI engineering and product-minded AI
 implementation work:
 
 - translating an AI workshop into an original evaluation project
