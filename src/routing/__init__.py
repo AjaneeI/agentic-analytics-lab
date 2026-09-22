@@ -17,6 +17,12 @@ from src.routing.deterministic_handlers import (
     HandlerResult,
     execute_deterministic_handler,
 )
+from src.routing.executor import (
+    ExecutionOutcome,
+    ExecutionRequest,
+    basic_validation_context,
+    execute_control_plane_request,
+)
 from src.routing.telemetry import RouteTelemetry, build_route_telemetry
 from src.routing.validation import (
     ValidationContext,
@@ -40,6 +46,10 @@ __all__ = [
     "HandlerKey",
     "HandlerResult",
     "execute_deterministic_handler",
+    "ExecutionOutcome",
+    "ExecutionRequest",
+    "basic_validation_context",
+    "execute_control_plane_request",
     "RouteTelemetry",
     "build_route_telemetry",
     "ValidationContext",
