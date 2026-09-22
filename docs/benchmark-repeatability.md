@@ -50,6 +50,42 @@ cp experiments/results/single_agent_qwen2.5_7b.json \
 
 Raw benchmark JSON remains ignored by git.
 
+
+## GitHub-hosted reproducibility lane
+
+The repository also includes a manual GitHub Actions lane for reproducing the
+same frozen three-run benchmark on a fresh Ubuntu runner:
+
+```text
+.github/workflows/repeatability-benchmark.yml
+```
+
+That workflow provisions an ephemeral pinned ClickHouse server, regenerates and
+loads the existing seed-42 / 500-row synthetic dataset, installs pinned Ollama,
+pulls `qwen2.5:7b`, runs the existing benchmark preflight, and then calls the
+same `scripts/run_repeatability_pass.py` orchestration used locally.
+
+Successful runs upload a GitHub Actions artifact containing the three raw JSON
+runs, the repeatability Markdown summary, an environment manifest, and
+non-secret diagnostics. Raw benchmark JSON remains uncommitted.
+
+The workflow is intended primarily for `workflow_dispatch`. A pull-request
+trigger scoped only to changes to the workflow file allows the workflow itself
+to be validated when it is introduced or deliberately edited without running
+the expensive benchmark on ordinary pull requests.
+
+### Environment comparability
+
+Treat GitHub-hosted and local Apple Silicon runs as separate execution
+environments. Hardware-dependent latency should only be compared within the
+same environment. Correctness, tool grounding, failure recurrence, model/tool
+call counts, and other hardware-insensitive fields remain useful when the
+benchmark configuration is otherwise matched.
+
+The GitHub lane must not substitute another model if the default runner cannot
+practically execute `qwen2.5:7b`. A measured resource blocker is evidence and
+should be documented rather than hidden.
+
 ## Summarize repeatability
 
 ```bash
