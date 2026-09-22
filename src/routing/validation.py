@@ -27,6 +27,7 @@ class ValidationContext:
 
     output_valid: bool
     evidence_satisfied: bool
+    evidence_required: bool = True
     security_boundary_violated: bool = False
     retryable_failure: bool = False
     retry_count: int = 0
@@ -54,7 +55,8 @@ def validate_execution(context: ValidationContext) -> ValidationResult:
             reason=ValidationReason.SECURITY_BOUNDARY_VIOLATION,
         )
 
-    if context.output_valid and context.evidence_satisfied:
+    evidence_ok = not context.evidence_required or context.evidence_satisfied
+    if context.output_valid and evidence_ok:
         return ValidationResult(
             disposition=ValidationDisposition.ACCEPT,
             reason=ValidationReason.VALIDATED,
