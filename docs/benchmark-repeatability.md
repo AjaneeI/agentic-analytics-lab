@@ -1,13 +1,44 @@
 # Benchmark Repeatability
 
 The next gate for Agentic Analytics Lab is to characterize how the unchanged
-single-agent baseline behaves across repeated local runs before tuning prompts or
+single-agent baseline behaves across repeated runs before tuning prompts or
 adding routing.
 
 This layer is intentionally descriptive. It does not change the agent, prompt,
 question set, evaluator, ClickHouse tool, or scorer.
 
-## Run the frozen benchmark repeatedly
+## GitHub-hosted reproducibility lane
+
+The recommended fully autonomous evidence lane is the manual-only GitHub Actions
+workflow at `.github/workflows/repeatability-benchmark.yml`.
+
+Run it from **Actions → GitHub repeatability benchmark → Run workflow** after the
+workflow is present on the default branch. It accepts no user-supplied commands,
+SQL, image names, or model identifiers.
+
+The workflow:
+
+1. checks out the exact commit being benchmarked;
+2. starts an ephemeral ClickHouse instance;
+3. regenerates and loads the deterministic seed-42 / 500-row dataset using the
+   repository generator and SQL;
+4. creates a separate ClickHouse user with SELECT-only access for the
+   model-facing read-only tool;
+5. starts pinned Ollama `0.34.2` and pulls the frozen `qwen2.5:7b` model;
+6. runs the existing benchmark preflight;
+7. calls the canonical `scripts/run_repeatability_pass.py` orchestration;
+8. uploads the three raw runs, repeatability summary, environment manifest, and
+   non-secret diagnostic logs as a GitHub Actions artifact.
+
+Artifacts use the name
+`single-agent-repeatability-github-runner-<commit-sha>` and are retained for
+14 days.
+
+If the default GitHub-hosted runner cannot practically support `qwen2.5:7b`,
+treat the failed run and its diagnostic artifact as a measured environment
+blocker. Do not substitute a smaller model and call it comparable evidence.
+
+## Local reference lane
 
 Run the commands below from the repository root with the benchmark environment
 already loaded into the shell.
@@ -88,6 +119,11 @@ The repeatability summary requires matching:
 
 Fields that should vary between runs, such as run timestamp and measured latency,
 are not part of the compatibility signature.
+
+The GitHub-hosted and local lanes use different hardware. Compare latency only
+within the same execution environment. Correctness, grounding, failure
+recurrence, model/tool-call counts, and other hardware-insensitive fields remain
+useful evidence when the benchmark configuration is otherwise matched.
 
 Do not tune Q3 or Q5 merely to improve the score before this repeatability pass.
 If their failure behavior changes across unchanged runs, record that as evidence.
