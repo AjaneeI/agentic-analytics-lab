@@ -1,6 +1,6 @@
 import unittest
 
-from src.agents.single_agent import AgentResult
+from src.agents.single_agent import AgentResult, RunMetrics
 from src.routing.control_plane import ExecutionRoute, TaskContext
 from src.routing.deterministic_handlers import HandlerKey
 from src.routing.executor import (
@@ -58,6 +58,22 @@ class StubWorker:
         )
 
 
+class FailingWorker:
+    def __init__(self):
+        self.calls = []
+        self.last_run_metrics = RunMetrics()
+
+    def run(self, question):
+        self.calls.append(question)
+        self.last_run_metrics = RunMetrics(
+            model_call_count=2,
+            input_tokens=101,
+            output_tokens=17,
+            model_duration_seconds=0.5,
+        )
+        raise RuntimeError("model step limit reached")
+
+
 class TestControlPlaneExecutor(unittest.TestCase):
     def test_deterministic_route_uses_handler_without_model_calls(self):
         queries = []
@@ -88,8 +104,10 @@ class TestControlPlaneExecutor(unittest.TestCase):
         self.assertEqual(len(outcome.result.tool_calls), 1)
         self.assertEqual(len(queries), 1)
         self.assertEqual(outcome.telemetry.worker, "blocker_rate_leader")
+        self.assertEqual(outcome.telemetry.worker_input_tokens, 0)
+        self.assertEqual(outcome.telemetry.worker_output_tokens, 0)
 
-    def test_local_route_reuses_existing_worker_contract(self):
+    def test_local_route_reuses_existing_worker_contract_and_tokens(self):
         worker = StubWorker()
         request = ExecutionRequest(
             task_id="Q6",
@@ -111,6 +129,8 @@ class TestControlPlaneExecutor(unittest.TestCase):
         self.assertEqual(outcome.result.model_call_count, 2)
         self.assertEqual(outcome.validation.disposition, ValidationDisposition.ACCEPT)
         self.assertEqual(outcome.telemetry.worker, "StubWorker")
+        self.assertEqual(outcome.telemetry.worker_input_tokens, 25)
+        self.assertEqual(outcome.telemetry.worker_output_tokens, 8)
 
     def test_initial_escalation_executes_no_worker(self):
         worker = StubWorker()
@@ -163,6 +183,60 @@ class TestControlPlaneExecutor(unittest.TestCase):
             outcome.telemetry.escalation_reason,
             "DETERMINISTIC_HANDLER_DECLINED",
         )
+
+    def test_deterministic_runtime_error_becomes_measured_escalation(self):
+        request = ExecutionRequest(
+            task_id="Q1-runtime",
+            question="Which team has the highest blocker rate?",
+            context=TaskContext(
+                task_type="retrieval",
+                requires_tool=True,
+                evidence_required=True,
+                deterministic_handler_available=True,
+            ),
+            deterministic_handler=HandlerKey.BLOCKER_RATE_LEADER,
+        )
+
+        def failing_query(_sql):
+            raise RuntimeError("ClickHouse unavailable")
+
+        outcome = execute_control_plane_request(
+            request,
+            query_fn=failing_query,
+        )
+
+        self.assertTrue(outcome.requires_escalation)
+        self.assertIsNone(outcome.result)
+        self.assertEqual(
+            outcome.telemetry.escalation_reason,
+            "DETERMINISTIC_EXECUTION_ERROR",
+        )
+        self.assertIn("ClickHouse unavailable", outcome.execution_note)
+
+    def test_local_runtime_error_preserves_partial_model_metrics(self):
+        worker = FailingWorker()
+        request = ExecutionRequest(
+            task_id="Q6-runtime",
+            question="Can this dataset establish causality?",
+            context=TaskContext(
+                task_type="epistemic",
+                requires_tool=False,
+                evidence_required=False,
+            ),
+        )
+
+        outcome = execute_control_plane_request(
+            request,
+            local_worker=worker,
+        )
+
+        self.assertTrue(outcome.requires_escalation)
+        self.assertIsNone(outcome.result)
+        self.assertEqual(outcome.telemetry.escalation_reason, "LOCAL_WORKER_ERROR")
+        self.assertEqual(outcome.telemetry.total_model_calls, 2)
+        self.assertEqual(outcome.telemetry.worker_input_tokens, 101)
+        self.assertEqual(outcome.telemetry.worker_output_tokens, 17)
+        self.assertIn("model step limit reached", outcome.execution_note)
 
     def test_security_validation_fails_closed(self):
         worker = StubWorker()
