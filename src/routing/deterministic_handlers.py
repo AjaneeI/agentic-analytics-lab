@@ -32,13 +32,15 @@ class HandlerResult:
 QueryFn = Callable[[str], list[dict[str, Any]]]
 
 
+# The frozen benchmark's effort metric is a weighted actual/planned ratio:
+# SUM(actual_hours) / SUM(planned_hours), as observed in accepted baseline evidence.
 GROUPED_TEAM_METRICS_SQL = """
 SELECT
     team,
     count() AS total_items,
     sum(blocked) AS blocked_items,
     round(100.0 * sum(blocked) / count(), 1) AS blocker_rate,
-    round(avg(actual_hours / planned_hours), 2) AS avg_effort_ratio
+    sum(actual_hours) / sum(planned_hours) AS avg_effort_ratio
 FROM agentic_analytics.delivery_work_items
 GROUP BY team
 ORDER BY team
@@ -145,6 +147,27 @@ def _unique_extreme(
     return candidates[0]
 
 
+def _unique_effort_control_leader(
+    rows: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Return the unique team whose actual/planned ratio is closest to 1.0."""
+
+    distances = {
+        row["team"]: abs(row["avg_effort_ratio"] - 1.0)
+        for row in rows
+    }
+    best_distance = min(distances.values())
+    candidates = [
+        row for row in rows
+        if abs(row["avg_effort_ratio"] - 1.0) == best_distance
+    ]
+    if len(candidates) != 1:
+        raise DeterministicHandlerDeclined(
+            "No unique team is closest to a 1.0 actual-to-planned effort ratio."
+        )
+    return candidates[0]
+
+
 def _blocker_rate_leader(rows: list[dict[str, Any]]) -> str:
     leader = _unique_extreme(rows, "blocker_rate", highest=True)
     return (
@@ -189,11 +212,11 @@ def _blocker_rate_ranking(rows: list[dict[str, Any]]) -> str:
 
 def _dual_metric_leader(rows: list[dict[str, Any]]) -> str:
     blocker_leader = _unique_extreme(rows, "blocker_rate", highest=False)
-    effort_leader = _unique_extreme(rows, "avg_effort_ratio", highest=False)
+    effort_leader = _unique_effort_control_leader(rows)
 
     if blocker_leader["team"] != effort_leader["team"]:
         raise DeterministicHandlerDeclined(
-            "No single team is uniquely best on both blocker rate and effort ratio."
+            "No single team is uniquely best on both blocker rate and effort control."
         )
 
     return (
