@@ -9,18 +9,29 @@ question set, evaluator, ClickHouse tool, or scorer.
 
 ## Run the frozen benchmark repeatedly
 
-Keep the local configuration fixed and save each raw JSON result separately.
+Recommended one-command path (runs preflight first, executes the unchanged
+single-agent benchmark three times, preserves run1/run2/run3 JSON, and then
+builds the repeatability summary):
 
-Before the three unchanged runs, verify local ClickHouse auth and seed-42 table
-shape:
+```bash
+python3 scripts/run_repeatability_pass.py
+```
+
+If preserved run files already exist, the command fails instead of overwriting
+them silently. Use the explicit override only when you intentionally want to
+replace the preserved runs:
+
+```bash
+python3 scripts/run_repeatability_pass.py --force
+```
+
+### Manual fallback/reference
+
+If you need to run the same workflow step-by-step, use:
 
 ```bash
 python3 scripts/preflight_benchmark_env.py
-```
 
-Example:
-
-```bash
 python3 scripts/run_single_agent_eval.py
 cp experiments/results/single_agent_qwen2.5_7b.json \
   experiments/results/single_agent_qwen2.5_7b_run1.json
