@@ -1,4 +1,5 @@
 name: Repeatability benchmark
+# Validation-only retrigger for PR #23; do not merge this comment.
 
 on:
   workflow_dispatch:
