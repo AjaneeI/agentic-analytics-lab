@@ -9,6 +9,9 @@ question set, evaluator, ClickHouse tool, or scorer.
 
 ## Run the frozen benchmark repeatedly
 
+Run the commands below from the repository root with the benchmark environment
+already loaded into the shell.
+
 Recommended one-command path (runs preflight first, executes the unchanged
 single-agent benchmark three times, preserves run1/run2/run3 JSON, and then
 builds the repeatability summary):
