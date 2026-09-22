@@ -1,0 +1,215 @@
+name: Repeatability benchmark
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repeatability-benchmark-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  benchmark:
+    name: Frozen Q1-Q6 repeatability
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      CLICKHOUSE_URL: http://127.0.0.1:8123
+      CLICKHOUSE_USER: benchmark_reader
+      CLICKHOUSE_PASSWORD: benchmark-reader-local
+      CH_ADMIN_PASSWORD: benchmark-admin-local
+      CLICKHOUSE_VERSION: "26.9.2.8"
+      OLLAMA_VERSION_PIN: "0.34.2"
+      OLLAMA_HOST: 127.0.0.1:11434
+      MODEL_NAME: qwen2.5:7b
+
+    steps:
+      - name: Check out benchmark commit
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Start pinned ClickHouse
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --detach             --name clickhouse             --ulimit nofile=262144:262144             --publish 127.0.0.1:8123:8123             --env CLICKHOUSE_PASSWORD="$CH_ADMIN_PASSWORD"             --env CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1             "clickhouse/clickhouse-server:$CLICKHOUSE_VERSION"
+
+          for _ in $(seq 1 60); do
+            if curl --fail --silent --show-error               --user "default:$CH_ADMIN_PASSWORD"               --data-binary "SELECT 1"               "$CLICKHOUSE_URL/" >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          docker logs clickhouse
+          echo "ClickHouse did not become ready." >&2
+          exit 1
+
+      - name: Generate and load the frozen seed-42 dataset
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/generate_delivery_data.py
+
+          docker exec -i clickhouse clickhouse-client             --user default             --password "$CH_ADMIN_PASSWORD"             --multiquery < sql/001_create_delivery_work_items.sql
+
+          docker exec -i clickhouse clickhouse-client             --user default             --password "$CH_ADMIN_PASSWORD"             --input_format_csv_empty_as_default=1             --query "INSERT INTO agentic_analytics.delivery_work_items FORMAT CSVWithNames"             < data/delivery_work_items.csv
+
+          docker exec -i clickhouse clickhouse-client             --user default             --password "$CH_ADMIN_PASSWORD"             --multiquery <<SQL
+          CREATE USER IF NOT EXISTS benchmark_reader
+            IDENTIFIED WITH plaintext_password BY '$CLICKHOUSE_PASSWORD';
+          GRANT SELECT ON agentic_analytics.delivery_work_items TO benchmark_reader;
+          SQL
+
+          row_count="$(
+            curl --fail --silent --show-error               --user "$CLICKHOUSE_USER:$CLICKHOUSE_PASSWORD"               --data-binary "SELECT count() FROM agentic_analytics.delivery_work_items"               "$CLICKHOUSE_URL/"
+          )"
+
+          if [[ "$row_count" != "500" ]]; then
+            echo "Expected 500 seed-42 rows, found: $row_count" >&2
+            exit 1
+          fi
+
+      - name: Install pinned Ollama
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd
+
+          archive="$RUNNER_TEMP/ollama-linux-amd64.tar.zst"
+          curl --fail --location             "https://github.com/ollama/ollama/releases/download/v$OLLAMA_VERSION_PIN/ollama-linux-amd64.tar.zst"             --output "$archive"
+
+          echo "e155b83589986d2c581fdbf1381ea3ebdb16549883679cd5a0627f7cdc05b12b  $archive"             | sha256sum --check -
+
+          sudo tar --zstd --extract --file "$archive" --directory /usr/local
+          ollama --version
+
+          nohup ollama serve >"$RUNNER_TEMP/ollama.log" 2>&1 &
+
+          for _ in $(seq 1 90); do
+            if curl --fail --silent http://127.0.0.1:11434/api/tags >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          cat "$RUNNER_TEMP/ollama.log"
+          echo "Ollama did not become ready." >&2
+          exit 1
+
+      - name: Pull and verify frozen model
+        shell: bash
+        run: |
+          set -euo pipefail
+          ollama pull "$MODEL_NAME"
+
+          curl --fail --silent --show-error             --header "Content-Type: application/json"             --data "{\"model\":\"$MODEL_NAME\"}"             http://127.0.0.1:11434/api/show             > "$RUNNER_TEMP/model-show.json"
+
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          payload = json.loads(Path(os.environ["RUNNER_TEMP"], "model-show.json").read_text())
+          if not payload:
+              raise SystemExit("Ollama model readiness response was empty.")
+          print("Verified model:", os.environ["MODEL_NAME"])
+          PY
+
+      - name: Write environment manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p experiments/results
+
+          clickhouse_actual="$(
+            docker exec clickhouse clickhouse-client               --user default               --password "$CH_ADMIN_PASSWORD"               --query "SELECT version()"
+          )"
+          export CLICKHOUSE_ACTUAL_VERSION="$clickhouse_actual"
+          export OLLAMA_ACTUAL_VERSION="$(ollama --version)"
+
+          python3 - <<'PY'
+          import json
+          import os
+          import platform
+          import urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          with urllib.request.urlopen("http://127.0.0.1:11434/api/tags", timeout=10) as response:
+              tags = json.load(response)
+
+          model_name = os.environ["MODEL_NAME"]
+          model = next(
+              (item for item in tags.get("models", []) if item.get("name") == model_name),
+              None,
+          )
+          if model is None:
+              raise SystemExit(f"{model_name} is missing from Ollama tags after pull.")
+
+          manifest = {
+              "execution_environment": "github_actions_ubuntu_x64",
+              "git_commit_sha": os.environ["GITHUB_SHA"],
+              "workflow_run_id": os.environ["GITHUB_RUN_ID"],
+              "runner_os": os.environ.get("RUNNER_OS"),
+              "runner_arch": os.environ.get("RUNNER_ARCH"),
+              "python_version": platform.python_version(),
+              "clickhouse_version_pin": os.environ["CLICKHOUSE_VERSION"],
+              "clickhouse_version_actual": os.environ["CLICKHOUSE_ACTUAL_VERSION"].strip(),
+              "ollama_version_pin": os.environ["OLLAMA_VERSION_PIN"],
+              "ollama_version_actual": os.environ["OLLAMA_ACTUAL_VERSION"].strip(),
+              "model": model_name,
+              "model_digest": model.get("digest"),
+              "dataset": "synthetic_delivery_seed_42",
+              "question_set": "evals/questions.json",
+              "benchmark_schema_version": 2,
+              "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+              "comparability_note": (
+                  "Latency is comparable only with runs produced under the same "
+                  "GitHub-hosted workflow/environment. Correctness, grounding, "
+                  "failure recurrence, and call counts remain useful across environments."
+              ),
+          }
+
+          Path("experiments/results/github-runner-environment.json").write_text(
+              json.dumps(manifest, indent=2) + "\n"
+          )
+          PY
+
+      - name: Run frozen three-pass benchmark
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/run_repeatability_pass.py             2>&1 | tee experiments/results/repeatability-run.log
+
+      - name: Capture service logs
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p experiments/results
+          docker logs clickhouse > experiments/results/clickhouse.log 2>&1 || true
+          cp "$RUNNER_TEMP/ollama.log" experiments/results/ollama.log 2>/dev/null || true
+
+      - name: Upload repeatability evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: single-agent-repeatability-github-runner-${{ github.sha }}
+          path: |
+            experiments/results/single_agent_qwen2.5_7b_run1.json
+            experiments/results/single_agent_qwen2.5_7b_run2.json
+            experiments/results/single_agent_qwen2.5_7b_run3.json
+            experiments/results/github-runner-environment.json
+            experiments/results/repeatability-run.log
+            experiments/results/clickhouse.log
+            experiments/results/ollama.log
+            docs/generated/single-agent-repeatability-summary.md
+          if-no-files-found: warn
+          retention-days: 14
