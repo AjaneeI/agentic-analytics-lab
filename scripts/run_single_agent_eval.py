@@ -3,6 +3,9 @@
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.agents.ollama_client import OllamaModelClient
 from src.agents.single_agent import SingleAgent
@@ -78,7 +81,7 @@ print(json.dumps(payload["summary"], indent=2), flush=True)
 print("\n=== CASE RESULTS ===", flush=True)
 
 for result in payload["results"]:
-    print(f"\n{result['question_id']} [{result['category']}]", flush=True)
+    print(f"\n{result['question_id']} [{result['category']}] ", flush=True)
     print(f"Execution: {result['execution_success']}", flush=True)
     print(f"Correct: {result['correct']}", flush=True)
     print(f"Task success: {result['task_success']}", flush=True)
