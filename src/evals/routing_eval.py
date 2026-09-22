@@ -1,4 +1,4 @@
-"""Evaluation utilities for the deterministic control-plane router."""
+"""Evaluation utilities for deterministic router contract conformance.\n\nThe synthetic fixtures exercise routing behavior and failure metrics. They are not\na statistical generalization benchmark and remain separate from frozen Q1-Q6.\n"""
 
 from __future__ import annotations
 
