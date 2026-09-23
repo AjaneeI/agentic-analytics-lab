@@ -3,7 +3,7 @@
 # This is intentionally smaller than an evidentiary ASSERT suite. It exists to
 # prove that ASSERT can generate a prompt, call the existing Agentic Analytics
 # single-agent target against seed-42 ClickHouse data, and judge the result using
-# the same local Ollama runtime. Do not use smoke-run rates as portfolio claims.
+# the the same local Ollama runtime. The Agentic target stays on qwen2.5:7b; ASSERT's auxiliary generation/judging uses qwen2.5:3b so this remains a practical plumbing test. Do not use smoke-run rates as portfolio claims.
 suite: agentic-analytics-q3-grounded-comparison
 run: smoke-local-qwen
 
@@ -26,7 +26,7 @@ context: >
   dataset, the model, or database permissions.
 
 default_model:
-  name: ollama/qwen2.5:7b
+  name: ollama/qwen2.5:3b
   max_tokens: 1600
 
 pipeline:
@@ -34,14 +34,14 @@ pipeline:
     behavior_category_count: 2
     web_search: false
     model:
-      name: ollama/qwen2.5:7b
+      name: ollama/qwen2.5:3b
       max_tokens: 2000
 
   test_set:
     prompt:
       sample_size: 2
       model:
-        name: ollama/qwen2.5:7b
+        name: ollama/qwen2.5:3b
         max_tokens: 1200
 
   inference:
@@ -53,7 +53,7 @@ pipeline:
 
   judge:
     model:
-      name: ollama/qwen2.5:7b
+      name: ollama/qwen2.5:3b
       max_tokens: 1600
     n: 1
     dimensions:
