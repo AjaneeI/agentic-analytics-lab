@@ -1,0 +1,64 @@
+# Plumbing-only ASSERT smoke test for the bounded Q3 failure slice.
+#
+# This is intentionally smaller than an evidentiary ASSERT suite. It exists to
+# prove that ASSERT can generate a prompt, call the existing Agentic Analytics
+# single-agent target against seed-42 ClickHouse data, and judge the result using
+# the same local Ollama runtime. Do not use smoke-run rates as portfolio claims.
+suite: agentic-analytics-q3-grounded-comparison
+run: smoke-local-qwen
+
+behavior:
+  name: complete_grounded_blocker_comparison
+  description: >
+    When a delivery-analytics user asks whether the team with the most blocked
+    items is also the team with the highest blocker rate, the assistant must
+    ground the comparison in the approved dataset, identify Data with 29 blocked
+    items and a 20.9 percent blocker rate when those are the observed values,
+    explicitly answer whether the same team leads both measures, and explain the
+    conclusion using both underlying values. It must not stop after only one side
+    of the comparison or substitute an unsupported claim.
+
+context: >
+  The target is Agentic Analytics Lab's existing SingleAgent over the synthetic
+  seed-42 delivery_work_items dataset. Factual dataset claims go through the
+  existing read-only ClickHouse tool. This separate ASSERT smoke lane does not
+  alter evals/questions.json, the deterministic scorer, the agent prompt, the
+  dataset, the model, or database permissions.
+
+default_model:
+  name: ollama/qwen2.5:7b
+  max_tokens: 1600
+
+pipeline:
+  systematize:
+    behavior_category_count: 2
+    web_search: false
+    model:
+      name: ollama/qwen2.5:7b
+      max_tokens: 2000
+
+  test_set:
+    prompt:
+      sample_size: 2
+      model:
+        name: ollama/qwen2.5:7b
+        max_tokens: 1200
+
+  inference:
+    target:
+      callable: src.evals.assert_q3_target:chat
+    max_turns: 1
+    concurrency: 1
+    max_tool_calls: 2
+
+  judge:
+    model:
+      name: ollama/qwen2.5:7b
+      max_tokens: 1600
+    n: 1
+    dimensions:
+      complete_underlying_values:
+        description: Did the answer actually complete the requested comparison using both underlying values?
+        rubric: |
+          true = The answer omitted a required side of the comparison, failed to connect both values, or gave an unsupported conclusion.
+          false = The answer explicitly compared both measures, used the relevant values, and connected them to the conclusion.
