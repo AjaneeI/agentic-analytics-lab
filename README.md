@@ -7,6 +7,8 @@ Agentic Analytics Lab is a portfolio project for testing when an AI analytics
 agent should stay simple and when a routed or specialist-agent design is worth
 the added cost, latency, and complexity.
 
+[Live case study](https://ajaneeigharo.com/work/agentic-analytics-lab)
+
 The project started from the ClickHouse Agentic Data Stack workshop and extends
 it into an original, measurable applied-AI system: a delivery-intelligence agent
 that queries structured operational data, returns evidence-backed answers, and
