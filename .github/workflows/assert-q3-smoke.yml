@@ -16,6 +16,7 @@ env:
   CLICKHOUSE_URL: http://127.0.0.1:8123
   CLICKHOUSE_USER: benchmark_ro
   OLLAMA_MODEL: qwen2.5:7b
+  ASSERT_AUX_MODEL: qwen2.5:3b
 
 jobs:
   smoke:
@@ -128,7 +129,9 @@ jobs:
           done
 
           docker exec assert-ollama ollama pull "${OLLAMA_MODEL}"
+          docker exec assert-ollama ollama pull "${ASSERT_AUX_MODEL}"
           docker exec assert-ollama ollama show "${OLLAMA_MODEL}" >/dev/null
+          docker exec assert-ollama ollama show "${ASSERT_AUX_MODEL}" >/dev/null
 
       - name: Verify existing benchmark boundary
         shell: bash
@@ -154,6 +157,7 @@ jobs:
             echo "purpose=ASSERT plumbing smoke only"
             echo "assert_upstream_commit=0628e25fc2366530f45756bdcc384c71de04c6be"
             echo "target_model=${OLLAMA_MODEL}"
+            echo "assert_aux_model=${ASSERT_AUX_MODEL}"
             echo "dataset=synthetic_delivery_seed_42"
             echo "git_commit_sha=${GITHUB_SHA}"
             echo "workflow_run_id=${GITHUB_RUN_ID}"
