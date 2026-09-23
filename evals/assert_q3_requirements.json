@@ -1,0 +1,68 @@
+{
+  "experiment_id": "assert_q3_bounded_slice_v0",
+  "status": "prepared_not_executed",
+  "benchmark_contract": "frozen_q1_q6",
+  "target_case": {
+    "id": "Q3",
+    "category": "reasoning",
+    "question": "Is the team with the most blocked items also the team with the highest blocker rate? Explain using the underlying values.",
+    "expected": {
+      "answer": true,
+      "team": "Data",
+      "blocked_items": 29,
+      "blocked_pct": 20.9
+    },
+    "requires_tool": true,
+    "max_tool_calls": 1
+  },
+  "baseline_observation": {
+    "environment": "canonical GitHub-hosted single-agent baseline",
+    "recurrence": "failed 3/3 unchanged runs",
+    "failure_signature": "The answer did not complete the required comparison even though the run used additional model/tool work."
+  },
+  "behavioral_requirements": [
+    {
+      "id": "Q3-R1",
+      "name": "tool_grounded_comparison",
+      "requirement": "The answer must be grounded in the benchmark tool evidence rather than unsupported inference."
+    },
+    {
+      "id": "Q3-R2",
+      "name": "blocked_item_value_present",
+      "requirement": "The answer must identify Data as having 29 blocked items."
+    },
+    {
+      "id": "Q3-R3",
+      "name": "blocker_rate_value_present",
+      "requirement": "The answer must identify Data as having a 20.9 percent blocker rate."
+    },
+    {
+      "id": "Q3-R4",
+      "name": "explicit_same_team_conclusion",
+      "requirement": "The answer must explicitly conclude that the team with the most blocked items is also the team with the highest blocker rate."
+    },
+    {
+      "id": "Q3-R5",
+      "name": "complete_underlying_values_explanation",
+      "requirement": "The explanation must connect both underlying values to the comparison instead of stopping after only one side of the question."
+    }
+  ],
+  "comparison_fields": [
+    "behavioral coverage",
+    "agreement with deterministic scorer",
+    "trace usefulness",
+    "false positive review burden",
+    "false negative review burden",
+    "reproducibility",
+    "integration complexity",
+    "latency overhead",
+    "CI regression suitability"
+  ],
+  "guardrails": [
+    "Do not modify evals/questions.json.",
+    "Do not modify the deterministic scorer, seed-42 dataset, model, prompt, or ClickHouse permissions for this slice.",
+    "Do not replace deterministic scoring with an LLM judge.",
+    "Treat a negative result as valid evidence.",
+    "Do not make an ASSERT adoption claim until the slice has been executed and reviewed."
+  ]
+}
