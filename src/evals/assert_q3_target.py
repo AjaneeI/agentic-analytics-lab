@@ -31,4 +31,7 @@ def chat(
         OllamaModelClient(model=model),
         max_steps=3,
     )
-    return agent.run(message).answer
+    result = agent.run(message)
+    if not any(call.name == "query_clickhouse" for call in result.tool_calls):
+        raise RuntimeError("Q3 smoke target answered without a ClickHouse query.")
+    return result.answer
