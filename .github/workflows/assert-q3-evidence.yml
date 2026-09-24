@@ -1,0 +1,212 @@
+name: ASSERT Q3 evidence
+
+on:
+  push:
+    branches:
+      - experiment/assert-q3-evidence-20260924
+    paths:
+      - .github/workflows/assert-q3-evidence.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: assert-q3-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ASSERT_UPSTREAM_COMMIT: 0628e25fc2366530f45756bdcc384c71de04c6be
+  VERIFIED_MAIN_COMMIT: 4e22b6f4fbeab8183f5313de3b71865367faf6af
+  SOURCE_TARGET_COMMIT: 80d120102a804e1e7d0fc6f112e667e96b50ae14
+  SOURCE_ACTIONS_RUN: "35755961530"
+  SOURCE_ARTIFACT_ID: "10708618392"
+  SOURCE_ARTIFACT_DIGEST: sha256:321187394c20047e2edbb12924d3a5849d7d78e0edded838bc5cc4edfb8a47ed
+  OLLAMA_MODEL: qwen2.5:7b
+
+jobs:
+  evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out exact experiment commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Record experiment start
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "EXPERIMENT_START_EPOCH=$(date +%s)" >> "${GITHUB_ENV}"
+
+      - name: Reconfirm verified main has not moved
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual_main="$(git ls-remote https://github.com/AjaneeI/agentic-analytics-lab.git refs/heads/main | awk '{print $1}')"
+          test "${actual_main}" = "${VERIFIED_MAIN_COMMIT}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Install pinned ASSERT
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install "git+https://github.com/responsibleai/ASSERT@${ASSERT_UPSTREAM_COMMIT}"
+          assert-ai --help >/dev/null
+          echo "ASSERT_INSTALL_DONE_EPOCH=$(date +%s)" >> "${GITHUB_ENV}"
+
+      - name: Start pinned Ollama and pull local judge
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d \
+            --name assert-evidence-ollama \
+            --memory=6g \
+            -p 127.0.0.1:11434:11434 \
+            -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_MAX_LOADED_MODELS=1 \
+            ollama/ollama:0.34.2
+
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:11434/api/tags >/dev/null; then
+              break
+            fi
+            if [ "${attempt}" -eq 60 ]; then
+              docker logs assert-evidence-ollama
+              exit 1
+            fi
+            sleep 2
+          done
+
+          docker exec assert-evidence-ollama ollama pull "${OLLAMA_MODEL}"
+          docker exec assert-evidence-ollama ollama show "${OLLAMA_MODEL}" >/dev/null
+          echo "OLLAMA_READY_EPOCH=$(date +%s)" >> "${GITHUB_ENV}"
+
+      - name: Validate preserved canonical Q3 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          expected_question = (
+              "Is the team with the most blocked items also the team with the "
+              "highest blocker rate? Explain using the underlying values."
+          )
+          path = Path("evals/assert_q3_evidence_inference_set.jsonl")
+          rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+          assert len(rows) == 3, len(rows)
+
+          for index, row in enumerate(rows, start=1):
+              assert row["test_case_id"] == f"q3-canonical-baseline-run{index}"
+              events = row["events"]
+              user_events = [
+                  e for e in events
+                  if e["edit"]["type"] == "add_message"
+                  and e["edit"]["message"]["role"] == "user"
+              ]
+              assistant_events = [
+                  e for e in events
+                  if e["edit"]["type"] == "add_message"
+                  and e["edit"]["message"]["role"] == "assistant"
+              ]
+              tool_events = [e for e in events if e["edit"]["type"] == "tool_call"]
+
+              assert len(user_events) == 1
+              assert user_events[0]["edit"]["message"]["content"] == expected_question
+              assert "Use query_clickhouse" not in user_events[0]["edit"]["message"]["content"]
+              assert len(assistant_events) == 1
+              assert len(tool_events) == 2
+              assert all(e["edit"]["tool_name"] == "query_clickhouse" for e in tool_events)
+              assert '"Data"' in tool_events[0]["edit"]["tool_result"]
+              assert '"29"' in tool_events[0]["edit"]["tool_result"]
+              assert "20.863309352517987" in tool_events[1]["edit"]["tool_result"]
+
+          print("Validated 3 preserved Q3 evidence rows with the exact frozen question.")
+          PY
+
+      - name: Run ASSERT judge-only Q3 evidence comparison
+        id: assert_evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          judge_start="$(date +%s)"
+          echo "JUDGE_START_EPOCH=${judge_start}" >> "${GITHUB_ENV}"
+          assert-ai run \
+            --config evals/assert_q3_evidence.yaml \
+            --override "results_dir=${GITHUB_WORKSPACE}/artifacts/results"
+          judge_end="$(date +%s)"
+          echo "JUDGE_END_EPOCH=${judge_end}" >> "${GITHUB_ENV}"
+
+      - name: Collect evidentiary artifacts
+        if: always()
+        shell: bash
+        env:
+          ASSERT_EVIDENCE_OUTCOME: ${{ steps.assert_evidence.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p assert-q3-evidence-artifacts
+
+          cp evals/assert_q3_evidence.yaml assert-q3-evidence-artifacts/
+          cp evals/assert_q3_evidence_taxonomy.json assert-q3-evidence-artifacts/
+          cp evals/assert_q3_evidence_inference_set.jsonl assert-q3-evidence-artifacts/
+          cp -R artifacts/results assert-q3-evidence-artifacts/results 2>/dev/null || true
+          docker logs assert-evidence-ollama > assert-q3-evidence-artifacts/ollama.log 2>&1 || true
+
+          install_done="${ASSERT_INSTALL_DONE_EPOCH:-0}"
+          model_ready="${OLLAMA_READY_EPOCH:-0}"
+          judge_start="${JUDGE_START_EPOCH:-0}"
+          judge_end="${JUDGE_END_EPOCH:-0}"
+          experiment_start="${EXPERIMENT_START_EPOCH:-0}"
+
+          {
+            echo "purpose=bounded ASSERT Q3 evidentiary comparison"
+            echo "assert_outcome=${ASSERT_EVIDENCE_OUTCOME}"
+            echo "assert_upstream_commit=${ASSERT_UPSTREAM_COMMIT}"
+            echo "experiment_branch_commit=${GITHUB_SHA}"
+            echo "verified_main_commit=${VERIFIED_MAIN_COMMIT}"
+            echo "source_target_repo_commit=${SOURCE_TARGET_COMMIT}"
+            echo "source_actions_run=${SOURCE_ACTIONS_RUN}"
+            echo "source_artifact_id=${SOURCE_ARTIFACT_ID}"
+            echo "source_artifact_digest=${SOURCE_ARTIFACT_DIGEST}"
+            echo "target_model=qwen2.5:7b (preserved historical inference; zero new target calls)"
+            echo "judge_model=ollama/qwen2.5:7b"
+            echo "judge_temperature=0"
+            echo "judge_n=1 per preserved transcript"
+            echo "preserved_transcripts=3"
+            echo "new_target_inference_calls=0"
+            echo "dataset=synthetic_delivery_seed_42"
+            echo "frozen_question=Q3"
+            echo "python=$(python --version 2>&1)"
+            echo "ollama_version=$(docker exec assert-evidence-ollama ollama --version 2>/dev/null || true)"
+            if [ "${install_done}" -gt 0 ] && [ "${experiment_start}" -gt 0 ]; then
+              echo "assert_install_elapsed_seconds=$((install_done - experiment_start))"
+            fi
+            if [ "${model_ready}" -gt 0 ] && [ "${install_done}" -gt 0 ]; then
+              echo "ollama_setup_and_pull_elapsed_seconds=$((model_ready - install_done))"
+            fi
+            if [ "${judge_end}" -gt 0 ] && [ "${judge_start}" -gt 0 ]; then
+              echo "assert_judge_elapsed_seconds=$((judge_end - judge_start))"
+            fi
+            if [ "${judge_end}" -gt 0 ] && [ "${experiment_start}" -gt 0 ]; then
+              echo "total_experiment_elapsed_seconds=$((judge_end - experiment_start))"
+            fi
+          } > assert-q3-evidence-artifacts/manifest.txt
+
+          cat assert-q3-evidence-artifacts/manifest.txt
+
+      - name: Upload ASSERT Q3 evidentiary artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: assert-q3-evidence-${{ github.sha }}
+          path: assert-q3-evidence-artifacts/
+          if-no-files-found: error
+          retention-days: 14
