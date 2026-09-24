@@ -21,7 +21,9 @@ env:
   SOURCE_ACTIONS_RUN: "35755961530"
   SOURCE_ARTIFACT_ID: "10708618392"
   SOURCE_ARTIFACT_DIGEST: sha256:321187394c20047e2edbb12924d3a5849d7d78e0edded838bc5cc4edfb8a47ed
-  OLLAMA_MODEL: qwen2.5:7b
+  OLLAMA_MODEL: qwen2.5:3b
+  PREVIOUS_ATTEMPT_RUN: "36039361171"
+  PREVIOUS_ATTEMPT_ARTIFACT: "10826072372"
 
 jobs:
   evidence:
@@ -136,14 +138,36 @@ jobs:
         id: assert_evidence
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
           judge_start="$(date +%s)"
           echo "JUDGE_START_EPOCH=${judge_start}" >> "${GITHUB_ENV}"
-          assert-ai run \
-            --config evals/assert_q3_evidence.yaml \
-            --override "results_dir=${GITHUB_WORKSPACE}/artifacts/results"
+
+          source_rows="/tmp/assert-q3-all-rows.jsonl"
+          timings="/tmp/assert-q3-judge-timings.txt"
+          cp evals/assert_q3_evidence_inference_set.jsonl "${source_rows}"
+          : > "${timings}"
+          overall=0
+
+          for index in 1 2 3; do
+            sed -n "${index}p" "${source_rows}" > evals/assert_q3_evidence_inference_set.jsonl
+            row_start="$(date +%s)"
+            if assert-ai run \
+              --config evals/assert_q3_evidence.yaml \
+              --override "results_dir=${GITHUB_WORKSPACE}/artifacts/results/run${index}"; then
+              row_outcome="success"
+            else
+              row_outcome="failure"
+              overall=1
+            fi
+            row_end="$(date +%s)"
+            echo "run${index}_outcome=${row_outcome}" >> "${timings}"
+            echo "run${index}_judge_elapsed_seconds=$((row_end - row_start))" >> "${timings}"
+          done
+
+          cp "${source_rows}" evals/assert_q3_evidence_inference_set.jsonl
           judge_end="$(date +%s)"
           echo "JUDGE_END_EPOCH=${judge_end}" >> "${GITHUB_ENV}"
+          exit "${overall}"
 
       - name: Collect evidentiary artifacts
         if: always()
@@ -159,6 +183,7 @@ jobs:
           cp evals/assert_q3_evidence_inference_set.jsonl assert-q3-evidence-artifacts/
           cp -R artifacts/results assert-q3-evidence-artifacts/results 2>/dev/null || true
           docker logs assert-evidence-ollama > assert-q3-evidence-artifacts/ollama.log 2>&1 || true
+          cp /tmp/assert-q3-judge-timings.txt assert-q3-evidence-artifacts/judge-timings.txt 2>/dev/null || true
 
           install_done="${ASSERT_INSTALL_DONE_EPOCH:-0}"
           model_ready="${OLLAMA_READY_EPOCH:-0}"
@@ -177,8 +202,12 @@ jobs:
             echo "source_artifact_id=${SOURCE_ARTIFACT_ID}"
             echo "source_artifact_digest=${SOURCE_ARTIFACT_DIGEST}"
             echo "target_model=qwen2.5:7b (preserved historical inference; zero new target calls)"
-            echo "judge_model=ollama/qwen2.5:7b"
+            echo "judge_model=ollama/qwen2.5:3b"
             echo "judge_temperature=0"
+            echo "judge_execution=three preserved transcripts scored sequentially"
+            echo "retry_reason=7B CPU judge timed out at the 300-second provider boundary before producing a verdict"
+            echo "previous_attempt_run=${PREVIOUS_ATTEMPT_RUN}"
+            echo "previous_attempt_artifact=${PREVIOUS_ATTEMPT_ARTIFACT}"
             echo "judge_n=1 per preserved transcript"
             echo "preserved_transcripts=3"
             echo "new_target_inference_calls=0"
