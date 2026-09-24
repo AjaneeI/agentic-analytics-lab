@@ -1,0 +1,92 @@
+[
+  {
+    "id": "NL01",
+    "prompt": "Which delivery team has the largest share of work items that were ever blocked?",
+    "expected_route": "deterministic",
+    "rationale": "Bounded structured aggregation over the approved delivery dataset."
+  },
+  {
+    "id": "NL02",
+    "prompt": "Rank the four teams by blocker percentage from highest to lowest.",
+    "expected_route": "deterministic",
+    "rationale": "Bounded ranking that can be handled deterministically."
+  },
+  {
+    "id": "NL03",
+    "prompt": "Which team has the highest actual-to-planned effort ratio?",
+    "expected_route": "deterministic",
+    "rationale": "Bounded metric comparison over structured data."
+  },
+  {
+    "id": "NL04",
+    "prompt": "Compare the team with the most blocked work items with the blocker-rate leader.",
+    "expected_route": "deterministic",
+    "rationale": "Bounded multi-aggregation comparison."
+  },
+  {
+    "id": "NL05",
+    "prompt": "Find the team with the lowest blocker percentage and strongest effort control.",
+    "expected_route": "deterministic",
+    "rationale": "Bounded multi-metric structured query."
+  },
+  {
+    "id": "NL06",
+    "prompt": "Can these observations prove that blockers cause missed deadlines?",
+    "expected_route": "local",
+    "rationale": "Epistemic causal reasoning should not be forced into a deterministic analytics handler."
+  },
+  {
+    "id": "NL07",
+    "prompt": "Explain the difference between correlation and causation for this delivery dataset.",
+    "expected_route": "local",
+    "rationale": "Open-ended epistemic explanation."
+  },
+  {
+    "id": "NL08",
+    "prompt": "What study design would we need before making a causal claim about blockers and lateness?",
+    "expected_route": "local",
+    "rationale": "Methodological reasoning rather than bounded aggregation."
+  },
+  {
+    "id": "NL09",
+    "prompt": "I'm not sure whether blocked means current status or ever experienced a blocker. Which team is worst?",
+    "expected_route": "escalate",
+    "rationale": "The metric definition is explicitly ambiguous."
+  },
+  {
+    "id": "NL10",
+    "prompt": "Use whichever blocker definition seems right and rank the teams.",
+    "expected_route": "escalate",
+    "rationale": "The request delegates an unresolved semantic choice."
+  },
+  {
+    "id": "NL11",
+    "prompt": "Compare these blocker results with our Jira project data.",
+    "expected_route": "escalate",
+    "rationale": "The request requires an unsupported external source."
+  },
+  {
+    "id": "NL12",
+    "prompt": "Pull Salesforce customer cases and combine them with the delivery data.",
+    "expected_route": "escalate",
+    "rationale": "The request requires an unsupported external source."
+  },
+  {
+    "id": "NL13",
+    "prompt": "Give me the blocker percentage leader and the value.",
+    "expected_route": "deterministic",
+    "rationale": "Bounded structured retrieval."
+  },
+  {
+    "id": "NL14",
+    "prompt": "Explain why a single synthetic dataset may not generalize to production.",
+    "expected_route": "local",
+    "rationale": "Open-ended generalization reasoning."
+  },
+  {
+    "id": "NL15",
+    "prompt": "Check my email for blocker escalations and compare them with this dataset.",
+    "expected_route": "escalate",
+    "rationale": "The request requires an unsupported external source."
+  }
+]
