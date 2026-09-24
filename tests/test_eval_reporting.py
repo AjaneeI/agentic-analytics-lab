@@ -23,6 +23,10 @@ class TestBenchmarkReporting(unittest.TestCase):
                 "total_input_tokens": 1000,
                 "total_output_tokens": 200,
                 "total_latency_seconds": 12.5,
+                "latency_seconds_per_task_success": 12.5,
+                "model_calls_per_task_success": 4.0,
+                "tool_calls_per_task_success": 2.0,
+                "tokens_per_task_success": 1200.0,
             },
             "metadata": {
                 "benchmark_schema_version": 2,
@@ -69,6 +73,8 @@ class TestBenchmarkReporting(unittest.TestCase):
         self.assertIn("| Q1 | retrieval | PASS | PASS | PASS | 1 | 2 | 5.000 |", report)
         self.assertIn("| Q2 | comparison | PASS | FAIL | FAIL | 1 | 2 | 7.500 |", report)
         self.assertIn("Q2:** incorrect_answer", report)
+        self.assertIn("Latency per successful task | 12.500 s", report)
+        self.assertIn("Model calls per successful task | 4.000", report)
 
     def test_write_and_load_round_trip(self):
         with tempfile.TemporaryDirectory() as tmp:
