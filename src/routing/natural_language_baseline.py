@@ -7,6 +7,7 @@ It is not the production router and it does not use frozen Q1-Q6 metadata.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 
 from src.routing.control_plane import ExecutionRoute
 
@@ -109,6 +110,9 @@ def classify_natural_language(question: str) -> NaturalLanguageRoute:
         )
 
     operations = tuple(cue for cue in _ANALYTIC_OPERATION_CUES if cue in text)
+    if re.search(r"\bwhich\b.{0,30}\bteam\b", text):
+        operations = operations + ("which_*_team",)
+
     metrics = tuple(cue for cue in _DATA_METRIC_CUES if cue in text)
     if operations and metrics:
         return NaturalLanguageRoute(
