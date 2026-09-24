@@ -198,19 +198,35 @@ def save_results(
     path = Path(destination)
     path.parent.mkdir(parents=True, exist_ok=True)
 
+    task_successful = sum(r.task_success for r in records)
+    total_tool_calls = sum(r.tool_call_count for r in records)
+    total_model_calls = sum(r.model_call_count for r in records)
+    total_input_tokens = sum(r.input_tokens or 0 for r in records)
+    total_output_tokens = sum(r.output_tokens or 0 for r in records)
+    total_latency_seconds = round(sum(r.latency_seconds for r in records), 6)
+
+    def per_success(value: int | float) -> float | None:
+        if not task_successful:
+            return None
+        return round(float(value) / task_successful, 6)
+
     payload = {
         "summary": {
             "questions": len(records),
             "execution_successful": sum(r.execution_success for r in records),
-            "task_successful": sum(r.task_success for r in records),
+            "task_successful": task_successful,
             "correct": sum(r.correct is True for r in records),
             "failed": sum(not r.task_success for r in records),
-            "total_tool_calls": sum(r.tool_call_count for r in records),
-            "total_model_calls": sum(r.model_call_count for r in records),
-            "total_input_tokens": sum(r.input_tokens or 0 for r in records),
-            "total_output_tokens": sum(r.output_tokens or 0 for r in records),
-            "total_latency_seconds": round(
-                sum(r.latency_seconds for r in records), 6
+            "total_tool_calls": total_tool_calls,
+            "total_model_calls": total_model_calls,
+            "total_input_tokens": total_input_tokens,
+            "total_output_tokens": total_output_tokens,
+            "total_latency_seconds": total_latency_seconds,
+            "latency_seconds_per_task_success": per_success(total_latency_seconds),
+            "model_calls_per_task_success": per_success(total_model_calls),
+            "tool_calls_per_task_success": per_success(total_tool_calls),
+            "tokens_per_task_success": per_success(
+                total_input_tokens + total_output_tokens
             ),
         },
         "results": [asdict(record) for record in records],
