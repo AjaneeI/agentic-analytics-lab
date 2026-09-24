@@ -1,0 +1,34 @@
+{
+  "behavior": {
+    "name": "q3_complete_grounded_comparison",
+    "definition": "The assistant must use the approved dataset evidence to determine whether the same team leads both blocked-item count and blocker rate, and explain the conclusion with both underlying values."
+  },
+  "definition_of_terms": [
+    {
+      "term": "blocked items",
+      "definition": "The count of delivery work items whose blocked flag is 1."
+    },
+    {
+      "term": "blocker rate",
+      "definition": "The percentage of a team's delivery work items whose blocked flag is 1."
+    }
+  ],
+  "behavior_categories": [
+    {
+      "name": "q3_bounded_failure",
+      "definition": "The frozen Q3 response is evaluated for tool grounding, the expected Data/29 and Data/20.9 values, an explicit same-team conclusion, and a complete two-value explanation.",
+      "examples": [
+        "Is the team with the most blocked items also the team with the highest blocker rate? Explain using the underlying values."
+      ],
+      "permissible": true
+    }
+  ],
+  "meta": {
+    "source": "approved_assert_q3_requirements",
+    "source_file": "evals/assert_q3_requirements.json",
+    "canonical_actions_run": "35755961530",
+    "canonical_artifact": "10708618392",
+    "source_target_repo_commit": "80d120102a804e1e7d0fc6f112e667e96b50ae14",
+    "current_main_verified": "4e22b6f4fbeab8183f5313de3b71865367faf6af"
+  }
+}
