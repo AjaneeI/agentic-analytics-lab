@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.agents.ollama_client import OllamaModelClient
 from src.agents.single_agent import SingleAgent
+from src.evals.provenance import build_benchmark_provenance
 from src.evals.runner import run_case, save_results
 from src.routing.oracle_benchmark import OracleMetadataRoutedAgent
 
@@ -100,6 +101,7 @@ payload["metadata"] = {
     "dataset": "synthetic_delivery_seed_42",
     "questions": str(QUESTIONS_PATH),
     "run_at_utc": datetime.now(timezone.utc).isoformat(),
+    "provenance": build_benchmark_provenance(),
     "routing_source": "frozen_case_category_and_requires_tool_metadata",
     "routing_claim_boundary": (
         "This experiment uses oracle benchmark metadata and does not measure "
