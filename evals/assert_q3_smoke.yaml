@@ -53,7 +53,7 @@ pipeline:
         max_tokens: 1200
 
   inference:
-    test_set_path: evals/assert_q3_smoke_test_set.jsonl
+    test_set_path: assert_q3_smoke_test_set.jsonl
     target:
       callable: src.evals.assert_q3_target:chat
     max_turns: 1
@@ -61,7 +61,7 @@ pipeline:
     max_tool_calls: 2
 
   judge:
-    taxonomy_path: evals/assert_q3_smoke_taxonomy.json
+    taxonomy_path: assert_q3_smoke_taxonomy.json
     model:
       name: ollama/qwen2.5:3b
       temperature: 0
