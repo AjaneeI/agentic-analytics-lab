@@ -28,14 +28,14 @@ This snapshot reflects the project state on **September 24, 2026**.
 
 | Item | Current anchor |
 | --- | --- |
-| Technical source of truth | `main` at `4e22b6f4fbeab8183f5313de3b71865367faf6af` |
-| Canonical single-agent baseline | GitHub Actions run `35755961530`, artifact `10708618392` |
+| Technical source of truth | [`main` at `4e22b6f`](https://github.com/AjaneeI/agentic-analytics-lab/commit/4e22b6f4fbeab8183f5313de3b71865367faf6af) |
+| Canonical single-agent baseline | [GitHub Actions run `35755961530`](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/35755961530), artifact `10708618392` |
 | Frozen benchmark | Q1-Q6, schema v2, seed-42 synthetic delivery data |
 | Target model | `qwen2.5:7b` |
 | Data boundary | Dataset-scoped, read-only ClickHouse |
 | Deterministic evaluation | Existing scorer remains the benchmark source of truth |
 | Routed comparison anchor | Evaluated `oracle_metadata_routed_v0` under matched GitHub-hosted conditions |
-| ASSERT state | Q3 bounded slice defined; plumbing smoke merged in PR #43; evidentiary comparison isolated on a separate branch |
+| ASSERT state | Q3 bounded slice defined; plumbing smoke merged in [PR #43](https://github.com/AjaneeI/agentic-analytics-lab/pull/43); evidentiary comparison isolated on a separate branch |
 | Failure diagnostics | Parallel-safe follow-on work using existing benchmark artifacts |
 
 The exact commit and artifact references are intentional. Experimental claims in
@@ -295,6 +295,9 @@ remain an architectural view of **evidence flow and decision dependencies**.
 ## Related documentation
 
 - [Architecture](../ARCHITECTURE.md)
+- [ASSERT evaluation issue #40](https://github.com/AjaneeI/agentic-analytics-lab/issues/40)
+- [Bounded ASSERT Q3 definition, PR #42](https://github.com/AjaneeI/agentic-analytics-lab/pull/42)
+- [ASSERT plumbing smoke, PR #43](https://github.com/AjaneeI/agentic-analytics-lab/pull/43)
 - [Bounded ASSERT Q3 slice](assert-q3-bounded-slice.md)
 - [Benchmark repeatability](benchmark-repeatability.md)
 - [Benchmark reporting](benchmark-reporting.md)
