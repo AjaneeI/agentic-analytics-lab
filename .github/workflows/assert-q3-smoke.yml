@@ -140,6 +140,7 @@ jobs:
           python scripts/preflight_benchmark_env.py
 
       - name: Run ASSERT Q3 plumbing smoke
+        id: assert_smoke
         shell: bash
         run: |
           set -euo pipefail
@@ -148,9 +149,17 @@ jobs:
       - name: Collect smoke evidence
         if: always()
         shell: bash
+        env:
+          ASSERT_SMOKE_OUTCOME: ${{ steps.assert_smoke.outcome }}
         run: |
+          set -euo pipefail
           mkdir -p assert-smoke-artifacts
-          cp -R artifacts/results/agentic-analytics-q3-grounded-comparison assert-smoke-artifacts/ 2>/dev/null || true
+          if [ "${ASSERT_SMOKE_OUTCOME}" = "success" ]; then
+            test -d artifacts/results/agentic-analytics-q3-grounded-comparison
+            cp -R artifacts/results/agentic-analytics-q3-grounded-comparison assert-smoke-artifacts/
+          else
+            cp -R artifacts/results/agentic-analytics-q3-grounded-comparison assert-smoke-artifacts/ 2>/dev/null || true
+          fi
           docker logs assert-clickhouse > assert-smoke-artifacts/clickhouse.log 2>&1 || true
           docker logs assert-ollama > assert-smoke-artifacts/ollama.log 2>&1 || true
           {
