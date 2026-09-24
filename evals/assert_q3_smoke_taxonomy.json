@@ -1,0 +1,30 @@
+{
+  "behavior": {
+    "name": "complete_grounded_blocker_comparison",
+    "definition": "The assistant must use the approved dataset to compare the team with the most blocked items against the team with the highest blocker rate, state whether the same team leads both measures, and explain the conclusion with both underlying values."
+  },
+  "definition_of_terms": [
+    {
+      "term": "blocked items",
+      "definition": "The count of delivery work items whose status is blocked."
+    },
+    {
+      "term": "blocker rate",
+      "definition": "The percentage of a team's delivery work items that are blocked."
+    }
+  ],
+  "behavior_categories": [
+    {
+      "name": "grounded_blocker_comparison",
+      "definition": "Use fresh dataset evidence to compare both blocker count and blocker rate and connect both values to the conclusion.",
+      "examples": [
+        "Use the approved dataset to determine whether the team with the most blocked items also has the highest blocker rate, and explain with both values."
+      ],
+      "permissible": true
+    }
+  ],
+  "meta": {
+    "source": "reviewed_fixture",
+    "purpose": "ASSERT Q3 plumbing smoke only"
+  }
+}
