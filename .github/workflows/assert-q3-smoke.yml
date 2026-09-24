@@ -1,0 +1,189 @@
+name: ASSERT Q3 smoke
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: assert-q3-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CLICKHOUSE_URL: http://127.0.0.1:8123
+  CLICKHOUSE_USER: benchmark_ro
+  OLLAMA_MODEL: qwen2.5:7b
+  ASSERT_AUX_MODEL: qwen2.5:3b
+
+jobs:
+  smoke:
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'run-assert-smoke'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out exact smoke commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Install pinned ASSERT
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install "git+https://github.com/responsibleai/ASSERT@0628e25fc2366530f45756bdcc384c71de04c6be"
+          assert-ai --help >/dev/null
+
+      - name: Generate ephemeral ClickHouse credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          admin_password="$(openssl rand -hex 24)"
+          readonly_password="$(openssl rand -hex 24)"
+          echo "::add-mask::${admin_password}"
+          echo "::add-mask::${readonly_password}"
+          {
+            echo "CLICKHOUSE_ADMIN_PASSWORD=${admin_password}"
+            echo "CLICKHOUSE_PASSWORD=${readonly_password}"
+          } >> "${GITHUB_ENV}"
+
+      - name: Start ephemeral ClickHouse
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d \
+            --name assert-clickhouse \
+            --memory=768m \
+            -p 127.0.0.1:8123:8123 \
+            -e CLICKHOUSE_PASSWORD="${CLICKHOUSE_ADMIN_PASSWORD}" \
+            -e CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1 \
+            clickhouse/clickhouse-server:24.8
+
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --user "default:${CLICKHOUSE_ADMIN_PASSWORD}" "${CLICKHOUSE_URL}/ping" >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs assert-clickhouse
+          exit 1
+
+      - name: Load frozen seed-42 dataset
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/generate_delivery_data.py
+          generated_rows=$(( $(wc -l < data/delivery_work_items.csv) - 1 ))
+          test "${generated_rows}" -eq 500
+
+          docker exec -i assert-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --multiquery < sql/001_create_delivery_work_items.sql
+
+          docker exec -i assert-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --query "INSERT INTO agentic_analytics.delivery_work_items FORMAT CSVWithNames" \
+            < data/delivery_work_items.csv
+
+          docker exec assert-clickhouse \
+            clickhouse-client \
+            --user default \
+            --password "${CLICKHOUSE_ADMIN_PASSWORD}" \
+            --multiquery \
+            --query "CREATE USER IF NOT EXISTS benchmark_ro IDENTIFIED WITH plaintext_password BY '${CLICKHOUSE_PASSWORD}'; GRANT SELECT ON agentic_analytics.delivery_work_items TO benchmark_ro;"
+
+          # Remove the privileged credential from all later steps. The benchmark
+          # runtime receives only the dataset-scoped read-only credential.
+          echo "CLICKHOUSE_ADMIN_PASSWORD=" >> "${GITHUB_ENV}"
+
+      - name: Start pinned Ollama and pull frozen model
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d \
+            --name assert-ollama \
+            --memory=6g \
+            -p 127.0.0.1:11434:11434 \
+            -e OLLAMA_NUM_PARALLEL=1 \
+            -e OLLAMA_MAX_LOADED_MODELS=1 \
+            ollama/ollama:0.34.2
+
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:11434/api/tags >/dev/null; then
+              break
+            fi
+            if [ "${attempt}" -eq 60 ]; then
+              docker logs assert-ollama
+              exit 1
+            fi
+            sleep 2
+          done
+
+          docker exec assert-ollama ollama pull "${OLLAMA_MODEL}"
+          docker exec assert-ollama ollama pull "${ASSERT_AUX_MODEL}"
+          docker exec assert-ollama ollama show "${OLLAMA_MODEL}" >/dev/null
+          docker exec assert-ollama ollama show "${ASSERT_AUX_MODEL}" >/dev/null
+
+      - name: Verify existing benchmark boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/preflight_benchmark_env.py
+
+      - name: Run ASSERT Q3 plumbing smoke
+        id: assert_smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          assert-ai run \
+            --config evals/assert_q3_smoke.yaml \
+            --override "results_dir=${GITHUB_WORKSPACE}/artifacts/results"
+
+      - name: Collect smoke evidence
+        if: always()
+        shell: bash
+        env:
+          ASSERT_SMOKE_OUTCOME: ${{ steps.assert_smoke.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p assert-smoke-artifacts
+          if [ "${ASSERT_SMOKE_OUTCOME}" = "success" ]; then
+            test -d artifacts/results/agentic-analytics-q3-grounded-comparison
+            cp -R artifacts/results/agentic-analytics-q3-grounded-comparison assert-smoke-artifacts/
+          else
+            cp -R artifacts/results/agentic-analytics-q3-grounded-comparison assert-smoke-artifacts/ 2>/dev/null || true
+          fi
+          docker logs assert-clickhouse > assert-smoke-artifacts/clickhouse.log 2>&1 || true
+          docker logs assert-ollama > assert-smoke-artifacts/ollama.log 2>&1 || true
+          {
+            echo "purpose=ASSERT plumbing smoke only"
+            echo "assert_upstream_commit=0628e25fc2366530f45756bdcc384c71de04c6be"
+            echo "target_model=${OLLAMA_MODEL}"
+            echo "assert_aux_model=${ASSERT_AUX_MODEL}"
+            echo "dataset=synthetic_delivery_seed_42"
+            echo "git_commit_sha=${GITHUB_SHA}"
+            echo "workflow_run_id=${GITHUB_RUN_ID}"
+            echo "claim_boundary=Do not use smoke-run rates as behavioral or portfolio evidence."
+          } > assert-smoke-artifacts/manifest.txt
+
+      - name: Upload ASSERT smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: assert-q3-smoke-${{ github.sha }}
+          path: assert-smoke-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
