@@ -1,0 +1,78 @@
+# Bounded evidentiary ASSERT comparison for the approved Q3 slice.
+#
+# This run reuses the three preserved Q3 transcripts from the accepted
+# GitHub-hosted single-agent baseline (Actions 35755961530 / artifact
+# 10708618392). It makes no new qwen2.5:7b target inference calls.
+# ASSERT is an additional behavioral judge only; the deterministic scorer
+# remains the benchmark source of truth and disagreements require manual review.
+suite: agentic-analytics-q3-evidence
+run: canonical-three-run-20260924
+
+behavior:
+  name: q3_complete_grounded_comparison
+  description: >
+    Evaluate the approved frozen Q3 response for five explicit behaviors:
+    grounding in query_clickhouse evidence, Data with 29 blocked items, Data
+    with a blocker rate equivalent to 20.9 percent under the benchmark numeric
+    tolerance, an explicit conclusion that the same team leads both measures,
+    and a complete explanation connecting both underlying values.
+
+context: >
+  The evidence rows are preserved outputs from the accepted canonical
+  GitHub-hosted single-agent baseline. The target was qwen2.5:7b over the
+  synthetic seed-42 delivery_work_items dataset through the existing read-only
+  query_clickhouse tool. The three Q3 runs are evaluated unchanged. ASSERT does
+  not replace the deterministic scorer and must not be treated as ground truth.
+
+pipeline:
+  judge:
+    inference_set_path: assert_q3_evidence_inference_set.jsonl
+    taxonomy_path: assert_q3_evidence_taxonomy.json
+    model:
+      name: ollama/qwen2.5:7b
+      temperature: 0
+      max_tokens: 1800
+    n: 1
+    disabled_dimensions:
+      - policy_violation
+      - overrefusal
+    dimensions:
+      q3_r1_violation:
+        description: >
+          Q3-R1 requirement: The answer must be grounded in the benchmark tool
+          evidence rather than unsupported inference. Did the transcript violate
+          this requirement?
+        rubric: |
+          true = The final dataset claims lack query_clickhouse call/result evidence, or the claims contradict the captured tool evidence.
+          false = query_clickhouse call/result evidence supports the factual dataset claims made in the final answer.
+          This dimension does not score the separate one-tool-call budget.
+      q3_r2_violation:
+        description: >
+          Q3-R2 requirement: The answer must identify Data as having 29 blocked
+          items. Did the final answer violate this requirement?
+        rubric: |
+          true = The final answer fails to identify Data with 29 blocked items, or states a conflicting count/team.
+          false = The final answer identifies Data as having 29 blocked items.
+      q3_r3_violation:
+        description: >
+          Q3-R3 requirement: The answer must identify Data as having a 20.9
+          percent blocker rate. Did the final answer violate this requirement?
+        rubric: |
+          true = The final answer fails to identify Data with the expected blocker rate, or states a conflicting rate/team.
+          false = The final answer identifies Data with 20.9 percent, or an equivalent rounded value such as 20.86 percent that is within the frozen deterministic scorer's numeric tolerance.
+      q3_r4_violation:
+        description: >
+          Q3-R4 requirement: The answer must explicitly conclude that the team
+          with the most blocked items is also the team with the highest blocker
+          rate. Did the final answer violate this requirement?
+        rubric: |
+          true = The answer does not explicitly reach the affirmative same-team conclusion, says the conclusion cannot be made, or gives a contradictory conclusion.
+          false = The answer explicitly concludes that Data is the same team leading both measures.
+      q3_r5_violation:
+        description: >
+          Q3-R5 requirement: The explanation must connect both underlying values
+          to the comparison instead of stopping after only one side of the
+          question. Did the final answer violate this requirement?
+        rubric: |
+          true = The explanation fails to connect both underlying values to the requested comparison/conclusion, or incorrectly says the comparison is unsupported despite the captured evidence.
+          false = The explanation uses both the blocked-item count and blocker-rate evidence to explain why the same team leads both measures.
