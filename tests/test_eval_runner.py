@@ -110,6 +110,18 @@ class TestEvalRunner(unittest.TestCase):
             self.assertEqual(payload["summary"]["total_model_calls"], 4)
             self.assertEqual(payload["summary"]["total_input_tokens"], 100)
             self.assertEqual(payload["summary"]["total_output_tokens"], 20)
+            self.assertIsNotNone(
+                payload["summary"]["latency_seconds_per_task_success"]
+            )
+            self.assertEqual(
+                payload["summary"]["model_calls_per_task_success"], 4.0
+            )
+            self.assertEqual(
+                payload["summary"]["tool_calls_per_task_success"], 2.0
+            )
+            self.assertEqual(
+                payload["summary"]["tokens_per_task_success"], 120.0
+            )
 
     def test_frozen_suite_loads(self):
         questions = json.loads(Path("evals/questions.json").read_text())

@@ -30,6 +30,12 @@ def _status(value: Any) -> str:
     return "N/A"
 
 
+def _optional_number(value: Any, *, suffix: str = "") -> str:
+    if value is None:
+        return "N/A"
+    return f"{float(value):.3f}{suffix}"
+
+
 def build_markdown_report(
     payload: dict[str, Any],
     *,
@@ -64,6 +70,10 @@ def build_markdown_report(
         f"| Input tokens | {int(summary.get('total_input_tokens', 0)):,} |",
         f"| Output tokens | {int(summary.get('total_output_tokens', 0)):,} |",
         f"| Total latency | {float(summary.get('total_latency_seconds', 0.0)):.3f} s |",
+        f"| Latency per successful task | {_optional_number(summary.get('latency_seconds_per_task_success'), suffix=' s')} |",
+        f"| Model calls per successful task | {_optional_number(summary.get('model_calls_per_task_success'))} |",
+        f"| Tool calls per successful task | {_optional_number(summary.get('tool_calls_per_task_success'))} |",
+        f"| Tokens per successful task | {_optional_number(summary.get('tokens_per_task_success'))} |",
         "",
     ]
 

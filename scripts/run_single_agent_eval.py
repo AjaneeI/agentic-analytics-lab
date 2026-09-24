@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.agents.ollama_client import OllamaModelClient
 from src.agents.single_agent import SingleAgent
+from src.evals.provenance import build_benchmark_provenance
 from src.evals.runner import run_case, save_results
 
 
@@ -67,6 +68,7 @@ payload["metadata"] = {
     "dataset": "synthetic_delivery_seed_42",
     "questions": str(QUESTIONS_PATH),
     "run_at_utc": datetime.now(timezone.utc).isoformat(),
+    "provenance": build_benchmark_provenance(),
     "cost_note": (
         "Ollama has no per-request API charge. Local hardware/electricity "
         "cost is not estimated by this benchmark."
