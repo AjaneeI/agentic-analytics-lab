@@ -23,10 +23,16 @@ context: >
   seed-42 delivery_work_items dataset. Factual dataset claims go through the
   existing read-only ClickHouse tool. This separate ASSERT smoke lane does not
   alter evals/questions.json, the deterministic scorer, the agent prompt, the
-  dataset, the model, or database permissions.
+  dataset, the model, or database permissions. Because this is a plumbing
+  smoke rather than a behavioral benchmark, every generated prompt must
+  explicitly ask the assistant to query the approved dataset before answering
+  and directly compare the team with the most blocked items with the team that
+  has the highest blocker rate. Do not generate generic result-confirmation
+  prompts that can be answered without fresh dataset access.
 
 default_model:
   name: ollama/qwen2.5:3b
+  temperature: 0
   max_tokens: 1600
 
 pipeline:
@@ -35,13 +41,15 @@ pipeline:
     web_search: false
     model:
       name: ollama/qwen2.5:3b
+      temperature: 0
       max_tokens: 2000
 
   test_set:
     prompt:
-      sample_size: 2
+      sample_size: 1
       model:
         name: ollama/qwen2.5:3b
+        temperature: 0
         max_tokens: 1200
 
   inference:
@@ -54,6 +62,7 @@ pipeline:
   judge:
     model:
       name: ollama/qwen2.5:3b
+      temperature: 0
       max_tokens: 1600
     n: 1
     dimensions:
