@@ -144,7 +144,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          assert-ai run --config evals/assert_q3_smoke.yaml
+          assert-ai run \
+            --config evals/assert_q3_smoke.yaml \
+            --override "results_dir=${GITHUB_WORKSPACE}/artifacts/results"
 
       - name: Collect smoke evidence
         if: always()
