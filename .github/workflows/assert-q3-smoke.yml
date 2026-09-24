@@ -105,6 +105,10 @@ jobs:
             --multiquery \
             --query "CREATE USER IF NOT EXISTS benchmark_ro IDENTIFIED WITH plaintext_password BY '${CLICKHOUSE_PASSWORD}'; GRANT SELECT ON agentic_analytics.delivery_work_items TO benchmark_ro;"
 
+          # Remove the privileged credential from all later steps. The benchmark
+          # runtime receives only the dataset-scoped read-only credential.
+          echo "CLICKHOUSE_ADMIN_PASSWORD=" >> "${GITHUB_ENV}"
+
       - name: Start pinned Ollama and pull frozen model
         shell: bash
         run: |
