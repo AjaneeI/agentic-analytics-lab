@@ -1,0 +1,32 @@
+{
+  "repository": "AjaneeI/agentic-analytics-lab",
+  "as_of_utc": "2026-09-24T19:32:00Z",
+  "source_ref": "4e22b6f4fbeab8183f5313de3b71865367faf6af",
+  "activity": {
+    "commits_observed_max_100": 49,
+    "commits_last_7d": 31,
+    "human_author_counts": {"AjaneeI": 47},
+    "automation_like_author_counts": {"Copilot": 2},
+    "max_human_commit_share": 1.0
+  },
+  "flow": {
+    "open_issues": 4,
+    "closed_issues": 7,
+    "median_issue_resolution_hours": 0.33361111111111114,
+    "open_prs": 7,
+    "merged_prs": 28,
+    "good_first_issues": 0
+  },
+  "reliability": {
+    "workflow_count": 5,
+    "workflows": ["assert-q3-smoke.yml","codeql.yml","oracle-routed-repeatability.yml","repeatability-benchmark.yml","tests.yml"]
+  },
+  "documentation": {"README": true,"ARCHITECTURE": true,"SECURITY": true,"CONTRIBUTING": false,"LICENSE": false},
+  "release": {"release_count": 0},
+  "caveats": [
+    "Commit collection is capped at the latest 100 commits.",
+    "Contributor concentration uses commit authorship as a proxy, not organizational ownership.",
+    "Issue resolution speed is descriptive and can be skewed by small or administrative issues.",
+    "No opaque composite health score is produced; the report keeps source signals visible."
+  ]
+}
