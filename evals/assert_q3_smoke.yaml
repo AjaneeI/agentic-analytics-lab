@@ -1,9 +1,10 @@
 # Plumbing-only ASSERT smoke test for the bounded Q3 failure slice.
 #
 # This is intentionally smaller than an evidentiary ASSERT suite. It exists to
-# prove that ASSERT can generate a prompt, call the existing Agentic Analytics
-# single-agent target against seed-42 ClickHouse data, and judge the result using
-# the the same local Ollama runtime. The Agentic target stays on qwen2.5:7b; ASSERT's auxiliary generation/judging uses qwen2.5:3b so this remains a practical plumbing test. Do not use smoke-run rates as portfolio claims.
+# prove that ASSERT can call the existing Agentic Analytics single-agent target
+# against seed-42 ClickHouse data and judge a reviewed fixed Q3 smoke input using
+# the same local Ollama runtime. Stochastic systematization/test synthesis is
+# deliberately outside this CI gate. The Agentic target stays on qwen2.5:7b; ASSERT's auxiliary generation/judging uses qwen2.5:3b so this remains a practical plumbing test. Do not use smoke-run rates as portfolio claims.
 suite: agentic-analytics-q3-grounded-comparison
 run: smoke-local-qwen
 
@@ -24,11 +25,8 @@ context: >
   existing read-only ClickHouse tool. This separate ASSERT smoke lane does not
   alter evals/questions.json, the deterministic scorer, the agent prompt, the
   dataset, the model, or database permissions. Because this is a plumbing
-  smoke rather than a behavioral benchmark, every generated prompt must
-  explicitly ask the assistant to query the approved dataset before answering
-  and directly compare the team with the most blocked items with the team that
-  has the highest blocker rate. Do not generate generic result-confirmation
-  prompts that can be answered without fresh dataset access.
+  smoke rather than a behavioral benchmark, it uses a reviewed fixed Q3 prompt
+  so CI tests the callable/tool/result path rather than stochastic test synthesis.
 
 default_model:
   name: ollama/qwen2.5:3b
@@ -37,6 +35,7 @@ default_model:
 
 pipeline:
   systematize:
+    enabled: false
     behavior_category_count: 2
     web_search: false
     model:
@@ -45,6 +44,7 @@ pipeline:
       max_tokens: 2000
 
   test_set:
+    enabled: false
     prompt:
       sample_size: 1
       model:
@@ -53,6 +53,7 @@ pipeline:
         max_tokens: 1200
 
   inference:
+    test_set_path: evals/assert_q3_smoke_test_set.jsonl
     target:
       callable: src.evals.assert_q3_target:chat
     max_turns: 1
@@ -60,6 +61,7 @@ pipeline:
     max_tool_calls: 2
 
   judge:
+    taxonomy_path: evals/assert_q3_smoke_taxonomy.json
     model:
       name: ollama/qwen2.5:3b
       temperature: 0
