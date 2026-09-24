@@ -46,7 +46,7 @@ class TestThroughputEvaluation(unittest.TestCase):
             created.append(agent)
             return agent
 
-        cases = [dict(CASE, id=f"Q{index}") for index in range(1, 5)]
+        cases = [dict(CASE, id=f"LOAD{index}") for index in range(1, 5)]
         result = run_load_level(factory, cases, concurrency=2)
 
         self.assertEqual(len(created), 4)
