@@ -2,7 +2,9 @@
 #
 # This run reuses the three preserved Q3 transcripts from the accepted
 # GitHub-hosted single-agent baseline (Actions 35755961530 / artifact
-# 10708618392). It makes no new qwen2.5:7b target inference calls.
+# 10708618392). It makes no new qwen2.5:7b target inference calls. The CI
+# harness feeds those preserved rows to ASSERT one at a time so local judge
+# queueing cannot masquerade as behavioral variability.
 # ASSERT is an additional behavioral judge only; the deterministic scorer
 # remains the benchmark source of truth and disagreements require manual review.
 suite: agentic-analytics-q3-evidence
@@ -29,7 +31,7 @@ pipeline:
     inference_set_path: assert_q3_evidence_inference_set.jsonl
     taxonomy_path: assert_q3_evidence_taxonomy.json
     model:
-      name: ollama/qwen2.5:7b
+      name: ollama/qwen2.5:3b
       temperature: 0
       max_tokens: 1800
     n: 1
