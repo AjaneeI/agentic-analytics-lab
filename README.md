@@ -246,6 +246,21 @@ Evidence screenshot:
 └── tests/
 ```
 
+## Visual Project Health
+
+![Project health snapshot](docs/project-health/overview.svg)
+
+The repository now includes a reusable, source-backed project-health reporting workflow inspired by the DevConf project-health-report pattern. It collects GitHub activity and maintainability signals in parallel, keeps caveats visible, and renders Markdown, SVG, HTML, and JSON evidence without hiding the inputs behind a composite score.
+
+- [Current project-health report](docs/project-health/README.md)
+- [Self-contained HTML report](docs/project-health/report.html)
+- [Reusable project-health skill](skills/project-health-report/SKILL.md)
+- [Visual contract](skills/project-health-report/TEMPLATE.md)
+
+Regenerate the artifacts with:
+
+    python scripts/render_project_health_report.py --repo AjaneeI/agentic-analytics-lab
+
 ## Portfolio Signal
 
 This project is evidence for applied AI engineering and product-minded AI
