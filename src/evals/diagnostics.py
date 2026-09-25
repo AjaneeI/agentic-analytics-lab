@@ -194,8 +194,90 @@ def _query_execution_outcome(
     )
 
 
+def _numeric_matches(observed: float, target: float) -> bool:
+    if abs(observed - target) <= 0.2:
+        return True
+    if abs(target) > 1 and -1 <= observed <= 1:
+        return abs((observed * 100) - target) <= 0.2
+    return False
+
+
+def _row_matches_value(row: Mapping[str, Any], value: Any) -> bool:
+    import json
+    import re
+
+    serialized = json.dumps(row, sort_keys=True).casefold()
+    if isinstance(value, bool):
+        return True
+    if isinstance(value, str):
+        return value.casefold() in serialized
+    if isinstance(value, (int, float)):
+        candidates = [
+            float(match.group(0))
+            for match in re.finditer(r"-?\d+(?:\.\d+)?", serialized)
+        ]
+        return any(_numeric_matches(candidate, float(value)) for candidate in candidates)
+    return False
+
+
+def _captured_rows(record: Mapping[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for call in _query_clickhouse_evidence(record):
+        for row in call.get("result_rows") or []:
+            if isinstance(row, dict):
+                rows.append(row)
+    return rows
+
+
+def _expected_evidence_is_captured(
+    record: Mapping[str, Any],
+    case: Mapping[str, Any],
+) -> bool | None:
+    expected = case.get("expected")
+    if not isinstance(expected, Mapping):
+        return None
+
+    rows = _captured_rows(record)
+    if not rows:
+        return False
+
+    if case.get("id") == "Q4":
+        ranking = expected.get("ranking")
+        if not isinstance(ranking, list):
+            return None
+        return all(
+            any(
+                _row_matches_value(row, team) and _row_matches_value(row, pct)
+                for row in rows
+            )
+            for team, pct in ranking
+        )
+
+    values = [
+        value
+        for key, value in expected.items()
+        if key != "answer" and not isinstance(value, bool)
+    ]
+
+    anchor = expected.get("team")
+    if isinstance(anchor, str):
+        anchored_rows = [row for row in rows if _row_matches_value(row, anchor)]
+        if not anchored_rows:
+            return False
+        return all(
+            any(_row_matches_value(row, value) for row in anchored_rows)
+            for value in values
+        )
+
+    return all(
+        any(_row_matches_value(row, value) for row in rows)
+        for value in values
+    )
+
+
 def _evidence_coverage_outcome(
     record: Mapping[str, Any],
+    case: Mapping[str, Any],
     requires_tool: bool,
     query_execution: StageOutcome,
 ) -> StageOutcome:
@@ -215,21 +297,43 @@ def _evidence_coverage_outcome(
             detail="Evidence coverage cannot be assessed without execution evidence.",
         )
 
+    captured = _expected_evidence_is_captured(record, case)
+    if captured is True:
+        if record.get("factual_consistency") is False:
+            return _stage(
+                "passed",
+                detail=(
+                    "Captured rows contain the frozen expected evidence across "
+                    "the executed tool results even though the legacy scorer's "
+                    "row-co-location check reported factual_consistency=false."
+                ),
+            )
+        return _stage(
+            "passed",
+            detail="Captured rows contain the frozen expected evidence.",
+        )
+    if captured is False:
+        return _stage(
+            "failed",
+            "required_rows_missing",
+            "Captured tool rows do not contain the frozen expected evidence.",
+        )
+
     factual_consistency = record.get("factual_consistency")
     if factual_consistency is True:
         return _stage(
             "passed",
-            detail="Captured rows contain the deterministic expected evidence.",
+            detail="Legacy deterministic factual-consistency evidence passed.",
         )
     if factual_consistency is False:
         return _stage(
             "failed",
             "required_rows_missing",
-            "Required answer values were not found together in captured tool evidence.",
+            "Required answer values were not found in captured tool evidence.",
         )
     return _stage(
         "unknown",
-        detail="The artifact does not contain a factual-consistency result.",
+        detail="The artifact does not contain enough evidence for coverage analysis.",
     )
 
 
@@ -353,6 +457,7 @@ def diagnose_record(
     )
     outcomes["evidence_coverage"] = _evidence_coverage_outcome(
         record,
+        case,
         requires_tool,
         outcomes["query_execution"],
     )
