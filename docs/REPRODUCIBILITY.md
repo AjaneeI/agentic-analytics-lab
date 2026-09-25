@@ -17,7 +17,7 @@ This validates the code paths that do not require a live ClickHouse or Ollama pr
 
 ## 2. Canonical benchmark lane
 
-The most reproducible end-to-end path is the manual GitHub Actions workflow in [\`.github/workflows/repeatability-benchmark.yml\`](../.github/workflows/repeatability-benchmark.yml).
+The most reproducible end-to-end path is the manual GitHub Actions workflow in [`.github/workflows/repeatability-benchmark.yml`](../.github/workflows/repeatability-benchmark.yml).
 
 That workflow:
 
@@ -25,7 +25,7 @@ That workflow:
 2. starts an ephemeral ClickHouse instance;
 3. regenerates the deterministic seed-42, 500-row delivery dataset;
 4. creates a separate SELECT-only ClickHouse user for the evaluated tool;
-5. starts pinned Ollama 0.34.2 and pulls \`qwen2.5:7b\`;
+5. starts pinned Ollama 0.34.2 and pulls `qwen2.5:7b`;
 6. runs benchmark preflight checks;
 7. executes three unchanged benchmark passes;
 8. preserves raw runs, a repeatability summary, environment metadata, and non-secret diagnostics as an Actions artifact.
@@ -62,7 +62,7 @@ Deterministic checks are preferred when a result can be verified directly. An LL
 
 ## 5. Provenance
 
-[\`src/evals/provenance.py\`](../src/evals/provenance.py) fingerprints the files that define the benchmark contract and records the evaluated Git commit.
+[`src/evals/provenance.py`](../src/evals/provenance.py) fingerprints the files that define the benchmark contract and records the evaluated Git commit.
 
 This protects against an easy benchmarking mistake: comparing two architectures after silently changing the prompt, scorer, data generator, or tool semantics.
 
