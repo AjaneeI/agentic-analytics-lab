@@ -158,6 +158,64 @@ class TestFailureStageDiagnostics(unittest.TestCase):
         self.assertEqual(result.primary_reason_code, "answer_value_incorrect")
         self.assertEqual(result.stage_outcomes["evidence_coverage"].state, "passed")
 
+    def test_split_q3_evidence_is_not_misclassified_as_missing(self):
+        case = {
+            "id": "Q3",
+            "category": "reasoning",
+            "question": "Is the same team highest on count and blocker rate?",
+            "expected": {
+                "answer": True,
+                "team": "Data",
+                "blocked_items": 29,
+                "blocked_pct": 20.9,
+            },
+            "requires_tool": True,
+            "max_tool_calls": 1,
+        }
+        record = self._record(
+            question_id="Q3",
+            correct=False,
+            task_success=False,
+            factual_consistency=False,
+            tool_call_count=2,
+            tool_call_attempt_count=2,
+            tool_evidence=[
+                {
+                    "name": "query_clickhouse",
+                    "arguments": {
+                        "sql": (
+                            "SELECT team, COUNT(*) AS blocked_items "
+                            "FROM agentic_analytics.delivery_work_items "
+                            "WHERE blocked = 1 GROUP BY team "
+                            "ORDER BY blocked_items DESC LIMIT 1"
+                        )
+                    },
+                    "row_count": 1,
+                    "result_rows": [{"team": "Data", "blocked_items": 29}],
+                },
+                {
+                    "name": "query_clickhouse",
+                    "arguments": {
+                        "sql": (
+                            "SELECT team, AVG(blocked) * 100 AS blocked_pct "
+                            "FROM agentic_analytics.delivery_work_items "
+                            "GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+                        )
+                    },
+                    "row_count": 1,
+                    "result_rows": [{"team": "Data", "blocked_pct": 20.9}],
+                },
+            ],
+        )
+        result = diagnose_record(record, case)
+
+        self.assertEqual(result.stage_outcomes["evidence_coverage"].state, "passed")
+        self.assertEqual(result.primary_failure_stage, "answer_synthesis")
+        self.assertIn(
+            "legacy scorer",
+            result.stage_outcomes["evidence_coverage"].detail,
+        )
+
     def test_successful_record_has_no_failure_stage(self):
         result = diagnose_record(self._record(), self.tool_case)
 
