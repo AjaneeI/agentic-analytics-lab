@@ -137,6 +137,19 @@ class TestFailureStageDiagnostics(unittest.TestCase):
             correct=False,
             task_success=False,
             factual_consistency=False,
+            tool_evidence=[
+                {
+                    "name": "query_clickhouse",
+                    "arguments": {
+                        "sql": (
+                            "SELECT team, 15.0 AS blocked_pct "
+                            "FROM agentic_analytics.delivery_work_items"
+                        )
+                    },
+                    "row_count": 1,
+                    "result_rows": [{"team": "AI", "blocked_pct": 15.0}],
+                }
+            ],
             unsupported_claims=[
                 "Required answer values were not found together in captured tool evidence."
             ],
