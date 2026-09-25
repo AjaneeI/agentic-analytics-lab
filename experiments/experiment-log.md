@@ -75,7 +75,7 @@ If route-relevant task facts are already known, can a routed execution layer imp
 
 **Claim boundary**
 
-The routed condition uses frozen benchmark category and \`requires_tool\` metadata. It tests execution value when the route is known. It does not measure free-text route inference and does not support a general multi-agent superiority claim.
+The routed condition uses frozen benchmark category and `requires_tool` metadata. It tests execution value when the route is known. It does not measure free-text route inference and does not support a general multi-agent superiority claim.
 
 See [Portfolio Results](../docs/portfolio-results.md) for the concise interpretation.
 
@@ -92,7 +92,7 @@ The system prompt was expanded with:
 
 - the exact ClickHouse table
 - column meanings
-- the distinction between \`status\` and the \`blocked\` indicator
+- the distinction between `status` and the `blocked` indicator
 - explicit guidance that rates require a numerator and denominator
 
 No ground-truth benchmark values were supplied.
@@ -121,4 +121,4 @@ That led to a lasting architectural distinction in the project:
 2. execution safety;
 3. semantic grounding for correct analytical reasoning.
 
-The current tool boundary now includes a targeted guard against labeling the complement of blocked work as \`blocker_rate\`.
+The current tool boundary now includes a targeted guard against labeling the complement of blocked work as `blocker_rate`.
