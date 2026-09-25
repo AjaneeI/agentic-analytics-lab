@@ -12,16 +12,16 @@ The repository has four distinct layers.
 
 | Layer | Responsibility | Representative code |
 | --- | --- | --- |
-| Agent | Turn a user question into tool calls and an evidence-backed answer | [\`src/agents/single_agent.py\`](src/agents/single_agent.py), [\`src/agents/ollama_client.py\`](src/agents/ollama_client.py) |
-| Tool boundary | Enforce least-privilege access to the approved analytics dataset | [\`src/tools/clickhouse_readonly.py\`](src/tools/clickhouse_readonly.py) |
-| Control plane | Decide whether work should use deterministic execution, local AI reasoning, or escalation | [\`src/routing/\`](src/routing/) |
-| Evaluation | Score outcomes, preserve provenance, compare repeated runs, and diagnose observable failures | [\`src/evals/\`](src/evals/) |
+| Agent | Turn a user question into tool calls and an evidence-backed answer | [`src/agents/single_agent.py`](src/agents/single_agent.py), [`src/agents/ollama_client.py`](src/agents/ollama_client.py) |
+| Tool boundary | Enforce least-privilege access to the approved analytics dataset | [`src/tools/clickhouse_readonly.py`](src/tools/clickhouse_readonly.py) |
+| Control plane | Decide whether work should use deterministic execution, local AI reasoning, or escalation | [`src/routing/`](src/routing/) |
+| Evaluation | Score outcomes, preserve provenance, compare repeated runs, and diagnose observable failures | [`src/evals/`](src/evals/) |
 
 This separation is deliberate. Routing does not weaken the tool boundary, and evaluation does not depend on hidden model reasoning.
 
 ## 1. Single-agent baseline
 
-The accepted baseline is a custom Python agent loop using a local \`qwen2.5:7b\` worker through Ollama.
+The accepted baseline is a custom Python agent loop using a local `qwen2.5:7b` worker through Ollama.
 
     User question
           |
@@ -60,14 +60,14 @@ The model-facing tool is treated as a security and correctness boundary rather t
 It constrains:
 
 - statement type to approved analytical reads;
-- physical table access to \`agentic_analytics.delivery_work_items\`;
+- physical table access to `agentic_analytics.delivery_work_items`;
 - joins to the same approved scope;
 - ClickHouse table functions;
 - multiple statements;
 - mutating and administrative keywords;
 - non-loopback plaintext HTTP connections;
 - query rows, bytes, memory, threads, and execution time;
-- a known blocker-rate semantic error where non-blocked work is mislabeled as \`blocker_rate\`.
+- a known blocker-rate semantic error where non-blocked work is mislabeled as `blocker_rate`.
 
 The database user in the hosted benchmark is also SELECT-only. Application checks and database permissions are complementary controls.
 
@@ -83,9 +83,9 @@ The routed layer does not automatically mean "more agents."
 
 The typed execution contract currently exposes three dispositions:
 
-- \`deterministic\`
-- \`local\`
-- \`escalate\`
+- `deterministic`
+- `local`
+- `escalate`
 
     Request + route-relevant facts
                 |
@@ -127,7 +127,7 @@ See [Portfolio Results](docs/portfolio-results.md).
 
 ## 5. Natural-language route inference
 
-[\`src/routing/natural_language_baseline.py\`](src/routing/natural_language_baseline.py) adds a small inspectable free-text baseline.
+[`src/routing/natural_language_baseline.py`](src/routing/natural_language_baseline.py) adds a small inspectable free-text baseline.
 
 Route inference is evaluated separately from answer quality. The current development fixtures measure route accuracy, false-cheap decisions, unnecessary escalations, and mismatches.
 
@@ -193,11 +193,11 @@ The architecture comparison keeps the following fixed when the evidence is inten
 - benchmark schema
 - measurement fields
 
-[\`src/evals/provenance.py\`](src/evals/provenance.py) fingerprints the files defining the benchmark contract. Repeatability aggregation rejects incompatible runs.
+[`src/evals/provenance.py`](src/evals/provenance.py) fingerprints the files defining the benchmark contract. Repeatability aggregation rejects incompatible runs.
 
 ## 7. Observable failure diagnostics
 
-[\`src/evals/diagnostics.py\`](src/evals/diagnostics.py) classifies failures from stored evidence such as:
+[`src/evals/diagnostics.py`](src/evals/diagnostics.py) classifies failures from stored evidence such as:
 
 - execution outcome
 - tool-call attempts
