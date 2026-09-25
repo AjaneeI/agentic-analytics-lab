@@ -7,7 +7,7 @@ Agentic Analytics Lab is a portfolio project for testing when an AI analytics
 agent should stay simple and when a routed or specialist-agent design is worth
 the added cost, latency, and complexity.
 
-[Live case study](https://ajaneeigharo.com/work/agentic-analytics-lab)
+[Live case study](https://ajaneeigharo.com/work/agentic-analytics-lab) · [Experiment dependency graph](docs/experiment-dependency-graph.md)
 
 The project started from the ClickHouse Agentic Data Stack workshop and extends
 it into an original, measurable applied-AI system: a delivery-intelligence agent
@@ -21,14 +21,17 @@ delivery-operations data, with dataset-scoped read-only ClickHouse access,
 semantic metric guards, and a reproducible evaluation runner.
 
 **What this demonstrates:** Python, SQL/tool integration, AI evaluation,
-guardrail design, debugging/documentation, and architecture tradeoff reasoning.
+guardrail design, debugging/documentation, architecture tradeoff reasoning, and
+dependency-aware experiment design for reproducible AI systems.
 
 **Current proof:** The automated regression suite runs in GitHub Actions across Python 3.11 and 3.12, and CodeQL runs extended Python security analysis. Coverage includes SQL safety, dataset-scope and transport validation, semantic metric guards, single-agent and control-plane behavior, deterministic handlers, answer scoring, tool grounding, model-adapter behavior, benchmark reporting, repeatability analysis, and evaluation infrastructure.
 
 **Current phase:** benchmarking the single-agent baseline alongside a first
 oracle-metadata routed experiment that has now been implemented and evaluated
 under matched conditions. The routed experiment uses frozen benchmark metadata
-rather than natural-language route inference. The project is a work sample for
+rather than natural-language route inference. The project also treats its
+experiment program as a dependency graph so independent work can move in
+parallel without contaminating benchmark evidence. It is a work sample for
 applied AI engineering and enterprise AI implementation, not a demo-only
 chatbot.
 
@@ -97,6 +100,8 @@ generalizations.
 - Capture task success, factual consistency, tool count, latency, tokens, cost,
   and failure behavior.
 - Add routed agents only when evaluation results justify the complexity.
+- Parallelize independent engineering work, but serialize evidence-changing
+  merges and benchmark gates.
 
 ## Architecture
 
@@ -138,7 +143,9 @@ Validation + route telemetry
 This experiment isolates execution-layer routing value. It does not measure
 natural-language route inference.
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller design notes.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller system design and the
+[Experiment Dependency Graph](docs/experiment-dependency-graph.md) for how
+experiments, evidence gates, and parallel workstreams are sequenced.
 
 ## Safety And Evaluation
 
@@ -220,6 +227,7 @@ Evidence screenshot:
 │   ├── benchmark-reporting.md
 │   ├── benchmark-repeatability.md
 │   ├── evidence-plan.md
+│   ├── experiment-dependency-graph.md
 │   ├── single-agent-benchmark-status-2026-09-17.md
 │   ├── publishing-plan.md
 │   ├── screenshots/
@@ -272,6 +280,8 @@ implementation work:
 - turning those guardrails into continuously tested regression coverage
 - documenting failures and debugging decisions
 - comparing AI architecture choices with latency, cost, and reliability in mind
+- designing experiment dependencies so higher project throughput does not weaken
+  reproducibility or evidence quality
 
 It is intentionally framed as a learning-in-public portfolio project, not as a
 production system.
