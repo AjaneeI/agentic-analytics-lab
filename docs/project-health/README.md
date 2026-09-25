@@ -1,6 +1,6 @@
 # Project Health Report
 
-![Project health snapshot](overview.svg)
+![Project health snapshot](overview.png)
 
 Repository: **AjaneeI/agentic-analytics-lab**  
 As of: **2026-09-24T19:32:00Z**  
