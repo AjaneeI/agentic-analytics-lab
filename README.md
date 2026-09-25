@@ -16,7 +16,7 @@ The project uses a synthetic delivery-operations dataset so architecture decisio
 | What an evaluator should know | Evidence |
 | --- | --- |
 | **Research question** | Compare a strong single-agent baseline with bounded routing strategies and require complexity to earn its place through measured outcomes. |
-| **Baseline** | A Python analytics agent using \`qwen2.5:7b\` via Ollama and a dataset-scoped read-only ClickHouse tool. |
+| **Baseline** | A Python analytics agent using `qwen2.5:7b` via Ollama and a dataset-scoped read-only ClickHouse tool. |
 | **Benchmark** | Frozen Q1-Q6 cases on deterministic seed-42 synthetic data, scored with deterministic correctness, grounding, factual-consistency, and epistemic checks. |
 | **Accepted baseline result** | 4/6 task success in each of three runs: 66.7% mean with 0.0 percentage-point run-to-run task-success variance. |
 | **Bounded routed result** | 5/6, 6/6, and 6/6 task success using oracle benchmark metadata to choose the execution path. This is an execution-layer experiment, not a natural-language routing claim. |
@@ -75,7 +75,7 @@ The project began after a ClickHouse Agentic Data Stack workshop, but the portfo
 My original project work includes:
 
 - a provider-agnostic Python single-agent loop and Ollama adapter;
-- a ClickHouse query tool constrained to \`agentic_analytics.delivery_work_items\`;
+- a ClickHouse query tool constrained to `agentic_analytics.delivery_work_items`;
 - statement, table-scope, transport, resource, and blocker-rate semantic guards;
 - deterministic scoring that separates execution from task correctness, grounding, factual consistency, completeness, and epistemic discipline;
 - a three-run repeatability harness with compatibility checks;
