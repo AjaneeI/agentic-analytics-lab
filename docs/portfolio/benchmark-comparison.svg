@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Accepted benchmark comparison</title>
+  <desc id="desc">Three-run single-agent baseline compared with the oracle-metadata routed execution experiment on task success, model calls, and latency.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #24292f; }
+    .title { font-size: 30px; font-weight: 700; }
+    .subtitle { font-size: 16px; fill: #57606a; }
+    .panel { fill: #f6f8fa; stroke: #d0d7de; stroke-width: 1.5; rx: 16; }
+    .panelTitle { font-size: 18px; font-weight: 650; }
+    .value { font-size: 24px; font-weight: 700; }
+    .small { font-size: 14px; fill: #57606a; }
+    .baseline { fill: #8c959f; }
+    .routed { fill: #54aeff; }
+    .axis { stroke: #8c959f; stroke-width: 1; }
+  </style>
+
+  <text x="60" y="55" class="title">Accepted benchmark comparison</text>
+  <text x="60" y="84" class="subtitle">Frozen Q1-Q6 · seed-42 synthetic data · qwen2.5:7b local worker · matched GitHub-hosted evidence</text>
+
+  <rect x="60" y="120" width="330" height="390" class="panel"/>
+  <text x="90" y="160" class="panelTitle">Mean task success</text>
+  <line x1="105" y1="430" x2="350" y2="430" class="axis"/>
+  <rect x="125" y="243" width="70" height="187" class="baseline"/>
+  <rect x="245" y="166" width="70" height="264" class="routed"/>
+  <text x="160" y="225" text-anchor="middle" class="value">66.7%</text>
+  <text x="280" y="148" text-anchor="middle" class="value">94.4%</text>
+  <text x="160" y="458" text-anchor="middle" class="small">Single agent</text>
+  <text x="280" y="458" text-anchor="middle" class="small">Oracle routed</text>
+  <text x="90" y="490" class="small">Runs: 4/6, 4/6, 4/6 vs 5/6, 6/6, 6/6</text>
+
+  <rect x="435" y="120" width="330" height="390" class="panel"/>
+  <text x="465" y="160" class="panelTitle">Model calls per run</text>
+  <line x1="480" y1="430" x2="725" y2="430" class="axis"/>
+  <rect x="500" y="188" width="70" height="242" class="baseline"/>
+  <rect x="620" y="408" width="70" height="22" class="routed"/>
+  <text x="535" y="170" text-anchor="middle" class="value">11</text>
+  <text x="655" y="390" text-anchor="middle" class="value">1</text>
+  <text x="535" y="458" text-anchor="middle" class="small">Single agent</text>
+  <text x="655" y="458" text-anchor="middle" class="small">Oracle routed</text>
+  <text x="465" y="490" class="small">Tool calls remain 5 per run in both conditions.</text>
+
+  <rect x="810" y="120" width="330" height="390" class="panel"/>
+  <text x="840" y="160" class="panelTitle">Mean end-to-end latency</text>
+  <line x1="855" y1="430" x2="1100" y2="430" class="axis"/>
+  <rect x="875" y="190" width="70" height="240" class="baseline"/>
+  <rect x="995" y="393" width="70" height="37" class="routed"/>
+  <text x="910" y="172" text-anchor="middle" class="value">217.0s</text>
+  <text x="1030" y="375" text-anchor="middle" class="value">33.9s</text>
+  <text x="910" y="458" text-anchor="middle" class="small">Single agent</text>
+  <text x="1030" y="458" text-anchor="middle" class="small">Oracle routed</text>
+  <text x="840" y="490" class="small">Compare only within the matched hosted environment.</text>
+
+  <rect x="60" y="545" width="1080" height="100" class="panel"/>
+  <text x="90" y="580" class="panelTitle">Claim boundary</text>
+  <text x="90" y="607" class="small">The routed condition receives frozen benchmark metadata that identifies the execution path. It measures execution-layer value, not natural-language route inference.</text>
+  <text x="90" y="630" class="small">Baseline evidence: Actions run 35755961530. Routed evidence: Actions run 35760422536. Results are bounded to this six-case synthetic benchmark.</text>
+</svg>
