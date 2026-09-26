@@ -1,295 +1,267 @@
-# Agentic Analytics Lab
+<p align="center">
+  <img src="docs/assets/hero.svg" alt="Agentic Analytics Lab" width="100%" />
+</p>
 
-[![Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
-[![CodeQL](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml/badge.svg)](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml)
+<p align="center">
+  <strong>Evaluation-first agentic analytics for deciding when routing is actually worth it.</strong><br />
+  A portfolio lab for measuring correctness, grounding, efficiency, and failure behavior across increasingly complex AI system designs.
+</p>
 
-Agentic Analytics Lab is a portfolio project for testing when an AI analytics
-agent should stay simple and when a routed or specialist-agent design is worth
-the added cost, latency, and complexity.
+<p align="center">
+  <a href="https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml"><img alt="Python tests" src="https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml/badge.svg"></a>
+  <a href="https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml"><img alt="CodeQL" src="https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml/badge.svg"></a>
+</p>
 
-[Live case study](https://ajaneeigharo.com/work/agentic-analytics-lab)
+<p align="center">
+  <a href="#research-question">Research question</a> ·
+  <a href="#what-i-built">What I built</a> ·
+  <a href="#current-evidence">Evidence</a> ·
+  <a href="#architecture">Architecture</a> ·
+  <a href="#evaluation-method">Evaluation</a> ·
+  <a href="#experiments">Experiments</a> ·
+  <a href="#reproduce">Reproduce</a>
+</p>
 
-The project started from the ClickHouse Agentic Data Stack workshop and extends
-it into an original, measurable applied-AI system: a delivery-intelligence agent
-that queries structured operational data, returns evidence-backed answers, and
-records enough execution detail to compare design choices.
+<p align="center">
+  <a href="https://ajaneeigharo.com/work/agentic-analytics-lab"><strong>View the live case study →</strong></a>
+</p>
 
-## Recruiter Quick Read
+---
 
-**What I built:** a Python single-agent analytics baseline over synthetic
-delivery-operations data, with dataset-scoped read-only ClickHouse access,
-semantic metric guards, and a reproducible evaluation runner.
+## Research question
 
-**What this demonstrates:** Python, SQL/tool integration, AI evaluation,
-guardrail design, debugging/documentation, and architecture tradeoff reasoning.
+> **When does a routed or specialist-agent design outperform a strong single-agent baseline enough to justify the added tool calls, latency, model cost, and maintenance?**
 
-**Current proof:** The automated regression suite runs in GitHub Actions across Python 3.11 and 3.12, and CodeQL runs extended Python security analysis. Coverage includes SQL safety, dataset-scope and transport validation, semantic metric guards, single-agent and control-plane behavior, deterministic handlers, answer scoring, tool grounding, model-adapter behavior, benchmark reporting, repeatability analysis, and evaluation infrastructure.
+Agent demos can look convincing before they are measured. This lab treats the agent as an operational system that needs **guardrails, reproducible evaluation, observable behavior, and explicit claim boundaries**.
 
-**Current phase:** benchmarking the single-agent baseline alongside a first
-oracle-metadata routed experiment that has now been implemented and evaluated
-under matched conditions. The routed experiment uses frozen benchmark metadata
-rather than natural-language route inference. The project is a work sample for
-applied AI engineering and enterprise AI implementation, not a demo-only
-chatbot.
+The project began from the ClickHouse Agentic Data Stack workshop, then grew into an original applied-AI evaluation system over synthetic delivery-operations data.
 
-## Why This Project Exists
+## What I built
 
-Agent demos often look convincing before they are measured. This project treats
-the agent as an operational system that needs guardrails, evaluation criteria,
-and observable behavior.
+I built the system around one constraint: **earn complexity with evidence instead of adding orchestration by default.**
 
-The central question is:
+- a Python single-agent analytics baseline over structured delivery data
+- dataset-scoped, read-only ClickHouse access with transport and resource safeguards
+- semantic metric guards for business definitions such as blocker rate
+- deterministic answer scoring and tool-grounding checks
+- benchmark provenance, reporting, repeatability, and failure diagnostics
+- an oracle-metadata routed execution experiment under matched conditions
+- a separate natural-language routing evaluation lane
+- route telemetry for latency, usage, validation, and routing decisions
+- GitHub Actions regression coverage across Python 3.11 and 3.12
+- CodeQL `security-extended` analysis
 
-> When does a routed or multi-agent design outperform a single-agent design
-> enough to justify extra tool calls, latency, model cost, and maintenance?
+This is an **Applied AI Engineering work sample**, not a demo-only chatbot.
 
-That question matters for practical AI adoption because organizations do not
-only need impressive answers. They need systems that are correct, explainable,
-safe to operate, and worth their complexity.
+## Current evidence
 
-## Current Status
+| Signal | Verified state |
+| --- | --- |
+| Unit / regression tests | **146 passing** on Python 3.11 and 3.12 |
+| CI | GitHub Actions passes on `main` |
+| Security analysis | CodeQL `security-extended` passes |
+| Data boundary | Read-only, dataset-scoped ClickHouse tool |
+| Evaluation | Deterministic checks where ground truth exists |
+| Routed execution | Oracle-metadata experiment implemented and evaluated |
+| Natural-language routing | Separate development evaluation lane implemented |
+| Published benchmark claim | Historical baseline retained as failure evidence; current post-hardening comparison remains intentionally bounded |
 
-- Reproduced a workshop baseline with LibreChat, Claude, ClickHouse Local MCP,
-  Docker Compose, and Langfuse tracing.
-- Built a Python single-agent baseline that can query a synthetic delivery
-  operations dataset through a read-only ClickHouse tool.
-- Added a deterministic evaluation runner that separates execution success from
-  task correctness, factual consistency, and tool grounding.
-- Added semantic grounding for delivery metrics, including blocker-rate
-  definitions.
-- Added a low-latency SQL guard that rejects blocker-rate queries when they
-  label non-blocked work as `blocker_rate`.
-- Hardened the ClickHouse boundary so the agent can read only
-  `agentic_analytics.delivery_work_items`, with table-function and cross-table
-  access rejected in code.
-- Added transport and query resource safeguards for the ClickHouse tool.
-- Added GitHub Actions CI for the full unit suite on Python 3.11 and 3.12.
-- Added CodeQL `security-extended` analysis on pull requests, pushes to `main`,
-  and a weekly schedule.
-- Added deterministic Markdown benchmark reporting plus a repeatability summary
-  that rejects mismatched run configurations before aggregation.
-- Implemented and evaluated `oracle_metadata_routed_v0`, which routes frozen
-  benchmark cases from category and `requires_tool` metadata to deterministic
-  handlers or the existing local worker.
+The latest verified Python workflow on `main` ran **146 tests successfully on both supported Python versions**.
 
-## What The Agent Can Answer
+### What the agent can answer
 
-The current dataset models delivery work items with fields such as team,
-priority, status, planned effort, actual effort, lateness, blockers, rework,
-and customer impact.
+The synthetic dataset models delivery work items with fields such as team, priority, status, planned effort, actual effort, lateness, blockers, rework, and customer impact.
 
-Example analytical questions:
+Examples include:
 
 - Which team has the highest blocker rate?
 - Which priorities are most likely to finish late?
 - Which teams have the highest rework burden?
 - Where do blockers and customer impact appear together?
 
-The agent is expected to answer with database-backed evidence, not unsupported
-generalizations.
-
-## Design Principles
-
-- Start with a single-agent baseline before adding orchestration.
-- Keep database access read-only and dataset-scoped by default.
-- Treat SQL safety and metric semantics as separate requirements.
-- Prefer one correct query over multiple unnecessary tool calls.
-- Capture task success, factual consistency, tool count, latency, tokens, cost,
-  and failure behavior.
-- Add routed agents only when evaluation results justify the complexity.
+The expected behavior is database-backed analysis, not unsupported generalization.
 
 ## Architecture
 
-```text
-User question
-  |
-  v
-Single-agent baseline
-  |
-  v
-Dataset-scoped read-only ClickHouse tool
-  |
-  v
-Synthetic delivery operations data
-  |
-  v
-Evidence-backed answer
-```
+<p align="center">
+  <img src="docs/assets/architecture.svg" alt="Three-lane architecture for Agentic Analytics Lab" width="100%" />
+</p>
 
-Implemented oracle-metadata routed experiment:
+The repo deliberately keeps **three questions separate**:
 
-```text
-Frozen benchmark question + routing metadata
-  |
-  v
-Deterministic control plane
-  |
-  +--> Deterministic handler
-  |
-  +--> Existing local worker
-  |
-  v
-Dataset-scoped read-only ClickHouse tool
-  |
-  v
-Validation + route telemetry
-```
+1. **Single-agent baseline:** what can the simplest credible worker do?
+2. **Oracle-metadata routed execution:** if the correct route is already known, does routing improve execution enough to justify complexity?
+3. **Natural-language routing:** can a system infer the correct route from the user's words?
 
-This experiment isolates execution-layer routing value. It does not measure
-natural-language route inference.
+That separation matters. A good worker can be hidden by a bad router, and oracle metadata can make routing look better than a real end-to-end system. The lab keeps those failure sources attributable.
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the fuller design notes.
+All analytical execution is constrained by the same hardened ClickHouse boundary. See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the fuller system notes.
 
-## Safety And Evaluation
+## Evaluation method
+
+<p align="center">
+  <img src="docs/assets/evaluation.svg" alt="Evaluation surface for Agentic Analytics Lab" width="100%" />
+</p>
+
+The evaluator separates:
+
+- **execution success** from **task success**
+- **answer correctness** from **tool grounding**
+- **evidence generation** from **answer reasoning**
+- **route selection** from **worker execution**
+- **quality gains** from **latency, token, and tool-call cost**
+
+The frozen cases use deterministic checks whenever deterministic ground truth is available. Q1–Q5 validate required answer values against both the expected contract and captured ClickHouse evidence. Q6 checks epistemic discipline rather than forcing a database query.
+
+See [`evals/rubric.md`](evals/rubric.md) for the scoring contract.
+
+## Guardrails
 
 The ClickHouse tool rejects or constrains:
 
-- mutating or administrative SQL keywords
+- mutating or administrative SQL
 - multiple SQL statements
 - physical tables outside `agentic_analytics.delivery_work_items`
 - joins to out-of-scope tables
 - ClickHouse table functions
-- broad `SHOW` access and `DESCRIBE` of out-of-scope tables
+- broad `SHOW` access and out-of-scope `DESCRIBE`
 - non-loopback plain-HTTP ClickHouse connections
-- attempts to label the complement of blocked work as `blocker_rate`
+- invalid blocker-rate semantics
 - excessive query execution through row, byte, memory, thread, and time caps
 
-The project currently uses Python `unittest` coverage for:
+The point is not only to produce a correct answer. The system should remain **safe to operate and inspect**.
 
-- read-only SQL validation
-- dataset-scope and table-function validation
-- ClickHouse URL transport validation
-- blocker-rate semantic validation
-- single-agent tool-call flow
-- Ollama model-adapter behavior
-- deterministic answer scoring and evaluation-runner behavior
-- factual-consistency and tool-grounding checks
-- model-call, tool-call, token, and timing accounting
-- deterministic benchmark-report rendering and repeated-run compatibility checks
+## Experiments
 
-Run the test suite:
+### Single-agent baseline
+
+The current single-agent implementation can decide whether a tool is needed, query the approved dataset, capture evidence rows, and produce a final answer with usage and timing metadata.
+
+A historical local Qwen/ClickHouse benchmark produced **4/6 task success**, but that run predates the hardened model/tool contract. It is preserved as historical failure evidence, **not** as the current routed-comparison anchor.
+
+Read the provenance note in [`docs/single-agent-benchmark-status-2026-09-17.md`](docs/single-agent-benchmark-status-2026-09-17.md).
+
+### Oracle-metadata routed execution
+
+`oracle_metadata_routed_v0` routes frozen benchmark cases from benchmark metadata to deterministic handlers or the existing local worker.
+
+This isolates **execution-layer routing value**. It does **not** measure whether a router can infer the correct route from natural language.
+
+### Natural-language routing
+
+The natural-language lane consumes free text only and evaluates route decisions independently from answer correctness.
+
+It reports route accuracy, false-cheap routes, unnecessary escalations, and mismatches.
+
+The current development set is a **regression fixture set, not evidence of generalization**. A separate held-out or novel-request evaluation is still required before making broader route-inference claims.
+
+Read [`docs/natural-language-routing-evaluation.md`](docs/natural-language-routing-evaluation.md).
+
+## Reproduce
+
+Run the regression suite:
 
 ```bash
-python3 -m unittest discover -s tests
+python3 -m unittest discover -s tests -v
 ```
 
-Current automated proof:
+Rebuild the synthetic data and verify the frozen ground truth:
 
-- [GitHub Actions: Python tests](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
-- [GitHub Actions: CodeQL](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml)
+```bash
+python3 scripts/generate_delivery_data.py
+python3 scripts/verify_ground_truth.py
+```
+
+Run the single-agent evaluator in the local ClickHouse + Ollama environment:
+
+```bash
+python3 scripts/run_single_agent_eval.py
+```
+
+The local benchmark path requires ClickHouse loaded with the synthetic dataset and Ollama serving the configured model.
+
+## Evidence and observability
+
+### Automated proof
+
+- [Python tests workflow](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/tests.yml)
+- [CodeQL workflow](https://github.com/AjaneeI/agentic-analytics-lab/actions/workflows/codeql.yml)
 - [Single-agent benchmark status](docs/single-agent-benchmark-status-2026-09-17.md)
+- [Natural-language routing evaluation](docs/natural-language-routing-evaluation.md)
+- [Benchmark reporting](docs/benchmark-reporting.md)
+- [Benchmark repeatability](docs/benchmark-repeatability.md)
 
-Historical local proof artifact:
-
-- [Test suite proof - 2026-09-15](docs/test-suite-proof-2026-09-15.md)
-
-Evidence screenshot:
-
-![Docker service health screenshot](docs/screenshots/docker-service-health.png)
-
-## Limitations
-
-- The current dataset is synthetic, so findings are useful for evaluating agent
-  behavior but should not be treated as real operational conclusions.
-- The oracle-metadata routed experiment has been implemented and evaluated
-  against matched baseline conditions, but it uses frozen benchmark metadata
-  and therefore does not measure natural-language route inference.
-- Local benchmark JSON files are kept out of the public repository until they
-  are reviewed and labeled as current benchmark results or historical failure
-  cases.
-- The project is not production-ready. It is a portfolio lab for testing tool
-  safety, metric semantics, and agent-design tradeoffs.
-- The earlier 6/6 execution-success, 4/6 task-success local benchmark predates
-  the hardened model/tool contract. It is retained as historical failure
-  evidence, not the current comparison anchor.
-- Cost and latency claims should be refreshed after each model, prompt, or
-  tool-layer change.
-
-## Repository Map
-
-```text
-.
-├── .github/
-│   └── workflows/
-│       ├── codeql.yml
-│       └── tests.yml
-├── README.md
-├── ARCHITECTURE.md
-├── SECURITY.md
-├── docs/
-│   ├── benchmark-reporting.md
-│   ├── benchmark-repeatability.md
-│   ├── evidence-plan.md
-│   ├── single-agent-benchmark-status-2026-09-17.md
-│   ├── publishing-plan.md
-│   ├── screenshots/
-│   ├── social-posting-kit.md
-│   └── workshop-notes.md
-├── evals/
-│   ├── questions.json
-│   └── rubric.md
-├── experiments/
-│   ├── experiment-log.md
-│   ├── ground-truth/
-│   └── results/
-├── scripts/
-│   ├── render_benchmark_report.py
-│   ├── run_single_agent_eval.py
-│   ├── summarize_repeatability.py
-│   └── verify_ground_truth.py
-├── sql/
-├── src/
-│   ├── agents/
-│   ├── evals/
-│   │   └── scoring.py
-│   └── tools/
-└── tests/
-```
-
-## Visual Project Health
+### Project health
 
 ![Project health snapshot](docs/project-health/overview.svg)
 
-The repository now includes a reusable, source-backed project-health reporting workflow inspired by the DevConf project-health-report pattern. It collects GitHub activity and maintainability signals in parallel, keeps caveats visible, and renders Markdown, SVG, HTML, and JSON evidence without hiding the inputs behind a composite score.
+The repository includes a source-backed project-health reporting workflow that keeps the underlying signals visible rather than collapsing them into one opaque score.
 
 - [Current project-health report](docs/project-health/README.md)
 - [Self-contained HTML report](docs/project-health/report.html)
 - [Reusable project-health skill](skills/project-health-report/SKILL.md)
-- [Visual contract](skills/project-health-report/TEMPLATE.md)
 
-Regenerate the artifacts with:
+## Limitations
 
-    python scripts/render_project_health_report.py --repo AjaneeI/agentic-analytics-lab
+- The dataset is synthetic, so analytical findings are evaluation evidence, not real operational conclusions.
+- The oracle-metadata routed experiment does not measure natural-language route inference.
+- The natural-language development set is not a held-out generalization benchmark.
+- Historical benchmark output predating the hardened contract should not be used as the current comparison anchor.
+- Raw local benchmark JSON stays unpublished until reviewed and clearly labeled.
+- Cost and latency claims must be refreshed after model, prompt, or tool-layer changes.
+- This is a portfolio lab, not a production deployment.
 
-## Portfolio Signal
+## Repository map
 
-This project is evidence for applied AI engineering and product-minded AI
-implementation work:
+```text
+.
+├── .github/workflows/       # CI, CodeQL, repeatability and smoke lanes
+├── docs/
+│   ├── assets/              # GitHub-facing visual system
+│   ├── project-health/      # source-backed repo health artifacts
+│   └── superpowers/         # approved benchmark specs and plans
+├── evals/                   # frozen cases, routing fixtures and rubric
+├── experiments/             # experiment log, ground truth and reviewed results
+├── scripts/                 # benchmark, reporting and verification CLIs
+├── skills/                  # reusable project-health skill
+├── sql/                     # schema and ground-truth SQL
+├── src/
+│   ├── agents/              # single-agent + model adapter
+│   ├── evals/               # scoring, provenance, diagnostics, repeatability
+│   ├── routing/             # control plane, handlers and route telemetry
+│   └── tools/               # guarded ClickHouse boundary
+├── tests/
+├── ARCHITECTURE.md
+├── SECURITY.md
+└── README.md
+```
 
-- translating an AI workshop into an original evaluation project
-- defining measurable success criteria before adding complexity
-- building dataset-scoped read-only tool access and semantic safety checks
-- turning those guardrails into continuously tested regression coverage
-- documenting failures and debugging decisions
-- comparing AI architecture choices with latency, cost, and reliability in mind
+## Portfolio signal
 
-It is intentionally framed as a learning-in-public portfolio project, not as a
-production system.
+This project demonstrates:
 
-## Upstream References
+- turning an AI workshop into an original, measurable engineering problem
+- building a strong baseline before introducing agentic complexity
+- least-privilege tool design and semantic safety checks
+- deterministic evaluation and regression infrastructure
+- failure attribution instead of pass/fail-only scoring
+- architecture comparison with latency, usage, and operational complexity in mind
+- explicit evidence boundaries so the repo does not claim more than it has measured
 
-This repository is an original extension of concepts practiced in the ClickHouse
-workshop. It does not claim the upstream stack as original work.
+## Upstream references
 
-- ClickHouse Agentic Data Stack: https://github.com/ClickHouse/agentic-data-stack
-- ClickHouse MCP server: https://github.com/ClickHouse/mcp-clickhouse
-- ClickHouse Agent Skills: https://github.com/ClickHouse/agent-skills
-- LibreChat: https://github.com/danny-avila/LibreChat
-- Langfuse: https://github.com/langfuse/langfuse
+This repository extends concepts practiced in the ClickHouse workshop and does not claim the upstream stack as original work.
 
-## Next Steps
+- [ClickHouse Agentic Data Stack](https://github.com/ClickHouse/agentic-data-stack)
+- [ClickHouse MCP server](https://github.com/ClickHouse/mcp-clickhouse)
+- [ClickHouse Agent Skills](https://github.com/ClickHouse/agent-skills)
+- [LibreChat](https://github.com/danny-avila/LibreChat)
+- [Langfuse](https://github.com/langfuse/langfuse)
 
-- Re-run the frozen Q1–Q6 single-agent benchmark on the current `main` branch without changing the benchmark contract, then use the produced artifact manifest to establish the exact benchmarked commit.
-- Preserve the evaluated oracle-metadata routed experiment as the current routed comparison anchor; do not treat it as a natural-language routing benchmark.
-- If natural-language routing is pursued, evaluate route inference separately against held-out or realistically phrased requests before making broader routing claims.
-- Choose an explicit repository license if reuse is intended.
+## Next evidence gates
+
+- establish a reviewed post-hardening single-agent comparison anchor from the frozen Q1–Q6 benchmark
+- preserve exact commit and artifact provenance for every published comparison
+- evaluate natural-language routing against a separate held-out or novel-request set
+- compare routing gains against tool calls, model calls, latency, tokens, cost, and maintenance complexity
+- choose an explicit repository license if reuse is intended

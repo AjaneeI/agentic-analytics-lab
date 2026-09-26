@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="900" viewBox="0 0 720 900" role="img" aria-labelledby="title desc">
+<title id="title">Agentic Analytics Lab evaluation surface</title>
+<desc id="desc">The lab measures task correctness, tool grounding, factual consistency, epistemic discipline, tool calls, latency, token usage, cost, and failure behavior. Deterministic checks are preferred when possible.</desc>
+<rect width="720" height="900" rx="24" fill="#0E0D0C"/>
+<text x="44" y="62" fill="#B66A45" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="700" letter-spacing="2">EVALUATION SURFACE</text>
+<text x="44" y="108" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="34" font-weight="750">More than “did it run?”</text>
+<text x="44" y="144" fill="#B1A598" font-family="Inter,system-ui,sans-serif" font-size="18">Execution success is separated from answer quality and operating cost.</text>
+
+<g font-family="Inter,system-ui,sans-serif">
+  <g transform="translate(44 196)">
+    <rect width="300" height="112" rx="18" fill="#181613" stroke="#B66A45"/>
+    <text x="24" y="36" fill="#B66A45" font-size="14" font-weight="700" letter-spacing="1.1">QUALITY</text>
+    <text x="24" y="70" fill="#F4E9DA" font-size="22" font-weight="700">Task correctness</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">required values + ranking checks</text>
+  </g>
+  <g transform="translate(376 196)">
+    <rect width="300" height="112" rx="18" fill="#181613" stroke="#B66A45"/>
+    <text x="24" y="36" fill="#B66A45" font-size="14" font-weight="700" letter-spacing="1.1">EVIDENCE</text>
+    <text x="24" y="70" fill="#F4E9DA" font-size="22" font-weight="700">Tool grounding</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">answer claims tied to tool rows</text>
+  </g>
+
+  <g transform="translate(44 332)">
+    <rect width="300" height="112" rx="18" fill="#181613" stroke="#B66A45"/>
+    <text x="24" y="36" fill="#B66A45" font-size="14" font-weight="700" letter-spacing="1.1">CONSISTENCY</text>
+    <text x="24" y="70" fill="#F4E9DA" font-size="22" font-weight="700">Factual consistency</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">captured evidence matches answer</text>
+  </g>
+  <g transform="translate(376 332)">
+    <rect width="300" height="112" rx="18" fill="#181613" stroke="#B66A45"/>
+    <text x="24" y="36" fill="#B66A45" font-size="14" font-weight="700" letter-spacing="1.1">DISCIPLINE</text>
+    <text x="24" y="70" fill="#F4E9DA" font-size="22" font-weight="700">Epistemic behavior</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">no unsupported causal claims</text>
+  </g>
+
+  <g transform="translate(44 468)">
+    <rect width="300" height="112" rx="18" fill="#20251F" stroke="#7C8A6E"/>
+    <text x="24" y="36" fill="#7C8A6E" font-size="14" font-weight="700" letter-spacing="1.1">EFFICIENCY</text>
+    <text x="24" y="70" fill="#E8E7D8" font-size="22" font-weight="700">Tool + model calls</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">repetition and escalation cost</text>
+  </g>
+  <g transform="translate(376 468)">
+    <rect width="300" height="112" rx="18" fill="#20251F" stroke="#7C8A6E"/>
+    <text x="24" y="36" fill="#7C8A6E" font-size="14" font-weight="700" letter-spacing="1.1">PERFORMANCE</text>
+    <text x="24" y="70" fill="#E8E7D8" font-size="22" font-weight="700">Latency</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">end-to-end runtime per case</text>
+  </g>
+
+  <g transform="translate(44 604)">
+    <rect width="300" height="112" rx="18" fill="#20251F" stroke="#7C8A6E"/>
+    <text x="24" y="36" fill="#7C8A6E" font-size="14" font-weight="700" letter-spacing="1.1">USAGE</text>
+    <text x="24" y="70" fill="#E8E7D8" font-size="22" font-weight="700">Tokens + cost</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">usage captured where available</text>
+  </g>
+  <g transform="translate(376 604)">
+    <rect width="300" height="112" rx="18" fill="#20251F" stroke="#7C8A6E"/>
+    <text x="24" y="36" fill="#7C8A6E" font-size="14" font-weight="700" letter-spacing="1.1">DIAGNOSTICS</text>
+    <text x="24" y="70" fill="#E8E7D8" font-size="22" font-weight="700">Failure behavior</text>
+    <text x="24" y="94" fill="#B1A598" font-size="15">selection, evidence, reasoning, runtime</text>
+  </g>
+
+  <rect x="44" y="770" width="632" height="86" rx="18" fill="#7A2E3A" stroke="#B66A45"/>
+  <text x="70" y="804" fill="#F4E9DA" font-size="18" font-weight="700">Evaluation rule</text>
+  <text x="70" y="832" fill="#F4E9DA" font-size="16">Prefer deterministic checks when deterministic ground truth exists.</text>
+</g>
+</svg>
