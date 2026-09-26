@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">Agentic Analytics Lab benchmark comparison</title>
+<desc id="desc">Three GitHub-hosted benchmark runs compare the single-agent baseline with oracle-metadata routed execution. The baseline scored four of six tasks in each run. Oracle-metadata routed execution scored five of six, then six of six, then six of six. Natural-language routing is evaluated separately and is not proven by this comparison.</desc>
+<rect width="1200" height="760" rx="28" fill="#0E0D0C"/>
+<style>
+  .kicker{font:700 15px Inter,system-ui,sans-serif;letter-spacing:1.8px}
+  .title{font:750 38px Inter,system-ui,sans-serif}
+  .sub{font:500 19px Inter,system-ui,sans-serif}
+  .head{font:700 21px Inter,system-ui,sans-serif}
+  .metric{font:800 48px Inter,system-ui,sans-serif}
+  .body{font:500 17px Inter,system-ui,sans-serif}
+  .small{font:600 14px Inter,system-ui,sans-serif;letter-spacing:.4px}
+  .tiny{font:500 13px Inter,system-ui,sans-serif}
+</style>
+
+<text x="56" y="62" class="kicker" fill="#B66A45">BENCHMARK EVIDENCE</text>
+<text x="56" y="110" class="title" fill="#F4E9DA">Known routes improved execution. Routing inference is still separate.</text>
+<text x="56" y="146" class="sub" fill="#B1A598">Three accepted GitHub-hosted runs under matched benchmark conditions.</text>
+
+<!-- baseline card -->
+<rect x="56" y="194" width="514" height="356" rx="22" fill="#181613" stroke="#3C3732"/>
+<text x="86" y="236" class="kicker" fill="#B66A45">SINGLE-AGENT BASELINE</text>
+<text x="86" y="290" class="metric" fill="#F4E9DA">4 / 6</text>
+<text x="86" y="320" class="body" fill="#B1A598">task success in every run</text>
+
+<text x="86" y="370" class="small" fill="#82786F">RUN 1</text>
+<g transform="translate(158,354)">
+  <circle cx="12" cy="12" r="9" fill="#B66A45"/><circle cx="38" cy="12" r="9" fill="#B66A45"/>
+  <circle cx="64" cy="12" r="9" fill="#B66A45"/><circle cx="90" cy="12" r="9" fill="#B66A45"/>
+  <circle cx="116" cy="12" r="9" fill="#3C3732"/><circle cx="142" cy="12" r="9" fill="#3C3732"/>
+</g>
+<text x="86" y="414" class="small" fill="#82786F">RUN 2</text>
+<g transform="translate(158,398)">
+  <circle cx="12" cy="12" r="9" fill="#B66A45"/><circle cx="38" cy="12" r="9" fill="#B66A45"/>
+  <circle cx="64" cy="12" r="9" fill="#B66A45"/><circle cx="90" cy="12" r="9" fill="#B66A45"/>
+  <circle cx="116" cy="12" r="9" fill="#3C3732"/><circle cx="142" cy="12" r="9" fill="#3C3732"/>
+</g>
+<text x="86" y="458" class="small" fill="#82786F">RUN 3</text>
+<g transform="translate(158,442)">
+  <circle cx="12" cy="12" r="9" fill="#B66A45"/><circle cx="38" cy="12" r="9" fill="#B66A45"/>
+  <circle cx="64" cy="12" r="9" fill="#B66A45"/><circle cx="90" cy="12" r="9" fill="#B66A45"/>
+  <circle cx="116" cy="12" r="9" fill="#3C3732"/><circle cx="142" cy="12" r="9" fill="#3C3732"/>
+</g>
+<text x="86" y="510" class="body" fill="#B1A598">12 / 18 successful tasks across three runs</text>
+
+<!-- routed card -->
+<rect x="594" y="194" width="550" height="356" rx="22" fill="#181613" stroke="#3C3732"/>
+<text x="624" y="236" class="kicker" fill="#7C8A6E">ORACLE-METADATA ROUTED EXECUTION</text>
+<text x="624" y="290" class="metric" fill="#E8E7D8">5 / 6 → 6 / 6 → 6 / 6</text>
+<text x="624" y="320" class="body" fill="#B1A598">task success across the three matched runs</text>
+
+<text x="624" y="370" class="small" fill="#82786F">RUN 1</text>
+<g transform="translate(696,354)">
+  <circle cx="12" cy="12" r="9" fill="#7C8A6E"/><circle cx="38" cy="12" r="9" fill="#7C8A6E"/>
+  <circle cx="64" cy="12" r="9" fill="#7C8A6E"/><circle cx="90" cy="12" r="9" fill="#7C8A6E"/>
+  <circle cx="116" cy="12" r="9" fill="#7C8A6E"/><circle cx="142" cy="12" r="9" fill="#3C3732"/>
+</g>
+<text x="624" y="414" class="small" fill="#82786F">RUN 2</text>
+<g transform="translate(696,398)">
+  <circle cx="12" cy="12" r="9" fill="#7C8A6E"/><circle cx="38" cy="12" r="9" fill="#7C8A6E"/>
+  <circle cx="64" cy="12" r="9" fill="#7C8A6E"/><circle cx="90" cy="12" r="9" fill="#7C8A6E"/>
+  <circle cx="116" cy="12" r="9" fill="#7C8A6E"/><circle cx="142" cy="12" r="9" fill="#7C8A6E"/>
+</g>
+<text x="624" y="458" class="small" fill="#82786F">RUN 3</text>
+<g transform="translate(696,442)">
+  <circle cx="12" cy="12" r="9" fill="#7C8A6E"/><circle cx="38" cy="12" r="9" fill="#7C8A6E"/>
+  <circle cx="64" cy="12" r="9" fill="#7C8A6E"/><circle cx="90" cy="12" r="9" fill="#7C8A6E"/>
+  <circle cx="116" cy="12" r="9" fill="#7C8A6E"/><circle cx="142" cy="12" r="9" fill="#7C8A6E"/>
+</g>
+<text x="624" y="510" class="body" fill="#B1A598">17 / 18 successful tasks across three runs</text>
+
+<!-- claim boundary -->
+<rect x="56" y="580" width="1088" height="118" rx="20" fill="#201D1A" stroke="#3C3732"/>
+<text x="84" y="618" class="kicker" fill="#A58A6A">CLAIM BOUNDARY</text>
+<text x="84" y="652" class="head" fill="#F4E9DA">This tests execution when the correct route is already known.</text>
+<text x="84" y="680" class="body" fill="#B1A598">It does not prove natural-language route inference or a general multi-agent advantage.</text>
+
+<text x="56" y="734" class="tiny" fill="#82786F">Evidence: GitHub Actions baseline run 35755961530 · oracle-routed run 35760422536 · frozen Q1–Q6 benchmark</text>
+</svg>
