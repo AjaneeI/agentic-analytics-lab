@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1180" viewBox="0 0 720 1180" role="img" aria-labelledby="title desc">
+<title id="title">Agentic Analytics Lab architecture</title>
+<desc id="desc">Three evidence lanes are separated: the single-agent analytics baseline, an oracle-metadata routed execution experiment, and a natural-language routing evaluation lane. All analytical paths share a dataset-scoped read-only ClickHouse boundary.</desc>
+<rect width="720" height="1180" rx="24" fill="#0E0D0C"/>
+<text x="44" y="62" fill="#B66A45" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="700" letter-spacing="2">SYSTEM ARCHITECTURE</text>
+<text x="44" y="108" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="34" font-weight="750">Three questions. Three evidence lanes.</text>
+<text x="44" y="144" fill="#B1A598" font-family="Inter,system-ui,sans-serif" font-size="18">Execution value and routing inference are measured separately.</text>
+
+<g font-family="Inter,system-ui,sans-serif">
+  <text x="44" y="206" fill="#B66A45" font-size="14" font-weight="700" letter-spacing="1.4">01 · SINGLE-AGENT BASELINE</text>
+  <rect x="44" y="226" width="632" height="192" rx="20" fill="#181613" stroke="#3C3732"/>
+  <rect x="70" y="254" width="150" height="62" rx="16" fill="#201D1A" stroke="#B66A45"/>
+  <text x="145" y="292" text-anchor="middle" fill="#F4E9DA" font-size="19" font-weight="700">User question</text>
+  <text x="242" y="294" fill="#B66A45" font-size="24" font-weight="700">→</text>
+  <rect x="282" y="254" width="174" height="62" rx="16" fill="#201D1A" stroke="#B66A45"/>
+  <text x="369" y="292" text-anchor="middle" fill="#F4E9DA" font-size="19" font-weight="700">Single agent</text>
+  <text x="478" y="294" fill="#B66A45" font-size="24" font-weight="700">→</text>
+  <rect x="518" y="254" width="132" height="62" rx="16" fill="#201D1A" stroke="#B66A45"/>
+  <text x="584" y="292" text-anchor="middle" fill="#F4E9DA" font-size="18" font-weight="700">Tool</text>
+  <text x="70" y="360" fill="#B1A598" font-size="17">One worker decides whether to query and returns an evidence-backed answer.</text>
+  <text x="70" y="390" fill="#82786F" font-size="15">Purpose: establish the simplest credible comparison anchor.</text>
+
+  <text x="44" y="470" fill="#7C8A6E" font-size="14" font-weight="700" letter-spacing="1.4">02 · ORACLE-METADATA ROUTED EXECUTION</text>
+  <rect x="44" y="490" width="632" height="230" rx="20" fill="#181613" stroke="#3C3732"/>
+  <rect x="70" y="520" width="172" height="62" rx="16" fill="#283028" stroke="#7C8A6E"/>
+  <text x="156" y="558" text-anchor="middle" fill="#E8E7D8" font-size="18" font-weight="700">Frozen metadata</text>
+  <text x="264" y="560" fill="#7C8A6E" font-size="24" font-weight="700">→</text>
+  <rect x="304" y="520" width="172" height="62" rx="16" fill="#283028" stroke="#7C8A6E"/>
+  <text x="390" y="558" text-anchor="middle" fill="#E8E7D8" font-size="18" font-weight="700">Control plane</text>
+  <text x="498" y="560" fill="#7C8A6E" font-size="24" font-weight="700">→</text>
+  <rect x="538" y="510" width="112" height="82" rx="16" fill="#283028" stroke="#7C8A6E"/>
+  <text x="594" y="542" text-anchor="middle" fill="#E8E7D8" font-size="16" font-weight="700">Handler</text>
+  <text x="594" y="568" text-anchor="middle" fill="#E8E7D8" font-size="16" font-weight="700">or worker</text>
+  <text x="70" y="632" fill="#B1A598" font-size="17">Known route → deterministic handler or existing local worker.</text>
+  <text x="70" y="662" fill="#82786F" font-size="15">Measures execution-layer value without route-inference error.</text>
+  <rect x="70" y="680" width="304" height="26" rx="13" fill="#2C312A"/>
+  <text x="222" y="698" text-anchor="middle" fill="#AAB69A" font-size="13" font-weight="700">NOT a natural-language routing benchmark</text>
+
+  <text x="44" y="772" fill="#A58A6A" font-size="14" font-weight="700" letter-spacing="1.4">03 · NATURAL-LANGUAGE ROUTING EVALUATION</text>
+  <rect x="44" y="792" width="632" height="216" rx="20" fill="#181613" stroke="#3C3732"/>
+  <rect x="70" y="822" width="172" height="62" rx="16" fill="#2A2420" stroke="#A58A6A"/>
+  <text x="156" y="860" text-anchor="middle" fill="#F1E5D8" font-size="18" font-weight="700">Free-text prompt</text>
+  <text x="264" y="862" fill="#A58A6A" font-size="24" font-weight="700">→</text>
+  <rect x="304" y="822" width="172" height="62" rx="16" fill="#2A2420" stroke="#A58A6A"/>
+  <text x="390" y="860" text-anchor="middle" fill="#F1E5D8" font-size="18" font-weight="700">Route classifier</text>
+  <text x="498" y="862" fill="#A58A6A" font-size="24" font-weight="700">→</text>
+  <rect x="538" y="822" width="112" height="62" rx="16" fill="#2A2420" stroke="#A58A6A"/>
+  <text x="594" y="849" text-anchor="middle" fill="#F1E5D8" font-size="15" font-weight="700">route</text>
+  <text x="594" y="871" text-anchor="middle" fill="#F1E5D8" font-size="15" font-weight="700">decision</text>
+  <text x="70" y="924" fill="#B1A598" font-size="17">Measures route accuracy, false-cheap routes, escalations, and mismatches.</text>
+  <text x="70" y="954" fill="#82786F" font-size="15">Current dev set is a regression fixture, not evidence of generalization.</text>
+
+  <text x="44" y="1062" fill="#82786F" font-size="14" font-weight="700" letter-spacing="1.4">SHARED ANALYTICAL BOUNDARY</text>
+  <rect x="44" y="1082" width="632" height="62" rx="18" fill="#201D1A" stroke="#3C3732"/>
+  <text x="360" y="1110" text-anchor="middle" fill="#F4E9DA" font-size="18" font-weight="700">Dataset-scoped read-only ClickHouse</text>
+  <text x="360" y="1134" text-anchor="middle" fill="#B1A598" font-size="14">semantic metric guards · scope checks · transport + resource safeguards</text>
+</g>
+</svg>

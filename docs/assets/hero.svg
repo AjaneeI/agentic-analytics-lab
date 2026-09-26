@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+<title id="title">Agentic Analytics Lab</title>
+<desc id="desc">Agentic Analytics Lab asks when routing earns its complexity, comparing a single-agent baseline with routed execution and separate natural-language routing evaluation.</desc>
+<rect width="720" height="360" rx="24" fill="#0E0D0C"/>
+<rect x="36" y="34" width="6" height="292" rx="3" fill="#B66A45"/>
+<text x="66" y="66" fill="#B66A45" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700" letter-spacing="1.8">AGENTIC ANALYTICS LAB</text>
+<text x="66" y="122" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="39" font-weight="750">When does routing</text>
+<text x="66" y="170" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="39" font-weight="750">earn its complexity?</text>
+<text x="66" y="213" fill="#B1A598" font-family="Inter,system-ui,sans-serif" font-size="18">Evaluation-first AI analytics over structured operational data.</text>
+
+<rect x="66" y="248" width="174" height="38" rx="19" fill="#201D1A" stroke="#B66A45"/>
+<text x="153" y="273" text-anchor="middle" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="650">single-agent baseline</text>
+<rect x="252" y="248" width="168" height="38" rx="19" fill="#283028" stroke="#7C8A6E"/>
+<text x="336" y="273" text-anchor="middle" fill="#E8E7D8" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="650">routed experiment</text>
+
+<text x="66" y="321" fill="#82786F" font-family="Inter,system-ui,sans-serif" font-size="14">146 tests · Python 3.11 + 3.12 · CodeQL · deterministic evaluation</text>
+
+<g transform="translate(492 78)">
+  <circle cx="72" cy="72" r="54" fill="none" stroke="#3C3732" stroke-width="2"/>
+  <circle cx="72" cy="72" r="34" fill="#181613" stroke="#B66A45" stroke-width="2"/>
+  <circle cx="72" cy="72" r="9" fill="#F4E9DA"/>
+  <path d="M106 72 H176" stroke="#7C8A6E" stroke-width="3" stroke-linecap="round"/>
+  <path d="M140 72 V28" stroke="#7C8A6E" stroke-width="3" stroke-linecap="round"/>
+  <path d="M140 72 V116" stroke="#7C8A6E" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="184" cy="72" r="11" fill="#7C8A6E"/>
+  <circle cx="140" cy="20" r="11" fill="#7C8A6E"/>
+  <circle cx="140" cy="124" r="11" fill="#7C8A6E"/>
+  <text x="72" y="158" text-anchor="middle" fill="#B66A45" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700">BASELINE</text>
+  <text x="156" y="158" text-anchor="middle" fill="#7C8A6E" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700">ROUTING</text>
+</g>
+</svg>
