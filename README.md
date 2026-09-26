@@ -68,6 +68,16 @@ This is an **Applied AI Engineering work sample**, not a demo-only chatbot.
 
 The latest verified Python workflow on `main` ran **146 tests successfully on both supported Python versions**.
 
+### Benchmark comparison
+
+<p align="center">
+  <img src="docs/assets/benchmark-comparison.svg" alt="Three-run benchmark comparison: the single-agent baseline scored 4 of 6 tasks in all three runs, while oracle-metadata routed execution scored 5 of 6, then 6 of 6, then 6 of 6" width="100%" />
+</p>
+
+Across the accepted GitHub-hosted comparison, the single-agent baseline completed **12/18** tasks across three runs and oracle-metadata routed execution completed **17/18**. The routed condition used frozen benchmark metadata to supply the intended route, so this is **execution-layer evidence**, not proof that a system can infer routes correctly from natural-language requests.
+
+Evidence: [single-agent repeatability run 35755961530](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/35755961530) · [oracle-metadata routed run 35760422536](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/35760422536)
+
 ### What the agent can answer
 
 The synthetic dataset models delivery work items with fields such as team, priority, status, planned effort, actual effort, lateness, blockers, rework, and customer impact.
