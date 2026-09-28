@@ -234,7 +234,9 @@ def _row_matches_value(
     value: Any,
     expected_key: str | None = None,
 ) -> bool:
-    if expected_key is not None and expected_key in row:
+    if expected_key is not None:
+        if expected_key not in row:
+            return False
         return _cell_matches_value(row[expected_key], value)
     return any(_cell_matches_value(cell, value) for cell in row.values())
 
