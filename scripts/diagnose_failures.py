@@ -37,8 +37,8 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    payload = json.loads(args.benchmark.read_text())
-    questions = json.loads(args.questions.read_text())
+    payload = json.loads(args.benchmark.read_text(encoding="utf-8"))
+    questions = json.loads(args.questions.read_text(encoding="utf-8"))
     diagnostics = diagnose_payload(payload, questions)
     diagnostics["source_artifact"] = str(args.benchmark)
     diagnostics["question_set"] = str(args.questions)
@@ -46,7 +46,7 @@ def main() -> None:
 
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(rendered)
+        args.output.write_text(rendered, encoding="utf-8")
 
     print(rendered, end="")
 
