@@ -132,6 +132,52 @@ class TestFailureStageDiagnostics(unittest.TestCase):
         self.assertEqual(result.primary_failure_stage, "query_execution")
         self.assertEqual(result.primary_reason_code, "query_execution_error")
 
+    def test_unknown_validation_does_not_overclaim_execution_failure(self):
+        record = self._record(
+            execution_success=False,
+            correct=None,
+            task_success=False,
+            factual_consistency=None,
+            tool_grounded=None,
+            tool_evidence=[],
+            tool_call_count=0,
+            tool_call_attempt_count=1,
+            failure_type="execution_error",
+            error=None,
+        )
+        result = diagnose_record(record, self.tool_case)
+
+        self.assertEqual(result.stage_outcomes["query_validation"].state, "unknown")
+        self.assertEqual(result.stage_outcomes["query_execution"].state, "unknown")
+        self.assertEqual(result.primary_failure_stage, "unknown")
+        self.assertFalse(result.diagnosis_complete)
+
+    def test_evidence_matching_ignores_column_names_and_unrelated_cells(self):
+        record = self._record(
+            correct=False,
+            task_success=False,
+            factual_consistency=False,
+            tool_evidence=[
+                {
+                    "name": "query_clickhouse",
+                    "arguments": {
+                        "sql": (
+                            "SELECT team, blocked_items, avg_wait_days "
+                            "FROM agentic_analytics.delivery_work_items"
+                        )
+                    },
+                    "row_count": 1,
+                    "result_rows": [
+                        {"team": "Data", "blocked_items": 21, "avg_wait_days": 20.9}
+                    ],
+                }
+            ],
+        )
+        result = diagnose_record(record, self.tool_case)
+
+        self.assertEqual(result.primary_failure_stage, "evidence_coverage")
+        self.assertEqual(result.primary_reason_code, "required_rows_missing")
+
     def test_incomplete_evidence_is_evidence_coverage_failure(self):
         record = self._record(
             correct=False,
