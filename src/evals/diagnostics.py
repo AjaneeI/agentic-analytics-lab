@@ -177,6 +177,15 @@ def _query_execution_outcome(
             detail="Captured query_clickhouse evidence proves execution returned.",
         )
 
+    if query_validation.state == "unknown":
+        return _stage(
+            "unknown",
+            detail=(
+                "Query validation is unknown, so a missing result cannot be "
+                "attributed to execution."
+            ),
+        )
+
     error = _error_text(record)
     if "ClickHouse query failed" in error:
         return _stage("failed", "query_execution_error", error)
@@ -202,22 +211,32 @@ def _numeric_matches(observed: float, target: float) -> bool:
     return False
 
 
-def _row_matches_value(row: Mapping[str, Any], value: Any) -> bool:
-    import json
-    import re
-
-    serialized = json.dumps(row, sort_keys=True).casefold()
+def _cell_matches_value(cell: Any, value: Any) -> bool:
     if isinstance(value, bool):
-        return True
+        return cell is value
     if isinstance(value, str):
-        return value.casefold() in serialized
+        return isinstance(cell, str) and cell.strip().casefold() == value.casefold()
     if isinstance(value, (int, float)):
-        candidates = [
-            float(match.group(0))
-            for match in re.finditer(r"-?\d+(?:\.\d+)?", serialized)
-        ]
-        return any(_numeric_matches(candidate, float(value)) for candidate in candidates)
+        if isinstance(cell, bool):
+            return False
+        if isinstance(cell, (int, float)):
+            return _numeric_matches(float(cell), float(value))
+        if isinstance(cell, str):
+            try:
+                return _numeric_matches(float(cell.strip()), float(value))
+            except ValueError:
+                return False
     return False
+
+
+def _row_matches_value(
+    row: Mapping[str, Any],
+    value: Any,
+    expected_key: str | None = None,
+) -> bool:
+    if expected_key is not None and expected_key in row:
+        return _cell_matches_value(row[expected_key], value)
+    return any(_cell_matches_value(cell, value) for cell in row.values())
 
 
 def _captured_rows(record: Mapping[str, Any]) -> list[dict[str, Any]]:
@@ -247,31 +266,37 @@ def _expected_evidence_is_captured(
             return None
         return all(
             any(
-                _row_matches_value(row, team) and _row_matches_value(row, pct)
+                _row_matches_value(row, team, "team")
+                and _row_matches_value(row, pct, "blocked_pct")
                 for row in rows
             )
             for team, pct in ranking
         )
 
-    values = [
-        value
+    expected_items = [
+        (key, value)
         for key, value in expected.items()
         if key != "answer" and not isinstance(value, bool)
     ]
 
     anchor = expected.get("team")
     if isinstance(anchor, str):
-        anchored_rows = [row for row in rows if _row_matches_value(row, anchor)]
+        anchored_rows = [
+            row for row in rows if _row_matches_value(row, anchor, "team")
+        ]
         if not anchored_rows:
             return False
         return all(
-            any(_row_matches_value(row, value) for row in anchored_rows)
-            for value in values
+            any(
+                _row_matches_value(row, value, key)
+                for row in anchored_rows
+            )
+            for key, value in expected_items
         )
 
     return all(
-        any(_row_matches_value(row, value) for row in rows)
-        for value in values
+        any(_row_matches_value(row, value, key) for row in rows)
+        for key, value in expected_items
     )
 
 
