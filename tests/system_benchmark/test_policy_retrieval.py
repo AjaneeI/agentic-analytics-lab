@@ -251,6 +251,18 @@ unlisted-only-token must never be retrievable.
         with self.assertRaisesRegex(retrieval.PolicyCorpusError, "current"):
             retrieval.retrieve_policy("blocked item", corpus_root=self.root)
 
+    def test_manifest_requires_one_current_version_per_document(self):
+        retrieval = _retrieval(self)
+        manifest = json.loads((self.root / "manifest.json").read_text(encoding="utf-8"))
+        manifest["documents"][1]["status"] = "superseded"
+        (self.root / "manifest.json").write_text(
+            json.dumps(manifest),
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(retrieval.PolicyCorpusError, "current"):
+            retrieval.retrieve_policy("blocked item", corpus_root=self.root)
+
     def test_manifest_path_traversal_is_rejected(self):
         retrieval = _retrieval(self)
         manifest = json.loads((self.root / "manifest.json").read_text(encoding="utf-8"))
