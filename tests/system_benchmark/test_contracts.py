@@ -51,6 +51,14 @@ class TestSystemBenchmarkTaskContract(unittest.TestCase):
         )
         self.assertEqual(task.expected_values[0].tolerance, 0.2)
 
+    def test_unsupported_benchmark_version_is_rejected(self):
+        contracts = _contracts(self)
+        payload = valid_task_payload()
+        payload["benchmark_version"] = "system-benchmark-v2"
+
+        with self.assertRaisesRegex(ValueError, "benchmark version"):
+            contracts.parse_task_contract(payload)
+
     def test_invalid_family_is_rejected(self):
         contracts = _contracts(self)
         payload = valid_task_payload()
@@ -115,6 +123,15 @@ class TestSystemBenchmarkTaskContract(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "tolerance"):
             contracts.parse_task_contract(payload)
 
+    def test_non_finite_tolerance_is_rejected(self):
+        contracts = _contracts(self)
+        for tolerance in (float("inf"), float("nan")):
+            payload = valid_task_payload()
+            payload["expected_values"][0]["tolerance"] = tolerance
+            with self.subTest(tolerance=tolerance):
+                with self.assertRaisesRegex(ValueError, "tolerance"):
+                    contracts.parse_task_contract(payload)
+
     def test_evidence_capability_requires_source_types(self):
         contracts = _contracts(self)
         payload = valid_task_payload()
@@ -130,6 +147,14 @@ class TestSystemBenchmarkTaskContract(unittest.TestCase):
         payload["forbidden_dispositions"] = ["answer", "unsupported", "handoff"]
 
         with self.assertRaisesRegex(ValueError, "clarification"):
+            contracts.parse_task_contract(payload)
+
+    def test_family_h_requires_handoff_disposition(self):
+        contracts = _contracts(self)
+        payload = valid_task_payload()
+        payload["family"] = "H"
+
+        with self.assertRaisesRegex(ValueError, "Family H"):
             contracts.parse_task_contract(payload)
 
     def test_handoff_disposition_requires_complete_handoff_contract(self):
