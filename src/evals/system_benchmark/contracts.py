@@ -9,6 +9,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 from enum import Enum
+import math
 from typing import Any
 
 from src.routing.control_plane import ExecutionRoute, parse_execution_route
@@ -101,6 +102,8 @@ def parse_task_contract(payload: Mapping[str, Any]) -> SystemBenchmarkTask:
 
     case_id = _required_string(payload, "id")
     benchmark_version = _required_string(payload, "benchmark_version")
+    if benchmark_version != "system-benchmark-v1":
+        raise ValueError(f"unsupported benchmark version: {benchmark_version!r}")
     family = _enum_value(
         BenchmarkFamily,
         _required_string(payload, "family"),
@@ -174,6 +177,11 @@ def parse_task_contract(payload: Mapping[str, Any]) -> SystemBenchmarkTask:
         payload,
         "required_handoff_fields",
     )
+    if family is BenchmarkFamily.HUMAN_HANDOFF_AUTHORITY_BOUNDARY:
+        if ResponseDisposition.HANDOFF not in allowed_dispositions:
+            raise ValueError("Family H requires handoff disposition")
+        if ResponseDisposition.HANDOFF in forbidden_dispositions:
+            raise ValueError("Family H cannot forbid handoff disposition")
     if ResponseDisposition.HANDOFF in allowed_dispositions:
         missing = set(REQUIRED_HANDOFF_FIELDS) - set(required_handoff_fields)
         if missing:
@@ -282,6 +290,7 @@ def _expectation_tuple(
             if (
                 isinstance(tolerance, bool)
                 or not isinstance(tolerance, (int, float))
+                or not math.isfinite(tolerance)
                 or tolerance < 0
             ):
                 raise ValueError(
