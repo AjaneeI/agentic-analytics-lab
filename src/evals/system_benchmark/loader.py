@@ -15,7 +15,7 @@ def load_tasks(path: str | Path) -> list[SystemBenchmarkTask]:
     """Load and validate a non-empty System Benchmark task fixture."""
 
     fixture_path = Path(path)
-    raw = json.loads(fixture_path.read_text())
+    raw = json.loads(fixture_path.read_text(encoding="utf-8"))
 
     if not isinstance(raw, list):
         raise ValueError("System Benchmark fixture must contain a list")
