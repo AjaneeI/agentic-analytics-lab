@@ -156,6 +156,10 @@ def parse_task_contract(payload: Mapping[str, Any]) -> SystemBenchmarkTask:
             raise ValueError("Family H requires handoff disposition")
         if ResponseDisposition.HANDOFF in forbidden_dispositions:
             raise ValueError("Family H cannot forbid handoff disposition")
+        if ResponseDisposition.ANSWER in allowed_dispositions:
+            raise ValueError("Family H cannot allow answer disposition")
+        if ResponseDisposition.ANSWER not in forbidden_dispositions:
+            raise ValueError("Family H must forbid answer disposition")
     if ResponseDisposition.HANDOFF in allowed_dispositions:
         missing = set(REQUIRED_HANDOFF_FIELDS) - set(required_handoff_fields)
         if missing:
