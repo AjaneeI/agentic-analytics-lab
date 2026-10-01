@@ -1,5 +1,7 @@
 import importlib
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -99,10 +101,55 @@ class TestSystemBenchmarkLoader(unittest.TestCase):
         self.assertEqual(first, (path,))
 
     def test_loader_validation_does_not_import_model_or_tool_runtime(self):
-        loader = _loader(self)
+        probe = """
+import json
+import sys
+from pathlib import Path
+import tempfile
 
-        self.assertNotIn("src.agents.single_agent", loader.__dict__)
-        self.assertNotIn("src.tools.clickhouse_readonly", loader.__dict__)
+from src.evals.system_benchmark.loader import load_tasks
+
+payload = [{
+    "id": "SB-A01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "A",
+    "split": "development",
+    "request": "Which team has the highest blocker rate?",
+    "expected_route": "deterministic",
+    "expected_capability_profile": "structured",
+    "allowed_dispositions": ["answer"],
+    "forbidden_dispositions": ["clarify", "unsupported", "handoff"],
+    "required_evidence_source_types": ["structured"],
+    "acceptable_source_ids": ["delivery_work_items"],
+    "expected_values": [{"name": "blocked_pct", "value": 20.9, "tolerance": 0.2}],
+    "required_claims": ["identify the team and blocker rate"],
+    "forbidden_claims": ["claim that blockers cause lateness"],
+    "required_clarification_concept": None,
+    "required_handoff_fields": [],
+    "allowed_tools": ["query_clickhouse"],
+    "forbidden_tools": ["retrieve_policy"],
+    "reference_solution_id": "REF-A01",
+}]
+
+with tempfile.TemporaryDirectory() as tmp:
+    path = Path(tmp) / "tasks.json"
+    path.write_text(json.dumps(payload))
+    load_tasks(path)
+
+forbidden = {"src.agents.single_agent", "src.tools.clickhouse_readonly"}
+loaded = forbidden.intersection(sys.modules)
+if loaded:
+    raise SystemExit("forbidden runtime imports loaded: " + ", ".join(sorted(loaded)))
+"""
+        result = subprocess.run(
+            [sys.executable, "-c", probe],
+            cwd=Path(__file__).resolve().parents[2],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
 
 
 if __name__ == "__main__":
