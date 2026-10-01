@@ -1,8 +1,10 @@
 import importlib
+import inspect
 import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 def _retrieval(testcase):
@@ -20,6 +22,10 @@ class TestPolicyRetrieval(unittest.TestCase):
 
     def tearDown(self):
         self.tmp.cleanup()
+
+    def _retrieve(self, retrieval, query, **kwargs):
+        with patch.object(retrieval, "DEFAULT_CORPUS_ROOT", self.root):
+            return retrieval.retrieve_policy(query, **kwargs)
 
     def _write(self, relative_path, text):
         path = self.root / relative_path
@@ -150,11 +156,33 @@ unlisted-only-token must never be retrievable.
 """,
         )
 
+    def test_public_tool_signature_does_not_expose_corpus_path(self):
+        retrieval = _retrieval(self)
+        parameters = inspect.signature(retrieval.retrieve_policy).parameters
+
+        self.assertEqual(tuple(parameters), ("query", "as_of", "top_k"))
+
+    def test_public_evidence_envelope_matches_design(self):
+        retrieval = _retrieval(self)
+        result = self._retrieve(retrieval, "blocker rate", top_k=1)[0]
+
+        self.assertEqual(
+            tuple(result.__dataclass_fields__),
+            (
+                "document_id",
+                "document_version",
+                "section_id",
+                "excerpt",
+                "effective_date",
+                "status",
+            ),
+        )
+
     def test_default_retrieval_prefers_current_policy_version(self):
         retrieval = _retrieval(self)
-        results = retrieval.retrieve_policy(
+        results = self._retrieve(
+            retrieval,
             "What counts as a blocked item?",
-            corpus_root=self.root,
         )
 
         self.assertTrue(results)
@@ -164,10 +192,10 @@ unlisted-only-token must never be retrievable.
 
     def test_as_of_date_returns_applicable_superseded_version(self):
         retrieval = _retrieval(self)
-        results = retrieval.retrieve_policy(
+        results = self._retrieve(
+            retrieval,
             "What counts as a blocked item?",
             as_of="2025-06-01",
-            corpus_root=self.root,
         )
 
         self.assertTrue(results)
@@ -177,9 +205,9 @@ unlisted-only-token must never be retrievable.
 
     def test_section_level_ranking_disambiguates_overlapping_terms(self):
         retrieval = _retrieval(self)
-        results = retrieval.retrieve_policy(
+        results = self._retrieve(
+            retrieval,
             "How is blocker rate calculated for active items?",
-            corpus_root=self.root,
         )
 
         self.assertTrue(results)
@@ -188,15 +216,15 @@ unlisted-only-token must never be retrievable.
 
     def test_tie_breaking_is_stable(self):
         retrieval = _retrieval(self)
-        first = retrieval.retrieve_policy(
+        first = self._retrieve(
+            retrieval,
             "deterministic tie marker",
             top_k=2,
-            corpus_root=self.root,
         )
-        second = retrieval.retrieve_policy(
+        second = self._retrieve(
+            retrieval,
             "deterministic tie marker",
             top_k=2,
-            corpus_root=self.root,
         )
 
         first_ids = [(item.document_id, item.section_id) for item in first]
@@ -211,19 +239,19 @@ unlisted-only-token must never be retrievable.
         retrieval = _retrieval(self)
 
         with self.assertRaisesRegex(ValueError, "top_k"):
-            retrieval.retrieve_policy("blocker", top_k=0, corpus_root=self.root)
+            self._retrieve(retrieval, "blocker", top_k=0)
         with self.assertRaisesRegex(ValueError, "top_k"):
-            retrieval.retrieve_policy(
+            self._retrieve(
+                retrieval,
                 "blocker",
                 top_k=retrieval.MAX_TOP_K + 1,
-                corpus_root=self.root,
             )
 
     def test_blank_query_returns_inspectable_empty_result(self):
         retrieval = _retrieval(self)
 
         self.assertEqual(
-            retrieval.retrieve_policy("   ", corpus_root=self.root),
+            self._retrieve(retrieval, "   "),
             [],
         )
 
@@ -237,7 +265,7 @@ unlisted-only-token must never be retrievable.
         )
 
         with self.assertRaisesRegex(retrieval.PolicyCorpusError, "corpus_version"):
-            retrieval.retrieve_policy("blocked item", corpus_root=self.root)
+            self._retrieve(retrieval, "blocked item")
 
     def test_manifest_rejects_multiple_current_versions_for_one_document(self):
         retrieval = _retrieval(self)
@@ -249,7 +277,7 @@ unlisted-only-token must never be retrievable.
         )
 
         with self.assertRaisesRegex(retrieval.PolicyCorpusError, "current"):
-            retrieval.retrieve_policy("blocked item", corpus_root=self.root)
+            self._retrieve(retrieval, "blocked item")
 
     def test_manifest_requires_one_current_version_per_document(self):
         retrieval = _retrieval(self)
@@ -261,7 +289,19 @@ unlisted-only-token must never be retrievable.
         )
 
         with self.assertRaisesRegex(retrieval.PolicyCorpusError, "current"):
-            retrieval.retrieve_policy("blocked item", corpus_root=self.root)
+            self._retrieve(retrieval, "blocked item")
+
+    def test_manifest_rejects_duplicate_effective_dates_for_one_document(self):
+        retrieval = _retrieval(self)
+        manifest = json.loads((self.root / "manifest.json").read_text(encoding="utf-8"))
+        manifest["documents"][0]["effective_date"] = "2026-01-01"
+        (self.root / "manifest.json").write_text(
+            json.dumps(manifest),
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(retrieval.PolicyCorpusError, "effective_date"):
+            self._retrieve(retrieval, "blocked item")
 
     def test_manifest_path_traversal_is_rejected(self):
         retrieval = _retrieval(self)
@@ -273,23 +313,23 @@ unlisted-only-token must never be retrievable.
         )
 
         with self.assertRaisesRegex(retrieval.PolicyCorpusError, "path"):
-            retrieval.retrieve_policy("blocked item", corpus_root=self.root)
+            self._retrieve(retrieval, "blocked item")
 
     def test_unlisted_files_are_not_retrievable(self):
         retrieval = _retrieval(self)
 
-        results = retrieval.retrieve_policy(
+        results = self._retrieve(
+            retrieval,
             "unlisted-only-token",
-            corpus_root=self.root,
         )
 
         self.assertEqual(results, [])
 
     def test_excerpt_length_is_bounded(self):
         retrieval = _retrieval(self)
-        results = retrieval.retrieve_policy(
+        results = self._retrieve(
+            retrieval,
             "blocked item active work dependency approval decision",
-            corpus_root=self.root,
         )
 
         self.assertTrue(results)
@@ -297,10 +337,10 @@ unlisted-only-token must never be retrievable.
 
     def test_evidence_identity_is_complete(self):
         retrieval = _retrieval(self)
-        result = retrieval.retrieve_policy(
+        result = self._retrieve(
+            retrieval,
             "blocker response owner",
             top_k=1,
-            corpus_root=self.root,
         )[0]
 
         self.assertEqual(result.document_id, "service-level")
@@ -327,10 +367,10 @@ unlisted-only-token must never be retrievable.
         retrieval = _retrieval(self)
 
         with self.assertRaisesRegex(ValueError, "as_of"):
-            retrieval.retrieve_policy(
+            self._retrieve(
+                retrieval,
                 "blocker",
                 as_of="not-a-date",
-                corpus_root=self.root,
             )
 
 
