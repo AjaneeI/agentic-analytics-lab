@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 def _loader(testcase):
@@ -99,6 +100,22 @@ class TestSystemBenchmarkLoader(unittest.TestCase):
 
         self.assertEqual(first, second)
         self.assertEqual(first, (path,))
+
+    def test_loader_reads_fixture_as_utf8(self):
+        loader = _loader(self)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._write(tmp, [valid_task_payload()])
+            original_read_text = Path.read_text
+            seen_encodings = []
+
+            def recording_read_text(path_obj, *args, **kwargs):
+                seen_encodings.append(kwargs.get("encoding"))
+                return original_read_text(path_obj, *args, **kwargs)
+
+            with patch.object(Path, "read_text", recording_read_text):
+                loader.load_tasks(path)
+
+        self.assertEqual(seen_encodings, ["utf-8"])
 
     def test_loader_validation_does_not_import_model_or_tool_runtime(self):
         probe = """
