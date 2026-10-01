@@ -274,6 +274,19 @@ unlisted-only-token must never be retrievable.
         self.assertEqual(result.status, "current")
         self.assertTrue(result.excerpt)
 
+    def test_repository_corpus_is_retrievable_by_default(self):
+        retrieval = _retrieval(self)
+
+        results = retrieval.retrieve_policy(
+            "How is blocker rate calculated for active items?",
+            top_k=1,
+        )
+
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].document_id, "blocker-definition")
+        self.assertEqual(results[0].document_version, "1.0")
+        self.assertEqual(results[0].section_id, "blocker-rate")
+
     def test_invalid_as_of_date_is_rejected(self):
         retrieval = _retrieval(self)
 
