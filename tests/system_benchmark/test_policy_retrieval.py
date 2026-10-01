@@ -227,6 +227,30 @@ unlisted-only-token must never be retrievable.
             [],
         )
 
+    def test_manifest_requires_corpus_version(self):
+        retrieval = _retrieval(self)
+        manifest = json.loads((self.root / "manifest.json").read_text(encoding="utf-8"))
+        manifest.pop("corpus_version")
+        (self.root / "manifest.json").write_text(
+            json.dumps(manifest),
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(retrieval.PolicyCorpusError, "corpus_version"):
+            retrieval.retrieve_policy("blocked item", corpus_root=self.root)
+
+    def test_manifest_rejects_multiple_current_versions_for_one_document(self):
+        retrieval = _retrieval(self)
+        manifest = json.loads((self.root / "manifest.json").read_text(encoding="utf-8"))
+        manifest["documents"][0]["status"] = "current"
+        (self.root / "manifest.json").write_text(
+            json.dumps(manifest),
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(retrieval.PolicyCorpusError, "current"):
+            retrieval.retrieve_policy("blocked item", corpus_root=self.root)
+
     def test_manifest_path_traversal_is_rejected(self):
         retrieval = _retrieval(self)
         manifest = json.loads((self.root / "manifest.json").read_text(encoding="utf-8"))
