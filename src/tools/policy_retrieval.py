@@ -34,7 +34,6 @@ class PolicyEvidence:
     excerpt: str
     effective_date: str
     status: str
-    score: int
 
 
 @dataclass(frozen=True)
@@ -52,7 +51,6 @@ def retrieve_policy(
     *,
     as_of: str | None = None,
     top_k: int = 3,
-    corpus_root: str | Path | None = None,
 ) -> list[PolicyEvidence]:
     """Return deterministic section-level policy evidence for a text query."""
 
@@ -65,12 +63,11 @@ def retrieve_policy(
     if not 1 <= top_k <= MAX_TOP_K:
         raise ValueError(f"top_k must be between 1 and {MAX_TOP_K}")
 
-    root = Path(corpus_root) if corpus_root is not None else DEFAULT_CORPUS_ROOT
-    documents = _load_manifest(root)
+    documents = _load_manifest(DEFAULT_CORPUS_ROOT)
     selected = _select_document_versions(documents, as_of=as_of)
     query_tokens = set(_tokens(query))
 
-    candidates: list[PolicyEvidence] = []
+    candidates: list[tuple[int, PolicyEvidence]] = []
     for document in selected:
         content = document.path.read_text(encoding="utf-8")
         for section_id, heading, body in _sections(content, document.path):
@@ -79,26 +76,28 @@ def retrieve_policy(
                 continue
             excerpt = _bounded_excerpt(heading, body)
             candidates.append(
-                PolicyEvidence(
-                    document_id=document.document_id,
-                    document_version=document.version,
-                    section_id=section_id,
-                    excerpt=excerpt,
-                    effective_date=document.effective_date.isoformat(),
-                    status=document.status,
-                    score=score,
+                (
+                    score,
+                    PolicyEvidence(
+                        document_id=document.document_id,
+                        document_version=document.version,
+                        section_id=section_id,
+                        excerpt=excerpt,
+                        effective_date=document.effective_date.isoformat(),
+                        status=document.status,
+                    ),
                 )
             )
 
     candidates.sort(
         key=lambda item: (
-            -item.score,
-            item.document_id,
-            item.document_version,
-            item.section_id,
+            -item[0],
+            item[1].document_id,
+            item[1].document_version,
+            item[1].section_id,
         )
     )
-    return candidates[:top_k]
+    return [evidence for _, evidence in candidates[:top_k]]
 
 
 def _load_manifest(root: Path) -> list[_ManifestDocument]:
@@ -120,6 +119,7 @@ def _load_manifest(root: Path) -> list[_ManifestDocument]:
 
     documents: list[_ManifestDocument] = []
     seen: set[tuple[str, str]] = set()
+    seen_effective_dates: set[tuple[str, date]] = set()
 
     for index, item in enumerate(raw["documents"]):
         if not isinstance(item, dict):
@@ -164,6 +164,14 @@ def _load_manifest(root: Path) -> list[_ManifestDocument]:
                 f"Duplicate policy document/version in manifest: {document_id} {version}"
             )
         seen.add(identity)
+
+        effective_identity = (document_id, effective_date)
+        if effective_identity in seen_effective_dates:
+            raise PolicyCorpusError(
+                "Policy versions for one document_id must have unique effective_date "
+                f"values: {document_id} {effective_date.isoformat()}"
+            )
+        seen_effective_dates.add(effective_identity)
 
         documents.append(
             _ManifestDocument(
