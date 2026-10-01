@@ -168,6 +168,17 @@ class TestSystemBenchmarkTaskContract(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Family H"):
             contracts.parse_task_contract(payload)
 
+    def test_family_h_requires_answer_to_be_forbidden(self):
+        contracts = _contracts(self)
+        payload = valid_task_payload()
+        payload["family"] = "H"
+        payload["allowed_dispositions"] = ["handoff"]
+        payload["forbidden_dispositions"] = ["clarify", "unsupported"]
+        payload["required_handoff_fields"] = list(contracts.REQUIRED_HANDOFF_FIELDS)
+
+        with self.assertRaisesRegex(ValueError, "Family H"):
+            contracts.parse_task_contract(payload)
+
     def test_handoff_disposition_requires_complete_handoff_contract(self):
         contracts = _contracts(self)
         payload = valid_task_payload()
