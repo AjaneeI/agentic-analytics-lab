@@ -112,6 +112,11 @@ def _load_manifest(root: Path) -> list[_ManifestDocument]:
 
     if not isinstance(raw, dict) or not isinstance(raw.get("documents"), list):
         raise PolicyCorpusError("Policy corpus manifest must contain a documents list")
+    corpus_version = raw.get("corpus_version")
+    if not isinstance(corpus_version, str) or not corpus_version.strip():
+        raise PolicyCorpusError(
+            "Policy corpus manifest field 'corpus_version' must be a non-empty string"
+        )
 
     documents: list[_ManifestDocument] = []
     seen: set[tuple[str, str]] = set()
@@ -173,6 +178,26 @@ def _load_manifest(root: Path) -> list[_ManifestDocument]:
 
     if not documents:
         raise PolicyCorpusError("Policy corpus manifest must not be empty")
+
+    current_counts: dict[str, int] = {}
+    for document in documents:
+        current_counts.setdefault(document.document_id, 0)
+        if document.status == "current":
+            current_counts[document.document_id] += 1
+    invalid_current = {
+        document_id: count
+        for document_id, count in current_counts.items()
+        if count != 1
+    }
+    if invalid_current:
+        details = ", ".join(
+            f"{document_id}={count}"
+            for document_id, count in sorted(invalid_current.items())
+        )
+        raise PolicyCorpusError(
+            "Each policy document_id must have exactly one current version: "
+            + details
+        )
 
     return documents
 
