@@ -71,7 +71,13 @@ def retrieve_policy(
     for document in selected:
         content = document.path.read_text(encoding="utf-8")
         for section_id, heading, body in _sections(content, document.path):
-            score = _score_section(query_tokens, heading, body)
+            score = _score_section(
+                query_tokens,
+                document.document_id,
+                document.path,
+                heading,
+                body,
+            )
             if score <= 0:
                 continue
             excerpt = _bounded_excerpt(heading, body)
@@ -188,8 +194,10 @@ def _load_manifest(root: Path) -> list[_ManifestDocument]:
         raise PolicyCorpusError("Policy corpus manifest must not be empty")
 
     current_counts: dict[str, int] = {}
+    versions_by_document: dict[str, list[_ManifestDocument]] = {}
     for document in documents:
         current_counts.setdefault(document.document_id, 0)
+        versions_by_document.setdefault(document.document_id, []).append(document)
         if document.status == "current":
             current_counts[document.document_id] += 1
     invalid_current = {
@@ -206,6 +214,20 @@ def _load_manifest(root: Path) -> list[_ManifestDocument]:
             "Each policy document_id must have exactly one current version: "
             + details
         )
+
+    for document_id, versions in versions_by_document.items():
+        current = next(doc for doc in versions if doc.status == "current")
+        newer_superseded = [
+            doc for doc in versions
+            if doc.status == "superseded" and doc.effective_date > current.effective_date
+        ]
+        if newer_superseded:
+            latest = max(newer_superseded, key=lambda doc: doc.effective_date)
+            raise PolicyCorpusError(
+                "Current policy version must have the latest effective_date for "
+                f"{document_id}: current={current.effective_date.isoformat()}, "
+                f"newer_superseded={latest.effective_date.isoformat()}"
+            )
 
     return documents
 
@@ -302,10 +324,21 @@ def _slug(text: str) -> str:
     return "-".join(_tokens(text))
 
 
-def _score_section(query_tokens: set[str], heading: str, body: str) -> int:
+def _score_section(
+    query_tokens: set[str],
+    document_id: str,
+    source: Path,
+    heading: str,
+    body: str,
+) -> int:
+    document_tokens = set(_tokens(document_id)) | set(_tokens(source.stem))
     heading_tokens = set(_tokens(heading))
     body_tokens = set(_tokens(body))
-    return 3 * len(query_tokens & heading_tokens) + len(query_tokens & body_tokens)
+    return (
+        4 * len(query_tokens & document_tokens)
+        + 3 * len(query_tokens & heading_tokens)
+        + len(query_tokens & body_tokens)
+    )
 
 
 def _bounded_excerpt(heading: str, body: str) -> str:
