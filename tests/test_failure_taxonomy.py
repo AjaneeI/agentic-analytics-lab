@@ -30,6 +30,14 @@ class TestFailureTaxonomy(unittest.TestCase):
         self.assertIn("tool_use.repeated_call", codes)
         self.assertIn("tool_use.call_budget_exceeded", codes)
 
+    def test_preserves_unknown_alongside_known_tag(self):
+        codes = taxonomy_codes(
+            reason_codes=("missing_required_evidence", "future_reason_code")
+        )
+
+        self.assertIn("grounding.missing_evidence", codes)
+        self.assertIn("unknown.unclassified", codes)
+
     def test_combines_diagnostic_stage_and_recovery(self):
         codes = taxonomy_codes(
             diagnostic_stage="tool_execution",
