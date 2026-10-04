@@ -1,0 +1,61 @@
+{
+  "corpus_version": "system-benchmark-policy-v1",
+  "documents": [
+    {
+      "document_id": "kpi-dictionary",
+      "version": "1.0",
+      "status": "current",
+      "effective_date": "2026-01-01",
+      "scope": "analytics",
+      "path": "kpi_dictionary_v1.md"
+    },
+    {
+      "document_id": "blocker-definition",
+      "version": "0.9",
+      "status": "superseded",
+      "effective_date": "2025-01-01",
+      "scope": "delivery",
+      "path": "blocker_definition_v0_9.md"
+    },
+    {
+      "document_id": "blocker-definition",
+      "version": "1.0",
+      "status": "current",
+      "effective_date": "2026-01-01",
+      "scope": "delivery",
+      "path": "blocker_definition_v1.md"
+    },
+    {
+      "document_id": "delivery-operating",
+      "version": "1.0",
+      "status": "current",
+      "effective_date": "2026-01-01",
+      "scope": "delivery",
+      "path": "delivery_operating_policy_v1.md"
+    },
+    {
+      "document_id": "escalation-policy",
+      "version": "1.0",
+      "status": "current",
+      "effective_date": "2026-01-01",
+      "scope": "delivery-operations",
+      "path": "escalation_policy_v1.md"
+    },
+    {
+      "document_id": "service-level-policy",
+      "version": "1.0",
+      "status": "current",
+      "effective_date": "2026-01-01",
+      "scope": "customer-service",
+      "path": "service_level_policy_v1.md"
+    },
+    {
+      "document_id": "analytical-interpretation",
+      "version": "1.0",
+      "status": "current",
+      "effective_date": "2026-01-01",
+      "scope": "analytics",
+      "path": "analytical_interpretation_guide_v1.md"
+    }
+  ]
+}

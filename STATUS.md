@@ -1,53 +1,52 @@
 # Verified Project Status
 
-_Last reviewed against the repository default branch and open PR state on 2026-09-29._
+_Last reviewed against the active System Benchmark v1 branch state on 2026-10-04._
 
 ## Current verified state
-- The public README reports 146 Python tests passing on Python 3.11 and 3.12.
-- GitHub Actions and CodeQL are presented as passing on `main`.
-- The project has three explicitly separated lanes:
+- The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
+- The project keeps three distinct evaluation lanes:
   - single-agent baseline;
   - oracle-metadata routed execution;
   - natural-language routing evaluation.
-- The accepted GitHub-hosted comparison reported:
-  - single-agent baseline: 12/18 task successes across three runs;
-  - oracle-metadata routed execution: 17/18 task successes across three runs.
-- That routed comparison is execution-layer evidence only because the intended route came from frozen benchmark metadata.
-- Natural-language routing has a development evaluation lane, but the repository explicitly does not treat the current development set as evidence of generalization.
-- The next public evidence gates in the README are:
-  - establish a reviewed post-hardening single-agent comparison anchor;
-  - preserve exact commit/artifact provenance for every published comparison;
-  - evaluate natural-language routing on a held-out or novel-request set;
-  - compare routing gains against latency, calls, tokens, cost, and maintenance complexity;
-  - choose an explicit repository license if reuse is intended.
+- The accepted GitHub-hosted comparison remains execution-layer evidence only because the intended route came from frozen benchmark metadata.
+- System Benchmark v1 is now the active architecture-level evidence program.
+- PR A (#63) merged the typed task/response contracts, deterministic fixture loader, fingerprint inputs, and model-free validation foundation.
+- PR B (#65) implements a repository-local policy corpus plus deterministic, read-only policy retrieval.
+- PR B's current implementation includes:
+  - current versus superseded version selection;
+  - historical `as_of` lookup;
+  - section-level deterministic ranking;
+  - bounded `top_k` and excerpts;
+  - path-traversal/corpus-root enforcement;
+  - auditable document/version/section identity.
+- The policy manifest rejects duplicate effective dates for the same `document_id`, avoiding ambiguous historical version precedence.
+- The Oct. 4 PR B fix set removes retrospective future-definition text from historical evidence, caps document-name matches at tie-break/fallback strength, validates calendar-date syntax before selection, and makes the P1 rules govern the same authorization under the same conditions.
+- Twelve additional deterministic regression tests cover the four findings and preserve named-source retrieval, historical/current definitions, and valid calendar boundaries.
+- Sandbox verification on Python 3.13.13: 59 System Benchmark tests and all 207 repository tests pass; source compilation and diff whitespace checks pass.
+- These are deterministic implementation checks, not model-performance results. Python 3.11/3.12 and CodeQL must be checked on the new PR head; green checks on the earlier `8276df4` head do not certify this fix set.
 
-## Recent default-branch milestones
-Recent merged work includes:
-- natural-language routing benchmark lane (#47);
-- failure diagnostics, provenance, and efficiency metrics (#46);
-- System Benchmark v1 design and implementation plan (#52/#54);
-- reusable project-health reporting (#53);
-- README/architecture refreshes and benchmark visualization.
+## Current merge gate
+PR B is not accepted evidence until:
+- fresh Python 3.11/3.12 and CodeQL checks are green on the final head;
+- substantive review findings are resolved or technically dispositioned;
+- deterministic repeatability remains intact;
+- `evals/questions.json` remains byte-for-byte unchanged.
 
-## Open work / PRs
-Open PRs visible on 2026-09-29 include:
-- #58 — post-hoc failure diagnostic sidecar refinement;
-- #51 — model-sensitivity runner;
-- #48 — bounded validated-throughput runner;
-- #45 — experiment dependency graph / architecture documentation refresh;
-- #2 — historical single-agent benchmark stabilization draft.
+## Next approved implementation slice
+GitHub issue #66 defines PR C: development-only fixtures plus deterministic reference/scoring contracts.
 
-These PRs should be treated according to their own scope and evidence boundaries; open implementation does not equal accepted evidence.
+PR C must remain:
+- model-free;
+- development-fixture-only;
+- deterministic and inspectable;
+- separate from held-out evidence;
+- separate from architecture-performance claims.
 
-## Current next step
-Use System Benchmark v1 as the next architecture-level evidence program while keeping the frozen Q1-Q6 comparison intact as historical/bounded evidence.
-
-Before broadening claims, prioritize:
-1. held-out or novel natural-language routing evaluation;
-2. validated-throughput evidence from a recorded environment;
-3. model-sensitivity evidence as a separate study, not a silent baseline replacement;
-4. failure attribution that remains observable and non-speculative;
-5. architecture decisions recorded in `DECISIONS.md`.
+## Evidence boundaries
+Landing PR B establishes a deterministic local evidence capability, not model quality.
+Landing PR C will establish the deterministic evaluation core, not single-agent or
+routed-agent superiority, unseen-task generalization, or publication-ready results.
 
 ## Staleness rule
-This file is not authoritative when it conflicts with the repository itself. If tests, PRs, workflows, or benchmark artifacts disagree with this document, update this file after verifying the repo state.
+This file is not authoritative when it conflicts with repository evidence. GitHub
+issues, PRs, commits, workflow runs, tests, and benchmark artifacts take precedence.
