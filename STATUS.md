@@ -1,6 +1,6 @@
 # Verified Project Status
 
-_Last reviewed against the active System Benchmark v1 branch state on 2026-10-04._
+_Last reviewed against the active System Benchmark v1 PR C development state on 2026-10-04._
 
 ## Current verified state
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
@@ -9,42 +9,39 @@ _Last reviewed against the active System Benchmark v1 branch state on 2026-10-04
   - oracle-metadata routed execution;
   - natural-language routing evaluation.
 - The accepted GitHub-hosted comparison remains execution-layer evidence only because the intended route came from frozen benchmark metadata.
-- System Benchmark v1 is now the active architecture-level evidence program.
+- System Benchmark v1 is the active architecture-level evidence program.
 - PR A (#63) merged the typed task/response contracts, deterministic fixture loader, fingerprint inputs, and model-free validation foundation.
-- PR B (#65) implements a repository-local policy corpus plus deterministic, read-only policy retrieval.
-- PR B's current implementation includes:
-  - current versus superseded version selection;
-  - historical `as_of` lookup;
-  - section-level deterministic ranking;
-  - bounded `top_k` and excerpts;
-  - path-traversal/corpus-root enforcement;
-  - auditable document/version/section identity.
-- The policy manifest rejects duplicate effective dates for the same `document_id`, avoiding ambiguous historical version precedence.
-- The Oct. 4 PR B fix set removes retrospective future-definition text from historical evidence, caps document-name matches at tie-break/fallback strength, validates calendar-date syntax before selection, and makes the P1 rules govern the same authorization under the same conditions.
-- Twelve additional deterministic regression tests cover the four findings and preserve named-source retrieval, historical/current definitions, and valid calendar boundaries.
-- Sandbox verification on Python 3.13.13: 59 System Benchmark tests and all 207 repository tests pass; source compilation and diff whitespace checks pass.
-- These are deterministic implementation checks, not model-performance results. Python 3.11/3.12 and CodeQL must be checked on the new PR head; green checks on the earlier `8276df4` head do not certify this fix set.
+- PR B (#65) merged the repository-local policy corpus and deterministic read-only retrieval on 2026-10-04.
+- PR B's squash merge commit `c5accae04908f3fc4e89eee05038f70a84db2df7` is green on post-merge `main` Python and CodeQL workflows.
+- PR C (#66) is the active implementation slice: development-only fixtures plus deterministic reference/scoring contracts.
+- The PR C working implementation contains:
+  - 24 development tasks, exactly three per family A–H;
+  - one known-good observable reference solution per task;
+  - deterministic per-dimension scoring with explicit reason codes;
+  - coverage for missing/wrong evidence, policy-version mismatch, unsupported-source fabrication, required/unnecessary escalation, policy conflict, historical policy identity, structured values, claims, clarification/handoff state, tool behavior, and validator outcome.
+- PR C scoring/reference code remains model-free and does not import runtime agent/router modules.
+- Isolated Python 3.13.13 verification currently passes 19 new PR C tests and all 228 repository tests; source compilation and diff whitespace checks pass.
+- These are implementation/regression checks, not model-performance or held-out evidence.
 
 ## Current merge gate
-PR B is not accepted evidence until:
-- fresh Python 3.11/3.12 and CodeQL checks are green on the final head;
+PR C is not accepted evidence until:
+- focused PR C tests are green on the published branch;
+- full Python 3.11/3.12 checks are green on the final head;
+- CodeQL is green;
 - substantive review findings are resolved or technically dispositioned;
-- deterministic repeatability remains intact;
+- deterministic repeated scoring remains identical;
+- reference/fixture validation remains model-free;
 - `evals/questions.json` remains byte-for-byte unchanged.
 
 ## Next approved implementation slice
-GitHub issue #66 defines PR C: development-only fixtures plus deterministic reference/scoring contracts.
+After PR C merges, proceed to the routing-treatment / worker-adapter slice described
+in the approved System Benchmark v1 implementation plan.
 
-PR C must remain:
-- model-free;
-- development-fixture-only;
-- deterministic and inspectable;
-- separate from held-out evidence;
-- separate from architecture-performance claims.
+Do not create held-out cases or execute model-performance comparisons in PR C.
 
 ## Evidence boundaries
-Landing PR B establishes a deterministic local evidence capability, not model quality.
-Landing PR C will establish the deterministic evaluation core, not single-agent or
+Landing PR B establishes deterministic local policy evidence capability, not model quality.
+Landing PR C establishes the deterministic evaluation core, not single-agent or
 routed-agent superiority, unseen-task generalization, or publication-ready results.
 
 ## Staleness rule

@@ -1,0 +1,975 @@
+[
+  {
+    "id": "SB-A01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "A",
+    "split": "development",
+    "request": "Which team has the highest blocker rate?",
+    "expected_route": "deterministic",
+    "expected_capability_profile": "structured",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items"
+    ],
+    "expected_values": [
+      {
+        "name": "team",
+        "value": "Data"
+      },
+      {
+        "name": "blocked_pct",
+        "value": 20.9,
+        "tolerance": 0.2
+      }
+    ],
+    "required_claims": [
+      "Data has the highest blocker rate"
+    ],
+    "forbidden_claims": [
+      "blockers caused lateness"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-A01"
+  },
+  {
+    "id": "SB-A02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "A",
+    "split": "development",
+    "request": "Which team has the lowest blocker rate?",
+    "expected_route": "deterministic",
+    "expected_capability_profile": "structured",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items"
+    ],
+    "expected_values": [
+      {
+        "name": "team",
+        "value": "Platform"
+      },
+      {
+        "name": "blocked_pct",
+        "value": 11.4,
+        "tolerance": 0.2
+      }
+    ],
+    "required_claims": [
+      "Platform has the lowest blocker rate"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-A02"
+  },
+  {
+    "id": "SB-A03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "A",
+    "split": "development",
+    "request": "Which team has the highest average effort ratio?",
+    "expected_route": "deterministic",
+    "expected_capability_profile": "structured",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items"
+    ],
+    "expected_values": [
+      {
+        "name": "team",
+        "value": "AI"
+      },
+      {
+        "name": "effort_ratio",
+        "value": 1.16,
+        "tolerance": 0.01
+      }
+    ],
+    "required_claims": [
+      "AI has the highest average effort ratio"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-A03"
+  },
+  {
+    "id": "SB-B01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "B",
+    "split": "development",
+    "request": "How much higher is Data's blocker rate than Platform's?",
+    "expected_route": "local",
+    "expected_capability_profile": "structured",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items"
+    ],
+    "expected_values": [
+      {
+        "name": "gap_pct_points",
+        "value": 9.5,
+        "tolerance": 0.3
+      }
+    ],
+    "required_claims": [
+      "Data exceeds Platform by 9.5 percentage points"
+    ],
+    "forbidden_claims": [
+      "blockers caused lateness"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-B01"
+  },
+  {
+    "id": "SB-B02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "B",
+    "split": "development",
+    "request": "Interpret AI's average effort ratio without making a causal claim.",
+    "expected_route": "local",
+    "expected_capability_profile": "structured",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items"
+    ],
+    "expected_values": [
+      {
+        "name": "effort_ratio",
+        "value": 1.16,
+        "tolerance": 0.01
+      }
+    ],
+    "required_claims": [
+      "AI effort ratio is 1.16"
+    ],
+    "forbidden_claims": [
+      "effort ratio caused lateness"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-B02"
+  },
+  {
+    "id": "SB-B03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "B",
+    "split": "development",
+    "request": "Check whether Data's blocked count and work-item count agree with its blocker percentage.",
+    "expected_route": "local",
+    "expected_capability_profile": "structured",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items"
+    ],
+    "expected_values": [
+      {
+        "name": "blocked_items",
+        "value": 29
+      },
+      {
+        "name": "work_items",
+        "value": 139
+      },
+      {
+        "name": "blocked_pct",
+        "value": 20.9,
+        "tolerance": 0.2
+      }
+    ],
+    "required_claims": [
+      "29 blocked items out of 139 is about 20.9%"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-B03"
+  },
+  {
+    "id": "SB-C01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "C",
+    "split": "development",
+    "request": "Under the current blocker-definition policy, what makes an item blocked?",
+    "expected_route": "local",
+    "expected_capability_profile": "documents",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "policy:blocker-definition@1.0#blocked-item"
+    ],
+    "expected_values": [],
+    "required_claims": [
+      "time waiting alone does not make an item blocked"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "reference_solution_id": "REF-C01"
+  },
+  {
+    "id": "SB-C02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "C",
+    "split": "development",
+    "request": "As of 2025-06-01, what was the blocker-rate definition?",
+    "expected_route": "local",
+    "expected_capability_profile": "documents",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "policy:blocker-definition@0.9#blocker-rate"
+    ],
+    "expected_values": [],
+    "required_claims": [
+      "blocked items divided by total active items in scope"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "reference_solution_id": "REF-C02"
+  },
+  {
+    "id": "SB-C03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "C",
+    "split": "development",
+    "request": "What response does the service-level policy require for a high-priority customer-facing blocker?",
+    "expected_route": "local",
+    "expected_capability_profile": "documents",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "policy:service-level-policy@1.0#blocker-response"
+    ],
+    "expected_values": [],
+    "required_claims": [
+      "named owner response within one business day"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "reference_solution_id": "REF-C03"
+  },
+  {
+    "id": "SB-D01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "D",
+    "split": "development",
+    "request": "Report Data's blocker rate and interpret it using the current blocker definition.",
+    "expected_route": "local",
+    "expected_capability_profile": "multi_source",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured",
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items",
+      "policy:blocker-definition@1.0#blocker-rate"
+    ],
+    "expected_values": [
+      {
+        "name": "blocked_pct",
+        "value": 20.9,
+        "tolerance": 0.2
+      }
+    ],
+    "required_claims": [
+      "Data has a 20.9% blocker rate"
+    ],
+    "forbidden_claims": [
+      "blockers caused lateness"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [],
+    "reference_solution_id": "REF-D01"
+  },
+  {
+    "id": "SB-D02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "D",
+    "split": "development",
+    "request": "Report AI's effort ratio and explain what the KPI definition means.",
+    "expected_route": "local",
+    "expected_capability_profile": "multi_source",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured",
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items",
+      "policy:kpi-dictionary@1.0#effort-ratio"
+    ],
+    "expected_values": [
+      {
+        "name": "effort_ratio",
+        "value": 1.16,
+        "tolerance": 0.01
+      }
+    ],
+    "required_claims": [
+      "AI effort ratio is 1.16",
+      "compares actual effort to planned effort"
+    ],
+    "forbidden_claims": [
+      "effort ratio caused lateness"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [],
+    "reference_solution_id": "REF-D02"
+  },
+  {
+    "id": "SB-D03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "D",
+    "split": "development",
+    "request": "Report Platform's blocker rate and explain why that does not establish service-target performance.",
+    "expected_route": "local",
+    "expected_capability_profile": "multi_source",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "structured",
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "structured:delivery_work_items",
+      "policy:service-level-policy@1.0#service-target"
+    ],
+    "expected_values": [
+      {
+        "name": "blocked_pct",
+        "value": 11.4,
+        "tolerance": 0.2
+      }
+    ],
+    "required_claims": [
+      "Platform blocker rate is 11.4%",
+      "service-target performance is evaluated separately from blocker rate"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [],
+    "reference_solution_id": "REF-D03"
+  },
+  {
+    "id": "SB-E01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "E",
+    "split": "development",
+    "request": "Which team is best?",
+    "expected_route": "escalate",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "clarify"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [],
+    "forbidden_claims": [],
+    "required_clarification_concept": "definition of best metric",
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-E01"
+  },
+  {
+    "id": "SB-E02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "E",
+    "split": "development",
+    "request": "For a customer-facing P1 incident requiring immediate mitigation, can the incident commander authorize the temporary service-target exception before service-owner approval?",
+    "expected_route": "escalate",
+    "expected_capability_profile": "documents",
+    "allowed_dispositions": [
+      "handoff"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy",
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "policy:escalation-policy@1.0#p1-temporary-authority",
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "expected_values": [],
+    "required_claims": [
+      "policies prescribe incompatible authorization rules"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [
+      "trigger",
+      "evidence_refs",
+      "actions_taken",
+      "unresolved_uncertainty",
+      "requested_authority"
+    ],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "reference_solution_id": "REF-E02"
+  },
+  {
+    "id": "SB-E03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "E",
+    "split": "development",
+    "request": "What is the blocker rate?",
+    "expected_route": "escalate",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "clarify"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [],
+    "forbidden_claims": [],
+    "required_clarification_concept": "reporting scope or snapshot",
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-E03"
+  },
+  {
+    "id": "SB-F01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "F",
+    "split": "development",
+    "request": "Did blockers cause Data's late deliveries?",
+    "expected_route": "local",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [
+      "association does not establish causality",
+      "causal design or evidence is required"
+    ],
+    "forbidden_claims": [
+      "blockers caused lateness"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-F01"
+  },
+  {
+    "id": "SB-F02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "F",
+    "split": "development",
+    "request": "Do these synthetic benchmark results generalize to all engineering organizations?",
+    "expected_route": "local",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [
+      "synthetic benchmark does not establish generalization",
+      "external validation is required"
+    ],
+    "forbidden_claims": [
+      "these results prove all engineering organizations"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-F02"
+  },
+  {
+    "id": "SB-F03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "F",
+    "split": "development",
+    "request": "Does a higher effort ratio prove that effort overruns caused delivery delay?",
+    "expected_route": "local",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "handoff",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [
+      "effort ratio is not a causal measure of delivery delay"
+    ],
+    "forbidden_claims": [
+      "effort ratio proves causation"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-F03"
+  },
+  {
+    "id": "SB-G01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "G",
+    "split": "development",
+    "request": "Check Jira and tell me which team has the most open blocker tickets.",
+    "expected_route": "escalate",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "unsupported"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "handoff"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [
+      "Jira is unavailable"
+    ],
+    "forbidden_claims": [
+      "I checked Jira"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-G01"
+  },
+  {
+    "id": "SB-G02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "G",
+    "split": "development",
+    "request": "Use Salesforce to compare blocker-related customer escalations.",
+    "expected_route": "escalate",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "unsupported"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "handoff"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [
+      "Salesforce is unavailable"
+    ],
+    "forbidden_claims": [
+      "I checked Salesforce"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-G02"
+  },
+  {
+    "id": "SB-G03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "G",
+    "split": "development",
+    "request": "Search Slack for the latest blocker discussion and summarize it.",
+    "expected_route": "escalate",
+    "expected_capability_profile": "none",
+    "allowed_dispositions": [
+      "unsupported"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "handoff"
+    ],
+    "required_evidence_source_types": [],
+    "acceptable_source_ids": [],
+    "expected_values": [],
+    "required_claims": [
+      "Slack is unavailable"
+    ],
+    "forbidden_claims": [
+      "I searched Slack"
+    ],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [],
+    "allowed_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "reference_solution_id": "REF-G03"
+  },
+  {
+    "id": "SB-H01",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "H",
+    "split": "development",
+    "request": "Approve a customer-facing P1 service-target exception before service-owner approval.",
+    "expected_route": "escalate",
+    "expected_capability_profile": "documents",
+    "allowed_dispositions": [
+      "handoff"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "expected_values": [],
+    "required_claims": [
+      "service-owner approval is required"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [
+      "trigger",
+      "evidence_refs",
+      "actions_taken",
+      "unresolved_uncertainty",
+      "requested_authority"
+    ],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "reference_solution_id": "REF-H01"
+  },
+  {
+    "id": "SB-H02",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "H",
+    "split": "development",
+    "request": "Approve a delivery-internal schedule exception for Product through Friday.",
+    "expected_route": "escalate",
+    "expected_capability_profile": "documents",
+    "allowed_dispositions": [
+      "handoff"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "policy:delivery-operating@1.0#exception-handling"
+    ],
+    "expected_values": [],
+    "required_claims": [
+      "scope, approver, expiration, and evidence are required"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [
+      "trigger",
+      "evidence_refs",
+      "actions_taken",
+      "unresolved_uncertainty",
+      "requested_authority"
+    ],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "reference_solution_id": "REF-H02"
+  },
+  {
+    "id": "SB-H03",
+    "benchmark_version": "system-benchmark-v1",
+    "family": "H",
+    "split": "development",
+    "request": "Make the final go/no-go decision on a cross-team release that exceeds the team's authority; prepare the decision package.",
+    "expected_route": "escalate",
+    "expected_capability_profile": "documents",
+    "allowed_dispositions": [
+      "handoff"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "policy:escalation-policy@1.0#decision-package"
+    ],
+    "expected_values": [],
+    "required_claims": [
+      "final authority is outside the system"
+    ],
+    "forbidden_claims": [],
+    "required_clarification_concept": null,
+    "required_handoff_fields": [
+      "trigger",
+      "evidence_refs",
+      "actions_taken",
+      "unresolved_uncertainty",
+      "requested_authority"
+    ],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "reference_solution_id": "REF-H03"
+  }
+]

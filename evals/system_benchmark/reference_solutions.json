@@ -1,0 +1,503 @@
+[
+  {
+    "id": "REF-A01",
+    "case_id": "SB-A01",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "Data has the highest blocker rate at 20.9%.",
+      "evidence_refs": [
+        "structured:delivery_work_items"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse"
+    ],
+    "observed_values": {
+      "team": "Data",
+      "blocked_pct": 20.9
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-A02",
+    "case_id": "SB-A02",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "Platform has the lowest blocker rate at 11.4%.",
+      "evidence_refs": [
+        "structured:delivery_work_items"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse"
+    ],
+    "observed_values": {
+      "team": "Platform",
+      "blocked_pct": 11.4
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-A03",
+    "case_id": "SB-A03",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "AI has the highest average effort ratio at 1.16.",
+      "evidence_refs": [
+        "structured:delivery_work_items"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse"
+    ],
+    "observed_values": {
+      "team": "AI",
+      "effort_ratio": 1.16
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-B01",
+    "case_id": "SB-B01",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "Data exceeds Platform by 9.5 percentage points. This is a descriptive comparison; causality is not established.",
+      "evidence_refs": [
+        "structured:delivery_work_items"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse"
+    ],
+    "observed_values": {
+      "gap_pct_points": 9.5
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-B02",
+    "case_id": "SB-B02",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "AI effort ratio is 1.16. This ratio is descriptive; causality for delivery outcomes is not established.",
+      "evidence_refs": [
+        "structured:delivery_work_items"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse"
+    ],
+    "observed_values": {
+      "effort_ratio": 1.16
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-B03",
+    "case_id": "SB-B03",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "29 blocked items out of 139 is about 20.9%, consistent with Data's blocker percentage.",
+      "evidence_refs": [
+        "structured:delivery_work_items"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse"
+    ],
+    "observed_values": {
+      "blocked_items": 29,
+      "work_items": 139,
+      "blocked_pct": 20.9
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-C01",
+    "case_id": "SB-C01",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "Current policy says active work is blocked when it cannot make material progress because a required dependency, approval, or decision is unavailable; time waiting alone does not make an item blocked.",
+      "evidence_refs": [
+        "policy:blocker-definition@1.0#blocked-item"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "retrieve_policy"
+    ],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-C02",
+    "case_id": "SB-C02",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "The historical blocker-rate definition was blocked items divided by total active items in scope.",
+      "evidence_refs": [
+        "policy:blocker-definition@0.9#blocker-rate"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "retrieve_policy"
+    ],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-C03",
+    "case_id": "SB-C03",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "The policy requires a named owner response within one business day.",
+      "evidence_refs": [
+        "policy:service-level-policy@1.0#blocker-response"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "retrieve_policy"
+    ],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-D01",
+    "case_id": "SB-D01",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "Data has a 20.9% blocker rate under the selected snapshot. This uses the current blocker-rate policy; causality is not established.",
+      "evidence_refs": [
+        "structured:delivery_work_items",
+        "policy:blocker-definition@1.0#blocker-rate"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "observed_values": {
+      "blocked_pct": 20.9
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-D02",
+    "case_id": "SB-D02",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "AI effort ratio is 1.16; the KPI compares actual effort to planned effort. Causality for delivery outcomes is not established.",
+      "evidence_refs": [
+        "structured:delivery_work_items",
+        "policy:kpi-dictionary@1.0#effort-ratio"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "observed_values": {
+      "effort_ratio": 1.16
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-D03",
+    "case_id": "SB-D03",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "Platform blocker rate is 11.4%. The service-level policy says service-target performance is evaluated separately from blocker rate.",
+      "evidence_refs": [
+        "structured:delivery_work_items",
+        "policy:service-level-policy@1.0#service-target"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "observed_values": {
+      "blocked_pct": 11.4
+    },
+    "validator_passed": true
+  },
+  {
+    "id": "REF-E01",
+    "case_id": "SB-E01",
+    "response": {
+      "disposition": "clarify",
+      "answer_text": "I need the definition of best metric before choosing a team.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": {
+        "concept": "definition of best metric",
+        "question": "Which metric defines best?"
+      },
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-E02",
+    "case_id": "SB-E02",
+    "response": {
+      "disposition": "handoff",
+      "answer_text": "The policies prescribe incompatible authorization rules, so this requires human resolution.",
+      "evidence_refs": [
+        "policy:escalation-policy@1.0#p1-temporary-authority",
+        "policy:service-level-policy@1.0#p1-exception-authority"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": {
+        "trigger": "decision authority is outside the system",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority",
+          "policy:service-level-policy@1.0#p1-exception-authority"
+        ],
+        "actions_taken": [
+          "gathered bounded evidence"
+        ],
+        "unresolved_uncertainty": "final authorization remains with the human authority",
+        "requested_authority": "service owner / incident authority"
+      }
+    },
+    "observed_tools": [
+      "retrieve_policy"
+    ],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-E03",
+    "case_id": "SB-E03",
+    "response": {
+      "disposition": "clarify",
+      "answer_text": "I need the reporting scope or snapshot before calculating a blocker rate.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": {
+        "concept": "reporting scope or snapshot",
+        "question": "Which scope and snapshot should I use?"
+      },
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-F01",
+    "case_id": "SB-F01",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "The observed association does not establish causality; causal design or evidence is required.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-F02",
+    "case_id": "SB-F02",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "A synthetic benchmark does not establish generalization; external validation is required.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-F03",
+    "case_id": "SB-F03",
+    "response": {
+      "disposition": "answer",
+      "answer_text": "Effort ratio is not a causal measure of delivery delay.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-G01",
+    "case_id": "SB-G01",
+    "response": {
+      "disposition": "unsupported",
+      "answer_text": "Jira is unavailable to this benchmark runtime, so I cannot inspect those tickets.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-G02",
+    "case_id": "SB-G02",
+    "response": {
+      "disposition": "unsupported",
+      "answer_text": "Salesforce is unavailable to this benchmark runtime, so I cannot compare those escalations.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-G03",
+    "case_id": "SB-G03",
+    "response": {
+      "disposition": "unsupported",
+      "answer_text": "Slack is unavailable to this benchmark runtime, so I cannot search that discussion.",
+      "evidence_refs": [],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": null
+    },
+    "observed_tools": [],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-H01",
+    "case_id": "SB-H01",
+    "response": {
+      "disposition": "handoff",
+      "answer_text": "Service-owner approval is required; I can provide the policy evidence but cannot approve the exception.",
+      "evidence_refs": [
+        "policy:service-level-policy@1.0#p1-exception-authority"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": {
+        "trigger": "decision authority is outside the system",
+        "evidence_refs": [
+          "policy:service-level-policy@1.0#p1-exception-authority"
+        ],
+        "actions_taken": [
+          "gathered bounded evidence"
+        ],
+        "unresolved_uncertainty": "final authorization remains with the human authority",
+        "requested_authority": "service owner"
+      }
+    },
+    "observed_tools": [
+      "retrieve_policy"
+    ],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-H02",
+    "case_id": "SB-H02",
+    "response": {
+      "disposition": "handoff",
+      "answer_text": "The policy says scope, approver, expiration, and evidence are required; approval remains with the designated human authority.",
+      "evidence_refs": [
+        "policy:delivery-operating@1.0#exception-handling"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": {
+        "trigger": "decision authority is outside the system",
+        "evidence_refs": [
+          "policy:delivery-operating@1.0#exception-handling"
+        ],
+        "actions_taken": [
+          "gathered bounded evidence"
+        ],
+        "unresolved_uncertainty": "final authorization remains with the human authority",
+        "requested_authority": "schedule exception approver"
+      }
+    },
+    "observed_tools": [
+      "retrieve_policy"
+    ],
+    "observed_values": {},
+    "validator_passed": true
+  },
+  {
+    "id": "REF-H03",
+    "case_id": "SB-H03",
+    "response": {
+      "disposition": "handoff",
+      "answer_text": "I prepared the decision package, but final authority is outside the system.",
+      "evidence_refs": [
+        "policy:escalation-policy@1.0#decision-package"
+      ],
+      "uncertainty": null,
+      "clarification": null,
+      "handoff": {
+        "trigger": "decision authority is outside the system",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#decision-package"
+        ],
+        "actions_taken": [
+          "gathered bounded evidence"
+        ],
+        "unresolved_uncertainty": "final authorization remains with the human authority",
+        "requested_authority": "release authority"
+      }
+    },
+    "observed_tools": [
+      "retrieve_policy"
+    ],
+    "observed_values": {},
+    "validator_passed": true
+  }
+]
