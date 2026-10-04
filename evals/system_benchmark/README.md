@@ -71,3 +71,33 @@ performance.
 PR C does not add held-out tasks, model execution, routing treatments, a
 benchmark runner, an LLM judge, or changes to frozen Q1–Q6 semantics, scorer,
 dataset, prompt/tool contract, or accepted comparison evidence.
+
+## PR D candidate — routing treatments and worker adapters
+
+Tracking issue: #69.
+
+The PR D candidate adds a model-free adapter layer that keeps route inference
+separate from worker execution:
+
+- `routing.py` defines normalized route/capability decisions, oracle routing,
+  a free-text adapter over the existing natural-language baseline, a simple
+  inspectable capability heuristic, and route-only metrics;
+- `workers.py` defines bounded worker invocations, capability-specific tool
+  exposure, the strong-single-agent tool contract, and hard Family G/H
+  response boundaries.
+
+The worker adapter intersects predicted capability tools with the task's
+allowed-tool contract, so a routing mistake cannot expand permissions.
+
+Development-only route checks on the seven current PR C cases are diagnostic,
+not architecture-performance evidence:
+
+- oracle metadata: 100% route accuracy and 100% capability-profile accuracy
+  by construction;
+- simple inspectable heuristic: 28.6% route accuracy and 57.1% capability
+  accuracy, with two false-cheap routes and zero unsupported-source misses.
+
+The weak heuristic result is intentionally preserved as a simple baseline
+rather than tuned to the development fixtures.
+
+PR D does not execute a model, Hermes, Ollama, or a benchmark worker runtime.
