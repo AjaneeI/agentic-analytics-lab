@@ -222,6 +222,49 @@ class TestSystemBenchmarkTaskContract(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "tool"):
             contracts.parse_task_contract(payload)
 
+    def test_legacy_fixture_gets_empty_trajectory_contract(self):
+        contracts = _contracts(self)
+        task = contracts.parse_task_contract(valid_task_payload())
+
+        self.assertEqual(task.trajectory.ordered_dependencies, ())
+        self.assertIsNone(task.trajectory.max_tool_calls)
+
+    def test_trajectory_contract_accepts_explicit_order_and_budget(self):
+        contracts = _contracts(self)
+        payload = valid_task_payload()
+        payload["allowed_tools"] = ["retrieve_policy", "query_clickhouse"]
+        payload["forbidden_tools"] = []
+        payload["trajectory"] = {
+            "ordered_dependencies": [["retrieve_policy", "query_clickhouse"]],
+            "max_tool_calls": 2,
+        }
+
+        task = contracts.parse_task_contract(payload)
+
+        self.assertEqual(
+            task.trajectory.ordered_dependencies,
+            (("retrieve_policy", "query_clickhouse"),),
+        )
+        self.assertEqual(task.trajectory.max_tool_calls, 2)
+
+    def test_trajectory_dependency_must_reference_allowed_tools(self):
+        contracts = _contracts(self)
+        payload = valid_task_payload()
+        payload["trajectory"] = {
+            "ordered_dependencies": [["retrieve_policy", "query_clickhouse"]],
+        }
+
+        with self.assertRaisesRegex(ValueError, "allowed tools"):
+            contracts.parse_task_contract(payload)
+
+    def test_trajectory_budget_rejects_negative_value(self):
+        contracts = _contracts(self)
+        payload = valid_task_payload()
+        payload["trajectory"] = {"max_tool_calls": -1}
+
+        with self.assertRaisesRegex(ValueError, "max_tool_calls"):
+            contracts.parse_task_contract(payload)
+
     def test_reference_solution_id_is_required(self):
         contracts = _contracts(self)
         payload = valid_task_payload()
