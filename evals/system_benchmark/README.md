@@ -5,7 +5,7 @@ evals/questions.json. It is built in bounded phases so task contracts,
 evidence capabilities, scoring, runtime execution, and held-out evidence do
 not become coupled.
 
-## Current phase — PR C
+## Merged foundation — PR C
 
 PR A established typed task/response contracts, deterministic fixture loading,
 fingerprint inputs, and model-free validation.
@@ -71,3 +71,26 @@ performance.
 PR C does not add held-out tasks, model execution, routing treatments, a
 benchmark runner, an LLM judge, or changes to frozen Q1–Q6 semantics, scorer,
 dataset, prompt/tool contract, or accepted comparison evidence.
+
+
+## Execution rehearsal candidate — issue #71
+
+The next bounded milestone connects these contracts to actual policy retrieval
+and a labelled seed-42 SQLite replay, without models or a live ClickHouse server.
+Run `python3 scripts/run_system_benchmark_dry_run.py --include-faults`.
+See `experiments/system-benchmark-dry-run-v1/README.md` for seven control records,
+fourteen deliberate negative controls, hashes and all claim boundaries.
+
+The gateway enforces allowlists before backend dispatch. Captured tool returns
+are immutable JSON snapshots, distinct from worker-declared answer values and
+citations. Prose checks remain bounded literal checks, not general semantic
+judging. Scripts use case IDs intentionally and do not measure route inference.
+The CLI emits canonical JSON or creates a new output file without overwriting.
+
+**Development reference correction:** SB-D01 now declares active work explicitly
+and expects Data 8/45 = 17.8% rounded. Its prior 20.9% referred to all work items,
+which conflicted with its active-work policy. SB-A01 and frozen Q1–Q6 are unchanged.
+No model results were consulted; the correction was reproduced from seed-42 rows.
+
+Candidate implementation and CI verification do not constitute integration.
+No new model/held-out phase or full 24-case task bank is authorized by this change.
