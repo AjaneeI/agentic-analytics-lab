@@ -292,8 +292,14 @@ class TestSystemBenchmarkScoring(unittest.TestCase):
         )
         ref = ref_payload(
             reference_solution_id="REF-D01",
-            required_evidence=(),
-            allowed_evidence=(),
+            required_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+            allowed_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
             required_tools=(),
             forbidden_tools=(),
             required_terms=(),
@@ -302,6 +308,10 @@ class TestSystemBenchmarkScoring(unittest.TestCase):
         response = SystemBenchmarkResponse(
             disposition=ResponseDisposition.ANSWER,
             answer_text="Bounded multi-source answer.",
+            evidence_refs=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
         )
         observation = ScoringObservation(
             tool_calls=("retrieve_policy", "query_clickhouse"),
@@ -332,8 +342,14 @@ class TestSystemBenchmarkScoring(unittest.TestCase):
         )
         ref = ref_payload(
             reference_solution_id="REF-D01",
-            required_evidence=(),
-            allowed_evidence=(),
+            required_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+            allowed_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
             required_tools=(),
             forbidden_tools=(),
             required_terms=(),
@@ -342,6 +358,10 @@ class TestSystemBenchmarkScoring(unittest.TestCase):
         response = SystemBenchmarkResponse(
             disposition=ResponseDisposition.ANSWER,
             answer_text="Bounded multi-source answer.",
+            evidence_refs=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
         )
         repeated_query = {"name": "query_clickhouse", "arguments": {"sql": "SELECT 1"}}
         observation = ScoringObservation(
