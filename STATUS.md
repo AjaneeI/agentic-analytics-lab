@@ -13,7 +13,7 @@ _Last reviewed against the active System Benchmark v1 PR C development state on 
 - PR A (#63) merged the typed task/response contracts, deterministic fixture loader, fingerprint inputs, and model-free validation foundation.
 - PR B (#65) merged the repository-local policy corpus and deterministic read-only retrieval on 2026-10-04.
 - PR B's squash merge commit `c5accae04908f3fc4e89eee05038f70a84db2df7` is green on post-merge `main` Python and CodeQL workflows.
-- PR C (#66) is the active implementation slice: development-only fixtures plus deterministic reference/scoring contracts.
+- PR C (PR #67, tracking issue #66) is the active implementation slice: development-only fixtures plus deterministic reference/scoring contracts.
 - The PR C working implementation contains:
   - 24 development tasks, exactly three per family A–H;
   - one known-good observable reference solution per task;
