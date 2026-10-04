@@ -13,11 +13,11 @@ _Last reviewed against System Benchmark v1 PR D work on 2026-10-04._
 - PR B (#65) merged as c5accae, establishing repository-local deterministic
   policy retrieval. It does not establish model quality.
 - PR C merged via #68 as `6982f6753bdbcbc4cb547a3db0e1695cd87a2c72`; post-merge Python 3.11/3.12 and CodeQL passed.
-- PR D / issue #69 is the active implementation slice: model-free routing treatments and worker adapters.
-- The PR D candidate keeps route inference independent from worker execution, supports oracle/free-text/simple-heuristic decisions, and exposes capability profiles `none`, `structured`, `documents`, and `multi_source`.
+- PR D / issue #69 is complete. Its reviewed five-file tree was integrated directly into `main` without a draft→ready transition, preserving the no-Codex rule.
+- The PR D implementation keeps route inference independent from worker execution, supports oracle/free-text/simple-heuristic decisions, and exposes capability profiles `none`, `structured`, `documents`, and `multi_source`.
 - Routed worker tool availability is intersected with the task's allowed-tool boundary, so routing errors cannot broaden permissions.
 - Family G cannot fabricate unsupported-source evidence; Family H must return a handoff after bounded evidence gathering.
-- Local PR D verification passes 13 focused tests and all 243 repository tests on Python 3.13.13; compileall and diff checks pass.
+- PR D verification passed 13 focused tests and all 243 repository tests locally; the integrated `main` head `13008e4208320d2ebb6fb189f9aa9ba3091cd788` passed hosted Python 3.11/3.12 and CodeQL.
 - Development-only heuristic diagnostics currently show 28.6% route accuracy, 57.1% capability accuracy, two false-cheap routes, and zero unsupported-source misses on the seven current development cases. This is a baseline diagnostic, not model-performance evidence.
 
 ## Previous PR C implementation
@@ -55,9 +55,9 @@ work.
 No held-out cases, model runs, LLM judge, or chain-of-thought scoring belong in
 this slice.
 
-## PR D merge gate
+## Next bounded experiment
 
-Publish the PR D candidate on its isolated branch, obtain fresh Python 3.11/3.12 and CodeQL evidence, review without Codex-credit use, and integrate only after the zero-Codex trigger boundary is preserved.
+Before expanding benchmark infrastructure, run one supervised Hermes-vs-direct vertical slice against the PR D worker/routing contract. Use the same task, allowed tools, response contract, and deterministic verification for both paths. Measure Ajanee hands-on intervention, task acceptance, recovery behavior, tool/model calls, memory pressure, and incremental spend. Do not add concurrency, always-on behavior, new workers, or paid fallbacks.
 
 ## Evidence boundary
 
