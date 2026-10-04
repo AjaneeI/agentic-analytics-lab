@@ -19,6 +19,10 @@ from src.evals.system_benchmark.references import (
     parse_policy_evidence_ref,
     validate_task_reference,
 )
+from src.evals.trajectory_quality import (
+    TrajectoryExpectation,
+    evaluate_trajectory,
+)
 
 
 @dataclass(frozen=True)
@@ -26,6 +30,7 @@ class ScoringObservation:
     """Observable execution facts supplied to deterministic scoring."""
 
     tool_calls: tuple[str, ...] = ()
+    tool_call_records: tuple[Mapping[str, Any], ...] = ()
     structured_values: Mapping[str, Any] = field(default_factory=dict)
 
 
@@ -74,6 +79,7 @@ def score_response(
         _score_disposition(task, response),
         _score_evidence(task, reference, response),
         _score_tools(task, reference, observation),
+        _score_trajectory(task, observation),
         _score_structured_values(task, observation),
         _score_clarification(task, response),
         _score_handoff(task, response),
@@ -199,6 +205,48 @@ def _score_tools(
         elif tool not in task.allowed_tools:
             reasons.append("unexpected_tool")
     return _dimension("tools", reasons)
+
+
+def _score_trajectory(
+    task: SystemBenchmarkTask,
+    observation: ScoringObservation,
+) -> DimensionResult:
+    """Score explicit trajectory expectations only when the task declares them."""
+
+    contract = task.trajectory
+    if contract.max_tool_calls is None and not contract.ordered_dependencies:
+        return _dimension("trajectory", [])
+
+    if observation.tool_call_records:
+        records = observation.tool_call_records
+    else:
+        records = tuple(
+            {"name": name, "arguments": {}}
+            for name in observation.tool_calls
+        )
+
+    result = evaluate_trajectory(
+        records,
+        TrajectoryExpectation(
+            required_tools=(),
+            allowed_tools=task.allowed_tools,
+            forbidden_tools=task.forbidden_tools,
+            ordered_dependencies=contract.ordered_dependencies,
+            max_tool_calls=contract.max_tool_calls,
+        ),
+    )
+
+    reasons: list[str] = []
+    if result.dependency_violations:
+        reasons.append("trajectory_dependency_violation")
+    if result.repeated_calls:
+        reasons.append("trajectory_repeated_call")
+    if result.unnecessary_calls:
+        reasons.append("trajectory_call_budget_exceeded")
+    if result.malformed_calls:
+        reasons.append("trajectory_malformed_call")
+
+    return _dimension("trajectory", reasons)
 
 
 def _score_structured_values(

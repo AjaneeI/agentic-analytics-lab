@@ -66,6 +66,10 @@
     "required_handoff_fields": [],
     "allowed_tools": ["query_clickhouse", "retrieve_policy"],
     "forbidden_tools": [],
+    "trajectory": {
+      "ordered_dependencies": [],
+      "max_tool_calls": 2
+    },
     "reference_solution_id": "REF-D01"
   },
   {

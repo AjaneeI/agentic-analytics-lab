@@ -122,3 +122,19 @@ request Codex code/security review or silently fall back to Codex. Before
 creating or readying a reviewable PR, account for external automatic-review
 triggers. This budget rule does not weaken branch protection or benchmark
 verification requirements.
+
+
+---
+
+## D-011 — Compare architecture tradeoffs with Pareto dominance
+**Status:** Accepted — 2026-10-04
+
+**Decision:** Architecture comparisons report quality/reliability and operational burden as separate declared metrics and use Pareto dominance/frontier membership rather than collapsing them into one weighted winner score.
+
+**Simpler baseline:** Continue reporting the strong single-agent baseline and raw matched metrics directly. The frontier is an additional interpretation layer, not a replacement for those measurements.
+
+**Why:** A weighted composite would embed arbitrary value judgments about how much latency, tool calls, model calls, tokens, or maintenance are worth relative to task success. Pareto analysis preserves those tradeoffs and identifies only architectures that are unambiguously dominated under the declared metric directions.
+
+**Evidence boundary:** Frontier membership is conditional on the chosen benchmark, observed measurements, and declared metric directions. It does not prove generalization, business value, or that every point on the frontier is worth deploying.
+
+**Consequence:** Any future weighted utility score requires a separate explicit decision with stakeholder-grounded weights. Added agentic complexity still has to move the observed quality-cost frontier outward to justify adoption.

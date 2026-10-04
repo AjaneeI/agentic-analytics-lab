@@ -72,6 +72,12 @@ class StructuredExpectation:
 
 
 @dataclass(frozen=True)
+class TrajectoryContract:
+    ordered_dependencies: tuple[tuple[str, str], ...] = ()
+    max_tool_calls: int | None = None
+
+
+@dataclass(frozen=True)
 class SystemBenchmarkTask:
     case_id: str
     benchmark_version: str
@@ -91,6 +97,7 @@ class SystemBenchmarkTask:
     required_handoff_fields: tuple[str, ...]
     allowed_tools: tuple[str, ...]
     forbidden_tools: tuple[str, ...]
+    trajectory: TrajectoryContract
     reference_solution_id: str
 
 
@@ -173,6 +180,8 @@ def parse_task_contract(payload: Mapping[str, Any]) -> SystemBenchmarkTask:
     if set(allowed_tools) & set(forbidden_tools):
         raise ValueError("allowed and forbidden tool sets must be disjoint")
 
+    trajectory = _trajectory_contract(payload.get("trajectory"), allowed_tools)
+
     reference_solution_id = _required_string(payload, "reference_solution_id")
     return SystemBenchmarkTask(
         case_id=case_id,
@@ -193,6 +202,7 @@ def parse_task_contract(payload: Mapping[str, Any]) -> SystemBenchmarkTask:
         required_handoff_fields=required_handoff_fields,
         allowed_tools=allowed_tools,
         forbidden_tools=forbidden_tools,
+        trajectory=trajectory,
         reference_solution_id=reference_solution_id,
     )
 
@@ -274,3 +284,58 @@ def _expectation_tuple(payload: Mapping[str, Any]) -> tuple[StructuredExpectatio
             StructuredExpectation(name=name, value=item["value"], tolerance=tolerance)
         )
     return tuple(expectations)
+
+
+def _trajectory_contract(
+    raw: Any,
+    allowed_tools: tuple[str, ...],
+) -> TrajectoryContract:
+    """Parse optional trajectory expectations without changing legacy fixtures."""
+
+    if raw is None:
+        return TrajectoryContract()
+    if not isinstance(raw, Mapping):
+        raise ValueError("trajectory must be an object when provided")
+
+    unknown = set(raw) - {"ordered_dependencies", "max_tool_calls"}
+    if unknown:
+        raise ValueError(
+            "trajectory contains unsupported fields: "
+            + ", ".join(sorted(unknown))
+        )
+
+    max_tool_calls = raw.get("max_tool_calls")
+    if max_tool_calls is not None:
+        if isinstance(max_tool_calls, bool) or not isinstance(max_tool_calls, int):
+            raise ValueError("trajectory max_tool_calls must be a non-negative integer or null")
+        if max_tool_calls < 0:
+            raise ValueError("trajectory max_tool_calls must be a non-negative integer or null")
+
+    dependencies_raw = raw.get("ordered_dependencies", [])
+    if not isinstance(dependencies_raw, list):
+        raise ValueError("trajectory ordered_dependencies must be a list")
+
+    allowed = set(allowed_tools)
+    dependencies: list[tuple[str, str]] = []
+    for item in dependencies_raw:
+        if (
+            not isinstance(item, list)
+            or len(item) != 2
+            or not all(isinstance(tool, str) and tool.strip() for tool in item)
+        ):
+            raise ValueError(
+                "each trajectory dependency must be a two-item list of tool names"
+            )
+        before, after = (tool.strip() for tool in item)
+        if before == after:
+            raise ValueError("trajectory dependency cannot reference the same tool twice")
+        if before not in allowed or after not in allowed:
+            raise ValueError(
+                "trajectory dependencies must reference allowed tools only"
+            )
+        dependencies.append((before, after))
+
+    return TrajectoryContract(
+        ordered_dependencies=tuple(dependencies),
+        max_tool_calls=max_tool_calls,
+    )

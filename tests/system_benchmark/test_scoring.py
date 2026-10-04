@@ -24,6 +24,7 @@ def task_payload(
     handoff_fields=(),
     allowed_tools=("query_clickhouse",),
     forbidden_tools=("retrieve_policy",),
+    trajectory=None,
     reference_solution_id="REF-A01",
 ):
     return {
@@ -46,6 +47,7 @@ def task_payload(
         "allowed_tools": list(allowed_tools),
         "forbidden_tools": list(forbidden_tools),
         "reference_solution_id": reference_solution_id,
+        **({"trajectory": trajectory} if trajectory is not None else {}),
     }
 
 
@@ -273,6 +275,109 @@ class TestSystemBenchmarkScoring(unittest.TestCase):
             ),
         )
         self.assertIn("structured_value_mismatch", score.reason_codes)
+
+    def test_declared_trajectory_order_and_budget_pass(self):
+        task = task_payload(
+            family="D",
+            capability="multi_source",
+            source_types=("structured", "policy"),
+            source_ids=("delivery_work_items", "kpi-dictionary"),
+            allowed_tools=("retrieve_policy", "query_clickhouse"),
+            forbidden_tools=(),
+            trajectory={
+                "ordered_dependencies": [["retrieve_policy", "query_clickhouse"]],
+                "max_tool_calls": 2,
+            },
+            reference_solution_id="REF-D01",
+        )
+        ref = ref_payload(
+            reference_solution_id="REF-D01",
+            required_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+            allowed_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+            required_tools=(),
+            forbidden_tools=(),
+            required_terms=(),
+            forbidden_terms=(),
+        )
+        response = SystemBenchmarkResponse(
+            disposition=ResponseDisposition.ANSWER,
+            answer_text="Bounded multi-source answer.",
+            evidence_refs=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+        )
+        observation = ScoringObservation(
+            tool_calls=("retrieve_policy", "query_clickhouse"),
+            tool_call_records=(
+                {"name": "retrieve_policy", "arguments": {"query": "blocker rate"}},
+                {"name": "query_clickhouse", "arguments": {"sql": "SELECT 1"}},
+            ),
+        )
+
+        score = self._score(task, ref, response, observation)
+
+        trajectory = next(d for d in score.dimensions if d.name == "trajectory")
+        self.assertTrue(trajectory.passed)
+
+    def test_declared_trajectory_failures_have_stable_reason_codes(self):
+        task = task_payload(
+            family="D",
+            capability="multi_source",
+            source_types=("structured", "policy"),
+            source_ids=("delivery_work_items", "kpi-dictionary"),
+            allowed_tools=("retrieve_policy", "query_clickhouse"),
+            forbidden_tools=(),
+            trajectory={
+                "ordered_dependencies": [["retrieve_policy", "query_clickhouse"]],
+                "max_tool_calls": 2,
+            },
+            reference_solution_id="REF-D01",
+        )
+        ref = ref_payload(
+            reference_solution_id="REF-D01",
+            required_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+            allowed_evidence=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+            required_tools=(),
+            forbidden_tools=(),
+            required_terms=(),
+            forbidden_terms=(),
+        )
+        response = SystemBenchmarkResponse(
+            disposition=ResponseDisposition.ANSWER,
+            answer_text="Bounded multi-source answer.",
+            evidence_refs=(
+                "structured:delivery_work_items",
+                "policy:kpi-dictionary@1.0#blocker-rate",
+            ),
+        )
+        repeated_query = {"name": "query_clickhouse", "arguments": {"sql": "SELECT 1"}}
+        observation = ScoringObservation(
+            tool_calls=("query_clickhouse", "query_clickhouse", "retrieve_policy"),
+            tool_call_records=(
+                repeated_query,
+                repeated_query,
+                {"name": "retrieve_policy", "arguments": {"query": "blocker rate"}},
+            ),
+        )
+
+        score = self._score(task, ref, response, observation)
+
+        self.assertIn("trajectory_dependency_violation", score.reason_codes)
+        self.assertIn("trajectory_repeated_call", score.reason_codes)
+        self.assertIn("trajectory_call_budget_exceeded", score.reason_codes)
 
     def test_repeated_scoring_is_structurally_and_byte_identical(self):
         task = task_payload(values=[{"name": "team", "value": "Data"}])

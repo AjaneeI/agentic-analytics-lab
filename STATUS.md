@@ -1,6 +1,6 @@
 # Verified Project Status
 
-_Last reviewed against System Benchmark v1 PR D work on 2026-10-04._
+_Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
 
 ## Current verified state
 
@@ -19,6 +19,9 @@ _Last reviewed against System Benchmark v1 PR D work on 2026-10-04._
 - Family G cannot fabricate unsupported-source evidence; Family H must return a handoff after bounded evidence gathering.
 - PR D verification passed 13 focused tests and all 243 repository tests locally; the integrated `main` head `13008e4208320d2ebb6fb189f9aa9ba3091cd788` passed hosted Python 3.11/3.12 and CodeQL.
 - Development-only heuristic diagnostics currently show 28.6% route accuracy, 57.1% capability accuracy, two false-cheap routes, and zero unsupported-source misses on the seven current development cases. This is a baseline diagnostic, not model-performance evidence.
+- PR #74 adds a model-free cross-cutting evidence layer: hierarchical task/run bootstrap comparison, explicit optional trajectory contracts and deterministic trajectory scoring, hierarchical failure taxonomy, and Pareto-frontier architecture comparison.
+- The evidence layer is implementation/regression evidence until it is run against accepted matched benchmark artifacts. It does not by itself establish architecture superiority or unseen-task generalization.
+- Architecture comparison requires matching benchmark-contract provenance but permits provider identifiers to differ when provider/runtime composition is part of the architecture treatment.
 
 ## Previous PR C implementation
 
@@ -57,7 +60,7 @@ this slice.
 
 ## Next bounded experiment
 
-Before expanding benchmark infrastructure, run one supervised Hermes-vs-direct vertical slice against the PR D worker/routing contract. Use the same task, allowed tools, response contract, and deterministic verification for both paths. Measure Ajanee hands-on intervention, task acceptance, recovery behavior, tool/model calls, memory pressure, and incremental spend. Do not add concurrency, always-on behavior, new workers, or paid fallbacks.
+First apply the PR #74 evidence layer to the accepted matched single-agent and oracle-metadata routed repeatability artifacts and review the resulting uncertainty/frontier evidence. Then, before expanding benchmark infrastructure, run one supervised Hermes-vs-direct vertical slice against the PR D worker/routing contract. Use the same task, allowed tools, response contract, and deterministic verification for both paths. Measure Ajanee hands-on intervention, task acceptance, recovery behavior, tool/model calls, memory pressure, and incremental spend. Do not add concurrency, always-on behavior, new workers, or paid fallbacks.
 
 ## Evidence boundary
 
