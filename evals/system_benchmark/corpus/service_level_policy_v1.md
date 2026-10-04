@@ -7,4 +7,4 @@ A high-priority customer-facing blocker requires a named owner response within o
 Service-target performance is evaluated separately from blocker rate. Missing a blocker-response target does not by itself establish a causal explanation for customer impact.
 
 ## P1 exception authority
-Any extension or exception to a customer-facing P1 service target requires service-owner approval before the exception is authorized. An incident commander must not authorize an exception to a customer-facing P1 service target before service-owner approval, including when immediate mitigation is required.
+Any extension or exception to a customer-facing P1 service target requires service-owner approval before the exception is authorized. When immediate mitigation is required for a customer-facing P1 incident, an incident commander must not authorize a temporary exception to the customer-facing P1 service target before service-owner approval.

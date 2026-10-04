@@ -1,6 +1,6 @@
 # Verified Project Status
 
-_Last reviewed on 2026-10-04 against PR B source `8276df4`; see commit-specific workflow evidence for integration readiness._
+_Last reviewed on 2026-10-04: reconciled isolated repair `c065972` with concurrent PR B revision `82ef40c`. Use commit-specific workflow evidence for integration readiness._
 
 ## Current verified state
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
@@ -21,7 +21,10 @@ _Last reviewed on 2026-10-04 against PR B source `8276df4`; see commit-specific 
   - auditable document/version/section identity.
 - The policy manifest rejects duplicate effective dates for the same `document_id`, avoiding ambiguous historical version precedence.
 - The PR B repair adds real-corpus regressions for historical leakage, mixed-source ranking, strict calendar dates, and the same-action P1 authorization conflict.
-- The isolated Python 3.13 sandbox suite passed 208 tests after the repair; the unchanged source snapshot passed 195. This is supplementary, not a substitute for the required Python 3.11/3.12 and CodeQL checks.
+- The reconciled candidate preserves both fix histories, the concurrent explicit P1 wording and extra-section ranking regression, plus strict raw-date/top_k validation, hash-seed repeatability, and the no-Codex execution constraint.
+- The isolated Python 3.13 suite passes 211 tests on the reconciled candidate. All 16 policy regression tests passed; reverting each of the four original fixes separately made its matching test fail. The original source snapshot had 195 tests.
+- Earlier isolated commit `c065972` passed 208 tests on hosted Python 3.11/3.12 and CodeQL. Those results do not certify a later reconciled commit: verify its own required checks before integration.
+- The original PR was concurrently advanced to `82ef40c`, and a separate manual Codex review request was observed. This repair session did not invoke it and cannot certify credit usage or cancellation. Stop external Codex activity and verify trigger settings before further reviewable PR updates. See `docs/pr65-repair-verification-2026-10-04.md`.
 - Benchmark work is subject to the no-Codex-credit constraint in D-010. Automatic code/security review settings must be verified off before updating a reviewable PR; preserving a tested branch is not the same as merging PR B.
 
 ## Current merge gate

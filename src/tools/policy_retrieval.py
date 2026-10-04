@@ -16,9 +16,9 @@ DEFAULT_CORPUS_ROOT = (
 MAX_TOP_K = 5
 MAX_EXCERPT_CHARS = 600
 
+_CALENDAR_DATE_RE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 _SECTION_RE = re.compile(r"^##\s+(.+?)\s*$")
-_CALENDAR_DATE_RE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
 
 class PolicyCorpusError(ValueError):
@@ -62,7 +62,7 @@ def retrieve_policy(
     if not 1 <= top_k <= MAX_TOP_K:
         raise ValueError(f"top_k must be between 1 and {MAX_TOP_K}")
 
-    cutoff = None if as_of is None else _parse_calendar_date(as_of, label="as_of")
+    cutoff = _parse_calendar_date(as_of, field="as_of") if as_of is not None else None
     if not query.strip():
         return []
 
@@ -70,7 +70,7 @@ def retrieve_policy(
     selected = _select_document_versions(documents, cutoff=cutoff)
     query_tokens = set(_tokens(query))
 
-    candidates: list[tuple[tuple[int, int], PolicyEvidence]] = []
+    candidates: list[tuple[int, PolicyEvidence]] = []
     for document in selected:
         content = document.path.read_text(encoding="utf-8")
         for section_id, heading, body in _sections(content, document.path):
@@ -81,7 +81,7 @@ def retrieve_policy(
                 heading,
                 body,
             )
-            if score == (0, 0):
+            if score <= 0:
                 continue
             excerpt = _bounded_excerpt(heading, body)
             candidates.append(
@@ -100,8 +100,7 @@ def retrieve_policy(
 
     candidates.sort(
         key=lambda item: (
-            -item[0][0],
-            -item[0][1],
+            -item[0],
             item[1].document_id,
             item[1].document_version,
             item[1].section_id,
@@ -148,7 +147,7 @@ def _load_manifest(root: Path) -> list[_ManifestDocument]:
             )
 
         try:
-            effective_date = _parse_calendar_date(effective_text, label="effective_date")
+            effective_date = _parse_calendar_date(effective_text, field="effective_date")
         except ValueError as exc:
             raise PolicyCorpusError(
                 f"Manifest document {document_id!r} has invalid effective_date"
@@ -245,10 +244,9 @@ def _required_text(item: dict[str, Any], key: str, index: int) -> str:
     return value.strip()
 
 
-def _parse_calendar_date(value: object, *, label: str) -> date:
-    """Require an exact ASCII calendar date, not basic ISO or week-date syntax."""
-
-    message = f"{label} must be a valid calendar date in YYYY-MM-DD format"
+def _parse_calendar_date(value: object, *, field: str) -> date:
+    """Accept only ASCII calendar dates, not compact or ISO week-date forms."""
+    message = f"{field} must be a valid calendar date in YYYY-MM-DD format"
     if not isinstance(value, str) or _CALENDAR_DATE_RE.fullmatch(value) is None:
         raise ValueError(message)
     try:
@@ -341,16 +339,18 @@ def _score_section(
     source: Path,
     heading: str,
     body: str,
-) -> tuple[int, int]:
-    """Rank section relevance first; source identity only breaks ties or supplies fallback."""
-
+) -> int:
     document_tokens = set(_tokens(document_id)) | set(_tokens(source.stem))
     heading_tokens = set(_tokens(heading))
     body_tokens = set(_tokens(body))
-    return (
-        3 * len(query_tokens & heading_tokens) + len(query_tokens & body_tokens),
-        len(query_tokens & document_tokens),
+    section_score = (
+        3 * len(query_tokens & heading_tokens)
+        + len(query_tokens & body_tokens)
     )
+    # A source-name match is only a tie-break/fallback, never stronger than
+    # one unit of section relevance. Named-source-only queries still work.
+    source_match = int(bool(query_tokens & document_tokens))
+    return 2 * section_score + source_match
 
 
 def _bounded_excerpt(heading: str, body: str) -> str:
