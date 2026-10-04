@@ -1,9 +1,9 @@
 """Statistical evidence helpers for matched architecture comparisons.
 
-The benchmark is stochastic, but repeated runs of the same task are not
-independent benchmark items. This module therefore summarizes repeats within
-each task first, then bootstraps across matched task IDs. That avoids treating
-every repeated observation as a new independent task.
+Architecture comparisons preserve task identity and repeated-run uncertainty.
+The bootstrap resamples matched tasks and, within each selected task, resamples
+observed repeated outcomes for each architecture. This avoids treating repeats
+as independent benchmark items while still reflecting run-level variability.
 
 The resulting interval is descriptive for the frozen benchmark task set. It is
 not evidence that performance will generalize to unseen tasks.
@@ -22,7 +22,6 @@ from src.evals.repeatability import validate_compatible_runs
 _MATCHED_METADATA_FIELDS = (
     "benchmark_schema_version",
     "model",
-    "provider",
     "dataset",
     "questions",
 )
@@ -30,6 +29,29 @@ _MATCHED_METADATA_FIELDS = (
 
 def _case_ids(payload: dict[str, Any]) -> list[str]:
     return [str(item.get("question_id")) for item in payload.get("results", [])]
+
+
+def _benchmark_contract_sha(payload: dict[str, Any]) -> str:
+    value = (
+        payload.get("metadata", {})
+        .get("provenance", {})
+        .get("benchmark_contract_sha256")
+    )
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(
+            "Architecture comparison requires metadata.provenance."
+            "benchmark_contract_sha256 on every run."
+        )
+    return value.strip()
+
+
+def _validate_provenance(payloads: list[dict[str, Any]], label: str) -> str:
+    fingerprints = {_benchmark_contract_sha(payload) for payload in payloads}
+    if len(fingerprints) != 1:
+        raise ValueError(
+            f"{label} repeated runs have mismatched benchmark contract provenance."
+        )
+    return next(iter(fingerprints))
 
 
 def _cross_architecture_compatibility(
@@ -50,6 +72,15 @@ def _cross_architecture_compatibility(
             )
         matched[field] = baseline_value
 
+    baseline_contract = _validate_provenance(baseline_runs, "Baseline")
+    candidate_contract = _validate_provenance(candidate_runs, "Candidate")
+    if baseline_contract != candidate_contract:
+        raise ValueError(
+            "Architecture comparison is incompatible: benchmark contract "
+            "provenance differs across architectures."
+        )
+    matched["benchmark_contract_sha256"] = baseline_contract
+
     baseline_ids = _case_ids(baseline_runs[0])
     candidate_ids = _case_ids(candidate_runs[0])
     if baseline_ids != candidate_ids:
@@ -66,19 +97,22 @@ def _cross_architecture_compatibility(
     return matched
 
 
-def _success_counts(
+def _success_matrix(
     payloads: list[dict[str, Any]],
-) -> tuple[list[str], list[int]]:
+) -> tuple[list[str], list[list[bool]]]:
     case_ids = _case_ids(payloads[0])
-    counts: list[int] = []
-    for position in range(len(case_ids)):
-        counts.append(
-            sum(
-                payload["results"][position].get("task_success") is True
-                for payload in payloads
-            )
-        )
-    return case_ids, counts
+    matrix: list[list[bool]] = []
+    for position, case_id in enumerate(case_ids):
+        outcomes: list[bool] = []
+        for run_index, payload in enumerate(payloads, start=1):
+            value = payload["results"][position].get("task_success")
+            if type(value) is not bool:
+                raise ValueError(
+                    f"Run {run_index} case {case_id}: task_success must be Boolean."
+                )
+            outcomes.append(value)
+        matrix.append(outcomes)
+    return case_ids, matrix
 
 
 def _quantile(sorted_values: list[float], probability: float) -> float:
@@ -98,27 +132,47 @@ def _quantile(sorted_values: list[float], probability: float) -> float:
     return sorted_values[lower] * (1 - weight) + sorted_values[upper] * weight
 
 
-def paired_task_bootstrap(
-    deltas: list[float],
+def paired_hierarchical_bootstrap(
+    baseline_outcomes: list[list[bool]],
+    candidate_outcomes: list[list[bool]],
     *,
     samples: int = 10_000,
     seed: int = 42,
 ) -> dict[str, float]:
-    """Bootstrap a mean delta by resampling matched task-level deltas."""
+    """Resample tasks, then observed runs within each selected task."""
 
-    if len(deltas) < 2:
+    if len(baseline_outcomes) < 2:
         raise ValueError("Paired bootstrap requires at least two benchmark tasks.")
+    if len(baseline_outcomes) != len(candidate_outcomes):
+        raise ValueError("Baseline and candidate task matrices must align.")
     if samples < 100:
         raise ValueError("Bootstrap requires at least 100 samples.")
 
     rng = random.Random(seed)
-    n = len(deltas)
-    estimates = [
-        mean(deltas[rng.randrange(n)] for _ in range(n))
-        for _ in range(samples)
-    ]
-    estimates.sort()
+    task_count = len(baseline_outcomes)
+    estimates: list[float] = []
 
+    for _ in range(samples):
+        task_deltas: list[float] = []
+        for _ in range(task_count):
+            task_index = rng.randrange(task_count)
+            baseline_task = baseline_outcomes[task_index]
+            candidate_task = candidate_outcomes[task_index]
+            if not baseline_task or not candidate_task:
+                raise ValueError("Every benchmark task must contain repeated outcomes.")
+
+            baseline_rate = mean(
+                1.0 if baseline_task[rng.randrange(len(baseline_task))] else 0.0
+                for _ in range(len(baseline_task))
+            )
+            candidate_rate = mean(
+                1.0 if candidate_task[rng.randrange(len(candidate_task))] else 0.0
+                for _ in range(len(candidate_task))
+            )
+            task_deltas.append(candidate_rate - baseline_rate)
+        estimates.append(mean(task_deltas))
+
+    estimates.sort()
     return {
         "lower_95": _quantile(estimates, 0.025),
         "upper_95": _quantile(estimates, 0.975),
@@ -133,11 +187,7 @@ def compare_architectures(
     bootstrap_samples: int = 10_000,
     seed: int = 42,
 ) -> dict[str, Any]:
-    """Compare matched repeated benchmark runs without pseudoreplication.
-
-    Repeats are summarized within each task. The bootstrap then resamples task
-    IDs, not individual repeated observations.
-    """
+    """Compare matched repeated benchmark runs with hierarchical resampling."""
 
     validate_compatible_runs(baseline_runs)
     validate_compatible_runs(candidate_runs)
@@ -145,10 +195,12 @@ def compare_architectures(
         baseline_runs, candidate_runs
     )
 
-    case_ids, baseline_counts = _success_counts(baseline_runs)
-    _, candidate_counts = _success_counts(candidate_runs)
+    case_ids, baseline_matrix = _success_matrix(baseline_runs)
+    _, candidate_matrix = _success_matrix(candidate_runs)
     runs = len(baseline_runs)
 
+    baseline_counts = [sum(outcomes) for outcomes in baseline_matrix]
+    candidate_counts = [sum(outcomes) for outcomes in candidate_matrix]
     baseline_rates = [count / runs for count in baseline_counts]
     candidate_rates = [count / runs for count in candidate_counts]
     deltas = [
@@ -156,8 +208,11 @@ def compare_architectures(
         for baseline, candidate in zip(baseline_rates, candidate_rates)
     ]
 
-    bootstrap = paired_task_bootstrap(
-        deltas, samples=bootstrap_samples, seed=seed
+    bootstrap = paired_hierarchical_bootstrap(
+        baseline_matrix,
+        candidate_matrix,
+        samples=bootstrap_samples,
+        seed=seed,
     )
 
     per_case = []
@@ -183,7 +238,7 @@ def compare_architectures(
         )
 
     return {
-        "method": "paired_task_level_bootstrap",
+        "method": "paired_hierarchical_task_run_bootstrap",
         "bootstrap_samples": bootstrap_samples,
         "seed": seed,
         "run_count_per_architecture": runs,
@@ -192,6 +247,10 @@ def compare_architectures(
         "architectures": {
             "baseline": baseline_runs[0]["metadata"].get("architecture"),
             "candidate": candidate_runs[0]["metadata"].get("architecture"),
+        },
+        "providers": {
+            "baseline": baseline_runs[0]["metadata"].get("provider"),
+            "candidate": candidate_runs[0]["metadata"].get("provider"),
         },
         "aggregate": {
             "baseline_mean_task_success_rate_pct": round(
@@ -214,9 +273,9 @@ def compare_architectures(
         },
         "per_case": per_case,
         "claim_boundary": (
-            "This is a descriptive paired bootstrap over the frozen benchmark "
-            "task set. It preserves repeated-run dependence by summarizing "
-            "within task before resampling tasks. It does not establish "
+            "This is a descriptive hierarchical bootstrap over the frozen "
+            "benchmark task set and observed repeated runs. It resamples tasks "
+            "and observed within-task outcomes. It does not establish "
             "generalization to unseen tasks."
         ),
     }
