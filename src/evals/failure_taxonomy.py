@@ -36,6 +36,10 @@ _REASON_CODE_MAP = {
     "unnecessary_escalation": FailureTag("routing", "unnecessary_escalation"),
     "required_unsupported_disposition": FailureTag("grounding", "unsupported_source_not_acknowledged"),
     "unexpected_disposition": FailureTag("reasoning", "unexpected_disposition"),
+    "trajectory_dependency_violation": FailureTag("tool_use", "dependency_order"),
+    "trajectory_repeated_call": FailureTag("tool_use", "repeated_call"),
+    "trajectory_call_budget_exceeded": FailureTag("tool_use", "call_budget_exceeded"),
+    "trajectory_malformed_call": FailureTag("tool_use", "malformed_call"),
 }
 
 _STAGE_MAP = {
