@@ -78,6 +78,30 @@ class TestPolicyRetrievalRegressions(unittest.TestCase):
         )
         self.assertFalse(any(r.section_id.startswith("administration-") for r in results))
 
+    def test_blank_query_still_validates_top_k(self):
+        for value in (0, 6, True, "3"):
+            with self.subTest(top_k=value):
+                with self.assertRaisesRegex(ValueError, "top_k"):
+                    retrieval.retrieve_policy("  ", top_k=value)
+
+    def test_complete_common_source_names_return_complete_document_evidence(self):
+        for query, document_id, expected_sections in (
+            (
+                "blocker definition",
+                "blocker-definition",
+                {"blocked-item", "blocker-rate", "dependency-ownership"},
+            ),
+            (
+                "service-level policy",
+                "service-level-policy",
+                {"blocker-response", "service-target", "p1-exception-authority"},
+            ),
+        ):
+            with self.subTest(query=query):
+                results = retrieval.retrieve_policy(query)
+                self.assertEqual({r.document_id for r in results}, {document_id})
+                self.assertEqual({r.section_id for r in results}, expected_sections)
+
     def test_as_of_rejects_non_calendar_syntax(self):
         for value in (
             "20260101", "2026-W01-1", "2026W011", "2026-1-01", "2026-01-1",
