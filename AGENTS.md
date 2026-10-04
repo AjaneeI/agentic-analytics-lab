@@ -16,6 +16,12 @@ This repository is evaluation-first. Agents must preserve evidence, benchmark in
 - Do not reintroduce rejected approaches merely because they are fashionable or convenient; check `DECISIONS.md` first.
 - Do not claim success from implementation alone. Verify with tests, artifacts, or reproducible evidence.
 
+## Benchmark execution budget — no Codex credits
+- Do not use Codex credits for benchmark implementation, debugging, testing, execution, or review.
+- Do not request Codex code/security review or use Codex as a fallback when deterministic tooling is sufficient.
+- Prefer standard-library code, local tests, GitHub Actions, CodeQL, and inspectable source-backed review.
+- Before creating or readying a reviewable PR, account for any external automatic-review trigger that could consume Codex credits.
+
 ## Evidence discipline
 For any meaningful change:
 - state the acceptance criteria;

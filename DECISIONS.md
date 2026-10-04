@@ -104,3 +104,21 @@ This file records durable architecture, evaluation, and operating decisions. It 
 **Why:** Coding agents should not reconstruct project intent, current state, or prior architecture decisions from scattered commits and chat history.
 
 **Consequence:** Agents must read these files before substantial work and update status/decisions only when evidence warrants it.
+
+---
+
+## D-010 — No Codex-credit use for benchmark work
+**Status:** Accepted — 2026-10-04
+
+**Decision:** Benchmark implementation, debugging, testing, execution, and
+review must not consume Codex credits.
+
+**Why:** The benchmark must remain reproducible with deterministic, inspectable
+engineering tools rather than depending on paid agent execution or review.
+
+**Consequence:** Use standard-library implementations, local deterministic
+tests, GitHub-hosted Python checks, CodeQL, and source-backed review. Do not
+request Codex code/security review or silently fall back to Codex. Before
+creating or readying a reviewable PR, account for external automatic-review
+triggers. This budget rule does not weaken branch protection or benchmark
+verification requirements.

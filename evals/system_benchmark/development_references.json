@@ -1,0 +1,77 @@
+[
+  {
+    "reference_solution_id": "REF-A01",
+    "required_evidence_refs": ["structured:delivery_work_items"],
+    "allowed_evidence_refs": ["structured:delivery_work_items"],
+    "required_tools": ["query_clickhouse"],
+    "forbidden_tools": ["retrieve_policy"],
+    "required_answer_terms": ["Data"],
+    "forbidden_answer_terms": ["causes"]
+  },
+  {
+    "reference_solution_id": "REF-C01",
+    "required_evidence_refs": ["policy:kpi-dictionary@1.0#blocker-rate"],
+    "allowed_evidence_refs": ["policy:kpi-dictionary@1.0#blocker-rate"],
+    "required_tools": ["retrieve_policy"],
+    "forbidden_tools": ["query_clickhouse"],
+    "required_answer_terms": ["blocked items", "active items"],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-D01",
+    "required_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:kpi-dictionary@1.0#blocker-rate"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:kpi-dictionary@1.0#blocker-rate"
+    ],
+    "required_tools": ["query_clickhouse", "retrieve_policy"],
+    "forbidden_tools": [],
+    "required_answer_terms": ["Data"],
+    "forbidden_answer_terms": ["causes"]
+  },
+  {
+    "reference_solution_id": "REF-G01",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": ["query_clickhouse", "retrieve_policy"],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-E01",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": ["query_clickhouse", "retrieve_policy"],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-H01",
+    "required_evidence_refs": [
+      "policy:escalation-policy@1.0#p1-temporary-authority",
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "allowed_evidence_refs": [
+      "policy:escalation-policy@1.0#p1-temporary-authority",
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "required_tools": ["retrieve_policy"],
+    "forbidden_tools": ["query_clickhouse"],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-C02",
+    "required_evidence_refs": ["policy:blocker-definition@0.9#blocked-item"],
+    "allowed_evidence_refs": ["policy:blocker-definition@0.9#blocked-item"],
+    "required_tools": ["retrieve_policy"],
+    "forbidden_tools": ["query_clickhouse"],
+    "required_answer_terms": ["business day"],
+    "forbidden_answer_terms": ["material progress"]
+  }
+]

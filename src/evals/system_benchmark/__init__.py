@@ -1,1 +1,1 @@
-"""System Benchmark v1 evaluation contracts and fixture loading."""
+"""System Benchmark v1 contracts, fixtures, references, and deterministic scoring."""
