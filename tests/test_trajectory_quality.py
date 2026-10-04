@@ -62,6 +62,15 @@ class TestTrajectoryQuality(unittest.TestCase):
             ("retrieve_policy->query_clickhouse:wrong_order",),
         )
 
+    def test_empty_allowlist_rejects_any_unlisted_tool(self):
+        result = evaluate_trajectory(
+            [{"name": "web_search", "arguments": {}}],
+            TrajectoryExpectation(allowed_tools=()),
+        )
+
+        self.assertFalse(result.passed)
+        self.assertEqual(result.unexpected_tools, ("web_search",))
+
     def test_forbidden_and_unexpected_tools_are_distinct(self):
         calls = [
             {"name": "admin_sql", "arguments": {}},
