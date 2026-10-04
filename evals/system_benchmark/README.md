@@ -1,36 +1,73 @@
 # System Benchmark v1
 
-System Benchmark v1 is a benchmark family separate from the frozen Q1–Q6
-microbenchmark in `evals/questions.json`.
+System Benchmark v1 is separate from the frozen Q1–Q6 microbenchmark in
+evals/questions.json. It is built in bounded phases so task contracts,
+evidence capabilities, scoring, runtime execution, and held-out evidence do
+not become coupled.
 
-This directory holds version-controlled benchmark contracts and the repository-local
-policy corpus used by the current development phase. Development fixtures,
-deterministic reference/scoring contracts, model execution, routing treatments,
-and held-out evidence land only in later bounded phases.
+## Current phase — PR C
 
-## Current phase
-
-PR A established the typed benchmark contract, deterministic fixture loader,
+PR A established typed task/response contracts, deterministic fixture loading,
 fingerprint inputs, and model-free validation.
 
-PR B adds the second evidence capability: a version-controlled local policy corpus
-plus deterministic, read-only section retrieval with auditable
-document/version/section identity, historical `as_of` selection, bounded `top_k`,
-bounded excerpts, corpus path enforcement, and deterministic tie-breaking.
+PR B added the repository-local, read-only policy corpus and deterministic
+section retrieval with version-aware as_of behavior.
 
-The current phase still does **not** add development task fixtures, held-out tasks,
-model execution, routing treatments, graders, or official System Benchmark v1
-performance evidence.
+PR C adds the deterministic evaluation core:
 
-Task fixtures are validated before execution and must declare their benchmark
-version, family, split, expected route, capability profile, allowed/forbidden
-dispositions, evidence requirements, semantic expectations, tool boundaries,
-and reference-solution identity.
+- development_tasks.json — seven inspectable development cases only;
+- development_references.json — exact machine-checkable evidence/tool/answer
+  expectations keyed by reference_solution_id;
+- src/evals/system_benchmark/references.py — strict reference loading and
+  task/reference compatibility validation;
+- src/evals/system_benchmark/scoring.py — deterministic per-dimension scoring
+  over observable response, evidence, tool-call, structured-value,
+  clarification, and handoff state.
 
-Held-out tasks remain intentionally absent until the development interfaces,
-scoring rules, tool contracts, routing contract, and corpus are frozen.
+The development set covers structured analytics evidence, current policy
+retrieval, structured + policy cross-source alignment, unsupported evidence,
+bounded clarification, conflicting policy authority requiring handoff, and
+historical policy selection.
 
-## Next phase
+No held-out fixture is present in this phase.
 
-PR C adds development-only fixtures and deterministic reference/scoring contracts.
-It remains model-free and does not expose held-out benchmark evidence.
+## Evidence reference format
+
+Reference expectations use explicit repository-local identifiers:
+
+- structured source: structured:<source_id>
+- policy section: policy:<document_id>@<version>#<section_id>
+
+Policy identity therefore remains auditable at document, version, and section
+granularity. Wrong-version evidence is scored separately from missing evidence.
+
+## Scoring dimensions
+
+score_response evaluates dimensions in a fixed order:
+
+1. disposition;
+2. evidence;
+3. tools;
+4. structured values;
+5. clarification;
+6. handoff;
+7. bounded answer terms.
+
+Failures return stable reason codes including missing_required_evidence,
+wrong_policy_version, unsupported_evidence_source, missing_required_tool,
+forbidden_tool_used, structured_value_mismatch, required_clarification_omitted,
+required_handoff_omitted, unnecessary_escalation, and
+forbidden_answer_disposition.
+
+Scoring uses no LLM judge, hidden reasoning, model inference, external SaaS,
+or paid API.
+
+## Development-only boundary
+
+Development fixtures are inspectable and may be used to debug the scorer.
+They are not evidence of unseen-task generalization or architecture
+performance.
+
+PR C does not add held-out tasks, model execution, routing treatments, a
+benchmark runner, an LLM judge, or changes to frozen Q1–Q6 semantics, scorer,
+dataset, prompt/tool contract, or accepted comparison evidence.
