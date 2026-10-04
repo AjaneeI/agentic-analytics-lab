@@ -97,7 +97,7 @@ def evaluate_trajectory(
     unexpected = tuple(
         tool
         for tool in names
-        if allowed and tool not in allowed and tool not in forbidden
+        if tool not in allowed and tool not in forbidden
     )
 
     dependency_violations: list[str] = []
