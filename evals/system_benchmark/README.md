@@ -17,7 +17,7 @@ corpus plus deterministic, read-only section retrieval with auditable
 document/version/section identity, historical `as_of` selection, bounded `top_k`,
 bounded excerpts, corpus path enforcement, and deterministic ranking.
 
-PR C (#66) adds the deterministic evaluation core:
+PR C (PR #67, tracking issue #66) adds the deterministic evaluation core:
 
 - `dev_tasks.json`: 24 inspectable development tasks, exactly three per family A–H;
 - `reference_solutions.json`: one known-good observable reference record per task;
