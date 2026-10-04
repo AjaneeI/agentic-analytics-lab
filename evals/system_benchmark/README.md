@@ -72,11 +72,11 @@ PR C does not add held-out tasks, model execution, routing treatments, a
 benchmark runner, an LLM judge, or changes to frozen Q1–Q6 semantics, scorer,
 dataset, prompt/tool contract, or accepted comparison evidence.
 
-## PR D candidate — routing treatments and worker adapters
+## PR D — routing treatments and worker adapters
 
 Tracking issue: #69.
 
-The PR D candidate adds a model-free adapter layer that keeps route inference
+PR D adds a model-free adapter layer that keeps route inference
 separate from worker execution:
 
 - `routing.py` defines normalized route/capability decisions, oracle routing,
@@ -100,4 +100,6 @@ not architecture-performance evidence:
 The weak heuristic result is intentionally preserved as a simple baseline
 rather than tuned to the development fixtures.
 
-PR D does not execute a model, Hermes, Ollama, or a benchmark worker runtime.
+PR D does not itself execute a model, Hermes, Ollama, or a benchmark worker runtime.
+
+PR D was integrated into `main` on 2026-10-04 without marking the draft PR ready, preserving the repository's no-Codex benchmark rule. The integrated tree passed hosted Python 3.11/3.12 and CodeQL.
