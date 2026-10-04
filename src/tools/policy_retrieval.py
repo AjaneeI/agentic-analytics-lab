@@ -58,12 +58,12 @@ def retrieve_policy(
     if not isinstance(query, str):
         raise TypeError("query must be a string")
     cutoff = _parse_calendar_date(as_of, field="as_of") if as_of is not None else None
-    if not query.strip():
-        return []
     if isinstance(top_k, bool) or not isinstance(top_k, int):
         raise ValueError("top_k must be an integer")
     if not 1 <= top_k <= MAX_TOP_K:
         raise ValueError(f"top_k must be between 1 and {MAX_TOP_K}")
+    if not query.strip():
+        return []
 
     documents = _load_manifest(DEFAULT_CORPUS_ROOT)
     selected = _select_document_versions(documents, cutoff=cutoff)
@@ -346,8 +346,12 @@ def _score_section(
         3 * len(query_tokens & heading_tokens)
         + len(query_tokens & body_tokens)
     )
-    # A source-name match is only a tie-break/fallback, never stronger than
-    # one unit of section relevance. Named-source-only queries still work.
+    # A complete document-id query should retrieve that source as a document,
+    # while partial source-name overlap remains only a tie-break/fallback.
+    document_id_tokens = set(_tokens(document_id))
+    exact_source_match = query_tokens == document_id_tokens
+    if exact_source_match:
+        return 1_000 + section_score
     source_match = int(bool(query_tokens & document_tokens))
     return 2 * section_score + source_match
 
