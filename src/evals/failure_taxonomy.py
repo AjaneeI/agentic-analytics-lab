@@ -61,12 +61,16 @@ def classify_failure(
 ) -> tuple[FailureTag, ...]:
     """Return stable taxonomy tags while preserving unknown observations."""
 
+    supplied_reason_codes = tuple(reason_codes)
     tags = {
         _REASON_CODE_MAP[code]
-        for code in reason_codes
+        for code in supplied_reason_codes
         if code in _REASON_CODE_MAP
     }
+    has_unknown = any(code not in _REASON_CODE_MAP for code in supplied_reason_codes)
 
+    if diagnostic_stage is not None and diagnostic_stage not in _STAGE_MAP:
+        has_unknown = True
     if diagnostic_stage in _STAGE_MAP:
         tags.add(_STAGE_MAP[diagnostic_stage])
 
@@ -75,7 +79,7 @@ def classify_failure(
     elif recovered is False:
         tags.add(FailureTag("recovery", "unrecovered"))
 
-    if not tags:
+    if has_unknown or not tags:
         tags.add(FailureTag("unknown", "unclassified"))
 
     return tuple(sorted(tags))
