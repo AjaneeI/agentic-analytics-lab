@@ -1,6 +1,6 @@
 # Verified Project Status
 
-_Last reviewed against the active System Benchmark v1 branch state on 2026-10-01._
+_Last reviewed against the active System Benchmark v1 branch state on 2026-10-04._
 
 ## Current verified state
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
@@ -20,7 +20,10 @@ _Last reviewed against the active System Benchmark v1 branch state on 2026-10-01
   - path-traversal/corpus-root enforcement;
   - auditable document/version/section identity.
 - The policy manifest rejects duplicate effective dates for the same `document_id`, avoiding ambiguous historical version precedence.
-- Python 3.11/3.12 and CodeQL are green on the current PR B implementation head before this documentation refresh.
+- The Oct. 4 PR B fix set removes retrospective future-definition text from historical evidence, caps document-name matches at tie-break/fallback strength, validates calendar-date syntax before selection, and makes the P1 rules govern the same authorization under the same conditions.
+- Twelve additional deterministic regression tests cover the four findings and preserve named-source retrieval, historical/current definitions, and valid calendar boundaries.
+- Sandbox verification on Python 3.13.13: 59 System Benchmark tests and all 207 repository tests pass; source compilation and diff whitespace checks pass.
+- These are deterministic implementation checks, not model-performance results. Python 3.11/3.12 and CodeQL must be checked on the new PR head; green checks on the earlier `8276df4` head do not certify this fix set.
 
 ## Current merge gate
 PR B is not accepted evidence until:
