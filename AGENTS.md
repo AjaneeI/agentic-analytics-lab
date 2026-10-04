@@ -21,6 +21,7 @@ This repository is evaluation-first. Agents must preserve evidence, benchmark in
 - Do not request Codex code/security review or use Codex as a fallback when deterministic tooling is sufficient.
 - Prefer standard-library code, local tests, GitHub Actions, CodeQL, and inspectable source-backed review.
 - Before creating or readying a reviewable PR, account for any external automatic-review trigger that could consume Codex credits.
+- PR #68 demonstrated that marking a draft ready triggers Codex here. Do not repeat that transition without verifying the applicable automatic review is disabled; absence of an immediate bot comment is not verification.
 
 ## Evidence discipline
 For any meaningful change:

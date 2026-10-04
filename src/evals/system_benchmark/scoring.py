@@ -171,6 +171,8 @@ def _score_evidence(
         if not is_wrong_version:
             reasons.append("unsupported_evidence_source")
             continue
+        # A valid citation does not excuse an additional obsolete/future citation.
+        reasons.append("wrong_policy_version")
         try:
             source_id = evidence_source_id(observed_ref)
         except ValueError:
@@ -267,14 +269,20 @@ def _score_answer_bounds(
 
 def _matches_expectation(observed: Any, expectation: StructuredExpectation) -> bool:
     expected = expectation.value
+    # bool is an int subclass, but not valid numeric evidence.
+    if isinstance(expected, bool) or isinstance(observed, bool):
+        return type(expected) is type(observed) and observed == expected
     if (
         isinstance(expected, (int, float))
         and not isinstance(expected, bool)
         and isinstance(observed, (int, float))
         and not isinstance(observed, bool)
     ):
-        expected_float = float(expected)
-        observed_float = float(observed)
+        try:
+            expected_float = float(expected)
+            observed_float = float(observed)
+        except OverflowError:
+            return False
         if not math.isfinite(expected_float) or not math.isfinite(observed_float):
             return False
         tolerance = expectation.tolerance or 0.0

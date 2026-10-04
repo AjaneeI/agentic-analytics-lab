@@ -122,3 +122,30 @@ request Codex code/security review or silently fall back to Codex. Before
 creating or readying a reviewable PR, account for external automatic-review
 triggers. This budget rule does not weaken branch protection or benchmark
 verification requirements.
+
+
+---
+
+## D-011 — Rehearse execution and evidence before live System Benchmark runs
+**Status:** Accepted scope — 2026-10-04; candidate implementation tracked in #71
+
+**Decision:** Insert the approved seven-case scripted rehearsal after PR C and
+before live routing/worker execution. Reuse existing response/scoring contracts,
+actual local policy retrieval, and an explicitly labelled, exact-query SQLite
+replay of the unchanged seed-42 CSV. Keep answer declarations distinct from
+immutable captured evidence and enforce tool permissions before dispatch.
+
+**Why:** Green component tests did not prove the evidence-to-score bridge. Real
+evidence rehearsal exposed SB-D01's all-item/active-work oracle mismatch and
+three bounded PR C scorer defects. Correct the development reference against
+source data, not against a model's output; retain the failure evidence.
+
+**Consequence:** Seven controls and fourteen negative controls are integration
+checks, not agent performance. No model, held-out, live database parity, broader
+routing claim, hostile-code sandbox claim, or new dependency follows. Defining
+inputs and outputs are content-hashed; volatile runtime metadata stays separate.
+The frozen microbenchmark/generator/runtime boundaries remain unchanged.
+
+**Cost:** D-010 remains mandatory. A draft-ready event on PR #68 did trigger a
+Codex review; repository prose and delayed bot comments are not an opt-out.
+Keep new work isolated/draft until a safe integration trigger path is verified.
