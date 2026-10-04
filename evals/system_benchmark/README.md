@@ -103,3 +103,29 @@ rather than tuned to the development fixtures.
 PR D does not itself execute a model, Hermes, Ollama, or a benchmark worker runtime.
 
 PR D was integrated into `main` on 2026-10-04 without marking the draft PR ready, preserving the repository's no-Codex benchmark rule. The integrated tree passed hosted Python 3.11/3.12 and CodeQL.
+
+
+## Cross-cutting evidence extensions
+
+The repository also includes model-free evidence utilities that can be applied
+to System Benchmark artifacts without changing task semantics or the
+deterministic scorer:
+
+- `src/evals/statistical_evidence.py` compares matched repeated runs with a
+  task-level paired bootstrap so repeated executions of one task are not
+  counted as independent benchmark items;
+- `src/evals/trajectory_quality.py` measures observable tool selection,
+  dependency order, repetition, malformed calls, and call-budget violations;
+- `src/evals/failure_taxonomy.py` groups raw reason codes and diagnostic
+  stages into a stable hierarchical reporting taxonomy while preserving the
+  underlying evidence;
+- `src/evals/complexity_frontier.py` compares architectures with Pareto
+  dominance instead of collapsing quality and operational burden into one
+  weighted score.
+
+These utilities do not create a new benchmark claim on their own. Trajectory
+quality is not yet a gating System Benchmark v1 scoring dimension because the
+current task contracts do not encode dependency order or call budgets.
+
+See `docs/agent-evaluation-evidence-method.md` for the research rationale,
+claim boundaries, and optional Wolfram independent-verification path.
