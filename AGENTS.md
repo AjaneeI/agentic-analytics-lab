@@ -16,6 +16,12 @@ This repository is evaluation-first. Agents must preserve evidence, benchmark in
 - Do not reintroduce rejected approaches merely because they are fashionable or convenient; check `DECISIONS.md` first.
 - Do not claim success from implementation alone. Verify with tests, artifacts, or reproducible evidence.
 
+## Benchmark execution budget — no Codex credits
+- Benchmark implementation, debugging, tests, execution, and review must not invoke Codex or consume Codex credits. This includes cloud tasks, code/security review, and automatic-review triggers.
+- Do not fall back or upgrade to Codex when a local tool, sandbox, or workflow fails. Use deterministic Python, GitHub Actions, CodeQL, source inspection, and evidence-preserving alternatives.
+- Verify external automatic-review settings before updating a reviewable PR or marking a draft ready. This file documents the rule; it does not disable external triggers.
+- When trigger safety cannot be established, preserve a tested patch on an isolated branch without a PR and record the integration gate. Do not bypass branch protection.
+
 ## Evidence discipline
 For any meaningful change:
 - state the acceptance criteria;

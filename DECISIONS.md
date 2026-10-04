@@ -104,3 +104,15 @@ This file records durable architecture, evaluation, and operating decisions. It 
 **Why:** Coding agents should not reconstruct project intent, current state, or prior architecture decisions from scattered commits and chat history.
 
 **Consequence:** Agents must read these files before substantial work and update status/decisions only when evidence warrants it.
+
+
+---
+
+## D-010 — No Codex-credit use for benchmark work
+**Status:** Accepted — 2026-10-04, explicit project-owner constraint
+
+**Decision:** Do not use Codex credits for benchmark implementation, debugging, testing, execution, or review. No automatic fallback to Codex is permitted.
+
+**Consequence:** Use deterministic code and tests, existing GitHub-hosted CI/CodeQL, and source-backed review. Keep frozen Q1–Q6 and all existing evidence boundaries unchanged. Third-party billing is not presumed free merely because it is not Codex.
+
+**Trigger boundary:** Codex automatic code/security review is configured outside the repository. Repository instructions are not a technical opt-out. Until the applicable settings are verified off, do not update a reviewable PR or mark a draft ready; use a separate branch without a PR for repair and manual verification. Preserve branch protections and record any remaining integration gate.

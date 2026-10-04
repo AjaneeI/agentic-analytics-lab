@@ -57,7 +57,7 @@ This is an **Applied AI Engineering work sample**, not a demo-only chatbot.
 
 | Signal | Verified state |
 | --- | --- |
-| Unit / regression tests | **146 passing** on Python 3.11 and 3.12 |
+| Unit / regression tests | Full suite on Python 3.11 and 3.12; see commit-specific workflow results |
 | CI | GitHub Actions passes on `main` |
 | Security analysis | CodeQL `security-extended` passes |
 | Data boundary | Read-only, dataset-scoped ClickHouse tool |
@@ -66,7 +66,7 @@ This is an **Applied AI Engineering work sample**, not a demo-only chatbot.
 | Natural-language routing | Separate development evaluation lane implemented |
 | Published benchmark claim | Historical baseline retained as failure evidence; current post-hardening comparison remains intentionally bounded |
 
-The latest verified Python workflow on `main` ran **146 tests successfully on both supported Python versions**.
+Test counts and outcomes are commit-specific: use the linked Python workflow for the revision being evaluated. Passing regression tests establishes implementation checks, not agent-performance or generalization evidence.
 
 ### Benchmark comparison
 
