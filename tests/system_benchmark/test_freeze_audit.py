@@ -10,7 +10,14 @@ def make_task(family, index):
     source_types = [] if capability == "none" else ["structured"]
     source_ids = [] if capability == "none" else ["delivery_work_items"]
     allowed_tools = [] if capability == "none" else ["query_clickhouse"]
-    allowed = ["unsupported"] if family == "G" else ["answer"]
+    if family == "G":
+        allowed = ["unsupported"]
+    elif family == "H":
+        allowed = ["handoff"]
+    elif family == "E":
+        allowed = ["clarify"]
+    else:
+        allowed = ["answer"]
     forbidden = [x for x in ["answer", "clarify", "unsupported", "handoff"] if x not in allowed]
     return parse_task_contract({
         "id": f"SB-{family}{index:02d}",
@@ -27,8 +34,11 @@ def make_task(family, index):
         "expected_values": [],
         "required_claims": [],
         "forbidden_claims": [],
-        "required_clarification_concept": None,
-        "required_handoff_fields": [],
+        "required_clarification_concept": "scope" if family == "E" else None,
+        "required_handoff_fields": (
+            ["trigger", "evidence_refs", "actions_taken", "unresolved_uncertainty", "requested_authority"]
+            if family == "H" else []
+        ),
         "allowed_tools": allowed_tools,
         "forbidden_tools": [],
         "reference_solution_id": f"REF-{family}{index:02d}",
