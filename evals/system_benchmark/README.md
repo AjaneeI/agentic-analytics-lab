@@ -123,9 +123,18 @@ deterministic scorer:
   dominance instead of collapsing quality and operational burden into one
   weighted score.
 
-These utilities do not create a new benchmark claim on their own. Trajectory
-quality is not yet a gating System Benchmark v1 scoring dimension because the
-current task contracts do not encode dependency order or call budgets.
+These utilities do not create a new benchmark claim on their own.
+
+System Benchmark task contracts may now optionally declare a `trajectory`
+object with `max_tool_calls` and explicit `ordered_dependencies`. When a
+task declares either constraint, deterministic scoring adds a `trajectory`
+dimension with stable reason codes for dependency-order violations, repeated
+calls, malformed calls, and call-budget overruns. Existing fixtures that omit
+the object retain their previous behavior.
+
+The current development set uses this conservatively: SB-D01 declares a
+two-call budget for its two-source task, but no arbitrary source order is
+imposed because the evidence contract does not require one.
 
 See `docs/agent-evaluation-evidence-method.md` for the research rationale,
 claim boundaries, and optional Wolfram independent-verification path.
