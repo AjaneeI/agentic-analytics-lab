@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict
 import json
 from pathlib import Path
+import re
 import time
 from typing import Any, Callable, Mapping, Protocol
 
@@ -80,6 +81,11 @@ _TOOL_SPECS = {
     "query_clickhouse": _QUERY_TOOL,
     "retrieve_policy": _POLICY_TOOL,
 }
+
+_DELIVERY_TABLE_REF = re.compile(
+    r"\b(?:from|join)\s+agentic_analytics\s*\.\s*delivery_work_items\b",
+    re.IGNORECASE,
+)
 
 _SYSTEM_PROMPT = """
 You are a bounded local worker for System Benchmark v1.
@@ -256,8 +262,9 @@ class BoundedLocalExecutor:
         ):
             raise LocalWorkerError("query_clickhouse returned invalid rows")
 
-        _append_unique(evidence_refs, "structured:delivery_work_items")
-        _extract_structured_values(task, rows, structured_values)
+        if rows and _query_references_delivery_table(sql):
+            _append_unique(evidence_refs, "structured:delivery_work_items")
+            _extract_structured_values(task, rows, structured_values)
         return rows
 
     def _run_policy_tool(
@@ -309,8 +316,19 @@ def _extract_structured_values(
         if not values:
             continue
         first = values[0]
-        if all(value == first for value in values):
-            output[expectation.name] = first
+        if not all(value == first for value in values):
+            output.pop(expectation.name, None)
+            continue
+        previous = output.get(expectation.name, first)
+        if previous != first:
+            output.pop(expectation.name, None)
+            continue
+        output[expectation.name] = first
+
+
+def _query_references_delivery_table(sql: str) -> bool:
+    normalized = sql.replace(chr(96), "").replace(chr(34), "")
+    return _DELIVERY_TABLE_REF.search(normalized) is not None
 
 
 def _append_unique(values: list[str], value: str) -> None:
