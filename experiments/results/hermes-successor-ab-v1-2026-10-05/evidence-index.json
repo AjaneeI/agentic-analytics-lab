@@ -1,0 +1,18 @@
+{
+  "files": {
+    "comparison.json": "447f1a8c8edf0aa50e3d3107e746c4c001bc24a7cc43ae0f2849410c708b9bb7",
+    "frozen-state.json": "8ccc232d0026e219d373824f1a885a5b0224a757820b3fc3985b50030665c371",
+    "preflight-a.json": "5c2405a565a64d548f2537bee76a6d39dc785c230c832efdcc4c575830494089",
+    "preflight-b.json": "5c2405a565a64d548f2537bee76a6d39dc785c230c832efdcc4c575830494089",
+    "treatment-a-error.json": "7d55234b4e34294fb901a0bebe1248b46af1f758e1395841c917fe6344dc4911",
+    "treatment-a-model.jsonl": "0ea6a563f0960a4a5690e42c1c8c1a6915c224090288422cecf20d0673213129",
+    "treatment-b-command.json": "e3ac704f965217597f4c4cd9bdd544537680076eb36cd101a716de4a9be6e308",
+    "treatment-b-error.json": "86a0bf0005ba9b391ce7daded87a013f4016b4f43667806661423f1d563f04b7",
+    "treatment-b-events.jsonl": "44881af4058b243244b1fa577200ee783411a5f109bbe979d65d8faaf885b594",
+    "treatment-b-process.json": "6633d727299c924dc6c41e372477743b3efd63081f4d7d985b31f432493d2cee",
+    "treatment-b-prompt.txt": "2a24847793e6d0cab9d20c9960fcf7791f1371105971d8b9beddfac0103788f9",
+    "treatment-b-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "treatment-b-stdout.txt": "6d525f2d0b4203c4417c09afd03950d5335a0957127706e972b0bf06d9c0d50d",
+    "treatment-b-usage.json": "1e7cbed65b8c2a273e44c53b1b6493ccc4b63107df1903b7209ef699ab9f77cb"
+  }
+}

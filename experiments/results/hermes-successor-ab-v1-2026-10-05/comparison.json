@@ -1,0 +1,40 @@
+{
+  "direct": {
+    "answer_quality": {
+      "passed": 0,
+      "reason_codes": [
+        "unscored"
+      ],
+      "total": 0
+    },
+    "deterministic_acceptance": false,
+    "error": "QueryRejected: Only agentic_analytics.delivery_work_items may be queried.",
+    "human_interventions": 0,
+    "latency_seconds": null,
+    "model_calls": null,
+    "recovery_actions": 0,
+    "retries": 0,
+    "tool_calls": null
+  },
+  "hermes": {
+    "answer_quality": {
+      "passed": 0,
+      "reason_codes": [
+        "unscored"
+      ],
+      "total": 0
+    },
+    "deterministic_acceptance": false,
+    "error": "ValueError: Treatment B requires exactly one successful delegate",
+    "human_interventions": 0,
+    "latency_seconds": null,
+    "model_calls": null,
+    "recovery_actions": 0,
+    "retries": 0,
+    "tool_calls": null,
+    "worker_count": 1
+  },
+  "incremental_paid_spend_usd": 0,
+  "scope_note": "One SB-D01 comparison does not establish general superiority of either architecture.",
+  "task_id": "SB-D01"
+}
