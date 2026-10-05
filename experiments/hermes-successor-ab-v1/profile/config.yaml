@@ -1,0 +1,96 @@
+model:
+  default: hermes-local:qwen3.5-9b
+  provider: custom
+  base_url: http://127.0.0.1:11434/v1
+  api_mode: chat_completions
+  context_length: 65536
+_config_version: 49
+terminal:
+  backend: local
+  cwd: .
+  home_mode: profile
+  timeout: 600
+agent:
+  disabled_toolsets:
+    - file
+    - herdr_worker
+    - skills
+    - terminal
+    - todo
+delegation:
+  max_concurrent_children: 1
+  max_spawn_depth: 1
+  oneshot_max_children: 1
+  max_iterations: 6
+  request_overrides:
+    temperature: 0
+memory:
+  memory_enabled: false
+  user_profile_enabled: false
+telemetry:
+  shared_metrics:
+    enabled: false
+browser:
+  extension_control:
+    enabled: false
+platform_toolsets:
+  cli:
+    - delegation
+    - system_benchmark
+known_plugin_toolsets:
+  cli:
+    - a2a
+    - herdr_worker
+    - spotify
+    - system_benchmark
+known_builtin_toolsets:
+  cli:
+    - browser
+    - clarify
+    - code_execution
+    - computer_use
+    - connections
+    - context_engine
+    - cronjob
+    - delegation
+    - discord
+    - discord_admin
+    - file
+    - homeassistant
+    - image_gen
+    - kanban
+    - memory
+    - session_search
+    - skills
+    - spotify
+    - stt
+    - terminal
+    - todo
+    - tts
+    - video
+    - video_gen
+    - vision
+    - web
+    - x_search
+    - yuanbao
+security:
+  redact_secrets: true
+  tirith_enabled: true
+  tirith_fail_open: false
+  protected_instruction_files: true
+onboarding:
+  seen:
+    tool_progress_prompt: true
+plugins:
+  enabled:
+    - herdr-worker
+    - system-benchmark-tools
+  disabled: []
+  entries:
+    herdr-worker:
+      allow_tool_override: false
+    system-benchmark-tools:
+      allow_tool_override: false
+tools:
+  tool_search:
+    enabled: "off"
