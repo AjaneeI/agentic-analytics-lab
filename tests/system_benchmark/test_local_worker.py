@@ -217,6 +217,86 @@ class TestBoundedLocalWorker(unittest.TestCase):
         with self.assertRaisesRegex(LocalWorkerError, "not exposed"):
             executor(sb_d01(), 1, None)
 
+    def test_empty_query_result_does_not_create_structured_evidence(self):
+        from src.evals.system_benchmark.local_worker import BoundedLocalExecutor
+
+        model = ScriptedModel([
+            {
+                "type": "tool_call",
+                "name": "query_clickhouse",
+                "arguments": {
+                    "sql": "SELECT team FROM agentic_analytics.delivery_work_items WHERE 1 = 0"
+                },
+            },
+            {"type": "final", "content": final_payload()},
+        ])
+        execution = BoundedLocalExecutor(
+            model=model,
+            query_fn=lambda _sql: [],
+            policy_fn=lambda **_kwargs: [],
+        )(sb_d01(), 1, None)
+
+        self.assertNotIn(
+            "structured:delivery_work_items",
+            execution.response.evidence_refs,
+        )
+        self.assertEqual(dict(execution.observation.structured_values), {})
+
+    def test_source_less_query_does_not_create_structured_evidence(self):
+        from src.evals.system_benchmark.local_worker import BoundedLocalExecutor
+
+        model = ScriptedModel([
+            {
+                "type": "tool_call",
+                "name": "query_clickhouse",
+                "arguments": {"sql": "SELECT 1 AS constant"},
+            },
+            {"type": "final", "content": final_payload()},
+        ])
+        execution = BoundedLocalExecutor(
+            model=model,
+            query_fn=lambda _sql: [{"constant": 1}],
+            policy_fn=lambda **_kwargs: [],
+        )(sb_d01(), 1, None)
+
+        self.assertNotIn(
+            "structured:delivery_work_items",
+            execution.response.evidence_refs,
+        )
+        self.assertEqual(dict(execution.observation.structured_values), {})
+
+    def test_conflicting_later_query_values_clear_stale_observations(self):
+        from src.evals.system_benchmark.local_worker import BoundedLocalExecutor
+
+        rows = iter([
+            [{"team": "Data", "blocked_pct": 20.9}],
+            [{"team": "Product", "blocked_pct": 10.0}],
+        ])
+        model = ScriptedModel([
+            {
+                "type": "tool_call",
+                "name": "query_clickhouse",
+                "arguments": {
+                    "sql": "SELECT team, 20.9 AS blocked_pct FROM agentic_analytics.delivery_work_items LIMIT 1"
+                },
+            },
+            {
+                "type": "tool_call",
+                "name": "query_clickhouse",
+                "arguments": {
+                    "sql": "SELECT team, 10.0 AS blocked_pct FROM agentic_analytics.delivery_work_items LIMIT 1"
+                },
+            },
+            {"type": "final", "content": final_payload()},
+        ])
+        execution = BoundedLocalExecutor(
+            model=model,
+            query_fn=lambda _sql: next(rows),
+            policy_fn=lambda **_kwargs: [],
+        )(sb_d01(), 1, None)
+
+        self.assertEqual(dict(execution.observation.structured_values), {})
+
     def test_policy_evidence_refs_come_from_actual_retrieval(self):
         from src.evals.system_benchmark.local_worker import BoundedLocalExecutor
 
