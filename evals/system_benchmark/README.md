@@ -5,7 +5,24 @@ evals/questions.json. It is built in bounded phases so task contracts,
 evidence capabilities, scoring, runtime execution, and held-out evidence do
 not become coupled.
 
-## Current phase — PR C
+## Current source snapshot
+
+As of the October 5, 2026 audit, `main` includes PR A–D foundations,
+trial/artifact support, the bounded local worker, and cross-cutting evidence
+utilities. The seven development cases remain development-only.
+See [verified status](../../STATUS.md) for the next bounded experiment and
+for the separate unmerged rehearsal candidate in PR #72.
+
+Validate the development contracts without model execution:
+
+```bash
+python3 scripts/validate_system_benchmark.py --emit-provenance
+```
+
+Run that command from the repository root. It validates task/reference
+compatibility and emits a contract fingerprint; it is not an agent run.
+
+## Foundation — PR A through PR C
 
 PR A established typed task/response contracts, deterministic fixture loading,
 fingerprint inputs, and model-free validation.
@@ -68,9 +85,7 @@ Development fixtures are inspectable and may be used to debug the scorer.
 They are not evidence of unseen-task generalization or architecture
 performance.
 
-PR C does not add held-out tasks, model execution, routing treatments, a
-benchmark runner, an LLM judge, or changes to frozen Q1–Q6 semantics, scorer,
-dataset, prompt/tool contract, or accepted comparison evidence.
+The PR C slice itself did not add held-out tasks, model execution, routing treatments, or a benchmark runner. Later sections describe subsequent implementations. Frozen Q1–Q6 semantics, scorer, dataset, prompt/tool contract, and accepted comparison evidence remain a separate contract; no LLM judge is introduced.
 
 ## PR D — routing treatments and worker adapters
 
