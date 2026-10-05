@@ -22,6 +22,7 @@ _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-
 - PR #74 adds a model-free cross-cutting evidence layer: hierarchical task/run bootstrap comparison, explicit optional trajectory contracts and deterministic trajectory scoring, hierarchical failure taxonomy, and Pareto-frontier architecture comparison.
 - The evidence layer is implementation/regression evidence until it is run against accepted matched benchmark artifacts. It does not by itself establish architecture superiority or unseen-task generalization.
 - Architecture comparison requires matching benchmark-contract provenance but permits provider identifiers to differ when provider/runtime composition is part of the architecture treatment.
+- Issue #78 / draft PR #79 remediated the direct-worker failure from #73 with a bounded local `hermes-local:qwen3.5-9b` executor that exposes only the real `query_clickhouse` and `retrieve_policy` tools, derives observations from actual runtime calls, and provides no filesystem/shell tool surface. The reviewed two-file tree is on `main`; Python 3.11/3.12 and CodeQL passed on the integrated code head.
 
 ## Previous PR C implementation
 
@@ -60,7 +61,7 @@ this slice.
 
 ## Next bounded experiment
 
-First apply the PR #74 evidence layer to the accepted matched single-agent and oracle-metadata routed repeatability artifacts and review the resulting uncertainty/frontier evidence. Then, before expanding benchmark infrastructure, run one supervised Hermes-vs-direct vertical slice against the PR D worker/routing contract. Use the same task, allowed tools, response contract, and deterministic verification for both paths. Measure Ajanee hands-on intervention, task acceptance, recovery behavior, tool/model calls, memory pressure, and incremental spend. Do not add concurrency, always-on behavior, new workers, or paid fallbacks.
+Resume issue #73 by rerunning **Treatment A only** with the new bounded local worker on the same SB-D01 task and deterministic scorer. Do not use generic OpenCode for this rerun. If Treatment A is accepted, preserve that evidence and stop. Treatment B remains blocked until Hermes enforces a hard one-worker/no-concurrency invariant at the delegation boundary; do not rerun Hermes by prompt instruction alone. Keep spend at $0 and do not change benchmark semantics, add workers, or start new infrastructure.
 
 ## Evidence boundary
 
