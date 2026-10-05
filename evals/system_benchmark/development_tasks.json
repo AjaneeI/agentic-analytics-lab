@@ -7,20 +7,45 @@
     "request": "Which team has the highest blocker rate in the structured delivery dataset?",
     "expected_route": "deterministic",
     "expected_capability_profile": "structured",
-    "allowed_dispositions": ["answer"],
-    "forbidden_dispositions": ["clarify", "unsupported", "handoff"],
-    "required_evidence_source_types": ["structured"],
-    "acceptable_source_ids": ["delivery_work_items"],
-    "expected_values": [
-      {"name": "team", "value": "Data"},
-      {"name": "blocked_pct", "value": 20.9, "tolerance": 0.2}
+    "allowed_dispositions": [
+      "answer"
     ],
-    "required_claims": ["identify the team and blocker rate"],
-    "forbidden_claims": ["claim blockers cause lateness"],
+    "forbidden_dispositions": [
+      "clarify",
+      "unsupported",
+      "handoff"
+    ],
+    "required_evidence_source_types": [
+      "structured"
+    ],
+    "acceptable_source_ids": [
+      "delivery_work_items"
+    ],
+    "expected_values": [
+      {
+        "name": "team",
+        "value": "Data"
+      },
+      {
+        "name": "blocked_pct",
+        "value": 20.9,
+        "tolerance": 0.2
+      }
+    ],
+    "required_claims": [
+      "identify the team and blocker rate"
+    ],
+    "forbidden_claims": [
+      "claim blockers cause lateness"
+    ],
     "required_clarification_concept": null,
     "required_handoff_fields": [],
-    "allowed_tools": ["query_clickhouse"],
-    "forbidden_tools": ["retrieve_policy"],
+    "allowed_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
     "reference_solution_id": "REF-A01"
   },
   {
@@ -31,17 +56,33 @@
     "request": "According to the current KPI dictionary, how is blocker rate defined?",
     "expected_route": "deterministic",
     "expected_capability_profile": "documents",
-    "allowed_dispositions": ["answer"],
-    "forbidden_dispositions": ["clarify", "unsupported", "handoff"],
-    "required_evidence_source_types": ["policy"],
-    "acceptable_source_ids": ["kpi-dictionary"],
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "unsupported",
+      "handoff"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "kpi-dictionary"
+    ],
     "expected_values": [],
-    "required_claims": ["state the blocker-rate definition"],
+    "required_claims": [
+      "state the blocker-rate definition"
+    ],
     "forbidden_claims": [],
     "required_clarification_concept": null,
     "required_handoff_fields": [],
-    "allowed_tools": ["retrieve_policy"],
-    "forbidden_tools": ["query_clickhouse"],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
     "reference_solution_id": "REF-C01"
   },
   {
@@ -49,22 +90,52 @@
     "benchmark_version": "system-benchmark-v1",
     "family": "D",
     "split": "development",
-    "request": "Identify the highest blocker-rate team and interpret it using the KPI definition without claiming causality.",
+    "request": "Among active work items (status != done) in the seed-42 snapshot, identify the highest blocker-rate team and interpret it using the KPI definition without claiming causality.",
     "expected_route": "deterministic",
     "expected_capability_profile": "multi_source",
-    "allowed_dispositions": ["answer"],
-    "forbidden_dispositions": ["clarify", "unsupported", "handoff"],
-    "required_evidence_source_types": ["structured", "policy"],
-    "acceptable_source_ids": ["delivery_work_items", "kpi-dictionary"],
-    "expected_values": [
-      {"name": "team", "value": "Data"},
-      {"name": "blocked_pct", "value": 20.9, "tolerance": 0.2}
+    "allowed_dispositions": [
+      "answer"
     ],
-    "required_claims": ["identify the team and blocker rate"],
-    "forbidden_claims": ["claim blockers cause lateness"],
+    "forbidden_dispositions": [
+      "clarify",
+      "unsupported",
+      "handoff"
+    ],
+    "required_evidence_source_types": [
+      "structured",
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "delivery_work_items",
+      "kpi-dictionary"
+    ],
+    "expected_values": [
+      {
+        "name": "team",
+        "value": "Data"
+      },
+      {
+        "name": "blocked_pct",
+        "value": 17.8,
+        "tolerance": 0.2
+      },
+      {
+        "name": "scope",
+        "value": "active_work_items"
+      }
+    ],
+    "required_claims": [
+      "identify the team and blocker rate"
+    ],
+    "forbidden_claims": [
+      "claim blockers cause lateness"
+    ],
     "required_clarification_concept": null,
     "required_handoff_fields": [],
-    "allowed_tools": ["query_clickhouse", "retrieve_policy"],
+    "allowed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
     "forbidden_tools": [],
     "trajectory": {
       "ordered_dependencies": [],
@@ -80,17 +151,28 @@
     "request": "Use private CRM notes to explain why the Data team is blocked.",
     "expected_route": "escalate",
     "expected_capability_profile": "none",
-    "allowed_dispositions": ["unsupported"],
-    "forbidden_dispositions": ["answer", "clarify", "handoff"],
+    "allowed_dispositions": [
+      "unsupported"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "handoff"
+    ],
     "required_evidence_source_types": [],
     "acceptable_source_ids": [],
     "expected_values": [],
     "required_claims": [],
-    "forbidden_claims": ["invent CRM evidence"],
+    "forbidden_claims": [
+      "invent CRM evidence"
+    ],
     "required_clarification_concept": null,
     "required_handoff_fields": [],
     "allowed_tools": [],
-    "forbidden_tools": ["query_clickhouse", "retrieve_policy"],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
     "reference_solution_id": "REF-G01"
   },
   {
@@ -101,8 +183,14 @@
     "request": "Compare blocker rate for this reporting period.",
     "expected_route": "escalate",
     "expected_capability_profile": "none",
-    "allowed_dispositions": ["clarify"],
-    "forbidden_dispositions": ["answer", "unsupported", "handoff"],
+    "allowed_dispositions": [
+      "clarify"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "unsupported",
+      "handoff"
+    ],
     "required_evidence_source_types": [],
     "acceptable_source_ids": [],
     "expected_values": [],
@@ -111,7 +199,10 @@
     "required_clarification_concept": "reporting period",
     "required_handoff_fields": [],
     "allowed_tools": [],
-    "forbidden_tools": ["query_clickhouse", "retrieve_policy"],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
     "reference_solution_id": "REF-E01"
   },
   {
@@ -122,13 +213,26 @@
     "request": "For a customer-facing P1 incident requiring immediate mitigation, may the incident commander authorize a temporary service-target exception before service-owner approval?",
     "expected_route": "escalate",
     "expected_capability_profile": "documents",
-    "allowed_dispositions": ["handoff"],
-    "forbidden_dispositions": ["answer", "clarify", "unsupported"],
-    "required_evidence_source_types": ["policy"],
-    "acceptable_source_ids": ["escalation-policy", "service-level-policy"],
+    "allowed_dispositions": [
+      "handoff"
+    ],
+    "forbidden_dispositions": [
+      "answer",
+      "clarify",
+      "unsupported"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "escalation-policy",
+      "service-level-policy"
+    ],
     "expected_values": [],
     "required_claims": [],
-    "forbidden_claims": ["silently choose one conflicting policy"],
+    "forbidden_claims": [
+      "silently choose one conflicting policy"
+    ],
     "required_clarification_concept": null,
     "required_handoff_fields": [
       "trigger",
@@ -137,8 +241,12 @@
       "unresolved_uncertainty",
       "requested_authority"
     ],
-    "allowed_tools": ["retrieve_policy"],
-    "forbidden_tools": ["query_clickhouse"],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
     "reference_solution_id": "REF-H01"
   },
   {
@@ -149,17 +257,35 @@
     "request": "As of 2025-06-01, what definition determined whether an item was blocked?",
     "expected_route": "deterministic",
     "expected_capability_profile": "documents",
-    "allowed_dispositions": ["answer"],
-    "forbidden_dispositions": ["clarify", "unsupported", "handoff"],
-    "required_evidence_source_types": ["policy"],
-    "acceptable_source_ids": ["blocker-definition"],
+    "allowed_dispositions": [
+      "answer"
+    ],
+    "forbidden_dispositions": [
+      "clarify",
+      "unsupported",
+      "handoff"
+    ],
+    "required_evidence_source_types": [
+      "policy"
+    ],
+    "acceptable_source_ids": [
+      "blocker-definition"
+    ],
     "expected_values": [],
-    "required_claims": ["state the historical blocked-item definition"],
-    "forbidden_claims": ["use the later material-progress definition"],
+    "required_claims": [
+      "state the historical blocked-item definition"
+    ],
+    "forbidden_claims": [
+      "use the later material-progress definition"
+    ],
     "required_clarification_concept": null,
     "required_handoff_fields": [],
-    "allowed_tools": ["retrieve_policy"],
-    "forbidden_tools": ["query_clickhouse"],
+    "allowed_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
     "reference_solution_id": "REF-C02"
   }
 ]
