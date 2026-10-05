@@ -89,9 +89,35 @@ It measures whether the system can infer the intended route from the user's word
 
 The current development set is a regression fixture. It is not evidence that routing will generalize to arbitrary real-world requests.
 
+## 4. System Benchmark v1
+
+This is a separate, staged evidence program, not a replacement for frozen Q1–Q6.
+The source snapshot audited on October 5, 2026 includes:
+
+| Layer | Current implementation | Boundary |
+| --- | --- | --- |
+| Task and response contracts | [contracts](src/evals/system_benchmark/contracts.py), [loader](src/evals/system_benchmark/loader.py), [references](src/evals/system_benchmark/references.py) | Seven development cases; no held-out performance claim |
+| Policy evidence | [repository-local retrieval](src/tools/policy_retrieval.py), [versioned corpus](evals/system_benchmark/corpus/manifest.json) | Read-only, explicit source/version/section identities |
+| Routing | [routing adapters and metrics](src/evals/system_benchmark/routing.py) | Oracle, free-text, and simple-heuristic decisions are evaluated separately from worker results |
+| Worker capabilities | [worker adapters](src/evals/system_benchmark/workers.py) | Predicted tools are intersected with task allowlists; unsupported-source and handoff rules remain explicit |
+| Execution and artifacts | [trial runner](src/evals/system_benchmark/runner.py), [bounded local executor](src/evals/system_benchmark/local_worker.py) | Recorded observations come from approved evidence tools, not a general filesystem/shell interface |
+| Evaluation | [deterministic scoring](src/evals/system_benchmark/scoring.py), [trajectory checks](src/evals/trajectory_quality.py), [failure taxonomy](src/evals/failure_taxonomy.py) | Observable outputs, evidence, tools, and declared contracts; no hidden-reasoning or LLM judge |
+| Comparison | [statistical evidence](src/evals/statistical_evidence.py), [Pareto frontier](src/evals/complexity_frontier.py) | Interpretation requires matched artifacts and declared metric directions; implementation alone proves no architecture advantage |
+
+The implementation path is task/reference validation → independent route/capability
+selection → bounded worker invocation → captured response/evidence → deterministic
+scoring → provenance-bearing artifact bundle. Oracle routing supplies an upper-bound
+control, not a deployable inference result.
+
+The [development guide](evals/system_benchmark/README.md) describes the contracts.
+[STATUS.md](STATUS.md) distinguishes merged work from the separate draft rehearsal
+in [PR #72](https://github.com/AjaneeI/agentic-analytics-lab/pull/72) and records the
+next permitted experiment. Do not attribute that draft's controls or test count to
+`main`, or jump from implementation tests to held-out claims.
+
 ## Shared analytical boundary
 
-All analytical execution paths use the same constrained data boundary:
+Structured-data execution uses the constrained ClickHouse boundary below. System Benchmark document-capable workers additionally use the separate read-only policy retriever listed above:
 
 ```text
 Agent or routed worker

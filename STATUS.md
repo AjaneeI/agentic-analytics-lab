@@ -1,6 +1,28 @@
 # Verified Project Status
 
-_Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
+_Last reviewed against `main` source `58add5e` on 2026-10-05; documentation audit only._
+
+## October 5 source and evidence snapshot
+
+- Audited source: [58add5e](https://github.com/AjaneeI/agentic-analytics-lab/commit/58add5e58e581be21d3511fc4cd2cb5be44f49b7).
+- The independent Python 3.13.13 check passes **289 repository tests**. Hosted
+  [Python 3.11/3.12](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/37250042363)
+  and [CodeQL](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/37250042377)
+  passed on this same source. Test counts describe regression coverage, not benchmark size.
+- The accepted Q1–Q6 results remain **12/18 vs. 17/18 task-success observations**:
+  six distinct tasks repeated three times. They test oracle-metadata execution,
+  not natural-language route inference. The [accepted analysis](docs/generated/accepted-q1-q6-architecture-evidence.md)
+  includes a descriptive uncertainty interval spanning zero.
+- PR #80 is on `main`: SB-D01 now uses the **active-work** denominator and
+  expected blocker rate **17.8%**, rather than the all-item rate. The frozen
+  Q1–Q6 questions, generator, and original scorer were not changed by this fix.
+- [PR #72](https://github.com/AjaneeI/agentic-analytics-lab/pull/72) remains an
+  intentionally draft, separately verified execution-rehearsal candidate. Its
+  seven controls, fourteen negative controls, and 278-test snapshot are not
+  interchangeable with the current `main` source.
+- This recruiter-readiness pass updates documentation and evidence navigation
+  only. It does not execute a model, change a scorer, merge an experimental
+  branch, or unlock a held-out phase.
 
 ## Current verified state
 
@@ -24,9 +46,9 @@ _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-
 - Architecture comparison requires matching benchmark-contract provenance but permits provider identifiers to differ when provider/runtime composition is part of the architecture treatment.
 - Issue #78 / draft PR #79 remediated the direct-worker failure from #73 with a bounded local `hermes-local:qwen3.5-9b` executor that exposes only the real `query_clickhouse` and `retrieve_policy` tools, derives observations from actual runtime calls, and provides no filesystem/shell tool surface. The reviewed two-file tree is on `main`; Python 3.11/3.12 and CodeQL passed on the integrated code head.
 
-## Previous PR C implementation
+## Historical PR C implementation evidence
 
-The current PR C candidate adds seven development-only task fixtures, seven
+The merged PR C slice established seven development-only task fixtures, seven
 deterministic reference expectations, strict reference validation,
 task/reference alignment, exact structured and policy evidence identities,
 and deterministic scoring across disposition, evidence, tools, structured
@@ -46,15 +68,14 @@ Local verification on Python 3.13.13:
 - evals/questions.json retains SHA-256
   0dc047fbc378f0cf75f1c488e92fcb18dddcbfe976c79b1f16281e4b428654d1.
 
-These are implementation/regression checks, not System Benchmark model results.
-Python 3.11/3.12 and CodeQL remain required on the published candidate.
+These were implementation/regression checks at the PR C milestone, not System Benchmark model results or the current suite count. PR C is merged; current-source checks are listed in the October 5 snapshot above.
 
 ## PR C boundaries
 
-PR C remains model-free, development-fixture-only, deterministic and
-inspectable, separate from held-out evidence, separate from
-architecture-performance claims, and free of Codex-credit use for benchmark
-work.
+The PR C slice was model-free, development-fixture-only, deterministic and
+inspectable, separate from held-out evidence and architecture-performance
+claims. The repository's no-Codex-credit rule governs further benchmark work;
+this statement is an operating constraint, not an audit of historical billing.
 
 No held-out cases, model runs, LLM judge, or chain-of-thought scoring belong in
 this slice.
@@ -65,7 +86,7 @@ Resume issue #73 by rerunning **Treatment A only** with the new bounded local wo
 
 ## Evidence boundary
 
-Landing PR C establishes the deterministic evaluation core only. It does not
+PR C established the deterministic evaluation core only. Later implementation and regression work does not
 establish single-agent or routed-agent superiority, unseen-task generalization,
 or publication-ready benchmark results.
 

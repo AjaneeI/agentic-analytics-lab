@@ -28,6 +28,8 @@
 
 ---
 
+**Start here:** [Verified status](STATUS.md) · [Accepted Q1–Q6 results](docs/generated/accepted-q1-q6-architecture-evidence.md) · [System Benchmark v1](evals/system_benchmark/README.md) · [Reproduce without a model](#reproduce)
+
 ## Research question
 
 > **When does a routed or specialist-agent design outperform a strong single-agent baseline enough to justify the added tool calls, latency, model cost, and maintenance?**
@@ -57,16 +59,17 @@ This is an **Applied AI Engineering work sample**, not a demo-only chatbot.
 
 | Signal | Verified state |
 | --- | --- |
-| Unit / regression tests | **146 passing** on Python 3.11 and 3.12 |
+| Unit / regression tests | **289 passing** on the audited source snapshot; see dated evidence below |
 | CI | GitHub Actions passes on `main` |
 | Security analysis | CodeQL `security-extended` passes |
 | Data boundary | Read-only, dataset-scoped ClickHouse tool |
 | Evaluation | Deterministic checks where ground truth exists |
 | Routed execution | Oracle-metadata experiment implemented and evaluated |
 | Natural-language routing | Separate development evaluation lane implemented |
-| Published benchmark claim | Historical baseline retained as failure evidence; current post-hardening comparison remains intentionally bounded |
+| Published benchmark claim | Accepted three-run Q1–Q6 comparison; oracle-metadata execution evidence only |
+| System Benchmark v1 | Contracts, policy retrieval, deterministic scoring, routing/worker adapters, and bounded local-worker implementation on `main`; broader performance evidence remains gated |
 
-The latest verified Python workflow on `main` ran **146 tests successfully on both supported Python versions**.
+**Audit snapshot — October 5, 2026:** source commit [`58add5e`](https://github.com/AjaneeI/agentic-analytics-lab/commit/58add5e58e581be21d3511fc4cd2cb5be44f49b7) passes 289 regression tests in an independent Python 3.13.13 environment. Its [hosted Python 3.11/3.12 workflow](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/37250042363) and [CodeQL run](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/37250042377) passed. These are implementation checks, not 289 benchmark tasks or a model-performance result. Consult the workflow links and [STATUS.md](STATUS.md) for subsequent changes.
 
 ### Benchmark comparison
 
@@ -77,6 +80,8 @@ The latest verified Python workflow on `main` ran **146 tests successfully on bo
 Across the accepted GitHub-hosted comparison, the single-agent baseline completed **12/18** tasks across three runs and oracle-metadata routed execution completed **17/18**. The routed condition used frozen benchmark metadata to supply the intended route, so this is **execution-layer evidence**, not proof that a system can infer routes correctly from natural-language requests.
 
 Evidence: [single-agent repeatability run 35755961530](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/35755961530) · [oracle-metadata routed run 35760422536](https://github.com/AjaneeI/agentic-analytics-lab/actions/runs/35760422536)
+
+The [accepted-results analysis](docs/generated/accepted-q1-q6-architecture-evidence.md) separates task correctness from execution completion and reports descriptive uncertainty. Eighteen repeated observations per architecture are **six distinct tasks repeated three times**, not eighteen independent tasks; the descriptive bootstrap interval includes zero.
 
 ### What the agent can answer
 
@@ -106,6 +111,14 @@ The repo deliberately keeps **three questions separate**:
 That separation matters. A good worker can be hidden by a bad router, and oracle metadata can make routing look better than a real end-to-end system. The lab keeps those failure sources attributable.
 
 All analytical execution is constrained by the same hardened ClickHouse boundary. See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the fuller system notes.
+
+### System Benchmark v1 — current implementation, separate evidence program
+
+The repository now also contains typed task/response contracts, seven development fixtures with reference expectations, version-aware local policy retrieval, per-dimension scoring, route/capability adapters, trial execution/artifact provenance, and a bounded local worker. The worker exposes approved evidence tools rather than a general shell or filesystem.
+
+These components do not establish held-out performance or architecture superiority. The model-free rehearsal in [draft PR #72](https://github.com/AjaneeI/agentic-analytics-lab/pull/72) is a separate candidate, not merged evidence for `main`. The next permitted experiment is tracked in [STATUS.md](STATUS.md); a live or held-out run must not be inferred from passing regression tests.
+
+See the [current component map](ARCHITECTURE.md#4-system-benchmark-v1) and [development-contract guide](evals/system_benchmark/README.md).
 
 ## Evaluation method
 
@@ -169,11 +182,19 @@ Read [`docs/natural-language-routing-evaluation.md`](docs/natural-language-routi
 
 ## Reproduce
 
-Run the regression suite:
+### No-model quick start
+
+Use Python 3.11 or 3.12 (the supported CI versions). The standard-library regression and contract checks do not need provider credentials, Ollama, Docker, or a live database:
 
 ```bash
+git clone https://github.com/AjaneeI/agentic-analytics-lab.git
+cd agentic-analytics-lab
 python3 -m unittest discover -s tests -v
+python3 scripts/check_project_context.py
+python3 scripts/validate_system_benchmark.py --emit-provenance
 ```
+
+The final command validates seven development task/reference pairs and emits contract provenance. It does not execute an agent or evaluate held-out tasks.
 
 Rebuild the synthetic data and verify the frozen ground truth:
 
@@ -182,7 +203,9 @@ python3 scripts/generate_delivery_data.py
 python3 scripts/verify_ground_truth.py
 ```
 
-Run the single-agent evaluator in the local ClickHouse + Ollama environment:
+### Optional live microbenchmark
+
+Run the single-agent evaluator only in the configured local ClickHouse + Ollama environment:
 
 ```bash
 python3 scripts/run_single_agent_eval.py
@@ -201,13 +224,13 @@ The local benchmark path requires ClickHouse loaded with the synthetic dataset a
 - [Benchmark reporting](docs/benchmark-reporting.md)
 - [Benchmark repeatability](docs/benchmark-repeatability.md)
 
-### Project health
+### Historical project-health snapshot
 
 ![Project health snapshot](docs/project-health/overview.svg)
 
-The repository includes a source-backed project-health reporting workflow that keeps the underlying signals visible rather than collapsing them into one opaque score.
+This generated snapshot is dated **September 24, 2026**, at source ref `4e22b6f`. It is historical—not a live count of tests, PRs, or releases. Use [verified status](STATUS.md) and the current Actions workflows above for present reliability. The reporting utility preserves source signals rather than collapsing them into an opaque score.
 
-- [Current project-health report](docs/project-health/README.md)
+- [Dated project-health report](docs/project-health/README.md)
 - [Self-contained HTML report](docs/project-health/report.html)
 - [Reusable project-health skill](skills/project-health-report/SKILL.md)
 
@@ -270,8 +293,8 @@ This repository extends concepts practiced in the ClickHouse workshop and does n
 
 ## Next evidence gates
 
-- establish a reviewed post-hardening single-agent comparison anchor from the frozen Q1–Q6 benchmark
-- preserve exact commit and artifact provenance for every published comparison
-- evaluate natural-language routing against a separate held-out or novel-request set
-- compare routing gains against tool calls, model calls, latency, tokens, cost, and maintenance complexity
-- choose an explicit repository license if reuse is intended
+- Follow [STATUS.md](STATUS.md) for the next bounded Treatment A rerun; do not skip directly to held-out execution or a delegated multi-worker comparison.
+- Preserve exact commit, contract, environment, and artifact provenance for every published comparison.
+- Keep development diagnostics, scripted controls, model results, and held-out generalization claims separate.
+- Expand task coverage before drawing broad conclusions from the six-task accepted comparison.
+- Choose an explicit repository license separately if reuse is intended; no license is asserted by this documentation update.

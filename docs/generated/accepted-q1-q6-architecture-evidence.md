@@ -37,7 +37,9 @@ Per-task recurrence:
 | Q6 | 3/3 | 2/3 |
 
 The architecture difference is therefore concentrated: routing converted stable
-Q3/Q5 failures into stable passes, while Q6 introduced one routed failure.
+Q3/Q5 failures into stable passes, while Q6 has one scored failure in the routed condition. Q6 uses the same local worker; that observation alone does not identify a route-inference regression.
+
+**Task success is not execution completion.** The accepted comparison distinguishes completed agent executions from correct, grounded task outcomes. The 12/18 and 17/18 totals above are scored task-success observations, not counts of processes that avoided an exception.
 
 ## Descriptive uncertainty
 
@@ -87,15 +89,14 @@ Pareto-dominates the accepted single-agent point:
 - fewer model calls;
 - fewer tokens.
 
-This is unusually strong execution-layer evidence because there is no observed
-quality/cost tradeoff on these declared metrics.
+This is descriptive dominance on these observed metrics, not a population-level result. The small sample, supplied oracle route, unmeasured maintenance costs, and recorded runner-environment differences limit the conclusion. Latency remains directional rather than a hardware-controlled causal estimate.
 
 ## Claim boundary
 
 The correct conclusion is:
 
 > On the accepted frozen Q1-Q6 GitHub-hosted comparison, supplying the known
-> benchmark route improved observed execution success and reduced model/latency/
+> benchmark route improved observed task success and reduced model/latency/
 > token burden enough to Pareto-dominate the strong single-agent baseline on
 > the declared metrics.
 
@@ -106,5 +107,4 @@ It is **not** evidence that:
 - the effect generalizes to unseen tasks;
 - the six-task benchmark is large enough for a precise population-level effect.
 
-The next evidence-expansion priority is therefore held-out System Benchmark v1
-execution, not more architecture framework code.
+The evidence-expansion program is System Benchmark v1. Follow [STATUS.md](../../STATUS.md) for the next bounded development experiment and its integration gates. This legacy analysis is not authorization to skip directly to held-out execution, delegated workers, or more framework code.
