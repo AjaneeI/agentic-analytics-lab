@@ -1,6 +1,7 @@
 import importlib.util
 import json
 from pathlib import Path
+from unittest import mock
 import unittest
 
 
@@ -55,6 +56,17 @@ def successful_events():
 
 
 class TestHermesSuccessorRunner(unittest.TestCase):
+    def test_frozen_state_dereferences_annotated_tag(self):
+        module = load_runner()
+        with mock.patch.object(module, "_run_git", return_value="abc123") as run_git:
+            resolved = module._resolve_commit(ROOT, "refs/tags/example")
+
+        self.assertEqual(resolved, "abc123")
+        self.assertEqual(
+            run_git.call_args.args,
+            (ROOT, "rev-parse", "refs/tags/example^{}"),
+        )
+
     def test_scores_hermes_from_raw_final_and_observed_tool_events(self):
         module = load_runner()
         raw_final = json.dumps(

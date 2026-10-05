@@ -1,7 +1,7 @@
 {
   "schema_version": "hermes-successor-ab-v1",
   "repository": {
-    "freeze_ref": "refs/tags/hermes-successor-ab-v1",
+    "freeze_ref": "refs/tags/hermes-successor-ab-v1.1",
     "remediation_commits": [
       "84263bfdadfd3f07a81ed7133456287e687146ba",
       "f596b5bebba5538d4eae09eee90b0861ab2d1b29"
@@ -99,7 +99,7 @@
     "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290",
     "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/plugin.yaml": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0",
     "experiments/hermes-successor-ab-v1/profile/config.yaml": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
-    "experiments/hermes-successor-ab-v1/run_benchmark.py": "4a2fdd272268d8410b678dd5c35abd62b06ba98d2c8963f7a1e6aeadea7b52e9",
+    "experiments/hermes-successor-ab-v1/run_benchmark.py": "881993b25f8d2e9aaa3bd1befde26c802d9600f36e2f09c60dd39fa179bb3c8b",
     "src/agents/single_agent.py": "2a6aed58041b95ceaef5a32431bded19322a81e5f2981a77e0caceb5a4df5793",
     "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
     "src/evals/system_benchmark/local_worker.py": "e2a5599d7a3c7ceb0a9378cdf818880d76ad264d996a0b6e5ab3392170199d7f",

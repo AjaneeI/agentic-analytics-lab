@@ -235,10 +235,16 @@ class RecordingModel:
         return response
 
 
+def _resolve_commit(root: Path, ref: str) -> str:
+    """Resolve a commit-ish, dereferencing annotated tags."""
+    return _run_git(root, "rev-parse", f"{ref}^{{}}")
+
+
 def verify_frozen_state(root: Path, manifest: dict[str, Any]) -> dict[str, Any]:
     expected_ref = manifest["repository"]["freeze_ref"]
     head = _run_git(root, "rev-parse", "HEAD")
-    frozen = _run_git(root, "rev-parse", expected_ref)
+    # Dereference annotated tags so the comparison is commit-to-commit.
+    frozen = _resolve_commit(root, expected_ref)
     if head != frozen:
         raise RuntimeError(f"HEAD {head} does not match {expected_ref} ({frozen})")
     subprocess.run(
