@@ -13,7 +13,8 @@
     "acceptable_source_ids": ["delivery_work_items"],
     "expected_values": [
       {"name": "team", "value": "Data"},
-      {"name": "blocked_pct", "value": 20.9, "tolerance": 0.2}
+      {"name": "blocked_pct", "value": 17.8, "tolerance": 0.2},
+      {"name": "scope", "value": "active_work_items"}
     ],
     "required_claims": ["identify the team and blocker rate"],
     "forbidden_claims": ["claim blockers cause lateness"],
@@ -49,7 +50,7 @@
     "benchmark_version": "system-benchmark-v1",
     "family": "D",
     "split": "development",
-    "request": "Identify the highest blocker-rate team and interpret it using the KPI definition without claiming causality.",
+    "request": "Among active work items (status != done) in the seed-42 snapshot, identify the highest blocker-rate team and interpret it using the KPI definition without claiming causality.",
     "expected_route": "deterministic",
     "expected_capability_profile": "multi_source",
     "allowed_dispositions": ["answer"],
