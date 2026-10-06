@@ -1,0 +1,69 @@
+diff --git a/tools/delegate_tool.py b/tools/delegate_tool.py
+index f091afdeb0..b4f5183415 100644
+--- a/tools/delegate_tool.py
++++ b/tools/delegate_tool.py
+@@ -11,6 +11,7 @@ the delegation call and the summary result, never the child's intermediate
+ tool calls or reasoning.
+ """
+ 
++import json
+ import logging
+ import time
+ import weakref
+@@ -437,6 +438,45 @@ def _oneshot_spawn_budget(parent_agent: Any, requested: int) -> Optional[str]:
+     return None
+ 
+ 
++def _retire_delegate_after_completed_oneshot(parent_agent: Any, raw_result: str) -> str:
++    """Hide ``delegate_task`` after this one-shot parent's sole child completes.
++
++    The structured child result is returned byte-for-byte. Failed children,
++    background dispatch handles, interactive sessions, and one-shot budgets
++    larger than one retain the tool surface; the existing dispatch-time budget
++    remains the independent hard backstop.
++    """
++    from agent.oneshot_footprint import is_single_query_session
++
++    if not is_single_query_session() or _get_oneshot_max_children() != 1:
++        return raw_result
++    try:
++        payload = json.loads(raw_result)
++        results = payload.get("results") if isinstance(payload, dict) else None
++    except (TypeError, ValueError):
++        return raw_result
++    if (
++        not isinstance(results, list)
++        or len(results) != 1
++        or not isinstance(results[0], dict)
++        or results[0].get("status") != "completed"
++        or results[0].get("schema_valid") is False
++    ):
++        return raw_result
++
++    tools = getattr(parent_agent, "tools", None)
++    if isinstance(tools, list):
++        parent_agent.tools = [
++            tool
++            for tool in tools
++            if (tool.get("function") or {}).get("name") != "delegate_task"
++        ]
++    valid_names = getattr(parent_agent, "valid_tool_names", None)
++    if isinstance(valid_names, (set, frozenset)):
++        parent_agent.valid_tool_names = set(valid_names) - {"delegate_task"}
++    return raw_result
++
++
+ def delegate_task(
+     goal: Optional[str] = None, context: Optional[str] = None, tasks: Optional[List[Dict[str, Any]]] = None,
+     max_iterations: Optional[int] = None, role: Optional[str] = None, background: Optional[bool] = None,
+@@ -529,7 +569,9 @@ def delegate_task(
+         task_list, children, parent_agent, creds, context, top_role, max_children,
+         live_deleg_id, live_writers, live_paths, *origin, overall_start,
+     )
+-    return _run_batch(batch, background)
++    return _retire_delegate_after_completed_oneshot(
++        parent_agent, _run_batch(batch, background)
++    )
+ 
+ 
+ # ── OpenAI function-calling schema ──────────────────────────────────────────

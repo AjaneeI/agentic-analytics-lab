@@ -1,0 +1,126 @@
+{
+  "schema_version": "m0-5b-delegation-retirement-v1",
+  "repository": {
+    "freeze_ref": "refs/tags/m0-5b-delegation-retirement-v1",
+    "evidence_branch": "m0/tool-contract-gate",
+    "authoritative_prior_issue": 85,
+    "historical_issues": [73, 82, 84],
+    "review_pull_request": 83
+  },
+  "hypothesis": "After one synchronous child completes successfully in a one-shot parent whose existing delegation budget is one, removing delegate_task from that parent's model-visible tools prevents redundant post-success delegation while preserving the child result and final answer.",
+  "retry_policy": "one scheduled attempt per frozen case; zero reruns after any observed result",
+  "incremental_paid_spend_usd": 0,
+  "evidence_destination": "experiments/results/m0-5b-delegation-retirement-2026-10-05",
+  "interpretation_boundary": "A 3/3 pass demonstrates only that this bounded runtime intervention repaired the observed post-success duplicate-delegation failure on these three frozen cases while the external enforcement remained active. It does not establish general Hermes reliability, model superiority, broader delegation quality, or readiness for unrestricted autonomy.",
+  "runtime": {
+    "context_length": 65536,
+    "hermes": {
+      "source_commit": "2ec7703012e5e356b8df383026397160ed9b0bed",
+      "version": "0.21.5+4410.g2ec7703"
+    },
+    "model": {
+      "family": "qwen35",
+      "file_type": "Q4_K_M",
+      "manifest_path": "/Users/ajaneeigharo/.ollama/models/manifests/registry.ollama.ai/library/hermes-local/qwen3.5-9b",
+      "manifest_sha256": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+      "name": "hermes-local:qwen3.5-9b",
+      "ollama_id": "0df9cd2e3545",
+      "parameter_size": "9.0B",
+      "worker_temperature": 0
+    },
+    "ollama": {
+      "client_version": "0.34.4",
+      "model_config_digest": "sha256:055501390333b9dfb77db59953edd4c1d36413ffe9376cb209c0913ea19f3e87",
+      "model_layer_digest": "sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8",
+      "params_digest": "sha256:74c152a9c92ebb7976f5b325dfa75d0e7361ae173af121ea56ea9338a941e238",
+      "server_version": "0.35.0"
+    },
+    "python_version": "3.14.7"
+  },
+  "implementation": {
+    "location": "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool.py",
+    "base_sha256": "91df0e5c338fa2212f7aac8ff96aaf7d7406b644185ad75129b3ee5ae3d25fc0",
+    "patched_sha256": "df65f6506c03d8533ee695a1266cc23739b4d0ad43715d0408e79fb8a2e35405",
+    "test_path": "/Users/ajaneeigharo/.hermes/hermes-agent/tests/tools/test_delegate_oneshot_retirement.py",
+    "test_sha256": "f8913b495fd1a02a83a01fec11ea8cccfc86e0aecd11b5e6d809dc6e251b53bc",
+    "patch_path": "experiments/m0-5b-delegation-retirement/hermes-runtime-post-success-retirement.patch",
+    "patch_sha256": "c54ad4e5f57fcecea0ca8b7e57d655ac57088d62d7f6266f0db0e0ba6a1bc21e",
+    "intervention": "For a one-shot parent with oneshot_max_children=1, retire delegate_task from parent_agent.tools and parent_agent.valid_tool_names only after one synchronous child result has status completed and no schema failure; return the raw child result unchanged.",
+    "external_enforcement_changed": false
+  },
+  "study": {
+    "study_id": "m0-5b-hermes-post-success-delegation-retirement-v1",
+    "sample_size": 3,
+    "pass_threshold": 3,
+    "allowed_parent_visible_tools_before_success": ["delegate_task", "query_clickhouse", "retrieve_policy"],
+    "allowed_parent_visible_tools_after_success": ["query_clickhouse", "retrieve_policy"],
+    "allowed_parent_action": "one delegate_task spawn containing exactly one child; no parent evidence-tool work",
+    "acceptance": "Exactly one attempted valid delegation and one successful child; zero extra delegation, parent evidence work, or enforcement intervention; first parent request includes delegate_task; sole follow-up parent request excludes delegate_task; process exit zero; exact final marker.",
+    "cases": [
+      {
+        "case_id": "B1_LITERAL",
+        "child_goal": "Return exactly M05_ALPHA_OK. No other text.",
+        "expected_marker": "M05_ALPHA_OK",
+        "parent_prompt": "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim:\n\nReturn exactly M05_ALPHA_OK. No other text.\n\nAfter the child returns, output exactly this marker and nothing else: M05_ALPHA_OK"
+      },
+      {
+        "case_id": "B2_EXTRACT",
+        "child_goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text.",
+        "expected_marker": "M05_OWNER_DATA",
+        "parent_prompt": "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim:\n\nRead this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text.\n\nAfter the child returns, output exactly this marker and nothing else: M05_OWNER_DATA"
+      },
+      {
+        "case_id": "B3_COMPARE",
+        "child_goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text.",
+        "expected_marker": "M05_MAX_7",
+        "parent_prompt": "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim:\n\nCompare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text.\n\nAfter the child returns, output exactly this marker and nothing else: M05_MAX_7"
+      }
+    ]
+  },
+  "one_worker_enforcement": {
+    "max_concurrent_children": 1,
+    "max_spawn_depth": 1,
+    "oneshot_max_children": 1,
+    "plugin_pre_hook": "unchanged; second attempted delegation is blocked with delegate_budget_exceeded",
+    "opencode_parallel_enabled": false
+  },
+  "installed_state": {
+    "profile": "localbenchmark",
+    "request_dump_directory": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions",
+    "files": [
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/config.yaml",
+        "sha256": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/__init__.py",
+        "sha256": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/plugin.yaml",
+        "sha256": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool.py",
+        "sha256": "df65f6506c03d8533ee695a1266cc23739b4d0ad43715d0408e79fb8a2e35405"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tests/tools/test_delegate_oneshot_retirement.py",
+        "sha256": "f8913b495fd1a02a83a01fec11ea8cccfc86e0aecd11b5e6d809dc6e251b53bc"
+      }
+    ]
+  },
+  "prior_evidence_sha256": {
+    "experiments/m0-5-capability-reliability/frozen-state.json": "c2c1e5aff3786aef2c86bfdc2bd7f6ce0a3e44ee4deb224cc246e069b23309a2",
+    "experiments/results/m0-5-capability-reliability-2026-10-05/summary.json": "d2ad7d882cb53dec8ec3f2f2c17c4996b29fdb26650987a5d7eaccfb8f799b23",
+    "experiments/results/m0-5-capability-reliability-2026-10-05/evidence-index.json": "35337606dee2875b3a3dbc074511cdf39cc0b8cea4a62e1cd390628b3982bb05",
+    "experiments/results/m0-5-capability-reliability-2026-10-05/study-b/B3_COMPARE/evaluation.json": "f253261613df0146f2ba3d96913adae17e1fe9d1fd2dbbd3e2d4fbbb4bc930ed"
+  },
+  "contract_sha256": {
+    "experiments/m0-5b-delegation-retirement/README.md": "575de026eda6d1dee367b2120e3a383ef4d40eb3e1a32422acdad72cd0198b3d",
+    "experiments/m0-5b-delegation-retirement/run_study.py": "78fd1acff4a775ad0a29d87c67b90522f0ce857a4c83557c026ef0656861d014",
+    "experiments/m0-5b-delegation-retirement/hermes-runtime-post-success-retirement.patch": "c54ad4e5f57fcecea0ca8b7e57d655ac57088d62d7f6266f0db0e0ba6a1bc21e",
+    "src/evals/capability_reliability.py": "ed314f3dba7a095880ca8fa537fa0605938f1a29e9d86817089e3e09a87b6c1c",
+    "tests/test_delegation_retirement_runner.py": "2965119d6cffe2b6846325c2898d027825cd19ba8a6f3f64367ac192111f01c5"
+  }
+}
