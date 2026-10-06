@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
 import tempfile
 import unittest
 from unittest import mock
@@ -37,7 +38,12 @@ class TestPersonalOpsProfile(unittest.TestCase):
         self.profile = base / "profiles" / "personalops"
         self.repo = base / "repo"
         self.repo.mkdir()
-        (self.repo / ".git").mkdir()
+        subprocess.run(["git", "init", "-b", "feat/test"], cwd=self.repo, check=True, capture_output=True)
+        subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=self.repo, check=True)
+        subprocess.run(["git", "config", "user.name", "Test User"], cwd=self.repo, check=True)
+        (self.repo / "notes.txt").write_text("alpha\n", encoding="utf-8")
+        subprocess.run(["git", "add", "notes.txt"], cwd=self.repo, check=True)
+        subprocess.run(["git", "commit", "-m", "initial"], cwd=self.repo, check=True, capture_output=True)
         self.hermes = base / "hermes-agent"
         (self.hermes / "tools").mkdir(parents=True)
         (self.hermes / "tests" / "tools").mkdir(parents=True)
@@ -143,6 +149,7 @@ class TestPersonalOpsProfile(unittest.TestCase):
                 tool_name="delegate_task",
                 args={"tasks": [{"goal": "Objective: edit only"}]},
                 tool_call_id="one",
+                session_id="session-one",
             )
 
         self.assertEqual(result["action"], "block")
@@ -169,10 +176,12 @@ class TestPersonalOpsProfile(unittest.TestCase):
         }
         with mock.patch.dict(os.environ, env, clear=False):
             first = plugin._pre_tool_call(
-                tool_name="delegate_task", args={"tasks": [{"goal": goal}]}, tool_call_id="one"
+                tool_name="delegate_task", args={"tasks": [{"goal": goal}]}, tool_call_id="one",
+                session_id="session-one",
             )
             second = plugin._pre_tool_call(
-                tool_name="delegate_task", args={"tasks": [{"goal": goal}]}, tool_call_id="two"
+                tool_name="delegate_task", args={"tasks": [{"goal": goal}]}, tool_call_id="two",
+                session_id="session-one",
             )
 
         self.assertIsNone(first)
@@ -194,6 +203,7 @@ class TestPersonalOpsProfile(unittest.TestCase):
                 tool_name="delegate_task",
                 args={"tasks": [{"goal": "Objective: x\nInputs: x\nAllowed changes: x\nAcceptance: x\nEvidence: x\nStop: x"}]},
                 tool_call_id="one",
+                session_id="session-one",
             )
 
         self.assertEqual(result["action"], "block")

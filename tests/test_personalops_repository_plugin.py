@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 import unittest
 from unittest import mock
 
@@ -70,6 +71,35 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
 
     def result(self, value):
         return json.loads(value)
+
+    def goal(self, allowed="notes.txt", acceptance="diff"):
+        return "\n".join(
+            [
+                "Objective: update one bounded file",
+                "Inputs: repository evidence",
+                f"Allowed changes: {allowed}",
+                f"Acceptance: {acceptance}",
+                "Evidence: exact diff and named check results",
+                "Stop: after one verified patch",
+            ]
+        )
+
+    def begin_delegation(self, *, allowed="notes.txt", acceptance="diff", parent="parent-1", child="child-1"):
+        goal = self.goal(allowed, acceptance)
+        with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
+            result = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": goal}]},
+                tool_call_id="delegate-1",
+                session_id=parent,
+            )
+        self.assertIsNone(result)
+        self.plugin._subagent_start(
+            parent_session_id=parent,
+            child_session_id=child,
+            child_goal=goal,
+        )
+        return goal
 
     def test_inspection_reports_live_git_state_and_safe_recommendation(self):
         result = self.result(self.plugin._inspect_repository({}))
@@ -140,14 +170,17 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
         self.assertEqual(result["reason_code"], "delegated_child_required")
         self.assertEqual((self.repo / "notes.txt").read_text(encoding="utf-8"), "alpha\nbeta\n")
 
-    def test_child_compare_and_swap_patch_succeeds(self):
+    def test_child_compare_and_swap_patch_succeeds_only_for_parent_allowed_path(self):
         path = self.repo / "notes.txt"
         expected = hashlib.sha256(path.read_bytes()).hexdigest()
+
+        self.begin_delegation()
 
         with mock.patch.object(self.plugin, "_is_delegated_child_context", return_value=True):
             result = self.result(
                 self.plugin._apply_patch(
-                    {"path": "notes.txt", "expected_sha256": expected, "old_text": "alpha", "new_text": "gamma"}
+                    {"path": "notes.txt", "expected_sha256": expected, "old_text": "alpha", "new_text": "gamma"},
+                    session_id="child-1",
                 )
             )
 
@@ -156,25 +189,215 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
         self.assertEqual(result["path"], "notes.txt")
 
     def test_child_patch_rejects_changed_file(self):
+        self.begin_delegation()
+
         with mock.patch.object(self.plugin, "_is_delegated_child_context", return_value=True):
             result = self.result(
                 self.plugin._apply_patch(
-                    {"path": "notes.txt", "expected_sha256": "0" * 64, "old_text": "alpha", "new_text": "gamma"}
+                    {"path": "notes.txt", "expected_sha256": "0" * 64, "old_text": "alpha", "new_text": "gamma"},
+                    session_id="child-1",
                 )
             )
 
         self.assertFalse(result["ok"])
         self.assertEqual(result["reason_code"], "file_changed")
 
-    def test_verifier_reports_diff_and_check_results(self):
+    def test_child_cannot_patch_undeclared_source_or_checker(self):
+        (self.repo / "source.py").write_text("old\n", encoding="utf-8")
+        self.git("git", "add", "source.py")
+        self.git("git", "commit", "-m", "add source")
+        self.begin_delegation(allowed="notes.txt")
+
+        with mock.patch.object(self.plugin, "_is_delegated_child_context", return_value=True):
+            source = self.result(
+                self.plugin._apply_patch(
+                    {
+                        "path": "source.py",
+                        "expected_sha256": hashlib.sha256((self.repo / "source.py").read_bytes()).hexdigest(),
+                        "old_text": "old",
+                        "new_text": "new",
+                    },
+                    session_id="child-1",
+                )
+            )
+            checker = self.result(
+                self.plugin._apply_patch(
+                    {
+                        "path": "scripts/check_project_context.py",
+                        "expected_sha256": hashlib.sha256(
+                            (self.repo / "scripts" / "check_project_context.py").read_bytes()
+                        ).hexdigest(),
+                        "old_text": "context ok",
+                        "new_text": "always pass",
+                    },
+                    session_id="child-1",
+                )
+            )
+
+        self.assertEqual(source["reason_code"], "path_not_allowed")
+        self.assertEqual(checker["reason_code"], "path_not_allowed")
+        self.assertEqual((self.repo / "source.py").read_text(encoding="utf-8"), "old\n")
+        self.assertIn("context ok", (self.repo / "scripts" / "check_project_context.py").read_text())
+
+    def test_manifest_rejects_traversal_and_symlink_allowed_paths(self):
+        (self.repo / "alias.txt").symlink_to(self.repo / "notes.txt")
+
+        with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
+            traversal = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal("../outside.txt")}]},
+                tool_call_id="traversal",
+                session_id="parent-traversal",
+            )
+            symlink = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal("alias.txt")}]},
+                tool_call_id="symlink",
+                session_id="parent-symlink",
+            )
+
+        self.assertEqual(traversal["action"], "block")
+        self.assertEqual(traversal["reason_code"], "invalid_allowed_path")
+        self.assertEqual(symlink["action"], "block")
+        self.assertEqual(symlink["reason_code"], "invalid_allowed_path")
+
+    def test_second_delegation_in_same_session_is_blocked(self):
+        with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
+            first = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal()}]},
+                tool_call_id="one",
+                session_id="same-session",
+            )
+            second = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal()}]},
+                tool_call_id="two",
+                session_id="same-session",
+            )
+
+        self.assertIsNone(first)
+        self.assertEqual(second["reason_code"], "one_delegation_limit")
+
+    def test_independent_sessions_have_independent_delegation_budgets(self):
+        with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
+            first = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal()}]},
+                tool_call_id="one",
+                session_id="session-a",
+            )
+            second = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal()}]},
+                tool_call_id="two",
+                session_id="session-b",
+            )
+
+        self.assertIsNone(first)
+        self.assertIsNone(second)
+
+    def test_concurrent_sessions_are_isolated_deterministically(self):
+        def delegate(session_id):
+            return self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal()}]},
+                tool_call_id=f"delegate-{session_id}",
+                session_id=session_id,
+            )
+
+        with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results = list(pool.map(delegate, ["session-a", "session-b"]))
+
+        self.assertEqual(results, [None, None])
+        events = [json.loads(line) for line in self.events.read_text().splitlines()]
+        allowed = [row for row in events if row.get("tool") == "delegate_task" and row.get("action") == "allow"]
+        self.assertEqual({row["session_id"] for row in allowed}, {"session-a", "session-b"})
+        self.assertEqual([row["delegation_number"] for row in allowed], [1, 1])
+
+    def test_verifier_rejects_actual_diff_outside_parent_allowlist(self):
+        self.begin_delegation()
+        (self.repo / "ARCHITECTURE.md").write_text("tampered\n", encoding="utf-8")
+        self.plugin._post_tool_call(
+            tool_name="delegate_task",
+            tool_call_id="delegate-1",
+            result={"status": "completed"},
+            status="ok",
+            session_id="parent-1",
+        )
+
+        result = self.result(
+            self.plugin._verify_change({"check_ids": ["diff"]}, session_id="parent-1")
+        )
+
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["reason_code"], "changed_path_not_allowed")
+        self.assertEqual(result["unexpected_paths"], ["ARCHITECTURE.md"])
+
+    def test_verifier_reports_diff_and_check_results_from_trusted_baseline(self):
+        self.begin_delegation(acceptance="diff, context")
         (self.repo / "notes.txt").write_text("gamma\nbeta\n", encoding="utf-8")
 
-        result = self.result(self.plugin._verify_change({"check_ids": ["diff", "context"]}))
+        self.plugin._post_tool_call(
+            tool_name="delegate_task",
+            tool_call_id="delegate-1",
+            result={"status": "completed"},
+            status="ok",
+            session_id="parent-1",
+        )
+
+        result = self.result(
+            self.plugin._verify_change(
+                {"check_ids": ["diff", "context"]}, session_id="parent-1"
+            )
+        )
 
         self.assertTrue(result["ok"])
         self.assertEqual(result["changed_paths"], ["notes.txt"])
         self.assertEqual([row["check_id"] for row in result["checks"]], ["diff", "context"])
         self.assertTrue(all(row["ok"] for row in result["checks"]))
+
+    def test_sensitive_path_variants_fail_closed(self):
+        sensitive = [
+            ".env",
+            ".env.local",
+            ".env.production",
+            "nested/.env.test",
+            ".netrc",
+            "nested/.netrc",
+            "credentials.json",
+            "nested/credentials.json",
+            "secrets.toml",
+            "nested/secrets.toml",
+            "private.pem",
+        ]
+
+        for raw in sensitive:
+            with self.subTest(path=raw):
+                self.assertTrue(self.plugin._is_sensitive(Path(raw)))
+
+        for raw in ["environment.md", "credentials-guide.md", "secrets-example.md"]:
+            with self.subTest(path=raw):
+                self.assertFalse(self.plugin._is_sensitive(Path(raw)))
+
+    def test_clarify_events_classify_red_boundary_without_storing_question_text(self):
+        self.plugin._pre_tool_call(
+            tool_name="clarify",
+            args={"questions": [{"question": "Approve git push?"}]},
+            tool_call_id="red",
+            session_id="session-a",
+        )
+        self.plugin._pre_tool_call(
+            tool_name="clarify",
+            args={"questions": [{"question": "Did the smoke pass?"}]},
+            tool_call_id="not-red",
+            session_id="session-b",
+        )
+
+        events = [json.loads(line) for line in self.events.read_text().splitlines()]
+        self.assertEqual([row["red_boundary"] for row in events], [True, False])
+        self.assertNotIn("Approve git push?", self.events.read_text())
 
 
 if __name__ == "__main__":

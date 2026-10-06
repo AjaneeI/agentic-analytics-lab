@@ -10,5 +10,8 @@ provides_tools:
   - personalops_verify_change
   - personalops_record_outcome
 provides_hooks:
+  - on_session_start
+  - on_session_end
   - pre_tool_call
   - post_tool_call
+  - subagent_start

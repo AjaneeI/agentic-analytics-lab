@@ -18,11 +18,18 @@ _MAX_PATCH_BYTES = 32_768
 _MAX_PROCESS_OUTPUT = 20_000
 _MAX_SEARCH_MATCHES = 50
 _SENSITIVE_PARTS = {".env", ".git", ".ssh", "credentials", "secrets"}
+_SENSITIVE_NAMES = {".netrc", "credentials.json", "secrets.toml"}
 _REQUIRED_CONTEXT = ["PROJECT.md", "STATUS.md", "DECISIONS.md", "ARCHITECTURE.md"]
 _WORKER_FIELDS = ["Objective", "Inputs", "Allowed changes", "Acceptance", "Evidence", "Stop"]
+_RED_ACTION_PATTERN = re.compile(
+    r"\b(push|merge|deploy|publish|send|delete|credential|secret|permission|paid|purchase|external write)\b",
+    re.IGNORECASE,
+)
 _lock = threading.Lock()
+_state_lock = threading.Lock()
 _settings: dict[str, Any] = {}
-_delegation_count = 0
+_manifests: dict[str, dict[str, Any]] = {}
+_child_parents: dict[str, str] = {}
 
 
 def _setting(name: str, environment: str) -> str:
@@ -104,16 +111,29 @@ def _fail(tool: str, reason_code: str, **extra: Any) -> str:
 
 def _is_sensitive(relative: Path) -> bool:
     lowered = {part.lower() for part in relative.parts}
-    return bool(lowered & _SENSITIVE_PARTS) or relative.name.lower().endswith(
-        (".pem", ".key", ".p12", ".pfx")
+    name = relative.name.lower()
+    return (
+        bool(lowered & _SENSITIVE_PARTS)
+        or name in _SENSITIVE_NAMES
+        or name.startswith(".env.")
+        or name.endswith((".pem", ".key", ".p12", ".pfx"))
     )
+
+
+def _has_symlink_component(root: Path, relative: Path) -> bool:
+    candidate = root
+    for part in relative.parts:
+        candidate = candidate / part
+        if candidate.is_symlink():
+            return True
+    return False
 
 
 def _resolve_path(raw: Any, *, require_file: bool = True) -> tuple[Path | None, str | None]:
     if not isinstance(raw, str) or not raw.strip():
         return None, "path_required"
     relative = Path(raw)
-    if relative.is_absolute():
+    if relative.is_absolute() or ".." in relative.parts or _has_symlink_component(_repo_root(), relative):
         return None, "path_outside_repository"
     root = _repo_root()
     try:
@@ -142,6 +162,132 @@ def _run(argv: list[str], *, timeout: int = 60) -> subprocess.CompletedProcess[s
 
 def _git(*args: str) -> subprocess.CompletedProcess[str]:
     return _run(["git", *args], timeout=30)
+
+
+def _repository_snapshot() -> dict[str, Any]:
+    head = _git("rev-parse", "HEAD")
+    tree = _git("rev-parse", "HEAD^{tree}")
+    files = _git("ls-files", "-co", "--exclude-standard", "-z")
+    if any(row.returncode != 0 for row in (head, tree, files)):
+        raise RuntimeError("repository baseline unavailable")
+    hashes: dict[str, str] = {}
+    for raw in files.stdout.split("\0"):
+        if not raw:
+            continue
+        relative = Path(raw)
+        if relative.is_absolute() or ".." in relative.parts:
+            raise RuntimeError("repository baseline contains unsafe path")
+        candidate = _repo_root() / relative
+        try:
+            if candidate.is_symlink():
+                payload = ("symlink:" + os.readlink(candidate)).encode("utf-8")
+            elif candidate.is_file():
+                payload = candidate.read_bytes()
+            else:
+                raise OSError(f"unsupported repository entry: {raw}")
+        except (OSError, UnicodeError) as exc:
+            raise RuntimeError(f"repository baseline unreadable: {raw}") from exc
+        hashes[relative.as_posix()] = hashlib.sha256(payload).hexdigest()
+    return {
+        "commit": head.stdout.strip(),
+        "tree": tree.stdout.strip(),
+        "file_hashes": hashes,
+    }
+
+
+def _normalize_allowed_path(raw: str) -> str:
+    value = raw.strip()
+    relative = Path(value)
+    root = _repo_root()
+    if (
+        not value
+        or relative.is_absolute()
+        or value != relative.as_posix()
+        or relative.as_posix() in {".", ""}
+        or ".." in relative.parts
+        or _is_sensitive(relative)
+        or _has_symlink_component(root, relative)
+    ):
+        raise ValueError("invalid_allowed_path")
+    candidate = root / relative
+    if not candidate.is_file():
+        raise ValueError("invalid_allowed_path")
+    return relative.as_posix()
+
+
+def _parse_worker_contract(goal: Any) -> dict[str, str]:
+    if not isinstance(goal, str):
+        raise ValueError("six_field_contract_required")
+    fields: dict[str, str] = {}
+    for line in goal.splitlines():
+        if ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        if key in _WORKER_FIELDS and value.strip() and key not in fields:
+            fields[key] = value.strip()
+        elif key in _WORKER_FIELDS:
+            raise ValueError("six_field_contract_required")
+    if set(fields) != set(_WORKER_FIELDS):
+        raise ValueError("six_field_contract_required")
+    return fields
+
+
+def _contains_red_action(value: Any) -> bool:
+    if isinstance(value, str):
+        return bool(_RED_ACTION_PATTERN.search(value))
+    if isinstance(value, dict):
+        return any(_contains_red_action(child) for child in value.values())
+    if isinstance(value, list):
+        return any(_contains_red_action(child) for child in value)
+    return False
+
+
+def _build_manifest(goal: str, *, session_id: str, tool_call_id: str) -> dict[str, Any]:
+    fields = _parse_worker_contract(goal)
+    allowed = tuple(
+        _normalize_allowed_path(value)
+        for value in (part.strip() for part in fields["Allowed changes"].split(","))
+        if value
+    )
+    if not allowed or len(set(allowed)) != len(allowed):
+        raise ValueError("invalid_allowed_path")
+    baseline = _repository_snapshot()
+    available_checks = _workflow().get("checks", {})
+    acceptance = fields["Acceptance"].lower()
+    required_checks = ["diff"]
+    if isinstance(available_checks, dict):
+        required_checks.extend(
+            check_id
+            for check_id in available_checks
+            if check_id != "diff" and re.search(rf"\b{re.escape(check_id.lower())}\b", acceptance)
+        )
+    return {
+        "parent_session_id": session_id,
+        "delegate_tool_call_id": tool_call_id,
+        "goal_sha256": hashlib.sha256(goal.encode("utf-8")).hexdigest(),
+        "allowed_paths": list(allowed),
+        "required_checks": required_checks,
+        "expected_evidence": fields["Evidence"],
+        "baseline_commit": baseline["commit"],
+        "baseline_tree": baseline["tree"],
+        "baseline_file_hashes": baseline["file_hashes"],
+        "allowed_file_hashes": {
+            path: baseline["file_hashes"].get(path) for path in allowed
+        },
+        "child_session_id": "",
+        "delegation_completed": False,
+    }
+
+
+def _changed_since_manifest(manifest: dict[str, Any]) -> list[str]:
+    current = _repository_snapshot()
+    if current["commit"] != manifest.get("baseline_commit") or current["tree"] != manifest.get("baseline_tree"):
+        raise RuntimeError("repository baseline changed")
+    before = manifest.get("baseline_file_hashes")
+    if not isinstance(before, dict):
+        raise RuntimeError("repository baseline unavailable")
+    after = current["file_hashes"]
+    return sorted(path for path in set(before) | set(after) if before.get(path) != after.get(path))
 
 
 def _remote_slug() -> str | None:
@@ -344,7 +490,7 @@ def _is_delegated_child_context() -> bool:
     return bool(is_delegated_child_context())
 
 
-def _apply_patch(args: dict[str, Any] | None, **_: Any) -> str:
+def _apply_patch(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     if not _is_delegated_child_context():
         return _fail("personalops_apply_patch", "delegated_child_required")
     arguments = dict(args or {})
@@ -353,6 +499,13 @@ def _apply_patch(args: dict[str, Any] | None, **_: Any) -> str:
         if error:
             return _fail("personalops_apply_patch", error)
         assert path is not None
+        with _state_lock:
+            parent_session_id = _child_parents.get(session_id, "")
+            manifest = _manifests.get(parent_session_id)
+            allowed_paths = set(manifest.get("allowed_paths", [])) if isinstance(manifest, dict) else set()
+        relative_path = path.relative_to(_repo_root()).as_posix()
+        if not parent_session_id or relative_path not in allowed_paths:
+            return _fail("personalops_apply_patch", "path_not_allowed", path=relative_path)
         old = arguments.get("old_text")
         new = arguments.get("new_text")
         expected = arguments.get("expected_sha256")
@@ -379,31 +532,71 @@ def _apply_patch(args: dict[str, Any] | None, **_: Any) -> str:
             "personalops_apply_patch",
             {
                 "ok": True,
-                "path": str(path.relative_to(_repo_root())),
+                "path": relative_path,
                 "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "parent_session_id": parent_session_id,
             },
         )
     except (OSError, UnicodeError, RuntimeError) as exc:
         return _fail("personalops_apply_patch", "patch_error", error=f"{type(exc).__name__}: {exc}")
 
 
-def _verify_change(args: dict[str, Any] | None, **_: Any) -> str:
+def _verify_change(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     arguments = dict(args or {})
     check_ids = arguments.get("check_ids")
     if not isinstance(check_ids, list) or not check_ids or not all(isinstance(item, str) for item in check_ids):
         return _fail("personalops_verify_change", "check_ids_required")
-    status = _git("status", "--short")
-    if status.returncode != 0:
-        return _fail("personalops_verify_change", "git_inspection_failed")
-    changed = []
-    for line in status.stdout.splitlines():
-        value = line[3:] if len(line) > 3 else ""
-        if " -> " in value:
-            value = value.split(" -> ", 1)[1]
-        if value:
-            changed.append(value)
+    with _state_lock:
+        manifest = _manifests.get(session_id)
+        manifest = dict(manifest) if isinstance(manifest, dict) else None
+    if manifest is None:
+        return _fail("personalops_verify_change", "trusted_manifest_missing")
+    if not manifest.get("delegation_completed"):
+        return _fail("personalops_verify_change", "delegation_not_completed")
+    required_checks = manifest.get("required_checks", [])
+    missing_checks = sorted(set(required_checks) - set(check_ids))
+    if missing_checks:
+        return _fail(
+            "personalops_verify_change", "required_checks_missing", missing_check_ids=missing_checks
+        )
+    try:
+        changed = _changed_since_manifest(manifest)
+    except RuntimeError as exc:
+        return _fail(
+            "personalops_verify_change", "baseline_unavailable", error=str(exc)
+        )
+    if not changed:
+        return _fail("personalops_verify_change", "no_post_delegation_change")
+    sensitive = [path for path in changed if _is_sensitive(Path(path))]
+    if sensitive:
+        return _fail(
+            "personalops_verify_change", "sensitive_path_changed", sensitive_paths=sensitive
+        )
+    unexpected = sorted(set(changed) - set(manifest.get("allowed_paths", [])))
+    if unexpected:
+        return _fail(
+            "personalops_verify_change",
+            "changed_path_not_allowed",
+            changed_paths=changed,
+            unexpected_paths=unexpected,
+        )
     checks = [_run_named_check(check_id) for check_id in check_ids]
-    result = {"ok": bool(checks) and all(row.get("ok") for row in checks), "changed_paths": sorted(changed), "checks": checks}
+    result = {
+        "ok": bool(checks) and all(row.get("ok") for row in checks),
+        "changed_paths": changed,
+        "checks": checks,
+        "manifest": {
+            "parent_session_id": manifest["parent_session_id"],
+            "delegate_tool_call_id": manifest["delegate_tool_call_id"],
+            "child_session_id": manifest["child_session_id"],
+            "allowed_paths": manifest["allowed_paths"],
+            "required_checks": manifest["required_checks"],
+            "baseline_commit": manifest["baseline_commit"],
+            "baseline_tree": manifest["baseline_tree"],
+            "allowed_file_hashes": manifest["allowed_file_hashes"],
+            "expected_evidence": manifest["expected_evidence"],
+        },
+    }
     return _emit("personalops_verify_change", result)
 
 
@@ -448,10 +641,20 @@ def _runtime_guard_status() -> tuple[bool, list[str]]:
     return not errors, errors
 
 
-def _pre_tool_call(tool_name: str = "", args: Any = None, tool_call_id: str = "", **_: Any):
-    global _delegation_count
+def _pre_tool_call(
+    tool_name: str = "", args: Any = None, tool_call_id: str = "", session_id: str = "", **_: Any
+):
     if tool_name != "delegate_task":
-        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "allow"})
+        event = {
+            "tool": tool_name,
+            "phase": "pre",
+            "tool_call_id": tool_call_id,
+            "session_id": session_id,
+            "action": "allow",
+        }
+        if tool_name == "clarify":
+            event["red_boundary"] = _contains_red_action(args)
+        _write_event(event)
         return None
     arguments = args if isinstance(args, dict) else {}
     guard_ok, guard_errors = _runtime_guard_status()
@@ -459,27 +662,118 @@ def _pre_tool_call(tool_name: str = "", args: Any = None, tool_call_id: str = ""
         message = "Personal Ops blocked delegation because the runtime guard is invalid: " + "; ".join(guard_errors)
         _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "runtime_guard_invalid"})
         return {"action": "block", "message": message}
-    if _delegation_count >= 1:
-        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "one_delegation_limit"})
-        return {"action": "block", "message": "Personal Ops permits exactly one delegation per session."}
+    if not session_id:
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "session_id_required"})
+        return {"action": "block", "reason_code": "session_id_required", "message": "Personal Ops requires a session identity before delegation."}
+    with _state_lock:
+        already_delegated = session_id in _manifests
+    if already_delegated:
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "session_id": session_id, "action": "block", "reason_code": "one_delegation_limit"})
+        return {"action": "block", "reason_code": "one_delegation_limit", "message": "Personal Ops permits exactly one delegation per session."}
     tasks = arguments.get("tasks")
     if not isinstance(tasks, list) or len(tasks) != 1 or not isinstance(tasks[0], dict):
         _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "one_task_required"})
         return {"action": "block", "message": "Personal Ops requires exactly one delegated task using the six-field worker contract."}
     goal = tasks[0].get("goal")
-    lines = set()
-    if isinstance(goal, str):
-        lines = {line.split(":", 1)[0] for line in goal.splitlines() if ":" in line and line.split(":", 1)[1].strip()}
-    if lines != set(_WORKER_FIELDS):
-        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "six_field_contract_required"})
-        return {"action": "block", "message": "Personal Ops requires the exact six-field worker contract: " + ", ".join(_WORKER_FIELDS) + "."}
-    _delegation_count += 1
-    _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "allow", "delegation_number": _delegation_count})
+    try:
+        manifest = _build_manifest(goal, session_id=session_id, tool_call_id=tool_call_id)
+    except ValueError as exc:
+        reason_code = str(exc)
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "session_id": session_id, "action": "block", "reason_code": reason_code})
+        if reason_code == "six_field_contract_required":
+            message = "Personal Ops requires the exact six-field worker contract: " + ", ".join(_WORKER_FIELDS) + "."
+        else:
+            message = "Personal Ops requires exact existing non-sensitive regular files in Allowed changes."
+        return {"action": "block", "reason_code": reason_code, "message": message}
+    except RuntimeError as exc:
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "session_id": session_id, "action": "block", "reason_code": "baseline_unavailable"})
+        return {"action": "block", "reason_code": "baseline_unavailable", "message": f"Personal Ops could not establish a trusted repository baseline: {exc}"}
+    with _state_lock:
+        if session_id in _manifests:
+            concurrent_duplicate = True
+        else:
+            _manifests[session_id] = manifest
+            concurrent_duplicate = False
+    if concurrent_duplicate:
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "session_id": session_id, "action": "block", "reason_code": "one_delegation_limit"})
+        return {"action": "block", "reason_code": "one_delegation_limit", "message": "Personal Ops permits exactly one delegation per session."}
+    _write_event({
+        "tool": tool_name,
+        "phase": "pre",
+        "tool_call_id": tool_call_id,
+        "session_id": session_id,
+        "action": "allow",
+        "delegation_number": 1,
+        "manifest": {
+            key: manifest[key]
+            for key in (
+                "allowed_paths", "required_checks", "expected_evidence", "baseline_commit",
+                "baseline_tree", "allowed_file_hashes", "goal_sha256",
+            )
+        },
+    })
     return None
 
 
-def _post_tool_call(tool_name: str = "", tool_call_id: str = "", result: Any = None, **_: Any) -> None:
-    _write_event({"tool": tool_name, "phase": "post", "tool_call_id": tool_call_id, "completed": True, "result_present": result is not None})
+def _on_session_start(session_id: str = "", parent_session_id: str = "", **_: Any) -> None:
+    if not session_id or parent_session_id:
+        return
+    with _state_lock:
+        stale = _manifests.pop(session_id, None)
+        if stale and stale.get("child_session_id"):
+            _child_parents.pop(stale["child_session_id"], None)
+
+
+def _on_session_end(session_id: str = "", **_: Any) -> None:
+    if not session_id:
+        return
+    with _state_lock:
+        parent_session_id = _child_parents.pop(session_id, "")
+        if parent_session_id:
+            manifest = _manifests.get(parent_session_id)
+            if manifest and manifest.get("child_session_id") == session_id:
+                manifest["child_session_id"] = ""
+            return
+        manifest = _manifests.pop(session_id, None)
+        if manifest and manifest.get("child_session_id"):
+            _child_parents.pop(manifest["child_session_id"], None)
+
+
+def _subagent_start(
+    parent_session_id: str = "", child_session_id: str = "", child_goal: str = "", **_: Any
+) -> None:
+    goal_sha256 = hashlib.sha256(child_goal.encode("utf-8")).hexdigest() if isinstance(child_goal, str) else ""
+    with _state_lock:
+        manifest = _manifests.get(parent_session_id)
+        bound = bool(
+            manifest
+            and child_session_id
+            and manifest.get("goal_sha256") == goal_sha256
+            and not manifest.get("child_session_id")
+        )
+        if bound:
+            manifest["child_session_id"] = child_session_id
+            _child_parents[child_session_id] = parent_session_id
+    _write_event({
+        "tool": "delegate_task",
+        "phase": "child_start",
+        "parent_session_id": parent_session_id,
+        "child_session_id": child_session_id,
+        "manifest_bound": bound,
+    })
+
+
+def _post_tool_call(
+    tool_name: str = "", tool_call_id: str = "", result: Any = None, session_id: str = "",
+    status: str = "", **_: Any
+) -> None:
+    completed = status in {"", "ok"} and result is not None
+    if tool_name == "delegate_task" and completed:
+        with _state_lock:
+            manifest = _manifests.get(session_id)
+            if manifest and manifest.get("delegate_tool_call_id") == tool_call_id and manifest.get("child_session_id"):
+                manifest["delegation_completed"] = True
+    _write_event({"tool": tool_name, "phase": "post", "tool_call_id": tool_call_id, "session_id": session_id, "completed": completed, "result_present": result is not None})
 
 
 def _schema(name: str, description: str, properties: dict[str, Any], required: list[str]) -> dict[str, Any]:
@@ -490,15 +784,19 @@ _PROMPT = """You are Hermes Desktop Lite for Ajanee. Use personalops_inspect_rep
 
 
 def register(ctx) -> None:
-    global _settings, _delegation_count
+    global _settings, _manifests, _child_parents
     _settings = {
         name: ctx.get_config(name, "")
         for name in ("repository_root", "contract_root", "evidence_log", "hermes_root")
     }
-    _delegation_count = 0
+    _manifests = {}
+    _child_parents = {}
     ctx.register_system_prompt_section("personalops.desktop-lite", _PROMPT, position="after_memory", max_chars=4000)
     ctx.register_hook("pre_tool_call", _pre_tool_call)
     ctx.register_hook("post_tool_call", _post_tool_call)
+    ctx.register_hook("subagent_start", _subagent_start)
+    ctx.register_hook("on_session_start", _on_session_start)
+    ctx.register_hook("on_session_end", _on_session_end)
     definitions = [
         ("personalops_inspect_repository", "Inspect the approved repository, Git state, context files, and read-only GitHub metadata.", {}, [], _inspect_repository),
         ("personalops_read_file", "Read one bounded UTF-8 file inside the approved repository.", {"path": {"type": "string"}}, ["path"], _read_file),
