@@ -1,0 +1,70 @@
+_config_version: 49
+
+model:
+  default: hermes-local:qwen3.5-9b
+  provider: custom
+  base_url: http://127.0.0.1:11434/v1
+  api_mode: chat_completions
+  context_length: 65536
+  ollama_num_ctx: 65536
+  request_overrides:
+    temperature: 0
+
+terminal:
+  backend: local
+  cwd: __PERSONALOPS_REPOSITORY_ROOT__
+  home_mode: profile
+  timeout: 600
+
+agent:
+  disabled_toolsets:
+    - browser
+    - cronjob
+    - file
+    - image_gen
+    - memory
+    - search
+    - session_search
+    - skills
+    - skills_hub
+    - terminal
+    - todo
+    - tts
+    - vision
+    - web
+
+delegation:
+  max_iterations: 8
+  max_concurrent_children: 1
+  max_spawn_depth: 1
+  oneshot_max_children: 1
+  orchestrator_enabled: false
+  inherit_mcp_toolsets: false
+  request_overrides:
+    temperature: 0
+
+platform_toolsets:
+  cli: [clarify, delegation, personalops_repository]
+  api_server: [clarify, delegation, personalops_repository]
+
+plugins:
+  enabled: [personalops-repository]
+  entries:
+    personalops-repository:
+      allow_tool_override: false
+      settings:
+        repository_root: __PERSONALOPS_REPOSITORY_ROOT__
+        contract_root: __PERSONALOPS_CONTRACT_ROOT__
+        evidence_log: __PERSONALOPS_EVIDENCE_LOG__
+        hermes_root: __PERSONALOPS_HERMES_ROOT__
+
+tools:
+  tool_search:
+    enabled: false
+
+memory:
+  enabled: false
+
+telemetry:
+  enabled: false
+

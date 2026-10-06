@@ -1,0 +1,14 @@
+{
+  "accepted": true,
+  "checks": {
+    "config": true,
+    "hermes_root": true,
+    "owned_contracts": true,
+    "package_contracts": true,
+    "plugin": true,
+    "repository": true,
+    "runtime_guard": true
+  },
+  "errors": [],
+  "profile_root": "/Users/ajaneeigharo/.hermes/profiles/personalops"
+}

@@ -138,3 +138,16 @@ verification requirements.
 **Evidence boundary:** Frontier membership is conditional on the chosen benchmark, observed measurements, and declared metric directions. It does not prove generalization, business value, or that every point on the frontier is worth deploying.
 
 **Consequence:** Any future weighted utility score requires a separate explicit decision with stakeholder-grounded weights. Added agentic complexity still has to move the observed quality-cost frontier outward to justify adoption.
+
+---
+
+## D-012 — Ship Personal Ops profile-first and fail closed at Red boundaries
+**Status:** Accepted — 2026-10-06
+
+**Decision:** The first Hermes Personal Ops product increment is one isolated `personalops` Desktop profile for the Agentic Analytics Lab safe-next-action workflow. It uses only local Qwen3.5-9B/Ollama, repository-scoped tools, at most one non-concurrent child, independent deterministic verification, and structured approval consultation for Red actions.
+
+**Why:** The M0 evidence supports bounded local use when tool and delegation contracts are explicit. A narrow, inspectable product slice provides practical value without assuming that memory, more workers, more frameworks, or broader integrations improve reliability.
+
+**Evidence boundary:** The product track is separate from the frozen benchmark track. Issues #89/#90 remain unchanged M0 provenance; issue #91 and its draft PR own product acceptance. A single passing smoke demonstrates only the approved workflow and cannot establish unrestricted autonomy, general model reliability, or Hermes superiority.
+
+**Consequence:** Desktop Lite exposes only `clarify`, `delegate_task`, and the Personal Ops repository toolset. Green work proceeds autonomously; Yellow work requires the six-field child contract and post-child verification; Red work stops for Ajanee. Expansion requires new evidence and a separate decision.

@@ -1,0 +1,65 @@
+{
+  "package_version": "0.1.0",
+  "workflow_id": "agentic-analytics-lab-safe-next-action-v1",
+  "prompt": "Check Agentic Analytics Lab, tell me the highest-value safe next step, and move it forward as far as you safely can.",
+  "model": {
+    "name": "hermes-local:qwen3.5-9b",
+    "provider": "custom",
+    "base_url": "http://127.0.0.1:11434/v1",
+    "context_length": 65536,
+    "fallbacks": []
+  },
+  "tools": [
+    "clarify",
+    "delegate_task",
+    "personalops_repository"
+  ],
+  "worker": {
+    "max_workers": 1,
+    "max_concurrency": 1,
+    "required_fields": [
+      "Objective",
+      "Inputs",
+      "Allowed changes",
+      "Acceptance",
+      "Evidence",
+      "Stop"
+    ]
+  },
+  "checks": {
+    "context": {
+      "command": [
+        "python3",
+        "scripts/check_project_context.py"
+      ],
+      "timeout_seconds": 60
+    },
+    "diff": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "timeout_seconds": 60
+    },
+    "full": {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "timeout_seconds": 600
+    }
+  },
+  "final_status_fields": [
+    "current_state",
+    "recommended_action",
+    "action_taken",
+    "verification",
+    "decision_needed"
+  ]
+}

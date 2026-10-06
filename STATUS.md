@@ -4,6 +4,17 @@ _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-
 
 ## Current verified state
 
+### Hermes Personal Ops product track
+
+- Issue #91 defines Hermes Desktop Lite as a separate product track built from current `main`; it does not modify or depend on the draft M0 diagnostic PR #90.
+- The versioned `personalops` package now contains the approved Green/Yellow/Red policy, local-only model contract, repository-scoped tools, isolated profile installer/validator, frozen Hermes worker guard, session-scoped one-shot delegation, parent-owned Yellow manifests, independent diff verification, strict evidence handling/redaction, and deterministic single-attempt smoke scoring.
+- Deterministic hardening passed 65 focused product tests, 368 full repository tests, and five focused Hermes one-worker/retirement tests. Installed-profile validation and plugin doctor also passed, and a fresh trust-boundary review found no unresolved Critical or High issue before the live attempt.
+- The post-hardening smoke was preregistered at `12ba6b0a38894de228ad06705cf7baf8678c33d3` and invoked exactly once. Its frozen deterministic scorer returned **PASS** with all 22 checks true. It used the local `hermes-local:qwen3.5-9b` path, recovered the exact repository identity, ran the recommended full check successfully (368 tests), launched no child, used no ClickHouse or Red execution tool, produced complete session-attributed evidence, and incurred `$0` paid spend.
+- The preserved user-visible answer nevertheless contradicts the observed evidence: it calls the `12ba6b0` smoke a failure, reports 326 rather than 368 tests, and asks whether to open an issue while its structured outcome says `decision_needed: none` without a `clarify` event.
+- The deterministic PASS remains unchanged, but the product-readiness requirement for a concise, useful, evidence-consistent final result was not met. This reveals an output-consistency/acceptance-coverage gap that was not caught by the frozen scorer.
+- Desktop Lite therefore remains an implementation candidate and is **not** marked operational. No retry or same-run tuning was performed. Any future work requires separate authorization and should first add a deterministic regression binding user-visible final text to structured outcome and observed check evidence.
+- Incremental paid spend remains `$0`. No ClickHouse-first workflow, benchmark treatment, model change, Hermes-core change, or new orchestration layer was added.
+
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
 - The project keeps the single-agent, oracle-metadata routed, and
   natural-language routing evaluation lanes distinct.
@@ -60,6 +71,10 @@ No held-out cases, model runs, LLM judge, or chain-of-thought scoring belong in
 this slice.
 
 ## Next bounded experiment
+
+For the Personal Ops product track, stop after recording the single post-hardening smoke on issue #91 and draft PR #93. Do not rerun it or tune the system in this implementation pass. A later, separately authorized hardening pass should begin with deterministic final-output/structured-outcome consistency coverage before any new live invocation.
+
+The older benchmark instruction below is retained as historical context and is superseded by issues #89/#90 for M0 status; it is not an instruction to rerun SB-D01 during Desktop Lite work.
 
 Resume issue #73 by rerunning **Treatment A only** with the new bounded local worker on the same SB-D01 task and deterministic scorer. Do not use generic OpenCode for this rerun. If Treatment A is accepted, preserve that evidence and stop. Treatment B remains blocked until Hermes enforces a hard one-worker/no-concurrency invariant at the delegation boundary; do not rerun Hermes by prompt instruction alone. Keep spend at $0 and do not change benchmark semantics, add workers, or start new infrastructure.
 
