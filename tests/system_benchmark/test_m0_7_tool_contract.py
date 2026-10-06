@@ -1,5 +1,7 @@
 import importlib.util
 from pathlib import Path
+import subprocess
+import sys
 import unittest
 
 from src.evals.system_benchmark.local_worker import _QUERY_TOOL
@@ -14,6 +16,7 @@ PLUGIN = (
     / "system-benchmark-tools"
     / "__init__.py"
 )
+RUNNER = ROOT / "experiments" / "m0-7-tool-contract-usability" / "run_study.py"
 REQUIRED_QUALIFICATION = (
     "SQL passed to this tool must reference this exact fully qualified "
     "table name: agentic_analytics.delivery_work_items."
@@ -28,6 +31,18 @@ def load_plugin():
 
 
 class TestM07ToolContract(unittest.TestCase):
+    def test_runner_help_loads_without_model_invocation(self):
+        completed = subprocess.run(
+            [sys.executable, str(RUNNER), "--help"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertIn("--verify-only", completed.stdout)
+
     def test_direct_contract_states_exact_sql_qualification_requirement(self):
         description = _QUERY_TOOL["description"]
 

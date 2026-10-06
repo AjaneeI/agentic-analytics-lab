@@ -9,10 +9,11 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import time
 from typing import Any
 
 from src.agents.ollama_client import OllamaModelClient
-from src.evals.capability_reliability import run_study_a_cases
+from src.evals.capability_reliability import evaluate_sql_attempt
 from src.evals.system_benchmark.local_worker import _QUERY_TOOL
 from src.tools.clickhouse_readonly import query_clickhouse
 
@@ -103,6 +104,51 @@ def build_evidence_index(output_dir: Path) -> dict[str, Any]:
     }
 
 
+def run_cases(
+    *,
+    model: Any,
+    cases: list[dict[str, Any]],
+    system_prompt: str,
+    tool_spec: dict[str, Any],
+    query_fn,
+) -> list[dict[str, Any]]:
+    attempts = []
+    for case in cases:
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": case["user_prompt"]},
+        ]
+        started_at = datetime.now(timezone.utc)
+        monotonic_started = time.perf_counter()
+        try:
+            raw_response = model.respond(messages, [tool_spec])
+            outcome = evaluate_sql_attempt(
+                raw_response,
+                expected_rows=case["expected_rows"],
+                query_fn=query_fn,
+            )
+        except Exception as exc:
+            outcome = {
+                "accepted": False,
+                "reason_code": "model_error",
+                "failure_categories": ["infrastructure_runtime"],
+                "raw_response": None,
+                "error": f"{type(exc).__name__}: {exc}",
+            }
+        attempts.append(
+            {
+                "case_id": case["case_id"],
+                "request": {"messages": messages, "tools": [tool_spec]},
+                "expected_rows": case["expected_rows"],
+                "started_at": started_at.isoformat(),
+                "ended_at": datetime.now(timezone.utc).isoformat(),
+                "elapsed_seconds": time.perf_counter() - monotonic_started,
+                **outcome,
+            }
+        )
+    return attempts
+
+
 def run_once(root: Path, output_dir: Path, manifest_path: Path) -> int:
     prepare_output_directory(output_dir)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -112,7 +158,7 @@ def run_once(root: Path, output_dir: Path, manifest_path: Path) -> int:
     )
 
     study = manifest["study"]
-    attempts = run_study_a_cases(
+    attempts = run_cases(
         model=OllamaModelClient(model=manifest["runtime"]["model"]["name"]),
         cases=study["cases"],
         system_prompt=study["system_prompt"],
