@@ -1,0 +1,7 @@
+{
+  "disposition": "incomplete",
+  "answer_text": "Could not identify the highest blocker-rate team. Policy definitions confirm blocker rate = (blocked active items / all active items) × 100, reported as a percentage with scope identified. However, ClickHouse queries failed: initial attempt used wrong table path, subsequent attempts exceeded tool budget. No team-level blocker percentages were retrieved.",
+  "uncertainty": "high",
+  "clarification": "Unable to complete data query within iteration limits. Would need additional tool budget to query agentic_analytics.delivery_work_items for team-level blocker rates.",
+  "handoff": "Request blocked by tool budget exhaustion. Requires fresh tool allocation to execute blocker rate calculation across teams."
+}

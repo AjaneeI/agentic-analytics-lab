@@ -1,0 +1,48 @@
+{
+  "direct": {
+    "answer_quality": {
+      "passed": 0,
+      "reason_codes": [
+        "unscored"
+      ],
+      "total": 0
+    },
+    "deterministic_acceptance": false,
+    "error": "QueryRejected: Only agentic_analytics.delivery_work_items may be queried.",
+    "human_interventions": 0,
+    "latency_seconds": null,
+    "model_calls": null,
+    "recovery_actions": 0,
+    "retries": 0,
+    "tool_calls": null
+  },
+  "hermes": {
+    "answer_quality": {
+      "passed": 0,
+      "reason_codes": [
+        "unscored"
+      ],
+      "total": 0
+    },
+    "answer_score_passed": false,
+    "attempted_extra_delegations": null,
+    "child_count": null,
+    "delegation_count": null,
+    "deterministic_acceptance": false,
+    "enforcement_interventions": null,
+    "error": "ValueError: Treatment B requires exactly two evidence-tool calls",
+    "human_interventions": 0,
+    "latency_seconds": null,
+    "model_calls": null,
+    "orchestration_accepted": false,
+    "parent_evidence_tool_calls": null,
+    "post_success_delegate_task_retired": null,
+    "recovery_actions": 0,
+    "retries": 0,
+    "tool_calls": null
+  },
+  "incremental_paid_spend_usd": 0,
+  "primary_metric": "Ajanee hands-on intervention per accepted result",
+  "scope_note": "One SB-D01 comparison does not establish general superiority of either architecture.",
+  "task_id": "SB-D01"
+}

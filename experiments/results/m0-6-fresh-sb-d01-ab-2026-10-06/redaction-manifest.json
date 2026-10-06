@@ -1,0 +1,112 @@
+{
+  "files": {
+    "request_dump_20261006_003213_d54f4b_20261006_003213_997356.json": {
+      "original_sha256": "1d57809dcf97b31691544c274ea9f8af8551e26e41259118c61ae1c0aec37e36",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003213_d54f4b_20261006_003213_997356.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "2463d9328b1573bdd4a407f8c44474f4904d93dc40e6dfb3d9ae7e4b8510b47e"
+    },
+    "request_dump_20261006_003213_d54f4b_20261006_003707_131706.json": {
+      "original_sha256": "915846dc2f1c200257b1e904a252d524c7e303744d7af8c4a4592cea00120341",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003213_d54f4b_20261006_003707_131706.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "a745100f4c317f4e4de2dafda1865fcdada5bf7c2de7b64dd3a599bdd8778796"
+    },
+    "request_dump_20261006_003213_d54f4b_20261006_003909_911729.json": {
+      "original_sha256": "07bf90e0d9a158c66d76b9ce8f2095a11cbdd5f9638f673e03a36a100f532ed3",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003213_d54f4b_20261006_003909_911729.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "36f085be34de36fd232049214bce23a51eb01c24c60fdb61e0fcd766b4b6f5b9"
+    },
+    "request_dump_20261006_003213_d54f4b_20261006_003921_556632.json": {
+      "original_sha256": "09f9d2fbc9f3f1482afcc21638795023cccd2302492b62f5976336031588ec58",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003213_d54f4b_20261006_003921_556632.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "2618ffc241ffe69b35f482348adfc57a04a9e521f1a555aebe305feba9c9f097"
+    },
+    "request_dump_20261006_003213_d54f4b_20261006_004049_396447.json": {
+      "original_sha256": "4e14a3bed3ce09c87f35b90b329d6cad296b5f8b927d5a44d4497ae89d48589a",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003213_d54f4b_20261006_004049_396447.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "097fc1f7609ced6acc185e4b1a35bb549e7ead807818a2259f18fe68061f3676"
+    },
+    "request_dump_20261006_003213_d54f4b_20261006_004136_354367.json": {
+      "original_sha256": "a377023b95d51c6fc91cf6ff3936b84961136fd76b3039bf7a886a56c3085680",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003213_d54f4b_20261006_004136_354367.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "cd453dae50a0dfb25742509a1cb907852f1e3e00d0ba5b57e057f643aef1f542"
+    },
+    "request_dump_20261006_003213_d54f4b_20261006_004336_813245.json": {
+      "original_sha256": "40cca826e8af8630804fc025b86ee1bbf5ee1bbceb7741e66838234a4a5f07d4",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003213_d54f4b_20261006_004336_813245.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "677ad236b1914109435330b027faa346b644a620a41333cd3877010625ca506e"
+    },
+    "request_dump_20261006_003326_472312_20261006_003326_892973.json": {
+      "original_sha256": "3a1741541754331a86b431e4e813f1eae396c61863f484c0b09ff68e31013108",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003326_472312_20261006_003326_892973.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "a0133b06c99801b4fe6f6abfd0e74a3c214256788a658c7736d2bf0b6c699704"
+    },
+    "request_dump_20261006_003326_472312_20261006_003417_792244.json": {
+      "original_sha256": "efe545e7c07ea9ab77dee0c9bf8ec43c723eed6a3c26af49e46f95e0a77fdd87",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003326_472312_20261006_003417_792244.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "6f930a285c93e99489f694ded7c6c98d3cfc1e1e3424fe63ef4907fe2567b6cb"
+    },
+    "request_dump_20261006_003326_472312_20261006_003440_868113.json": {
+      "original_sha256": "997c676728e57ac3bf5c947cbe313699732f94316e62ee9a3a376a106e853a98",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003326_472312_20261006_003440_868113.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "5ee4d16bf6d7c5456eaf62175ec5d73e6bd5f68354cf77493209e22730c1d3a2"
+    },
+    "request_dump_20261006_003326_472312_20261006_003452_044168.json": {
+      "original_sha256": "6d11880a0a38f17438b98b6737f310f0de2836c0951c691aafbeb9e68f9761b6",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003326_472312_20261006_003452_044168.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "6d69c1e2a98dbac60b939b6d1463d594c3c68178230a1d1cc3bab278f60902a9"
+    },
+    "request_dump_20261006_003326_472312_20261006_003505_045593.json": {
+      "original_sha256": "9f774f3cc0dccc033bec26e41de3a5064e0072469c0bbac48618c259f8001ec4",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003326_472312_20261006_003505_045593.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "f9647265d1bcdba633a69a6f82f9e5026cce91e55cc27cdfc9615be2064f1018"
+    },
+    "request_dump_20261006_003326_472312_20261006_003524_552181.json": {
+      "original_sha256": "eaa5e6d404d81b5f1ea5bd66ff800a272269eafedce234a292c1c004c325bbee",
+      "original_source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_003326_472312_20261006_003524_552181.json",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "sanitized_sha256": "876041b7870b23ba4a0e052b8c5844dcf62e5ed15a159ebef26070482c8e62da"
+    }
+  },
+  "original_source_directory": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions",
+  "originals_retained_locally": true,
+  "policy": "Repository copies replace only request.headers.Authorization. Model messages, tool arrays, tool results, timing, and all other request fields are unchanged.",
+  "schema_version": "m0-6-request-redaction-v1"
+}

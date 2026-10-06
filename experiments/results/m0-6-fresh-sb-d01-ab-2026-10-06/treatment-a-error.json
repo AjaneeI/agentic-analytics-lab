@@ -1,0 +1,9 @@
+{
+  "ended_at": "2026-10-06T04:32:05.713627+00:00",
+  "error": "QueryRejected: Only agentic_analytics.delivery_work_items may be queried.",
+  "human_interventions": 0,
+  "incremental_paid_spend_usd": 0,
+  "retries": 0,
+  "scored": false,
+  "started_at": "2026-10-06T04:31:21.777851+00:00"
+}
