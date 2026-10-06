@@ -1,10 +1,15 @@
 # Hermes Personal Ops roadmap — morning status
 
-Date: 2026-10-06  
-Roadmap branch: `hermes-personal-ops-roadmap`  
-Tracking issue: [#89](https://github.com/AjaneeI/agentic-analytics-lab/issues/89)  
-Draft evidence PR: [#90](https://github.com/AjaneeI/agentic-analytics-lab/pull/90), stacked on the M0.6 branch  
-Historical evidence preserved: issues #73, #82, #84, #85, #86, #87 and draft PRs #83/#88  
+Date: 2026-10-06
+
+Roadmap branch: `hermes-personal-ops-roadmap`
+
+Tracking issue: [#89](https://github.com/AjaneeI/agentic-analytics-lab/issues/89)
+
+Draft evidence PR: [#90](https://github.com/AjaneeI/agentic-analytics-lab/pull/90), stacked on the M0.6 branch
+
+Historical evidence preserved: issues #73, #82, #84, #85, #86, #87 and draft PRs #83/#88
+
 Incremental paid spend: **$0**
 
 ## Outcome

@@ -8,10 +8,10 @@
 - M0.7's original three-case probe failed 0/3. Its frozen, bounded recovery
   passed 3/3: local Qwen produced validator-compliant fully qualified SQL,
   correct blocker-rate formulas, and exact rows with zero retries or spend.
-- The first M0.8 Hermes validation failed: one child batched two SQL calls
-  before policy, exhausted the evidence budget, and returned no policy
-  interpretation. The failure is preserved at commit `4da9586` beneath tag
-  `m0-8-final-bounded-validation-v1`.
+- The first M0.8 Hermes validation was frozen at commit `8cd4cef` and tag
+  `m0-8-final-bounded-validation-v1`. It failed: one child batched two SQL
+  calls before policy, exhausted the evidence budget, and returned no policy
+  interpretation. Its result evidence was preserved in commit `4da9586`.
 - The final prompt-only M0.8 recovery was frozen at commit `4da9586` and tag
   `m0-8-recovery-successor-v1`, published before invocation, and run exactly
   once. It failed. The child retrieved policy successfully, then its qualified
