@@ -516,6 +516,36 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
             with self.subTest(value=value):
                 self.assertFalse(self.plugin._contains_red_action(value))
 
+    def test_outcome_rejects_free_text_boundary_and_accepts_structured_red_category(self):
+        base = {
+            "current_state": "clean",
+            "action_taken": "ran checks",
+            "verification": "passed",
+        }
+        invalid = self.result(
+            self.plugin._record_outcome(
+                {
+                    **base,
+                    "recommended_action": "Assign issue #91 to Alice",
+                    "decision_needed": "none",
+                },
+                session_id="parent-1",
+            )
+        )
+        valid = self.result(
+            self.plugin._record_outcome(
+                {
+                    **base,
+                    "recommended_action": "request_approval_external_write",
+                    "decision_needed": "external_write",
+                },
+                session_id="parent-1",
+            )
+        )
+
+        self.assertEqual(invalid["reason_code"], "invalid_outcome_boundary")
+        self.assertTrue(valid["ok"])
+
     def test_clarify_events_classify_red_boundary_without_storing_question_text(self):
         self.plugin._pre_tool_call(
             tool_name="clarify",
@@ -550,7 +580,7 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
                 "questions": [
                     {
                         "question": (
-                            "Decision needed: approve git push? Why it matters: external write. "
+                            "Decision needed: external_write. Why it matters: external write. "
                             "Options/tradeoffs: approve or stop. Hermes recommendation: stop."
                         )
                     }
@@ -563,6 +593,7 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
         events = [json.loads(line) for line in self.events.read_text().splitlines()]
         self.assertEqual([row["red_boundary"] for row in events], [True, False, True, True])
         self.assertEqual([row["consultation_complete"] for row in events], [False, False, False, True])
+        self.assertEqual([row["red_category"] for row in events], ["", "", "", "external_write"])
         self.assertNotIn("Approve git push?", self.events.read_text())
 
     def test_event_log_redacts_sensitive_keys_bearer_tokens_and_assignments(self):
@@ -577,6 +608,10 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
                     '{"private_key":"-----BEGIN PRIVATE KEY-----\\n'
                     'PLUGIN-PRIVATE-BODY\\n-----END PRIVATE KEY-----"}'
                 ),
+                "yaml_output": (
+                    "private_key: |\n  -----BEGIN PRIVATE KEY-----\n"
+                    "  YAML-PRIVATE-BODY\n  -----END PRIVATE KEY-----\n"
+                ),
             }
         )
 
@@ -584,6 +619,7 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
         for secret in (
             "auth-secret", "key-secret", "pk-material-secret", "output-secret",
             "token-secret", "PLUGIN-PRIVATE-BODY", "BEGIN PRIVATE KEY", "END PRIVATE KEY",
+            "YAML-PRIVATE-BODY",
         ):
             self.assertNotIn(secret, saved)
         self.assertIn("[REDACTED]", saved)

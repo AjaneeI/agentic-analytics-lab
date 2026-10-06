@@ -49,6 +49,31 @@ _SECRET_KEY_PATTERN = re.compile(
 )
 _REQUIRED_CONTEXT = ["PROJECT.md", "STATUS.md", "DECISIONS.md", "ARCHITECTURE.md"]
 _WORKER_FIELDS = ["Objective", "Inputs", "Allowed changes", "Acceptance", "Evidence", "Stop"]
+_RED_CATEGORIES = (
+    "external_write",
+    "external_communication",
+    "publish",
+    "deploy",
+    "push",
+    "merge",
+    "paid_provider",
+    "meaningful_delete",
+    "credential_change",
+    "security_change",
+    "new_external_permission",
+    "ambiguous_high_impact_decision",
+)
+_SAFE_OUTCOME_RECOMMENDATIONS = {
+    "none",
+    "review_verified_local_change",
+    "inspect_and_verify_current_changes",
+    "run_full_verification_for_draft_pr",
+    "run_verification_before_red_push_or_pr",
+    "run_context_and_full_checks",
+}
+_RED_OUTCOME_RECOMMENDATIONS = {
+    f"request_approval_{category}": category for category in _RED_CATEGORIES
+}
 _RED_ACTION_PATTERNS = tuple(
     re.compile(pattern, re.IGNORECASE)
     for pattern in (
@@ -133,7 +158,17 @@ def _event_log() -> Path:
 
 def _redact_text(value: str) -> str:
     value = re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "Bearer [REDACTED]", value)
+    value = re.sub(
+        r"(?is)-----BEGIN (?:[A-Z0-9]+ )*PRIVATE KEY-----.*?-----END (?:[A-Z0-9]+ )*PRIVATE KEY-----",
+        "[REDACTED PRIVATE KEY]",
+        value,
+    )
     key = r'(?:authorization|api[_-]?key|private[_-]?key|(?:access[_-]?|refresh[_-]?|auth[_-]?)?token|password|secret|credentials?)'
+    value = re.sub(
+        rf'(?im)^([ \t]*["\']?{key}["\']?[ \t]*:[ \t]*(?:[|>][+-]?[ \t]*)?)\r?\n(?:(?:[ \t]+[^\r\n]*(?:\r?\n|$))+)',
+        r"\1\n  [REDACTED]\n",
+        value,
+    )
     value = re.sub(
         rf'(?is)(["\']?{key}["\']?\s*[:=]\s*)(["\'])(.*?)\2',
         r"\1\2[REDACTED]\2",
@@ -313,7 +348,10 @@ def _parse_worker_contract(goal: Any) -> dict[str, str]:
 
 def _contains_red_action(value: Any) -> bool:
     if isinstance(value, str):
-        return any(pattern.search(value.strip()) for pattern in _RED_ACTION_PATTERNS)
+        normalized = re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
+        return normalized in _RED_CATEGORIES or any(
+            pattern.search(value.strip()) for pattern in _RED_ACTION_PATTERNS
+        )
     if isinstance(value, dict):
         return any(_contains_red_action(child) for child in value.values())
     if isinstance(value, list):
@@ -321,7 +359,7 @@ def _contains_red_action(value: Any) -> bool:
     return False
 
 
-def _consultation_complete(value: Any) -> bool:
+def _consultation_sections(value: Any) -> list[tuple[str, str]]:
     strings: list[str] = []
 
     def collect(item: Any) -> None:
@@ -343,7 +381,21 @@ def _consultation_complete(value: Any) -> bool:
         r"(?im)^\s*(Decision needed|Why it matters|Options/tradeoffs|Hermes recommendation)\s*:\s*(\S.*)$",
         text,
     )
+    return sections
+
+
+def _consultation_complete(value: Any) -> bool:
+    sections = _consultation_sections(value)
+    labels = ("Decision needed", "Why it matters", "Options/tradeoffs", "Hermes recommendation")
     return [name.lower() for name, _ in sections] == [label.lower() for label in labels]
+
+
+def _consultation_red_category(value: Any) -> str:
+    sections = _consultation_sections(value)
+    if not sections or sections[0][0].lower() != "decision needed":
+        return ""
+    normalized = re.sub(r"[^a-z0-9]+", "_", sections[0][1].lower()).strip("_")
+    return normalized if normalized in _RED_CATEGORIES else ""
 
 
 def _build_manifest(goal: str, *, session_id: str, tool_call_id: str) -> dict[str, Any]:
@@ -747,6 +799,20 @@ def _record_outcome(args: dict[str, Any] | None, session_id: str = "", **_: Any)
     missing = [field for field in required if not isinstance(arguments.get(field), str) or not arguments[field].strip()]
     if missing:
         return _fail("personalops_record_outcome", "missing_final_status_fields", session_id=session_id, missing=missing)
+    recommendation = arguments["recommended_action"].strip()
+    decision = arguments["decision_needed"].strip()
+    red_category = _RED_OUTCOME_RECOMMENDATIONS.get(recommendation)
+    boundary_valid = (
+        recommendation in _SAFE_OUTCOME_RECOMMENDATIONS and decision == "none"
+    ) or (
+        red_category is not None and decision == red_category
+    )
+    if not boundary_valid:
+        return _fail(
+            "personalops_record_outcome",
+            "invalid_outcome_boundary",
+            session_id=session_id,
+        )
     return _emit("personalops_record_outcome", {"ok": True, "outcome": {field: arguments[field].strip() for field in required}}, session_id=session_id)
 
 
@@ -794,7 +860,8 @@ def _pre_tool_call(
             "action": "allow",
         }
         if tool_name == "clarify":
-            event["red_boundary"] = _contains_red_action(args)
+            event["red_category"] = _consultation_red_category(args)
+            event["red_boundary"] = bool(event["red_category"]) or _contains_red_action(args)
             event["consultation_complete"] = _consultation_complete(args)
         _write_event(event)
         return None
@@ -928,7 +995,7 @@ def _schema(name: str, description: str, properties: dict[str, Any], required: l
     return {"name": name, "description": description, "parameters": {"type": "object", "properties": properties, "required": required}}
 
 
-_PROMPT = """You are Hermes Desktop Lite for Ajanee. Use personalops_inspect_repository before making repository claims. Green actions are read-only inspection and named checks; perform them autonomously. Yellow actions are one bounded delegated child making reversible local edits through personalops_apply_patch; give the child Objective, Inputs, Allowed changes, Acceptance, Evidence, and Stop, then independently call personalops_verify_change. Red actions include external writes or communications, publish/deploy, push/merge, paid providers, deletion, credentials/security, new permissions, or ambiguous high-impact choices. For Red work call clarify with Decision needed, Why it matters, Options/tradeoffs, and Hermes recommendation, then wait. Never use ClickHouse for this workflow. Before the concise final answer, call personalops_record_outcome with current_state, recommended_action, action_taken, verification, and decision_needed. Do not expose internal orchestration logs."""
+_PROMPT = """You are Hermes Desktop Lite for Ajanee. Use personalops_inspect_repository before making repository claims. Green actions are read-only inspection and named checks; perform them autonomously. Yellow actions are one bounded delegated child making reversible local edits through personalops_apply_patch; give the child Objective, Inputs, Allowed changes, Acceptance, Evidence, and Stop, then independently call personalops_verify_change. Red actions include external writes or communications, publish/deploy, push/merge, paid providers, deletion, credentials/security, new permissions, or ambiguous high-impact choices. For Red work call clarify with Decision needed, Why it matters, Options/tradeoffs, and Hermes recommendation; Decision needed must be the exact Red category token. Then wait. Never use ClickHouse for this workflow. Before the concise final answer, call personalops_record_outcome with current_state, recommended_action, action_taken, verification, and decision_needed. Use only the tool's enum tokens: a Red recommendation is request_approval_<category> with the matching decision_needed category; otherwise decision_needed is none. Do not expose internal orchestration logs."""
 
 
 def register(ctx) -> None:
@@ -964,7 +1031,22 @@ def register(ctx) -> None:
             ["check_ids"],
             _verify_change,
         ),
-        ("personalops_record_outcome", "Record the structured final status before answering Ajanee.", {field: {"type": "string"} for field in ["current_state", "recommended_action", "action_taken", "verification", "decision_needed"]}, ["current_state", "recommended_action", "action_taken", "verification", "decision_needed"], _record_outcome),
+        (
+            "personalops_record_outcome",
+            "Record the structured final status before answering Ajanee.",
+            {
+                "current_state": {"type": "string"},
+                "recommended_action": {
+                    "type": "string",
+                    "enum": sorted(_SAFE_OUTCOME_RECOMMENDATIONS | set(_RED_OUTCOME_RECOMMENDATIONS)),
+                },
+                "action_taken": {"type": "string"},
+                "verification": {"type": "string"},
+                "decision_needed": {"type": "string", "enum": ["none", *_RED_CATEGORIES]},
+            },
+            ["current_state", "recommended_action", "action_taken", "verification", "decision_needed"],
+            _record_outcome,
+        ),
     ]
     for name, description, properties, required, handler in definitions:
         ctx.register_tool(name=name, toolset="personalops_repository", schema=_schema(name, description, properties, required), handler=handler)
