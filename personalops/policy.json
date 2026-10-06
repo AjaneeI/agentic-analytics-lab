@@ -1,0 +1,39 @@
+{
+  "package_version": "0.1.0",
+  "levels": {
+    "green": [
+      "read_repository",
+      "inspect_git",
+      "read_github",
+      "search_repository",
+      "run_named_check"
+    ],
+    "yellow": [
+      "bounded_local_edit",
+      "one_worker",
+      "local_artifact"
+    ],
+    "red": [
+      "external_write",
+      "external_communication",
+      "publish",
+      "deploy",
+      "push",
+      "merge",
+      "paid_provider",
+      "meaningful_delete",
+      "credential_change",
+      "security_change",
+      "new_external_permission",
+      "ambiguous_high_impact_decision"
+    ]
+  },
+  "consultation": {
+    "required_sections": [
+      "Decision needed",
+      "Why it matters",
+      "Options/tradeoffs",
+      "Hermes recommendation"
+    ]
+  }
+}
