@@ -1,0 +1,275 @@
+{
+  "attempts": [
+    {
+      "accepted": true,
+      "case_id": "A1_TOTAL_COUNT",
+      "elapsed_seconds": 25.225014249997912,
+      "ended_at": "2026-10-06T00:50:23.077007+00:00",
+      "expected_rows": [
+        {
+          "row_count": 500
+        }
+      ],
+      "failure_categories": [],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 403,
+          "output_tokens": 145,
+          "total_duration_seconds": 25.10859825
+        },
+        "arguments": {
+          "sql": "SELECT COUNT(*) AS row_count FROM agentic_analytics.delivery_work_items"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "accepted",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "How many work items are in the delivery dataset? Use the available analytics tool and return the result field as row_count.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run a read-only analytical SQL query against the approved local ClickHouse dataset. SELECT/WITH/EXPLAIN queries may reference only agentic_analytics.delivery_work_items (or CTEs derived from it), and DESCRIBE may target only that table. Other tables and table functions are rejected.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "description": "A single read-only ClickHouse SQL statement.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "result_rows": [
+        {
+          "row_count": 500
+        }
+      ],
+      "started_at": "2026-10-06T00:49:57.852138+00:00",
+      "validated_sql": "SELECT COUNT(*) AS row_count FROM agentic_analytics.delivery_work_items"
+    },
+    {
+      "accepted": true,
+      "case_id": "A2_LARGEST_TEAM",
+      "elapsed_seconds": 12.784923625004012,
+      "ended_at": "2026-10-06T00:50:35.862735+00:00",
+      "expected_rows": [
+        {
+          "item_count": 139,
+          "team": "Data"
+        }
+      ],
+      "failure_categories": [],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 408,
+          "output_tokens": 172,
+          "total_duration_seconds": 12.722910792
+        },
+        "arguments": {
+          "sql": "SELECT team, COUNT(*) AS item_count FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY item_count DESC LIMIT 1"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "accepted",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Which team owns the most delivery work items, and how many does it own? Use the available analytics tool and return fields team and item_count.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run a read-only analytical SQL query against the approved local ClickHouse dataset. SELECT/WITH/EXPLAIN queries may reference only agentic_analytics.delivery_work_items (or CTEs derived from it), and DESCRIBE may target only that table. Other tables and table functions are rejected.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "description": "A single read-only ClickHouse SQL statement.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "result_rows": [
+        {
+          "item_count": 139,
+          "team": "Data"
+        }
+      ],
+      "started_at": "2026-10-06T00:50:23.077809+00:00",
+      "validated_sql": "SELECT team, COUNT(*) AS item_count FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY item_count DESC LIMIT 1"
+    },
+    {
+      "accepted": true,
+      "case_id": "A3_CRITICAL_COUNT",
+      "elapsed_seconds": 13.566824540990638,
+      "ended_at": "2026-10-06T00:50:49.429533+00:00",
+      "expected_rows": [
+        {
+          "critical_count": 136
+        }
+      ],
+      "failure_categories": [],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 402,
+          "output_tokens": 187,
+          "total_duration_seconds": 13.493755792
+        },
+        "arguments": {
+          "sql": "SELECT COUNT(*) as critical_count FROM agentic_analytics.delivery_work_items WHERE priority = 'critical'"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "accepted",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "How many delivery work items have critical priority? Use the available analytics tool and return the result field as critical_count.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run a read-only analytical SQL query against the approved local ClickHouse dataset. SELECT/WITH/EXPLAIN queries may reference only agentic_analytics.delivery_work_items (or CTEs derived from it), and DESCRIBE may target only that table. Other tables and table functions are rejected.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "description": "A single read-only ClickHouse SQL statement.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "result_rows": [
+        {
+          "critical_count": 136
+        }
+      ],
+      "started_at": "2026-10-06T00:50:35.862808+00:00",
+      "validated_sql": "SELECT COUNT(*) as critical_count FROM agentic_analytics.delivery_work_items WHERE priority = 'critical'"
+    },
+    {
+      "accepted": true,
+      "case_id": "A4_STATUS_COUNTS",
+      "elapsed_seconds": 16.052860333002172,
+      "ended_at": "2026-10-06T00:51:05.482559+00:00",
+      "expected_rows": [
+        {
+          "item_count": 61,
+          "status": "blocked"
+        },
+        {
+          "item_count": 330,
+          "status": "done"
+        },
+        {
+          "item_count": 109,
+          "status": "in_progress"
+        }
+      ],
+      "failure_categories": [],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 407,
+          "output_tokens": 212,
+          "total_duration_seconds": 15.6710155
+        },
+        "arguments": {
+          "sql": "SELECT status, COUNT(*) as item_count FROM agentic_analytics.delivery_work_items GROUP BY status ORDER BY status"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "accepted",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Return the number of delivery work items for each status, sorted by status. Use the available analytics tool and return fields status and item_count.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run a read-only analytical SQL query against the approved local ClickHouse dataset. SELECT/WITH/EXPLAIN queries may reference only agentic_analytics.delivery_work_items (or CTEs derived from it), and DESCRIBE may target only that table. Other tables and table functions are rejected.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "description": "A single read-only ClickHouse SQL statement.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "result_rows": [
+        {
+          "item_count": 61,
+          "status": "blocked"
+        },
+        {
+          "item_count": 330,
+          "status": "done"
+        },
+        {
+          "item_count": 109,
+          "status": "in_progress"
+        }
+      ],
+      "started_at": "2026-10-06T00:50:49.429703+00:00",
+      "validated_sql": "SELECT status, COUNT(*) as item_count FROM agentic_analytics.delivery_work_items GROUP BY status ORDER BY status"
+    }
+  ],
+  "pass_threshold": 4,
+  "sample_size": 4,
+  "study_id": "m0-5-qwen-sql-contract-v1"
+}

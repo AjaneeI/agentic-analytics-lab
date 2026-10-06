@@ -1,0 +1,9 @@
+name: system-benchmark-tools
+version: "1.0.0"
+description: Frozen read-only evidence tools for the Hermes successor A/B experiment
+provides_tools:
+  - query_clickhouse
+  - retrieve_policy
+provides_hooks:
+  - pre_tool_call
+  - post_tool_call

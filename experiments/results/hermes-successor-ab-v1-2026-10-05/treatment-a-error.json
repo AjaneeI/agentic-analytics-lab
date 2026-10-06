@@ -1,0 +1,4 @@
+{
+  "error": "QueryRejected: Only agentic_analytics.delivery_work_items may be queried.",
+  "scored": false
+}

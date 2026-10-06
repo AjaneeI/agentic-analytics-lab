@@ -1,0 +1,184 @@
+{
+  "attempts": [
+    {
+      "accepted": true,
+      "attempted_delegations": 1,
+      "attempted_extra_delegations": 0,
+      "case_id": "B1_LITERAL",
+      "elapsed_seconds": 92.31158125000366,
+      "enforcement_interventions": 0,
+      "events": [
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Return exactly M05_ALPHA_OK. No other text."
+              }
+            ]
+          },
+          "delegate_sequence": 1,
+          "event": "delegate_pre",
+          "ok": true,
+          "tool": "delegate_task",
+          "tool_call_id": "fv80qQGDr6jmvDPWUzY72VBOYmj1ylEE"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Return exactly M05_ALPHA_OK. No other text."
+              }
+            ]
+          },
+          "error_type": null,
+          "event": "delegate_post",
+          "ok": true,
+          "status": "ok",
+          "tool": "delegate_task",
+          "tool_call_id": "fv80qQGDr6jmvDPWUzY72VBOYmj1ylEE"
+        }
+      ],
+      "expected_marker": "M05_ALPHA_OK",
+      "failure_categories": [],
+      "final_completion": true,
+      "observed_stdout": "M05_ALPHA_OK\n",
+      "parent_level_work_attempts": 0,
+      "reason_code": "accepted",
+      "returncode": 0,
+      "successful_delegate_requests": 1,
+      "successful_worker_launches": 1
+    },
+    {
+      "accepted": true,
+      "attempted_delegations": 1,
+      "attempted_extra_delegations": 0,
+      "case_id": "B2_EXTRACT",
+      "elapsed_seconds": 37.86858933301119,
+      "enforcement_interventions": 0,
+      "events": [
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text."
+              }
+            ]
+          },
+          "delegate_sequence": 1,
+          "event": "delegate_pre",
+          "ok": true,
+          "tool": "delegate_task",
+          "tool_call_id": "louZo4vCplsEAkAhTg6AGeqZF4MtKp3P"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text."
+              }
+            ]
+          },
+          "error_type": null,
+          "event": "delegate_post",
+          "ok": true,
+          "status": "ok",
+          "tool": "delegate_task",
+          "tool_call_id": "louZo4vCplsEAkAhTg6AGeqZF4MtKp3P"
+        }
+      ],
+      "expected_marker": "M05_OWNER_DATA",
+      "failure_categories": [],
+      "final_completion": true,
+      "observed_stdout": "M05_OWNER_DATA\n",
+      "parent_level_work_attempts": 0,
+      "reason_code": "accepted",
+      "returncode": 0,
+      "successful_delegate_requests": 1,
+      "successful_worker_launches": 1
+    },
+    {
+      "accepted": false,
+      "attempted_delegations": 2,
+      "attempted_extra_delegations": 1,
+      "case_id": "B3_COMPARE",
+      "elapsed_seconds": 42.094095124994055,
+      "enforcement_interventions": 2,
+      "events": [
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+              }
+            ]
+          },
+          "delegate_sequence": 1,
+          "event": "delegate_pre",
+          "ok": true,
+          "tool": "delegate_task",
+          "tool_call_id": "dubscEEMohbSyTaepq0DUmlKPyrqS1fQ"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+              }
+            ]
+          },
+          "error_type": null,
+          "event": "delegate_post",
+          "ok": true,
+          "status": "ok",
+          "tool": "delegate_task",
+          "tool_call_id": "dubscEEMohbSyTaepq0DUmlKPyrqS1fQ"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+              }
+            ]
+          },
+          "delegate_sequence": 2,
+          "event": "delegate_pre",
+          "ok": false,
+          "reason_code": "delegate_budget_exceeded",
+          "tool": "delegate_task",
+          "tool_call_id": "jyvtGVOhy4Ku1oRqFxdKHZ6ULWOlOIKT"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+              }
+            ]
+          },
+          "error_type": "plugin_block",
+          "event": "delegate_post",
+          "ok": false,
+          "status": "blocked",
+          "tool": "delegate_task",
+          "tool_call_id": "jyvtGVOhy4Ku1oRqFxdKHZ6ULWOlOIKT"
+        }
+      ],
+      "expected_marker": "M05_MAX_7",
+      "failure_categories": [
+        "orchestration_decomposition",
+        "enforcement_intervention"
+      ],
+      "final_completion": true,
+      "observed_stdout": "M05_MAX_7\n",
+      "parent_level_work_attempts": 0,
+      "reason_code": "delegation_contract_failed",
+      "returncode": 0,
+      "successful_delegate_requests": 1,
+      "successful_worker_launches": 1
+    }
+  ],
+  "pass_threshold": 3,
+  "sample_size": 3,
+  "study_id": "m0-5-hermes-single-delegation-v1"
+}

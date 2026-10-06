@@ -1,0 +1,22 @@
+{
+  "decision": "define_next_experiment",
+  "incremental_paid_spend_usd": 0,
+  "interpretation_boundary": "These seven frozen cases characterize only the tested SQL shapes and delegation requests; they do not establish general reliability.",
+  "observed_failure_categories": [
+    "enforcement_intervention",
+    "orchestration_decomposition"
+  ],
+  "rerun_authorized": false,
+  "study_a": {
+    "accepted": 4,
+    "passed": true,
+    "sample_size": 4,
+    "threshold": 4
+  },
+  "study_b": {
+    "accepted": 2,
+    "passed": false,
+    "sample_size": 3,
+    "threshold": 3
+  }
+}

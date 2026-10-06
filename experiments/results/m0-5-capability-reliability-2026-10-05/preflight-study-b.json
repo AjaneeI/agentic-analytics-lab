@@ -1,0 +1,18 @@
+{
+  "contract_sha256": {
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/plugin.yaml": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0",
+    "experiments/hermes-successor-ab-v1/profile/config.yaml": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
+    "experiments/m0-5-capability-reliability/README.md": "0a477d9e50c0cd6bdbe828cb531acd27df405e13804b8e1a1b2c161daa910e4a",
+    "experiments/m0-5-capability-reliability/run_studies.py": "4b8c4ad32f8c7703d5fa105f2b9bbef4be3c27f1af8ca76d9f5fab0d13c95099",
+    "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+    "src/agents/single_agent.py": "2a6aed58041b95ceaef5a32431bded19322a81e5f2981a77e0caceb5a4df5793",
+    "src/evals/capability_reliability.py": "ed314f3dba7a095880ca8fa537fa0605938f1a29e9d86817089e3e09a87b6c1c",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9"
+  },
+  "freeze_ref": "refs/tags/m0-5-capability-reliability-v1",
+  "head": "33b6fe2aa5b484b87efc9321077471c568ebaf88",
+  "passed": true,
+  "profile": "localbenchmark",
+  "tool_count": 3
+}
