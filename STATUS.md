@@ -4,6 +4,14 @@ _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-
 
 ## Current verified state
 
+### Hermes Personal Ops product track
+
+- Issue #91 defines Hermes Desktop Lite as a separate product track built from current `main`; it does not modify or depend on the draft M0 diagnostic PR #90.
+- The versioned `personalops` package now contains the approved Green/Yellow/Red policy, local-only model contract, repository-scoped tools, isolated profile installer/validator, frozen Hermes worker guard, one-shot delegation hook, and deterministic single-attempt smoke scorer.
+- Product implementation evidence through Task 4 is local and deterministic: contract tests, repository-tool tests, profile/guard tests, smoke acceptance fixtures, and the live Hermes retirement guard all pass.
+- The one permitted natural-language Qwen smoke remains the final product acceptance gate. Until its preserved `acceptance.json` passes, Desktop Lite is an implementation candidate rather than an operational product workflow.
+- Incremental paid spend remains `$0`. No ClickHouse-first workflow, benchmark treatment, model change, Hermes-core change, or new orchestration layer was added.
+
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
 - The project keeps the single-agent, oracle-metadata routed, and
   natural-language routing evaluation lanes distinct.
@@ -60,6 +68,10 @@ No held-out cases, model runs, LLM judge, or chain-of-thought scoring belong in
 this slice.
 
 ## Next bounded experiment
+
+For the Personal Ops product track, install and validate the isolated `personalops` profile, create the draft product PR, and execute the exact natural-language smoke once. Preserve a failure without prompt/configuration repair or retry.
+
+The older benchmark instruction below is retained as historical context and is superseded by issues #89/#90 for M0 status; it is not an instruction to rerun SB-D01 during Desktop Lite work.
 
 Resume issue #73 by rerunning **Treatment A only** with the new bounded local worker on the same SB-D01 task and deterministic scorer. Do not use generic OpenCode for this rerun. If Treatment A is accepted, preserve that evidence and stop. Treatment B remains blocked until Hermes enforces a hard one-worker/no-concurrency invariant at the delegation boundary; do not rerun Hermes by prompt instruction alone. Keep spend at $0 and do not change benchmark semantics, add workers, or start new infrastructure.
 
