@@ -43,9 +43,23 @@ _RECOMMENDED_CHECKS = {
     "run_verification_before_red_push_or_pr": {"diff", "full"},
     "run_context_and_full_checks": {"context", "full"},
 }
-_RED_ACTION_PATTERN = re.compile(
-    r"\b(push|merge|deploy|publish|release|send|email|upload|post|submit|share|notify|message|contact|delete|remove|destroy|drop|credential|secret|password|security|permission|grant|revoke|invite|paid|purchase|external write|external communication|(?:open|create|file|close|edit|update|label|comment(?:\s+on)?)\s+(?:an?\s+)?(?:pull request|pr|issue))\b",
-    re.IGNORECASE,
+_RED_ACTION_PATTERNS = tuple(
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in (
+        r"(?:^|[.;]\s*|\b(?:to|will|should|must)\s+)(?:push|pushed|merge|merged|deploy|deployed|publish|published|upload|uploaded|submit|submitted)(?![-_])\b",
+        r"(?:^|[.;]\s*|\b(?:to|will|should|must)\s+)(?:release|released)\s+(?:an?\s+|the\s+)?(?:app|application|version|build|artifact|product)\b",
+        r"\b(?:approve|authorize)\s+(?:an?\s+|the\s+)?(?:git\s+)?(?:push|merge|deploy|publication|release|upload|submission|send|email|post)\b",
+        r"\b(?:open|opened|create|created|file|filed|close|closed|reopen|reopened|edit|edited|update|updated|label|labeled|comment on|commented on|reply to|replied to|approve|approved)\s+(?:an?\s+|the\s+)?(?:github\s+)?(?:pull request|pr|issue)\b",
+        r"(?:^|[.;]\s*|\b(?:to|will|should|must)\s+)(?:send|sent|email|emailed|message|messaged|notify|notified|contact|contacted)\s+(?:an?\s+|the\s+|to\s+)?(?:user|customer|team|client|stakeholder|recipient|owner|report|results?|update|message|email|notification|artifact|file|link)\b",
+        r"\b(?:reply|replied|respond|responded)\s+to\s+\S+",
+        r"(?:^|[.;]\s*|\b(?:to|will|should|must)\s+)(?:post|posted|share|shared)\s+(?:an?\s+|the\s+)?(?:update|message|comment|reply|report|results?|artifact|file|link)\b",
+        r"(?:^|[.;]\s*|\b(?:to|will|should|must)\s+)(?:share|shared)\s+with\s+\S+",
+        r"\b(?:delete|deleted|remove|removed|destroy|destroyed|drop|dropped)\s+(?:an?\s+|the\s+)?(?:file|directory|folder|repository|repo|database|table|record|account|branch|artifact|dataset|data)\b",
+        r"\b(?:create|created|change|changed|rotate|rotated|revoke|revoked|grant|granted|modify|modified|update|updated|delete|deleted|remove|removed|expose|exposed)\s+(?:an?\s+|the\s+)?(?:credential|secret|password|token|private key|permission|access|role|security setting)\b",
+        r"\b(?:purchase|purchased|buy|bought|subscribe|subscribed|charge|charged|use|used|call|called|invoke|invoked)\s+(?:an?\s+|the\s+)?(?:paid|billable|subscription)\b",
+        r"\b(?:external write|external communication|paid provider)\b",
+        r"\b(?:approve|decide|choose)\s+(?:production|security|permission|paid|purchase|deployment)\b",
+    )
 )
 _SECRET_KEY_PATTERN = re.compile(
     r"(^|[_-])(authorization|api[_-]?key|private[_-]?key|token|password|secret|credential|credentials)($|[_-])",
@@ -155,7 +169,7 @@ def _decision_requested(outcome: dict[str, Any]) -> bool:
 
 def _red_decision_requested(outcome: dict[str, Any]) -> bool:
     return any(
-        bool(_RED_ACTION_PATTERN.search(str(outcome.get(field, ""))))
+        any(pattern.search(str(outcome.get(field, "")).strip()) for pattern in _RED_ACTION_PATTERNS)
         for field in ("recommended_action", "action_taken", "decision_needed")
     )
 
@@ -495,8 +509,14 @@ def _redact_authorization(value: Any) -> Any:
 def _redact_raw_text(data: bytes) -> str:
     text = data.decode("utf-8", errors="replace")
     text = re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "Bearer [REDACTED]", text)
+    key = r'(?:authorization|api[_-]?key|private[_-]?key|(?:access[_-]?|refresh[_-]?|auth[_-]?)?token|password|secret|credentials?)'
     text = re.sub(
-        r'(?i)(["\']?(?:authorization|api[_-]?key|private[_-]?key|(?:access[_-]?|refresh[_-]?|auth[_-]?)?token|password|secret|credentials?)["\']?\s*[:=]\s*["\']?)[^"\'\s\n\r,}]+',
+        rf'(?is)(["\']?{key}["\']?\s*[:=]\s*)(["\'])(.*?)\2',
+        r"\1\2[REDACTED]\2",
+        text,
+    )
+    text = re.sub(
+        rf'(?i)(["\']?{key}["\']?\s*[:=]\s*)[^"\'\s\n\r,}}]+',
         r"\1[REDACTED]",
         text,
     )

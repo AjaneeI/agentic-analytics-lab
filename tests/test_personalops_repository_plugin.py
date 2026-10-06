@@ -495,6 +495,27 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
             with self.subTest(path=raw):
                 self.assertFalse(self.plugin._is_sensitive(Path(raw)))
 
+    def test_red_action_classifier_covers_external_actions_without_local_false_positive(self):
+        for value in (
+            "Reply to issue #91",
+            "Approve pull request #93",
+            "Reopen issue #91",
+            "Respond to the customer",
+        ):
+            with self.subTest(value=value):
+                self.assertTrue(self.plugin._contains_red_action(value))
+        for value in (
+            "Remove trailing whitespace from README locally",
+            "Post-check status is clean",
+            "Message schema validated locally",
+            "Share helper tests passed",
+            "Security docs updated locally",
+            "Permission parser passed",
+            "Release notes updated locally",
+        ):
+            with self.subTest(value=value):
+                self.assertFalse(self.plugin._contains_red_action(value))
+
     def test_clarify_events_classify_red_boundary_without_storing_question_text(self):
         self.plugin._pre_tool_call(
             tool_name="clarify",
@@ -551,14 +572,18 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
                 "authorization": "Bearer auth-secret",
                 "api_key": "key-secret",
                 "private_key": "pk-material-secret",
-                "output": 'API_KEY=output-secret TOKEN:token-secret {"api_key":"json-secret"}',
+                "output": (
+                    'API_KEY=output-secret TOKEN:token-secret '
+                    '{"private_key":"-----BEGIN PRIVATE KEY-----\\n'
+                    'PLUGIN-PRIVATE-BODY\\n-----END PRIVATE KEY-----"}'
+                ),
             }
         )
 
         saved = self.events.read_text(encoding="utf-8")
         for secret in (
             "auth-secret", "key-secret", "pk-material-secret", "output-secret",
-            "token-secret", "json-secret",
+            "token-secret", "PLUGIN-PRIVATE-BODY", "BEGIN PRIVATE KEY", "END PRIVATE KEY",
         ):
             self.assertNotIn(secret, saved)
         self.assertIn("[REDACTED]", saved)
