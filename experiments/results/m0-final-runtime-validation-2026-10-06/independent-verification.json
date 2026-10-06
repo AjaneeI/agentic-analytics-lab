@@ -1,0 +1,7 @@
+{
+  "accepted": false,
+  "error": "ValueError: Treatment B requires exactly two evidence-tool calls",
+  "existing_deterministic_scorer_passed": false,
+  "raw_event_orchestration_passed": false,
+  "tool_events_reconstructed": 8
+}

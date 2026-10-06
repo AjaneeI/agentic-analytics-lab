@@ -1,5 +1,38 @@
 # Verified Project Status
 
+## M0 diagnostic and final runtime validation — 2026-10-06
+
+- The issue #89 ClickHouse 404 was reproduced without Qwen or Hermes. Parent
+  and child host, port, protocol, path, auth source, table, encoding, query
+  parameters, timeout/retry policy, environment, effective profile, working
+  directory, tool wrapper, and request adapter matched.
+- The actual prior server response was ClickHouse exception code 47:
+  `UNKNOWN_IDENTIFIER` for nonexistent `team_id`. The parent used a valid
+  count body; the child body grouped by `team_id` instead of schema column
+  `team`. The 404 was therefore not evidence of endpoint routing failure.
+- The read-only wrapper had discarded the ClickHouse error body. Commit
+  `f0a42dc` now preserves bounded server error context without changing auth,
+  retries, validation, SQL semantics, fallback networking, architecture, or
+  model-visible tool contracts. RED→GREEN regression passed; focused tests
+  passed 35/35 and the full suite passed 349/349.
+- Exactly one unchanged-controls validation was frozen at commit `f92f709` and
+  tag `m0-final-runtime-validation-v1`, recorded on issue #89, and run once.
+- The run failed. One policy call succeeded; the child again used nonexistent
+  `team_id`, and its query timed out. Four later child evidence attempts were
+  enforcement-blocked. The final response was fenced JSON and incomplete.
+- Exactly one delegation/child occurred, no second worker or extra delegation
+  launched, and post-child `delegate_task` retirement held. Raw event order
+  proves all six evidence attempts came from the child; the generated
+  orchestration summary's four parent calls are a metadata artifact.
+- Frozen-state preflight/postflight passed. Runtime was 628.646 seconds;
+  retries and human intervention were zero; incremental paid spend was `$0`.
+- **M0 remains incomplete; M1 is not authorized.** The blocker is mixed:
+  model/tool-contract understanding (`team_id`), child query timeout
+  (infrastructure/runtime), instruction-following/orchestration, and correctly
+  triggered enforcement. The stop rule forbids another M0.x chain in this run.
+- Evidence is preserved under
+  `experiments/results/m0-final-runtime-validation-2026-10-06`.
+
 ## Hermes Personal Ops roadmap M0 stop — 2026-10-06
 
 - Roadmap evidence is tracked on issue #89 and branch

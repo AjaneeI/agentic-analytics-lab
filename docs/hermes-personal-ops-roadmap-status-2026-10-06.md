@@ -12,6 +12,29 @@ Historical evidence preserved: issues #73, #82, #84, #85, #86, #87 and draft PRs
 
 Incremental paid spend: **$0**
 
+## Diagnostic-gate addendum
+
+The authorized model-free diagnostic found that the prior delegated-child 404
+was ClickHouse code 47 for nonexistent `team_id`, not evidence of different
+endpoint, auth, profile, or request-adapter behavior. A bounded error-reporting
+fix now preserves the server code and detail; it does not repair SQL, add a
+retry, or change the tool contract. RED→GREEN verification passed, including
+349/349 repository tests.
+
+One new unchanged-controls validation was frozen at `f92f709` / tag
+`m0-final-runtime-validation-v1` and executed exactly once. It failed: the
+child again used `team_id`; its first query timed out after the successful
+parent preflight; four further child evidence attempts were budget-blocked;
+and the final response was incomplete fenced JSON. One delegation/one child
+and post-child delegation retirement held. Runtime was 628.646 seconds, with
+zero retries, intervention, or paid spend.
+
+M0 therefore remains incomplete and M1 remains unauthorized. Per the frozen
+stop rule, no new M0.x experiment or M1 planning is started in this run. Raw
+evidence is under
+`experiments/results/m0-final-runtime-validation-2026-10-06` and the durable
+decision is recorded on issue #89.
+
 ## Outcome
 
 The roadmap stopped at the M0 reliability gate. M0.7 proved that local Qwen

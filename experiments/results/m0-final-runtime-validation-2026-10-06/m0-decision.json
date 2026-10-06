@@ -1,0 +1,8 @@
+{
+  "foundation_sufficient_for_bounded_use": false,
+  "human_interventions": 0,
+  "incremental_paid_spend_usd": 0,
+  "m1_authorized_by_evidence": false,
+  "retries": 0,
+  "verdict": "M0 exit criterion not met"
+}
