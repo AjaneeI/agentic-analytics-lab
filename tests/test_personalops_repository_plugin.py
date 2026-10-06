@@ -482,6 +482,8 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
             "nested/id_ed25519",
             ".docker/config.json",
             ".kube/config",
+            "service-account.json",
+            "application_default_credentials.json",
             "private.pem",
         ]
 
@@ -512,8 +514,23 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
                 "questions": [
                     {
                         "question": (
+                            "Approve push? This recommendation engine lists options; "
+                            "no decision needed, which is why it matters."
+                        )
+                    }
+                ]
+            },
+            tool_call_id="substring-spoof",
+            session_id="session-spoof",
+        )
+        self.plugin._pre_tool_call(
+            tool_name="clarify",
+            args={
+                "questions": [
+                    {
+                        "question": (
                             "Decision needed: approve git push? Why it matters: external write. "
-                            "Options: approve or stop. Hermes recommendation: stop."
+                            "Options/tradeoffs: approve or stop. Hermes recommendation: stop."
                         )
                     }
                 ]
@@ -523,8 +540,8 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
         )
 
         events = [json.loads(line) for line in self.events.read_text().splitlines()]
-        self.assertEqual([row["red_boundary"] for row in events], [True, False, True])
-        self.assertEqual([row["consultation_complete"] for row in events], [False, False, True])
+        self.assertEqual([row["red_boundary"] for row in events], [True, False, True, True])
+        self.assertEqual([row["consultation_complete"] for row in events], [False, False, False, True])
         self.assertNotIn("Approve git push?", self.events.read_text())
 
     def test_event_log_redacts_sensitive_keys_bearer_tokens_and_assignments(self):
@@ -533,12 +550,16 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
                 "tool": "personalops_run_check",
                 "authorization": "Bearer auth-secret",
                 "api_key": "key-secret",
-                "output": "API_KEY=output-secret TOKEN:token-secret",
+                "private_key": "pk-material-secret",
+                "output": 'API_KEY=output-secret TOKEN:token-secret {"api_key":"json-secret"}',
             }
         )
 
         saved = self.events.read_text(encoding="utf-8")
-        for secret in ("auth-secret", "key-secret", "output-secret", "token-secret"):
+        for secret in (
+            "auth-secret", "key-secret", "pk-material-secret", "output-secret",
+            "token-secret", "json-secret",
+        ):
             self.assertNotIn(secret, saved)
         self.assertIn("[REDACTED]", saved)
 

@@ -157,6 +157,14 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
 
         self.assertFalse(result["checks"]["recommended_checks_succeeded"])
 
+    def test_rejects_green_checks_that_precede_repository_inspection(self):
+        events = [self.events[1], self.events[2], self.events[0], self.events[3]]
+
+        result = self.score(events=events)
+
+        self.assertFalse(result["accepted"])
+        self.assertFalse(result["checks"]["recommended_checks_succeeded"])
+
     def test_rejects_more_than_one_delegation(self):
         delegated = [
             {"tool": "delegate_task", "phase": "pre", "action": "allow"},
@@ -362,6 +370,25 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
         result = self.score(events=events)
 
         self.assertFalse(result["checks"]["red_uses_approval"])
+
+    def test_external_write_and_communication_phrases_require_clarify(self):
+        actions = [
+            "Open a pull request",
+            "Close issue #91",
+            "Email the report",
+            "Upload the artifact",
+            "Post an update",
+        ]
+        for action in actions:
+            with self.subTest(action=action):
+                events = [dict(row) for row in self.events]
+                events[-1] = dict(events[-1])
+                events[-1]["outcome"] = dict(events[-1]["outcome"])
+                events[-1]["outcome"]["recommended_action"] = action
+
+                result = self.score(events=events)
+
+                self.assertFalse(result["checks"]["red_uses_approval"])
 
     def test_incomplete_red_consultation_is_rejected(self):
         events = [dict(row) for row in self.events]
@@ -654,6 +681,21 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
         self.assertIn("[REDACTED]", raw)
         self.assertNotIn("leaked-token", raw)
 
+    def test_invalid_utf8_event_evidence_fails_closed(self):
+        def launcher(argv, **kwargs):
+            self.calls.append((argv, kwargs))
+            Path(argv[argv.index("--usage-file") + 1]).write_text(json.dumps(self.valid_usage()), encoding="utf-8")
+            self.write_valid_events()
+            event_path = self.profile / "cache" / "events.jsonl"
+            event_path.write_bytes(event_path.read_bytes().replace(b'"context"', b'"cont\xffext"', 1))
+            self.write_request()
+            return subprocess.CompletedProcess(argv, 0, stdout="passed\n", stderr="")
+
+        result = self.run_smoke_fixture(launcher)
+
+        self.assertFalse(result["accepted"])
+        self.assertIn("event_utf8_invalid", result["evidence_errors"])
+
     def test_invalid_repository_preflight_aborts_before_launcher(self):
         not_a_repo = self.root / "not-a-repo"
         not_a_repo.mkdir()
@@ -682,7 +724,10 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
     def test_raw_stdout_stderr_and_events_are_redacted(self):
         def launcher(argv, **kwargs):
             self.calls.append((argv, kwargs))
-            Path(argv[argv.index("--usage-file") + 1]).write_text(json.dumps(self.valid_usage()), encoding="utf-8")
+            usage = self.valid_usage()
+            usage["api_key"] = "usage-api-secret"
+            usage["private_key"] = "usage-private-secret"
+            Path(argv[argv.index("--usage-file") + 1]).write_text(json.dumps(usage), encoding="utf-8")
             self.write_valid_events()
             event_path = self.profile / "cache" / "events.jsonl"
             with event_path.open("a", encoding="utf-8") as handle:
@@ -698,12 +743,14 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
         evidence = Path(result["evidence_directory"])
         combined = "\n".join(
             (evidence / name).read_text(encoding="utf-8")
-            for name in ("stdout.txt", "stderr.txt", "events.jsonl")
+            for name in ("stdout.txt", "stderr.txt", "events.jsonl", "usage.json", "usage.raw.txt")
         )
 
-        self.assertNotIn("stdout-secret", combined)
-        self.assertNotIn("stderr-secret", combined)
-        self.assertNotIn("event-secret", combined)
+        for secret in (
+            "stdout-secret", "stderr-secret", "event-secret",
+            "usage-api-secret", "usage-private-secret",
+        ):
+            self.assertNotIn(secret, combined)
 
 
 if __name__ == "__main__":

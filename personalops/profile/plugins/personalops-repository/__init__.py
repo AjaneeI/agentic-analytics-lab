@@ -24,9 +24,13 @@ _SENSITIVE_NAMES = {
     ".netrc",
     ".npmrc",
     ".pypirc",
+    "application-default-credentials.json",
+    "application_default_credentials.json",
     "credentials.json",
     "id_ed25519",
     "id_rsa",
+    "service-account.json",
+    "service_account.json",
     "secrets.toml",
 }
 _PROTECTED_PATHS = {
@@ -40,13 +44,13 @@ _PROTECTED_PATHS = {
     "personalops/profile/plugins/personalops-repository/plugin.yaml",
 }
 _SECRET_KEY_PATTERN = re.compile(
-    r"(^|[_-])(authorization|api[_-]?key|token|password|secret|credential|credentials)($|[_-])",
+    r"(^|[_-])(authorization|api[_-]?key|private[_-]?key|token|password|secret|credential|credentials)($|[_-])",
     re.IGNORECASE,
 )
 _REQUIRED_CONTEXT = ["PROJECT.md", "STATUS.md", "DECISIONS.md", "ARCHITECTURE.md"]
 _WORKER_FIELDS = ["Objective", "Inputs", "Allowed changes", "Acceptance", "Evidence", "Stop"]
 _RED_ACTION_PATTERN = re.compile(
-    r"\b(push|merge|deploy|publish|send|delete|credential|secret|permission|paid|purchase|external write)\b",
+    r"\b(push|merge|deploy|publish|release|send|email|upload|post|submit|share|notify|message|contact|delete|remove|destroy|drop|credential|secret|password|security|permission|grant|revoke|invite|paid|purchase|external write|external communication|(?:open|create|file|close|edit|update|label|comment(?:\s+on)?)\s+(?:an?\s+)?(?:pull request|pr|issue))\b",
     re.IGNORECASE,
 )
 _lock = threading.Lock()
@@ -116,8 +120,8 @@ def _event_log() -> Path:
 def _redact_text(value: str) -> str:
     value = re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "Bearer [REDACTED]", value)
     return re.sub(
-        r"(?i)\b((?:[A-Z0-9_]*API_KEY|[A-Z0-9_]*(?:PASSWORD|SECRET|CREDENTIAL)|(?:[A-Z0-9_]*_)?TOKEN))\s*[=:]\s*([^\s,;}]+)",
-        r"\1=[REDACTED]",
+        r'(?i)(["\']?(?:authorization|api[_-]?key|private[_-]?key|(?:access[_-]?|refresh[_-]?|auth[_-]?)?token|password|secret|credentials?)["\']?\s*[:=]\s*["\']?)[^"\'\s\n\r,}]+',
+        r"\1[REDACTED]",
         value,
     )
 
@@ -298,14 +302,28 @@ def _contains_red_action(value: Any) -> bool:
 
 
 def _consultation_complete(value: Any) -> bool:
-    try:
-        text = json.dumps(value, sort_keys=True).lower()
-    except (TypeError, ValueError):
-        return False
-    return all(
-        phrase in text
-        for phrase in ("decision needed", "why it matters", "options", "recommendation")
+    strings: list[str] = []
+
+    def collect(item: Any) -> None:
+        if isinstance(item, str):
+            strings.append(item)
+        elif isinstance(item, dict):
+            for child in item.values():
+                collect(child)
+        elif isinstance(item, list):
+            for child in item:
+                collect(child)
+
+    collect(value)
+    text = "\n".join(strings)
+    labels = ("Decision needed", "Why it matters", "Options/tradeoffs", "Hermes recommendation")
+    for label in labels:
+        text = re.sub(rf"\s*{re.escape(label)}\s*:", f"\n{label}:", text, flags=re.IGNORECASE)
+    sections = re.findall(
+        r"(?im)^\s*(Decision needed|Why it matters|Options/tradeoffs|Hermes recommendation)\s*:\s*(\S.*)$",
+        text,
     )
+    return [name.lower() for name, _ in sections] == [label.lower() for label in labels]
 
 
 def _build_manifest(goal: str, *, session_id: str, tool_call_id: str) -> dict[str, Any]:
