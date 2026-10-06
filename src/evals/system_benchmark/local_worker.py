@@ -51,7 +51,8 @@ _QUERY_TOOL = {
         "agentic_analytics.delivery_work_items. SQL passed to this tool must "
         "reference this exact fully qualified table name: "
         "agentic_analytics.delivery_work_items. For blocker percentage, "
-        "return the percentage from ClickHouse and alias it as blocked_pct."
+        "compute 100 * SUM(blocked) / COUNT(*) (or an equivalent expression) "
+        "and use blocked_pct only as the result alias."
     ),
     "input_schema": {
         "type": "object",

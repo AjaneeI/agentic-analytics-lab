@@ -1,0 +1,191 @@
+{
+  "accepted_attempts": 0,
+  "attempts": [
+    {
+      "accepted": false,
+      "case_id": "M07_HIGHEST_RATE",
+      "elapsed_seconds": 48.25843754099333,
+      "ended_at": "2026-10-06T05:03:40.838169+00:00",
+      "error": "RuntimeError: ClickHouse query failed: HTTP Error 401: Unauthorized",
+      "expected_rows": [
+        {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        }
+      ],
+      "failure_categories": [
+        "infrastructure_runtime"
+      ],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 400,
+          "output_tokens": 352,
+          "total_duration_seconds": 48.122661917
+        },
+        "arguments": {
+          "sql": "SELECT team, ROUND(blocked_pct, 1) as blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "execution_error",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Which team has the highest blocker rate in the delivery dataset? Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run one read-only SQL query. The only approved table is agentic_analytics.delivery_work_items. SQL passed to this tool must reference this exact fully qualified table name: agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "started_at": "2026-10-06T05:02:52.579562+00:00",
+      "validated_sql": "SELECT team, ROUND(blocked_pct, 1) as blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "accepted": false,
+      "case_id": "M07_LOWEST_RATE",
+      "elapsed_seconds": 39.50588670899742,
+      "ended_at": "2026-10-06T05:04:20.343165+00:00",
+      "error": "HTTPError: HTTP Error 500: Internal Server Error",
+      "expected_rows": [
+        {
+          "blocked_pct": 11.4,
+          "team": "Platform"
+        }
+      ],
+      "failure_categories": [
+        "infrastructure_runtime"
+      ],
+      "raw_response": null,
+      "reason_code": "model_error",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Which team has the lowest blocker rate in the delivery dataset? Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run one read-only SQL query. The only approved table is agentic_analytics.delivery_work_items. SQL passed to this tool must reference this exact fully qualified table name: agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "started_at": "2026-10-06T05:03:40.838321+00:00"
+    },
+    {
+      "accepted": false,
+      "case_id": "M07_ALL_RATES",
+      "elapsed_seconds": 23.873865000001388,
+      "ended_at": "2026-10-06T05:04:44.218216+00:00",
+      "error": "RuntimeError: ClickHouse query failed: HTTP Error 401: Unauthorized",
+      "expected_rows": [
+        {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        },
+        {
+          "blocked_pct": 15.0,
+          "team": "AI"
+        },
+        {
+          "blocked_pct": 14.7,
+          "team": "Product"
+        },
+        {
+          "blocked_pct": 11.4,
+          "team": "Platform"
+        }
+      ],
+      "failure_categories": [
+        "infrastructure_runtime"
+      ],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 400,
+          "output_tokens": 305,
+          "total_duration_seconds": 23.824916916
+        },
+        "arguments": {
+          "sql": "SELECT team, ROUND(blocked_pct, 1) as blocked_pct FROM agentic_analytics.delivery_work_items ORDER BY blocked_pct DESC"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "execution_error",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Return every delivery team's blocker rate from highest to lowest. Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run one read-only SQL query. The only approved table is agentic_analytics.delivery_work_items. SQL passed to this tool must reference this exact fully qualified table name: agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "started_at": "2026-10-06T05:04:20.344436+00:00",
+      "validated_sql": "SELECT team, ROUND(blocked_pct, 1) as blocked_pct FROM agentic_analytics.delivery_work_items ORDER BY blocked_pct DESC"
+    }
+  ],
+  "incremental_paid_spend_usd": 0,
+  "pass_threshold": 3,
+  "passed": false,
+  "retries": 0,
+  "sample_size": 3,
+  "study_id": "m0-7-qwen-sql-qualification-v1"
+}

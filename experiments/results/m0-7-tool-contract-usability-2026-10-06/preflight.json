@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-06T05:02:52.579070+00:00",
+  "contract_sha256": {
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "5ee9e04a5c756a73b7a84932468e9799a12fe04389675d00f21a0874b641278d",
+    "experiments/m0-7-tool-contract-usability/README.md": "9dd47f0b6b036108083f8de7b38da44381b83821e4ed83143b1a8cf364eb2f83",
+    "experiments/m0-7-tool-contract-usability/run_study.py": "94905cb8e5ffc5228431daad6a15aeaddc01ec16d7d55090e2c34a58dfd3e560",
+    "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+    "src/evals/capability_reliability.py": "ed314f3dba7a095880ca8fa537fa0605938f1a29e9d86817089e3e09a87b6c1c",
+    "src/evals/system_benchmark/local_worker.py": "838c4574c9df83f7defa11bb0bff4eb795498dff4812234816c8fa36f78b56c5",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+    "tests/system_benchmark/test_m0_7_tool_contract.py": "604492ae8f0f4ba6fea70bc3f4de1445d1fe6723079da93d657dfc9d72594bf1"
+  },
+  "freeze_ref": "refs/tags/m0-7-tool-contract-usability-v1",
+  "head": "13397fdb1e0b04a9291b59a51d0304ae099909d9",
+  "model_manifest_sha256": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+  "passed": true
+}

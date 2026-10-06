@@ -1,0 +1,38 @@
+{
+  "accepted_attempts": 0,
+  "classification": {
+    "M07_ALL_RATES": [
+      "tool_contract_understanding",
+      "infrastructure_runtime"
+    ],
+    "M07_HIGHEST_RATE": [
+      "tool_contract_understanding",
+      "infrastructure_runtime"
+    ],
+    "M07_LOWEST_RATE": [
+      "infrastructure_runtime"
+    ]
+  },
+  "end_to_end_threshold": "3/3",
+  "fully_qualified_sql_attempts": 2,
+  "fully_qualified_sql_compliant": 2,
+  "infrastructure_findings": [
+    "The execution command referenced a nonexistent .env in the M0.6 worktree, so ClickHouse used default empty credentials and returned HTTP 401.",
+    "The authoritative existing environment file remains at /Users/ajaneeigharo/Projects/agentic-analytics-lab/.env; no credential was changed.",
+    "M07_LOWEST_RATE failed inside the local Ollama request with HTTP 500 and produced no raw model response."
+  ],
+  "model_findings": [
+    "Both SQL-bearing responses referenced agentic_analytics.delivery_work_items and passed the unchanged read-only validator.",
+    "Both SQL-bearing responses treated blocked_pct as an existing source column instead of computing 100 * SUM(blocked) / COUNT(*).",
+    "The repository schema has blocked but no blocked_pct column, so neither preserved SQL statement can return the preregistered result."
+  ],
+  "next_experiment": {
+    "name": "M0.7 bounded recovery successor",
+    "intervention": "Clarify only the model-visible blocker-rate formula and alias instruction, and add a deterministic credential/live-query preflight that stops before model invocation when the existing environment is absent or invalid.",
+    "same_run_retried": false,
+    "status": "defined_not_executed"
+  },
+  "passed": false,
+  "retries": 0,
+  "sample_size": 3
+}
