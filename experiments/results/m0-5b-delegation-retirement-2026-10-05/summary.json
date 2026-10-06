@@ -1,0 +1,11 @@
+{
+  "accepted": 3,
+  "decision": "recommend_next_m0_gate_not_executed",
+  "incremental_paid_spend_usd": 0,
+  "interpretation_boundary": "A 3/3 pass demonstrates only that this bounded runtime intervention repaired the observed post-success duplicate-delegation failure on these three frozen cases while the external enforcement remained active. It does not establish general Hermes reliability, model superiority, broader delegation quality, or readiness for unrestricted autonomy.",
+  "pass_threshold": 3,
+  "passed": true,
+  "rerun_authorized": false,
+  "sample_size": 3,
+  "study_id": "m0-5b-hermes-post-success-delegation-retirement-v1"
+}

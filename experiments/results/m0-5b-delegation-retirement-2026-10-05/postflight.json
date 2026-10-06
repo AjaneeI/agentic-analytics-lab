@@ -1,0 +1,14 @@
+{
+  "freeze_ref": "refs/tags/m0-5b-delegation-retirement-v1",
+  "head": "22bc26bd4e36b9e063514f47a4494532deace4a0",
+  "initial_tool_count": 3,
+  "installed_state_sha256": {
+    "/Users/ajaneeigharo/.hermes/hermes-agent/tests/tools/test_delegate_oneshot_retirement.py": "f8913b495fd1a02a83a01fec11ea8cccfc86e0aecd11b5e6d809dc6e251b53bc",
+    "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool.py": "df65f6506c03d8533ee695a1266cc23739b4d0ad43715d0408e79fb8a2e35405",
+    "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/config.yaml": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
+    "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/__init__.py": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290",
+    "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/plugin.yaml": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0"
+  },
+  "passed": true,
+  "profile": "localbenchmark"
+}

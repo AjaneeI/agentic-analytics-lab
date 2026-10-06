@@ -1,0 +1,67 @@
+{
+  "accepted": true,
+  "attempted_delegations": 1,
+  "attempted_extra_delegations": 0,
+  "case_id": "B2_EXTRACT",
+  "elapsed_seconds": 231.74705670800176,
+  "enforcement_interventions": 0,
+  "events": [
+    {
+      "arguments": {
+        "tasks": [
+          {
+            "context": "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim: Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text. After the child returns, output exactly this marker and nothing else: M05_OWNER_DATA",
+            "goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text."
+          }
+        ]
+      },
+      "delegate_sequence": 1,
+      "event": "delegate_pre",
+      "ok": true,
+      "tool": "delegate_task",
+      "tool_call_id": "YYRwKx2J3T7Zs4mDVAy1HxTrAMbfSBxs"
+    },
+    {
+      "arguments": {
+        "tasks": [
+          {
+            "context": "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim: Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text. After the child returns, output exactly this marker and nothing else: M05_OWNER_DATA",
+            "goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text."
+          }
+        ]
+      },
+      "error_type": null,
+      "event": "delegate_post",
+      "ok": true,
+      "status": "ok",
+      "tool": "delegate_task",
+      "tool_call_id": "YYRwKx2J3T7Zs4mDVAy1HxTrAMbfSBxs"
+    }
+  ],
+  "expected_marker": "M05_OWNER_DATA",
+  "failure_categories": [],
+  "final_completion": true,
+  "observed_stdout": "M05_OWNER_DATA\n",
+  "parent_level_work_attempts": 0,
+  "reason_code": "accepted",
+  "returncode": 0,
+  "successful_delegate_requests": 1,
+  "successful_worker_launches": 1,
+  "tool_retirement": {
+    "accepted": true,
+    "parent_request_count": 2,
+    "parent_session_id": "20261005_220957_836fe9",
+    "parent_tools_by_request": [
+      [
+        "delegate_task",
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ]
+    ],
+    "reason_code": "accepted"
+  }
+}

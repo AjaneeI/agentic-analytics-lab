@@ -1,0 +1,210 @@
+{
+  "accepted": 3,
+  "attempts": [
+    {
+      "accepted": true,
+      "attempted_delegations": 1,
+      "attempted_extra_delegations": 0,
+      "case_id": "B1_LITERAL",
+      "elapsed_seconds": 221.21880200000305,
+      "enforcement_interventions": 0,
+      "events": [
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Return exactly M05_ALPHA_OK. No other text."
+              }
+            ]
+          },
+          "delegate_sequence": 1,
+          "event": "delegate_pre",
+          "ok": true,
+          "tool": "delegate_task",
+          "tool_call_id": "i0NBhknM1J3e00K6MIGuhxoW3fCyg3WL"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Return exactly M05_ALPHA_OK. No other text."
+              }
+            ]
+          },
+          "error_type": null,
+          "event": "delegate_post",
+          "ok": true,
+          "status": "ok",
+          "tool": "delegate_task",
+          "tool_call_id": "i0NBhknM1J3e00K6MIGuhxoW3fCyg3WL"
+        }
+      ],
+      "expected_marker": "M05_ALPHA_OK",
+      "failure_categories": [],
+      "final_completion": true,
+      "observed_stdout": "M05_ALPHA_OK\n",
+      "parent_level_work_attempts": 0,
+      "reason_code": "accepted",
+      "returncode": 0,
+      "successful_delegate_requests": 1,
+      "successful_worker_launches": 1,
+      "tool_retirement": {
+        "accepted": true,
+        "parent_request_count": 2,
+        "parent_session_id": "20261005_220611_3a0c54",
+        "parent_tools_by_request": [
+          [
+            "delegate_task",
+            "query_clickhouse",
+            "retrieve_policy"
+          ],
+          [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        ],
+        "reason_code": "accepted"
+      }
+    },
+    {
+      "accepted": true,
+      "attempted_delegations": 1,
+      "attempted_extra_delegations": 0,
+      "case_id": "B2_EXTRACT",
+      "elapsed_seconds": 231.74705670800176,
+      "enforcement_interventions": 0,
+      "events": [
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "context": "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim: Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text. After the child returns, output exactly this marker and nothing else: M05_OWNER_DATA",
+                "goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text."
+              }
+            ]
+          },
+          "delegate_sequence": 1,
+          "event": "delegate_pre",
+          "ok": true,
+          "tool": "delegate_task",
+          "tool_call_id": "YYRwKx2J3T7Zs4mDVAy1HxTrAMbfSBxs"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "context": "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim: Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text. After the child returns, output exactly this marker and nothing else: M05_OWNER_DATA",
+                "goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text."
+              }
+            ]
+          },
+          "error_type": null,
+          "event": "delegate_post",
+          "ok": true,
+          "status": "ok",
+          "tool": "delegate_task",
+          "tool_call_id": "YYRwKx2J3T7Zs4mDVAy1HxTrAMbfSBxs"
+        }
+      ],
+      "expected_marker": "M05_OWNER_DATA",
+      "failure_categories": [],
+      "final_completion": true,
+      "observed_stdout": "M05_OWNER_DATA\n",
+      "parent_level_work_attempts": 0,
+      "reason_code": "accepted",
+      "returncode": 0,
+      "successful_delegate_requests": 1,
+      "successful_worker_launches": 1,
+      "tool_retirement": {
+        "accepted": true,
+        "parent_request_count": 2,
+        "parent_session_id": "20261005_220957_836fe9",
+        "parent_tools_by_request": [
+          [
+            "delegate_task",
+            "query_clickhouse",
+            "retrieve_policy"
+          ],
+          [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        ],
+        "reason_code": "accepted"
+      }
+    },
+    {
+      "accepted": true,
+      "attempted_delegations": 1,
+      "attempted_extra_delegations": 0,
+      "case_id": "B3_COMPARE",
+      "elapsed_seconds": 317.7765385829989,
+      "enforcement_interventions": 0,
+      "events": [
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+              }
+            ]
+          },
+          "delegate_sequence": 1,
+          "event": "delegate_pre",
+          "ok": true,
+          "tool": "delegate_task",
+          "tool_call_id": "TGjAnniEw4Eek1XbGjRqYjhuda7ZvWm6"
+        },
+        {
+          "arguments": {
+            "tasks": [
+              {
+                "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+              }
+            ]
+          },
+          "error_type": null,
+          "event": "delegate_post",
+          "ok": true,
+          "status": "ok",
+          "tool": "delegate_task",
+          "tool_call_id": "TGjAnniEw4Eek1XbGjRqYjhuda7ZvWm6"
+        }
+      ],
+      "expected_marker": "M05_MAX_7",
+      "failure_categories": [],
+      "final_completion": true,
+      "observed_stdout": "M05_MAX_7\n",
+      "parent_level_work_attempts": 0,
+      "reason_code": "accepted",
+      "returncode": 0,
+      "successful_delegate_requests": 1,
+      "successful_worker_launches": 1,
+      "tool_retirement": {
+        "accepted": true,
+        "parent_request_count": 2,
+        "parent_session_id": "20261005_221352_0b27cf",
+        "parent_tools_by_request": [
+          [
+            "delegate_task",
+            "query_clickhouse",
+            "retrieve_policy"
+          ],
+          [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        ],
+        "reason_code": "accepted"
+      }
+    }
+  ],
+  "decision": "recommend_next_m0_gate_not_executed",
+  "incremental_paid_spend_usd": 0,
+  "interpretation_boundary": "A 3/3 pass demonstrates only that this bounded runtime intervention repaired the observed post-success duplicate-delegation failure on these three frozen cases while the external enforcement remained active. It does not establish general Hermes reliability, model superiority, broader delegation quality, or readiness for unrestricted autonomy.",
+  "pass_threshold": 3,
+  "passed": true,
+  "rerun_authorized": false,
+  "sample_size": 3,
+  "study_id": "m0-5b-hermes-post-success-delegation-retirement-v1"
+}
