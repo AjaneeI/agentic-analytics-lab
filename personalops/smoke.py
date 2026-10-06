@@ -47,6 +47,10 @@ _RED_ACTION_PATTERN = re.compile(
     r"\b(push|merge|deploy|publish|send|delete|credential|secret|permission|paid|purchase|external write)\b",
     re.IGNORECASE,
 )
+_SECRET_KEY_PATTERN = re.compile(
+    r"(^|[_-])(authorization|api[_-]?key|token|password|secret|credential|credentials)($|[_-])",
+    re.IGNORECASE,
+)
 
 
 def _request_body(request: dict[str, Any]) -> dict[str, Any]:
@@ -70,7 +74,9 @@ def _valid_request_structure(request: Any) -> bool:
         return False
     body = envelope.get("body")
     return (
-        isinstance(envelope.get("url"), str)
+        isinstance(request.get("session_id"), str)
+        and bool(request["session_id"].strip())
+        and isinstance(envelope.get("url"), str)
         and bool(envelope["url"].strip())
         and isinstance(envelope.get("headers"), dict)
         and isinstance(body, dict)
@@ -85,9 +91,13 @@ def _usage_evidence_complete(usage: Any) -> bool:
     total = usage.get("total_including_auxiliary")
     numeric = lambda value: isinstance(value, (int, float)) and not isinstance(value, bool)
     return (
-        isinstance(usage.get("api_calls"), int)
+        isinstance(usage.get("session_id"), str)
+        and bool(usage["session_id"].strip())
+        and isinstance(usage.get("api_calls"), int)
         and usage["api_calls"] >= 0
         and all(isinstance(usage.get(key), bool) for key in ("completed", "failed", "interrupted", "partial"))
+        and usage.get("completed") is True
+        and all(usage.get(key) is False for key in ("failed", "interrupted", "partial"))
         and isinstance(usage.get("model"), str)
         and bool(usage["model"])
         and isinstance(usage.get("provider"), str)
@@ -144,8 +154,61 @@ def _decision_requested(outcome: dict[str, Any]) -> bool:
 
 
 def _red_decision_requested(outcome: dict[str, Any]) -> bool:
-    value = str(outcome.get("decision_needed", "")).strip()
-    return bool(_RED_ACTION_PATTERN.search(value))
+    return any(
+        bool(_RED_ACTION_PATTERN.search(str(outcome.get(field, ""))))
+        for field in ("recommended_action", "action_taken", "decision_needed")
+    )
+
+
+def _session_attribution_ok(
+    usage: dict[str, Any], events: list[dict[str, Any]], requests: list[dict[str, Any]]
+) -> bool:
+    session_id = usage.get("session_id")
+    if not isinstance(session_id, str) or not session_id:
+        return False
+    child_ids = {
+        row.get("child_session_id")
+        for row in events
+        if row.get("tool") == "delegate_task"
+        and row.get("phase") == "child_start"
+        and row.get("parent_session_id") == session_id
+        and isinstance(row.get("child_session_id"), str)
+        and row.get("child_session_id")
+    }
+    events_ok = all(
+        row.get("session_id") == session_id
+        or row.get("parent_session_id") == session_id
+        or row.get("session_id") in child_ids
+        for row in events
+    )
+    requests_ok = bool(requests) and all(row.get("session_id") == session_id for row in requests)
+    return events_ok and requests_ok
+
+
+def _partition_session_events(
+    events: list[dict[str, Any]], session_id: str
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    child_ids = {
+        row.get("child_session_id")
+        for row in events
+        if row.get("tool") == "delegate_task"
+        and row.get("phase") == "child_start"
+        and row.get("parent_session_id") == session_id
+        and isinstance(row.get("child_session_id"), str)
+        and row.get("child_session_id")
+    }
+    selected: list[dict[str, Any]] = []
+    foreign: list[dict[str, Any]] = []
+    for row in events:
+        if (
+            row.get("session_id") == session_id
+            or row.get("parent_session_id") == session_id
+            or row.get("session_id") in child_ids
+        ):
+            selected.append(row)
+        else:
+            foreign.append(row)
+    return selected, foreign
 
 
 def _yellow_trajectory_ok(events: list[dict[str, Any]]) -> bool:
@@ -291,7 +354,11 @@ def score_attempt(
         for index, row in enumerate(events)
         if row.get("tool") == "clarify" and row.get("phase") == "pre" and row.get("action") == "allow"
     ]
-    red_clarifies = [(index, row) for index, row in clarify_events if row.get("red_boundary") is True]
+    red_clarifies = [
+        (index, row)
+        for index, row in clarify_events
+        if row.get("red_boundary") is True and row.get("consultation_complete") is True
+    ]
     outcome_index = next(
         (
             index
@@ -314,10 +381,11 @@ def score_attempt(
     checks = {
         "profile_valid": profile_validation.get("accepted") is True
         and profile_validation.get("checks", {}).get("runtime_guard") is True,
-        "process_completed": returncode == 0 and usage.get("completed") is True and bool(stdout.strip()),
+        "process_completed": returncode == 0 and usage_complete and bool(stdout.strip()),
         "evidence_well_formed": not evidence_errors,
         "usage_evidence_complete": usage_complete,
         "request_evidence": request_evidence_ok,
+        "session_attribution": _session_attribution_ok(usage, events, requests),
         "local_model_path": local_urls,
         "approved_tool_surface": all(isinstance(name, str) and bool(name) for name in event_tool_names)
         and all_tools <= _ALLOWED_TOOLS,
@@ -398,22 +466,27 @@ def _json_rows(data: bytes) -> tuple[list[dict[str, Any]], list[str]]:
 def _redact_authorization(value: Any) -> Any:
     if isinstance(value, dict):
         return {
-            key: "[REDACTED]" if key.lower() == "authorization" else _redact_authorization(child)
+            key: "[REDACTED]"
+            if _SECRET_KEY_PATTERN.search(key)
+            else _redact_authorization(child)
             for key, child in value.items()
         }
     if isinstance(value, list):
         return [_redact_authorization(child) for child in value]
+    if isinstance(value, str):
+        return _redact_raw_text(value.encode("utf-8"))
     return value
 
 
 def _redact_raw_text(data: bytes) -> str:
     text = data.decode("utf-8", errors="replace")
+    text = re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "Bearer [REDACTED]", text)
     text = re.sub(
-        r'(?i)(["\']?authorization["\']?\s*:\s*["\']?)[^"\'\n\r,}]+',
+        r'(?i)(["\']?(?:authorization|api[_-]?key|(?:access[_-]?|refresh[_-]?|auth[_-]?)?token|password|secret|credentials?)["\']?\s*[:=]\s*["\']?)[^"\'\s\n\r,}]+',
         r"\1[REDACTED]",
         text,
     )
-    return re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "Bearer [REDACTED]", text)
+    return text
 
 
 def run_smoke(
@@ -431,20 +504,48 @@ def run_smoke(
     package = Path(package_root).resolve()
     profile = Path(profile_root).resolve()
     repository = Path(repo_root).resolve()
-    validation = validate_profile(
-        package_root=package,
-        profile_root=profile,
-        repo_root=repository,
-        hermes_root=Path(hermes_root),
-    )
-    repository_state = _git_state(repository)
-    workflow = load_workflow(package)
-    prompt = workflow["prompt"]
+    validation: dict[str, Any] = {"accepted": False, "checks": {}, "errors": []}
+    repository_state = {"repository_root": str(repository), "branch": "", "head": ""}
+    prompt = ""
+    preflight_error = ""
+    try:
+        validation = validate_profile(
+            package_root=package,
+            profile_root=profile,
+            repo_root=repository,
+            hermes_root=Path(hermes_root),
+        )
+    except Exception as exc:
+        preflight_error = f"profile validation raised {type(exc).__name__}: {exc}"
+        validation = {
+            "accepted": False,
+            "checks": {},
+            "errors": [preflight_error],
+        }
+    if validation.get("accepted") is True:
+        try:
+            repository_state = _git_state(repository)
+            workflow = load_workflow(package)
+            prompt = workflow["prompt"]
+            if not isinstance(prompt, str) or not prompt.strip():
+                raise ValueError("workflow prompt is missing")
+        except Exception as exc:
+            preflight_error = f"preflight raised {type(exc).__name__}: {exc}"
+            validation = {
+                **validation,
+                "accepted": False,
+                "errors": [*list(validation.get("errors") or []), preflight_error],
+            }
+    elif not preflight_error:
+        preflight_error = "profile validation rejected the runtime contract"
     event_log = profile / "cache" / "events.jsonl"
-    staging_parent = profile / "cache"
-    staging_parent.mkdir(parents=True, exist_ok=True)
-    staging = Path(tempfile.mkdtemp(prefix="desktop-lite-smoke-", dir=staging_parent))
-    usage_path = staging / "usage.json"
+    staging: Path | None = None
+    usage_path = profile / "cache" / "desktop-lite-smoke-not-started" / "usage.json"
+    if validation.get("accepted") is True:
+        staging_parent = profile / "cache"
+        staging_parent.mkdir(parents=True, exist_ok=True)
+        staging = Path(tempfile.mkdtemp(prefix="desktop-lite-smoke-", dir=staging_parent))
+        usage_path = staging / "usage.json"
     argv = [
         hermes_bin,
         "-p",
@@ -463,7 +564,9 @@ def run_smoke(
     usage: dict[str, Any] = {}
     usage_raw = b""
     event_bytes = b""
+    all_events: list[dict[str, Any]] = []
     events: list[dict[str, Any]] = []
+    foreign_events: list[dict[str, Any]] = []
     requests: list[dict[str, Any]] = []
     request_records: list[tuple[Path, bytes, str, Any]] = []
     attempt_count = 0
@@ -472,6 +575,7 @@ def run_smoke(
             argv, 125, stdout="", stderr="profile validation failed before launch"
         )
         evidence_errors.append("profile_validation_failed")
+        evidence_errors.append("preflight_failed")
     else:
         event_offset = event_log.stat().st_size if event_log.exists() else 0
         old_dumps = set(profile.rglob("request_dump_*.json"))
@@ -514,11 +618,16 @@ def run_smoke(
                 event_bytes = handle.read()
         if not event_bytes:
             evidence_errors.append("event_evidence_missing")
-        events, event_errors = _json_rows(event_bytes)
+        all_events, event_errors = _json_rows(event_bytes)
         evidence_errors.extend(event_errors)
+        session_id = usage.get("session_id") if isinstance(usage.get("session_id"), str) else ""
+        if session_id:
+            events, foreign_events = _partition_session_events(all_events, session_id)
+        else:
+            foreign_events = all_events
+        if not events:
+            evidence_errors.append("session_event_evidence_missing")
         new_dumps = sorted(set(profile.rglob("request_dump_*.json")) - old_dumps)
-        if not new_dumps:
-            evidence_errors.append("request_evidence_missing")
         for path in new_dumps:
             raw = b""
             try:
@@ -532,8 +641,13 @@ def run_smoke(
                 evidence_errors.append(f"request_structure_invalid:{path.name}")
                 request_records.append((path, raw, "invalid", value))
                 continue
-            requests.append(value)
-            request_records.append((path, raw, "valid", value))
+            if value.get("session_id") == session_id:
+                requests.append(value)
+                request_records.append((path, raw, "valid", value))
+            else:
+                request_records.append((path, raw, "foreign", value))
+        if not requests:
+            evidence_errors.append("request_evidence_missing")
     acceptance = score_attempt(
         repository_state=repository_state,
         profile_validation=validation,
@@ -545,12 +659,29 @@ def run_smoke(
         requests=requests,
         evidence_errors=evidence_errors,
     )
+    acceptance["observations"]["foreign_event_count"] = len(foreign_events)
+    acceptance["observations"]["foreign_request_count"] = sum(
+        kind == "foreign" for _, _, kind, _ in request_records
+    )
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
     destination = Path(evidence_root).resolve() / stamp
     destination.mkdir(parents=True, exist_ok=False)
-    (destination / "stdout.txt").write_text(completed.stdout or "", encoding="utf-8")
-    (destination / "stderr.txt").write_text(completed.stderr or "", encoding="utf-8")
-    (destination / "events.jsonl").write_bytes(event_bytes)
+    (destination / "stdout.txt").write_text(
+        _redact_raw_text((completed.stdout or "").encode("utf-8")), encoding="utf-8"
+    )
+    (destination / "stderr.txt").write_text(
+        _redact_raw_text((completed.stderr or "").encode("utf-8")), encoding="utf-8"
+    )
+    (destination / "events.jsonl").write_text(_redact_raw_text(event_bytes), encoding="utf-8")
+    (destination / "events-scored.jsonl").write_text(
+        "".join(json.dumps(_redact_authorization(row), sort_keys=True) + "\n" for row in events),
+        encoding="utf-8",
+    )
+    if foreign_events:
+        (destination / "events-foreign.jsonl").write_text(
+            "".join(json.dumps(_redact_authorization(row), sort_keys=True) + "\n" for row in foreign_events),
+            encoding="utf-8",
+        )
     (destination / "usage.json").write_text(json.dumps(usage, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if usage_raw:
         (destination / "usage.raw.txt").write_text(_redact_raw_text(usage_raw), encoding="utf-8")
@@ -573,7 +704,7 @@ def run_smoke(
     )
     request_dir = destination / "requests"
     request_dir.mkdir()
-    valid_index = malformed_index = invalid_index = 0
+    valid_index = malformed_index = invalid_index = foreign_index = 0
     for path, raw, kind, value in request_records:
         if kind == "valid":
             valid_index += 1
@@ -589,10 +720,16 @@ def run_smoke(
                 _redact_raw_text(raw), encoding="utf-8"
             )
         else:
-            invalid_index += 1
-            invalid_dir = destination / "requests-invalid"
+            if kind == "foreign":
+                foreign_index += 1
+                invalid_dir = destination / "requests-foreign"
+                output_name = f"request-{foreign_index:03d}-{path.name}.json"
+            else:
+                invalid_index += 1
+                invalid_dir = destination / "requests-invalid"
+                output_name = f"request-{invalid_index:03d}-{path.name}.json"
             invalid_dir.mkdir(exist_ok=True)
-            (invalid_dir / f"request-{invalid_index:03d}-{path.name}.json").write_text(
+            (invalid_dir / output_name).write_text(
                 json.dumps(_redact_authorization(value), indent=2, sort_keys=True) + "\n",
                 encoding="utf-8",
             )
@@ -601,7 +738,8 @@ def run_smoke(
     (destination / "acceptance.json").write_text(
         json.dumps(acceptance, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    shutil.rmtree(staging, ignore_errors=True)
+    if staging is not None:
+        shutil.rmtree(staging, ignore_errors=True)
     return acceptance
 
 

@@ -23,6 +23,7 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
         }
         self.validation = {"accepted": True, "checks": {"runtime_guard": True}, "errors": []}
         self.usage = {
+            "session_id": "smoke-session",
             "api_calls": 2,
             "completed": True,
             "failed": False,
@@ -39,6 +40,7 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
         }
         self.events = [
             {
+                "session_id": "smoke-session",
                 "tool": "personalops_inspect_repository",
                 "ok": True,
                 "repository_root": "/tmp/repo",
@@ -46,9 +48,10 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
                 "head": "abc123",
                 "recommended_action": "run_context_and_full_checks",
             },
-            {"tool": "personalops_run_check", "ok": True, "check_id": "context"},
-            {"tool": "personalops_run_check", "ok": True, "check_id": "full"},
+            {"session_id": "smoke-session", "tool": "personalops_run_check", "ok": True, "check_id": "context"},
+            {"session_id": "smoke-session", "tool": "personalops_run_check", "ok": True, "check_id": "full"},
             {
+                "session_id": "smoke-session",
                 "tool": "personalops_record_outcome",
                 "ok": True,
                 "outcome": {
@@ -62,6 +65,7 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
         ]
         self.requests = [
             {
+                "session_id": "smoke-session",
                 "request": {
                     "url": "http://127.0.0.1:11434/v1/chat/completions",
                     "headers": {},
@@ -103,7 +107,19 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
         return score_attempt(**values)
 
     def before_outcome(self, *rows):
-        return self.events[:-1] + list(rows) + [self.events[-1]]
+        attributed = []
+        for original in rows:
+            row = dict(original)
+            if row.get("phase") == "child_start":
+                row.setdefault("parent_session_id", "smoke-session")
+                row.setdefault("child_session_id", "child-session")
+            elif row.get("tool") == "personalops_apply_patch":
+                row.setdefault("session_id", "child-session")
+                row.setdefault("parent_session_id", "smoke-session")
+            else:
+                row.setdefault("session_id", "smoke-session")
+            attributed.append(row)
+        return self.events[:-1] + attributed + [self.events[-1]]
 
     def test_accepts_complete_green_workflow(self):
         result = self.score()
@@ -113,7 +129,7 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
 
     def test_accepts_post_hook_observer_after_structured_outcome(self):
         events = self.events + [
-            {"tool": "personalops_record_outcome", "phase": "post", "completed": True}
+            {"session_id": "smoke-session", "tool": "personalops_record_outcome", "phase": "post", "completed": True}
         ]
 
         result = self.score(events=events)
@@ -184,6 +200,26 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
 
         self.assertFalse(result["accepted"])
         self.assertFalse(result["checks"]["usage_evidence_complete"])
+
+    def test_rejects_contradictory_completed_usage_flags(self):
+        usage = dict(self.usage)
+        usage["failed"] = True
+
+        result = self.score(usage=usage)
+
+        self.assertFalse(result["accepted"])
+        self.assertFalse(result["checks"]["usage_evidence_complete"])
+        self.assertFalse(result["checks"]["process_completed"])
+
+    def test_rejects_foreign_session_evidence(self):
+        events = self.before_outcome(
+            {"session_id": "other-session", "tool": "personalops_run_check", "ok": True, "check_id": "full"}
+        )
+
+        result = self.score(events=events)
+
+        self.assertFalse(result["accepted"])
+        self.assertFalse(result["checks"]["session_attribution"])
 
     def test_rejects_missing_and_unexpected_request_evidence(self):
         missing = self.score(requests=[])
@@ -297,6 +333,8 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
                     "phase": "pre",
                     "action": "allow",
                     "red_boundary": True,
+                    "consultation_complete": True,
+                    "session_id": "smoke-session",
                 },
                 events[-1],
             ]
@@ -315,13 +353,46 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
 
         self.assertFalse(result["checks"]["red_uses_approval"])
 
+    def test_red_recommendation_cannot_bypass_clarify(self):
+        events = [dict(row) for row in self.events]
+        events[-1] = dict(events[-1])
+        events[-1]["outcome"] = dict(events[-1]["outcome"])
+        events[-1]["outcome"]["recommended_action"] = "Push the verified branch to GitHub"
+
+        result = self.score(events=events)
+
+        self.assertFalse(result["checks"]["red_uses_approval"])
+
+    def test_incomplete_red_consultation_is_rejected(self):
+        events = [dict(row) for row in self.events]
+        events[-1] = dict(events[-1])
+        events[-1]["outcome"] = dict(events[-1]["outcome"])
+        events[-1]["outcome"]["decision_needed"] = "approve push"
+
+        result = self.score(
+            events=events[:-1]
+            + [
+                {
+                    "tool": "clarify",
+                    "phase": "pre",
+                    "action": "allow",
+                    "red_boundary": True,
+                    "consultation_complete": False,
+                    "session_id": "smoke-session",
+                },
+                events[-1],
+            ]
+        )
+
+        self.assertFalse(result["checks"]["red_uses_approval"])
+
     def test_non_red_approval_request_is_an_orchestration_error(self):
         events = [dict(row) for row in self.events]
         events[-1] = dict(events[-1])
         events[-1]["outcome"] = dict(events[-1]["outcome"])
         events[-1]["outcome"]["decision_needed"] = "did the smoke pass or fail?"
         events = events[:-1] + [
-            {"tool": "clarify", "phase": "pre", "action": "allow", "red_boundary": False},
+            {"session_id": "smoke-session", "tool": "clarify", "phase": "pre", "action": "allow", "red_boundary": False, "consultation_complete": False},
             events[-1],
         ]
 
@@ -333,6 +404,7 @@ class TestPersonalOpsSmokeScoring(unittest.TestCase):
     @staticmethod
     def retired_request():
         return {
+            "session_id": "smoke-session",
             "request": {
                 "url": "http://127.0.0.1:11434/v1/chat/completions",
                 "headers": {},
@@ -397,6 +469,7 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
 
     def valid_usage(self):
         return {
+            "session_id": "smoke-session",
             "api_calls": 2,
             "completed": True,
             "failed": False,
@@ -411,13 +484,15 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
     def write_valid_events(self):
         events = [
             {
+                "session_id": "smoke-session",
                 "tool": "personalops_inspect_repository", "ok": True,
                 "repository_root": str(self.repo.resolve()), "branch": "feat/test", "head": self.head,
                 "recommended_action": "run_context_and_full_checks",
             },
-            {"tool": "personalops_run_check", "ok": True, "check_id": "context"},
-            {"tool": "personalops_run_check", "ok": True, "check_id": "full"},
+            {"session_id": "smoke-session", "tool": "personalops_run_check", "ok": True, "check_id": "context"},
+            {"session_id": "smoke-session", "tool": "personalops_run_check", "ok": True, "check_id": "full"},
             {
+                "session_id": "smoke-session",
                 "tool": "personalops_record_outcome", "ok": True,
                 "outcome": {
                     "current_state": "clean", "recommended_action": "run checks",
@@ -434,6 +509,7 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
         if content is None:
             content = json.dumps(
                 {
+                    "session_id": "smoke-session",
                     "request": {
                         "url": "http://127.0.0.1:11434/v1/chat/completions",
                         "headers": {"Authorization": "Bearer masked"},
@@ -475,6 +551,25 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
         self.assertTrue((evidence / "acceptance.json").is_file())
         saved_request = json.loads((evidence / "requests" / "request-001.json").read_text())
         self.assertEqual(saved_request["request"]["headers"]["Authorization"], "[REDACTED]")
+
+    def test_runner_scores_only_requests_attributed_to_usage_session(self):
+        def launcher(argv, **kwargs):
+            self.calls.append((argv, kwargs))
+            Path(argv[argv.index("--usage-file") + 1]).write_text(json.dumps(self.valid_usage()), encoding="utf-8")
+            self.write_valid_events()
+            self.write_request()
+            target = self.profile / "logs" / "request_dump_test_001.json"
+            foreign = json.loads(target.read_text(encoding="utf-8"))
+            foreign["session_id"] = "foreign-session"
+            (target.parent / "request_dump_test_002.json").write_text(json.dumps(foreign), encoding="utf-8")
+            return subprocess.CompletedProcess(argv, 0, stdout="passed\n", stderr="")
+
+        result = self.run_smoke_fixture(launcher)
+
+        self.assertTrue(result["accepted"])
+        evidence = Path(result["evidence_directory"])
+        self.assertEqual(len(list((evidence / "requests").glob("*.json"))), 1)
+        self.assertEqual(len(list((evidence / "requests-foreign").glob("*.json"))), 1)
 
     def test_invalid_profile_aborts_before_launcher_and_preserves_failure(self):
         self.guard.write_text("changed\n", encoding="utf-8")
@@ -558,6 +653,57 @@ class TestPersonalOpsSmokeRunner(unittest.TestCase):
         raw = raw_files[0].read_text()
         self.assertIn("[REDACTED]", raw)
         self.assertNotIn("leaked-token", raw)
+
+    def test_invalid_repository_preflight_aborts_before_launcher(self):
+        not_a_repo = self.root / "not-a-repo"
+        not_a_repo.mkdir()
+
+        result = run_smoke(
+            package_root=self.package, profile_root=self.profile, repo_root=not_a_repo,
+            hermes_root=self.hermes, evidence_root=self.root / "preflight-evidence",
+            hermes_bin="fake-hermes", launcher=self.valid_launcher,
+        )
+
+        self.assertFalse(result["accepted"])
+        self.assertEqual(result["attempt_count"], 0)
+        self.assertEqual(self.calls, [])
+        self.assertIn("preflight_failed", result["evidence_errors"])
+
+    def test_malformed_workflow_preflight_aborts_before_launcher(self):
+        (self.package / "workflow.json").write_text("{", encoding="utf-8")
+
+        result = self.run_smoke_fixture(self.valid_launcher)
+
+        self.assertFalse(result["accepted"])
+        self.assertEqual(result["attempt_count"], 0)
+        self.assertEqual(self.calls, [])
+        self.assertIn("profile_validation_failed", result["evidence_errors"])
+
+    def test_raw_stdout_stderr_and_events_are_redacted(self):
+        def launcher(argv, **kwargs):
+            self.calls.append((argv, kwargs))
+            Path(argv[argv.index("--usage-file") + 1]).write_text(json.dumps(self.valid_usage()), encoding="utf-8")
+            self.write_valid_events()
+            event_path = self.profile / "cache" / "events.jsonl"
+            with event_path.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps({"session_id": "smoke-session", "tool": "personalops_run_check", "ok": True, "api_key": "event-secret"}) + "\n")
+            self.write_request()
+            return subprocess.CompletedProcess(
+                argv, 0,
+                stdout="passed API_KEY=stdout-secret\n",
+                stderr="Authorization: Bearer stderr-secret\n",
+            )
+
+        result = self.run_smoke_fixture(launcher)
+        evidence = Path(result["evidence_directory"])
+        combined = "\n".join(
+            (evidence / name).read_text(encoding="utf-8")
+            for name in ("stdout.txt", "stderr.txt", "events.jsonl")
+        )
+
+        self.assertNotIn("stdout-secret", combined)
+        self.assertNotIn("stderr-secret", combined)
+        self.assertNotIn("event-secret", combined)
 
 
 if __name__ == "__main__":

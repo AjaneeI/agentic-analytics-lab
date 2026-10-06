@@ -18,7 +18,31 @@ _MAX_PATCH_BYTES = 32_768
 _MAX_PROCESS_OUTPUT = 20_000
 _MAX_SEARCH_MATCHES = 50
 _SENSITIVE_PARTS = {".env", ".git", ".ssh", "credentials", "secrets"}
-_SENSITIVE_NAMES = {".netrc", "credentials.json", "secrets.toml"}
+_SENSITIVE_NAMES = {
+    ".envrc",
+    ".git-credentials",
+    ".netrc",
+    ".npmrc",
+    ".pypirc",
+    "credentials.json",
+    "id_ed25519",
+    "id_rsa",
+    "secrets.toml",
+}
+_PROTECTED_PATHS = {
+    "scripts/check_project_context.py",
+    "personalops/contracts.py",
+    "personalops/smoke.py",
+    "personalops/validate.py",
+    "personalops/workflow.json",
+    "personalops/profile/runtime-contract.json",
+    "personalops/profile/plugins/personalops-repository/__init__.py",
+    "personalops/profile/plugins/personalops-repository/plugin.yaml",
+}
+_SECRET_KEY_PATTERN = re.compile(
+    r"(^|[_-])(authorization|api[_-]?key|token|password|secret|credential|credentials)($|[_-])",
+    re.IGNORECASE,
+)
 _REQUIRED_CONTEXT = ["PROJECT.md", "STATUS.md", "DECISIONS.md", "ARCHITECTURE.md"]
 _WORKER_FIELDS = ["Objective", "Inputs", "Allowed changes", "Acceptance", "Evidence", "Stop"]
 _RED_ACTION_PATTERN = re.compile(
@@ -89,24 +113,47 @@ def _event_log() -> Path:
     return path
 
 
+def _redact_text(value: str) -> str:
+    value = re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "Bearer [REDACTED]", value)
+    return re.sub(
+        r"(?i)\b((?:[A-Z0-9_]*API_KEY|[A-Z0-9_]*(?:PASSWORD|SECRET|CREDENTIAL)|(?:[A-Z0-9_]*_)?TOKEN))\s*[=:]\s*([^\s,;}]+)",
+        r"\1=[REDACTED]",
+        value,
+    )
+
+
+def _redact_evidence(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {
+            key: "[REDACTED]" if _SECRET_KEY_PATTERN.search(str(key)) else _redact_evidence(child)
+            for key, child in value.items()
+        }
+    if isinstance(value, list):
+        return [_redact_evidence(child) for child in value]
+    if isinstance(value, str):
+        return _redact_text(value)
+    return value
+
+
 def _write_event(event: dict[str, Any]) -> None:
     path = _event_log()
     path.parent.mkdir(parents=True, exist_ok=True)
     with _lock:
         with path.open("a", encoding="utf-8") as handle:
-            handle.write(json.dumps(event, sort_keys=True) + "\n")
+            handle.write(json.dumps(_redact_evidence(event), sort_keys=True) + "\n")
             handle.flush()
             os.fsync(handle.fileno())
 
 
-def _emit(tool: str, result: dict[str, Any]) -> str:
-    event = {"tool": tool, **result}
+def _emit(tool: str, result: dict[str, Any], *, session_id: str = "") -> str:
+    safe_result = _redact_evidence(result)
+    event = {"tool": tool, "session_id": session_id, **safe_result}
     _write_event(event)
-    return json.dumps(result, sort_keys=True)
+    return json.dumps(safe_result, sort_keys=True)
 
 
-def _fail(tool: str, reason_code: str, **extra: Any) -> str:
-    return _emit(tool, {"ok": False, "reason_code": reason_code, **extra})
+def _fail(tool: str, reason_code: str, *, session_id: str = "", **extra: Any) -> str:
+    return _emit(tool, {"ok": False, "reason_code": reason_code, **extra}, session_id=session_id)
 
 
 def _is_sensitive(relative: Path) -> bool:
@@ -117,7 +164,13 @@ def _is_sensitive(relative: Path) -> bool:
         or name in _SENSITIVE_NAMES
         or name.startswith(".env.")
         or name.endswith((".pem", ".key", ".p12", ".pfx"))
+        or relative.as_posix().lower().endswith((".docker/config.json", ".kube/config"))
     )
+
+
+def _is_protected(relative: Path) -> bool:
+    value = relative.as_posix()
+    return value == "tests" or value.startswith("tests/") or value in _PROTECTED_PATHS
 
 
 def _has_symlink_component(root: Path, relative: Path) -> bool:
@@ -209,6 +262,8 @@ def _normalize_allowed_path(raw: str) -> str:
         or _has_symlink_component(root, relative)
     ):
         raise ValueError("invalid_allowed_path")
+    if _is_protected(relative):
+        raise ValueError("protected_path_forbidden")
     candidate = root / relative
     if not candidate.is_file():
         raise ValueError("invalid_allowed_path")
@@ -240,6 +295,17 @@ def _contains_red_action(value: Any) -> bool:
     if isinstance(value, list):
         return any(_contains_red_action(child) for child in value)
     return False
+
+
+def _consultation_complete(value: Any) -> bool:
+    try:
+        text = json.dumps(value, sort_keys=True).lower()
+    except (TypeError, ValueError):
+        return False
+    return all(
+        phrase in text
+        for phrase in ("decision needed", "why it matters", "options", "recommendation")
+    )
 
 
 def _build_manifest(goal: str, *, session_id: str, tool_call_id: str) -> dict[str, Any]:
@@ -275,6 +341,7 @@ def _build_manifest(goal: str, *, session_id: str, tool_call_id: str) -> dict[st
             path: baseline["file_hashes"].get(path) for path in allowed
         },
         "child_session_id": "",
+        "child_writes": {},
         "delegation_completed": False,
     }
 
@@ -336,7 +403,7 @@ def _github_state(branch: str) -> dict[str, Any]:
     }
 
 
-def _inspect_repository(args: dict[str, Any] | None, **_: Any) -> str:
+def _inspect_repository(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     del args
     try:
         root = _repo_root()
@@ -345,7 +412,7 @@ def _inspect_repository(args: dict[str, Any] | None, **_: Any) -> str:
         status_result = _git("status", "--short")
         log_result = _git("log", "-5", "--pretty=format:%H%x09%s")
         if any(row.returncode != 0 for row in (branch_result, head_result, status_result, log_result)):
-            return _fail("personalops_inspect_repository", "git_inspection_failed")
+            return _fail("personalops_inspect_repository", "git_inspection_failed", session_id=session_id)
         branch = branch_result.stdout.strip()
         status = [line for line in status_result.stdout.splitlines() if line]
         github = _github_state(branch)
@@ -384,48 +451,49 @@ def _inspect_repository(args: dict[str, Any] | None, **_: Any) -> str:
             "github": github,
             "recommended_action": recommendation,
         }
-        return _emit("personalops_inspect_repository", result)
+        return _emit("personalops_inspect_repository", result, session_id=session_id)
     except Exception as exc:
-        return _fail("personalops_inspect_repository", "inspection_error", error=f"{type(exc).__name__}: {exc}")
+        return _fail("personalops_inspect_repository", "inspection_error", session_id=session_id, error=f"{type(exc).__name__}: {exc}")
 
 
-def _read_file(args: dict[str, Any] | None, **_: Any) -> str:
+def _read_file(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     arguments = dict(args or {})
     try:
         path, error = _resolve_path(arguments.get("path"))
         if error:
-            return _fail("personalops_read_file", error)
+            return _fail("personalops_read_file", error, session_id=session_id)
         assert path is not None
         if path.stat().st_size > _MAX_FILE_BYTES:
-            return _fail("personalops_read_file", "file_too_large")
+            return _fail("personalops_read_file", "file_too_large", session_id=session_id)
         data = path.read_bytes()
         if b"\x00" in data:
-            return _fail("personalops_read_file", "binary_file_forbidden")
+            return _fail("personalops_read_file", "binary_file_forbidden", session_id=session_id)
         content = data.decode("utf-8")
         relative = str(path.relative_to(_repo_root()))
         return _emit(
             "personalops_read_file",
             {"ok": True, "path": relative, "sha256": hashlib.sha256(data).hexdigest(), "content": content},
+            session_id=session_id,
         )
     except (OSError, UnicodeError, RuntimeError) as exc:
-        return _fail("personalops_read_file", "read_error", error=f"{type(exc).__name__}: {exc}")
+        return _fail("personalops_read_file", "read_error", session_id=session_id, error=f"{type(exc).__name__}: {exc}")
 
 
-def _search_repository(args: dict[str, Any] | None, **_: Any) -> str:
+def _search_repository(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     arguments = dict(args or {})
     query = arguments.get("query")
     paths = arguments.get("paths", ["."])
     if not isinstance(query, str) or not query or len(query) > 200:
-        return _fail("personalops_search_repository", "invalid_query")
+        return _fail("personalops_search_repository", "invalid_query", session_id=session_id)
     if not isinstance(paths, list) or not paths or not all(isinstance(item, str) for item in paths):
-        return _fail("personalops_search_repository", "invalid_paths")
+        return _fail("personalops_search_repository", "invalid_paths", session_id=session_id)
     files: set[Path] = set()
     for raw in paths:
         try:
             base = (_repo_root() / raw).resolve(strict=True)
             base.relative_to(_repo_root())
         except (OSError, ValueError):
-            return _fail("personalops_search_repository", "path_outside_repository")
+            return _fail("personalops_search_repository", "path_outside_repository", session_id=session_id)
         candidates = [base] if base.is_file() else base.rglob("*")
         for candidate in candidates:
             if candidate.is_symlink() or not candidate.is_file():
@@ -450,7 +518,7 @@ def _search_repository(args: dict[str, Any] | None, **_: Any) -> str:
                     break
         if len(matches) >= _MAX_SEARCH_MATCHES:
             break
-    return _emit("personalops_search_repository", {"ok": True, "matches": matches, "truncated": len(matches) >= _MAX_SEARCH_MATCHES})
+    return _emit("personalops_search_repository", {"ok": True, "matches": matches, "truncated": len(matches) >= _MAX_SEARCH_MATCHES}, session_id=session_id)
 
 
 def _run_named_check(check_id: Any) -> dict[str, Any]:
@@ -477,9 +545,9 @@ def _run_named_check(check_id: Any) -> dict[str, Any]:
     }
 
 
-def _run_check(args: dict[str, Any] | None, **_: Any) -> str:
+def _run_check(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     result = _run_named_check(dict(args or {}).get("check_id"))
-    return _emit("personalops_run_check", result)
+    return _emit("personalops_run_check", result, session_id=session_id)
 
 
 def _is_delegated_child_context() -> bool:
@@ -492,12 +560,12 @@ def _is_delegated_child_context() -> bool:
 
 def _apply_patch(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     if not _is_delegated_child_context():
-        return _fail("personalops_apply_patch", "delegated_child_required")
+        return _fail("personalops_apply_patch", "delegated_child_required", session_id=session_id)
     arguments = dict(args or {})
     try:
         path, error = _resolve_path(arguments.get("path"))
         if error:
-            return _fail("personalops_apply_patch", error)
+            return _fail("personalops_apply_patch", error, session_id=session_id)
         assert path is not None
         with _state_lock:
             parent_session_id = _child_parents.get(session_id, "")
@@ -505,80 +573,114 @@ def _apply_patch(args: dict[str, Any] | None, session_id: str = "", **_: Any) ->
             allowed_paths = set(manifest.get("allowed_paths", [])) if isinstance(manifest, dict) else set()
         relative_path = path.relative_to(_repo_root()).as_posix()
         if not parent_session_id or relative_path not in allowed_paths:
-            return _fail("personalops_apply_patch", "path_not_allowed", path=relative_path)
+            return _fail("personalops_apply_patch", "path_not_allowed", session_id=session_id, path=relative_path)
         old = arguments.get("old_text")
         new = arguments.get("new_text")
         expected = arguments.get("expected_sha256")
         if not all(isinstance(item, str) for item in (old, new, expected)) or not old:
-            return _fail("personalops_apply_patch", "invalid_patch")
+            return _fail("personalops_apply_patch", "invalid_patch", session_id=session_id)
         if len(old.encode("utf-8")) + len(new.encode("utf-8")) > _MAX_PATCH_BYTES:
-            return _fail("personalops_apply_patch", "patch_too_large")
+            return _fail("personalops_apply_patch", "patch_too_large", session_id=session_id)
         data = path.read_bytes()
         if hashlib.sha256(data).hexdigest() != expected:
-            return _fail("personalops_apply_patch", "file_changed")
+            return _fail("personalops_apply_patch", "file_changed", session_id=session_id)
         if b"\x00" in data:
-            return _fail("personalops_apply_patch", "binary_file_forbidden")
+            return _fail("personalops_apply_patch", "binary_file_forbidden", session_id=session_id)
         content = data.decode("utf-8")
         if content.count(old) != 1:
-            return _fail("personalops_apply_patch", "patch_match_must_be_unique")
+            return _fail("personalops_apply_patch", "patch_match_must_be_unique", session_id=session_id)
         updated = content.replace(old, new, 1)
         mode = path.stat().st_mode
         with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as handle:
             handle.write(updated)
             temporary = Path(handle.name)
         os.chmod(temporary, mode)
-        os.replace(temporary, path)
+        with _state_lock:
+            current_parent = _child_parents.get(session_id, "")
+            current_manifest = _manifests.get(current_parent)
+            if current_parent != parent_session_id or current_manifest is not manifest:
+                temporary.unlink(missing_ok=True)
+                return _fail("personalops_apply_patch", "manifest_binding_changed", session_id=session_id)
+            if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+                temporary.unlink(missing_ok=True)
+                return _fail("personalops_apply_patch", "file_changed", session_id=session_id)
+            os.replace(temporary, path)
+            updated_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+            current_manifest.setdefault("child_writes", {})[relative_path] = updated_sha256
         return _emit(
             "personalops_apply_patch",
             {
                 "ok": True,
                 "path": relative_path,
-                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "sha256": updated_sha256,
                 "parent_session_id": parent_session_id,
             },
+            session_id=session_id,
         )
     except (OSError, UnicodeError, RuntimeError) as exc:
-        return _fail("personalops_apply_patch", "patch_error", error=f"{type(exc).__name__}: {exc}")
+        return _fail("personalops_apply_patch", "patch_error", session_id=session_id, error=f"{type(exc).__name__}: {exc}")
 
 
 def _verify_change(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     arguments = dict(args or {})
     check_ids = arguments.get("check_ids")
     if not isinstance(check_ids, list) or not check_ids or not all(isinstance(item, str) for item in check_ids):
-        return _fail("personalops_verify_change", "check_ids_required")
+        return _fail("personalops_verify_change", "check_ids_required", session_id=session_id)
     with _state_lock:
         manifest = _manifests.get(session_id)
         manifest = dict(manifest) if isinstance(manifest, dict) else None
     if manifest is None:
-        return _fail("personalops_verify_change", "trusted_manifest_missing")
+        return _fail("personalops_verify_change", "trusted_manifest_missing", session_id=session_id)
     if not manifest.get("delegation_completed"):
-        return _fail("personalops_verify_change", "delegation_not_completed")
+        return _fail("personalops_verify_change", "delegation_not_completed", session_id=session_id)
     required_checks = manifest.get("required_checks", [])
     missing_checks = sorted(set(required_checks) - set(check_ids))
     if missing_checks:
         return _fail(
-            "personalops_verify_change", "required_checks_missing", missing_check_ids=missing_checks
+            "personalops_verify_change", "required_checks_missing", session_id=session_id, missing_check_ids=missing_checks
         )
     try:
         changed = _changed_since_manifest(manifest)
     except RuntimeError as exc:
         return _fail(
-            "personalops_verify_change", "baseline_unavailable", error=str(exc)
+            "personalops_verify_change", "baseline_unavailable", session_id=session_id, error=str(exc)
         )
     if not changed:
-        return _fail("personalops_verify_change", "no_post_delegation_change")
+        return _fail("personalops_verify_change", "no_post_delegation_change", session_id=session_id)
     sensitive = [path for path in changed if _is_sensitive(Path(path))]
     if sensitive:
         return _fail(
-            "personalops_verify_change", "sensitive_path_changed", sensitive_paths=sensitive
+            "personalops_verify_change", "sensitive_path_changed", session_id=session_id, sensitive_paths=sensitive
+        )
+    protected = [path for path in changed if _is_protected(Path(path))]
+    if protected:
+        return _fail(
+            "personalops_verify_change", "protected_path_changed", session_id=session_id, protected_paths=protected
         )
     unexpected = sorted(set(changed) - set(manifest.get("allowed_paths", [])))
     if unexpected:
         return _fail(
             "personalops_verify_change",
             "changed_path_not_allowed",
+            session_id=session_id,
             changed_paths=changed,
             unexpected_paths=unexpected,
+        )
+    child_writes = manifest.get("child_writes")
+    if not isinstance(child_writes, dict) or not child_writes:
+        return _fail("personalops_verify_change", "no_child_writes", session_id=session_id)
+    if set(changed) != set(child_writes):
+        return _fail(
+            "personalops_verify_change",
+            "child_write_attribution_failed",
+            session_id=session_id,
+            changed_paths=changed,
+            child_write_paths=sorted(child_writes),
+        )
+    current_hashes = _repository_snapshot()["file_hashes"]
+    if any(current_hashes.get(path) != expected for path, expected in child_writes.items()):
+        return _fail(
+            "personalops_verify_change", "child_write_attribution_failed", session_id=session_id
         )
     checks = [_run_named_check(check_id) for check_id in check_ids]
     result = {
@@ -595,18 +697,19 @@ def _verify_change(args: dict[str, Any] | None, session_id: str = "", **_: Any) 
             "baseline_tree": manifest["baseline_tree"],
             "allowed_file_hashes": manifest["allowed_file_hashes"],
             "expected_evidence": manifest["expected_evidence"],
+            "child_writes": child_writes,
         },
     }
-    return _emit("personalops_verify_change", result)
+    return _emit("personalops_verify_change", result, session_id=session_id)
 
 
-def _record_outcome(args: dict[str, Any] | None, **_: Any) -> str:
+def _record_outcome(args: dict[str, Any] | None, session_id: str = "", **_: Any) -> str:
     arguments = dict(args or {})
     required = _workflow().get("final_status_fields", [])
     missing = [field for field in required if not isinstance(arguments.get(field), str) or not arguments[field].strip()]
     if missing:
-        return _fail("personalops_record_outcome", "missing_final_status_fields", missing=missing)
-    return _emit("personalops_record_outcome", {"ok": True, "outcome": {field: arguments[field].strip() for field in required}})
+        return _fail("personalops_record_outcome", "missing_final_status_fields", session_id=session_id, missing=missing)
+    return _emit("personalops_record_outcome", {"ok": True, "outcome": {field: arguments[field].strip() for field in required}}, session_id=session_id)
 
 
 def _runtime_guard_status() -> tuple[bool, list[str]]:
@@ -654,6 +757,7 @@ def _pre_tool_call(
         }
         if tool_name == "clarify":
             event["red_boundary"] = _contains_red_action(args)
+            event["consultation_complete"] = _consultation_complete(args)
         _write_event(event)
         return None
     arguments = args if isinstance(args, dict) else {}
@@ -682,6 +786,8 @@ def _pre_tool_call(
         _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "session_id": session_id, "action": "block", "reason_code": reason_code})
         if reason_code == "six_field_contract_required":
             message = "Personal Ops requires the exact six-field worker contract: " + ", ".join(_WORKER_FIELDS) + "."
+        elif reason_code == "protected_path_forbidden":
+            message = "Personal Ops does not permit a delegated worker to edit its checker, verifier, policy, or tests."
         else:
             message = "Personal Ops requires exact existing non-sensitive regular files in Allowed changes."
         return {"action": "block", "reason_code": reason_code, "message": message}
@@ -725,14 +831,18 @@ def _on_session_start(session_id: str = "", parent_session_id: str = "", **_: An
 
 
 def _on_session_end(session_id: str = "", **_: Any) -> None:
+    # Hermes emits this hook at turn boundaries. A background child can finish
+    # between turns, so trusted state must survive until session finalization.
+    del session_id
+
+
+def _on_session_finalize(session_id: str = "", **_: Any) -> None:
     if not session_id:
         return
     with _state_lock:
-        parent_session_id = _child_parents.pop(session_id, "")
-        if parent_session_id:
-            manifest = _manifests.get(parent_session_id)
-            if manifest and manifest.get("child_session_id") == session_id:
-                manifest["child_session_id"] = ""
+        if session_id in _child_parents:
+            # The parent owns this state and removes it when the parent session
+            # is finalized. Child finalization may precede the parent post-hook.
             return
         manifest = _manifests.pop(session_id, None)
         if manifest and manifest.get("child_session_id"):
@@ -797,6 +907,7 @@ def register(ctx) -> None:
     ctx.register_hook("subagent_start", _subagent_start)
     ctx.register_hook("on_session_start", _on_session_start)
     ctx.register_hook("on_session_end", _on_session_end)
+    ctx.register_hook("on_session_finalize", _on_session_finalize)
     definitions = [
         ("personalops_inspect_repository", "Inspect the approved repository, Git state, context files, and read-only GitHub metadata.", {}, [], _inspect_repository),
         ("personalops_read_file", "Read one bounded UTF-8 file inside the approved repository.", {"path": {"type": "string"}}, ["path"], _read_file),

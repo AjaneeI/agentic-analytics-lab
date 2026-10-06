@@ -261,6 +261,18 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
         self.assertEqual(symlink["action"], "block")
         self.assertEqual(symlink["reason_code"], "invalid_allowed_path")
 
+    def test_manifest_rejects_explicitly_allowed_verifier_or_checker(self):
+        with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
+            checker = self.plugin._pre_tool_call(
+                tool_name="delegate_task",
+                args={"tasks": [{"goal": self.goal("scripts/check_project_context.py")}]},
+                tool_call_id="checker",
+                session_id="parent-checker",
+            )
+
+        self.assertEqual(checker["action"], "block")
+        self.assertEqual(checker["reason_code"], "protected_path_forbidden")
+
     def test_second_delegation_in_same_session_is_blocked(self):
         with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
             first = self.plugin._pre_tool_call(
@@ -316,6 +328,85 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
         self.assertEqual({row["session_id"] for row in allowed}, {"session-a", "session-b"})
         self.assertEqual([row["delegation_number"] for row in allowed], [1, 1])
 
+    def test_child_turn_end_preserves_binding_until_parent_verifies(self):
+        self.begin_delegation()
+        path = self.repo / "notes.txt"
+        with mock.patch.object(self.plugin, "_is_delegated_child_context", return_value=True):
+            patch = self.result(
+                self.plugin._apply_patch(
+                    {
+                        "path": "notes.txt",
+                        "expected_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                        "old_text": "alpha",
+                        "new_text": "gamma",
+                    },
+                    session_id="child-1",
+                )
+            )
+        self.plugin._on_session_end(session_id="child-1")
+        self.plugin._post_tool_call(
+            tool_name="delegate_task", tool_call_id="delegate-1", result={"status": "completed"},
+            status="ok", session_id="parent-1",
+        )
+
+        verified = self.result(
+            self.plugin._verify_change({"check_ids": ["diff"]}, session_id="parent-1")
+        )
+
+        self.assertTrue(patch["ok"])
+        self.assertTrue(verified["ok"])
+
+    def test_parent_turn_end_preserves_background_delegation_manifest(self):
+        goal = self.goal()
+        with mock.patch.object(self.plugin, "_runtime_guard_status", return_value=(True, [])):
+            self.assertIsNone(
+                self.plugin._pre_tool_call(
+                    tool_name="delegate_task", args={"tasks": [{"goal": goal}]},
+                    tool_call_id="delegate-1", session_id="parent-1",
+                )
+            )
+        self.plugin._on_session_end(session_id="parent-1")
+        self.plugin._subagent_start(
+            parent_session_id="parent-1", child_session_id="child-1", child_goal=goal
+        )
+
+        self.assertEqual(self.plugin._child_parents.get("child-1"), "parent-1")
+
+        self.plugin._on_session_finalize(session_id="parent-1")
+
+        self.assertNotIn("parent-1", self.plugin._manifests)
+        self.assertNotIn("child-1", self.plugin._child_parents)
+
+    def test_one_session_cannot_verify_another_childs_write(self):
+        self.begin_delegation(parent="parent-a", child="child-a")
+        self.begin_delegation(parent="parent-b", child="child-b")
+        path = self.repo / "notes.txt"
+        with mock.patch.object(self.plugin, "_is_delegated_child_context", return_value=True):
+            changed = self.result(
+                self.plugin._apply_patch(
+                    {
+                        "path": "notes.txt",
+                        "expected_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                        "old_text": "alpha",
+                        "new_text": "gamma",
+                    },
+                    session_id="child-b",
+                )
+            )
+        for parent in ("parent-a", "parent-b"):
+            self.plugin._post_tool_call(
+                tool_name="delegate_task", tool_call_id="delegate-1", result={"status": "completed"},
+                status="ok", session_id=parent,
+            )
+
+        a = self.result(self.plugin._verify_change({"check_ids": ["diff"]}, session_id="parent-a"))
+        b = self.result(self.plugin._verify_change({"check_ids": ["diff"]}, session_id="parent-b"))
+
+        self.assertTrue(changed["ok"])
+        self.assertFalse(a["ok"])
+        self.assertEqual(a["reason_code"], "no_child_writes")
+        self.assertTrue(b["ok"])
+
     def test_verifier_rejects_actual_diff_outside_parent_allowlist(self):
         self.begin_delegation()
         (self.repo / "ARCHITECTURE.md").write_text("tampered\n", encoding="utf-8")
@@ -337,7 +428,20 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
 
     def test_verifier_reports_diff_and_check_results_from_trusted_baseline(self):
         self.begin_delegation(acceptance="diff, context")
-        (self.repo / "notes.txt").write_text("gamma\nbeta\n", encoding="utf-8")
+        path = self.repo / "notes.txt"
+        with mock.patch.object(self.plugin, "_is_delegated_child_context", return_value=True):
+            patched = self.result(
+                self.plugin._apply_patch(
+                    {
+                        "path": "notes.txt",
+                        "expected_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                        "old_text": "alpha",
+                        "new_text": "gamma",
+                    },
+                    session_id="child-1",
+                )
+            )
+        self.assertTrue(patched["ok"])
 
         self.plugin._post_tool_call(
             tool_name="delegate_task",
@@ -370,6 +474,14 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
             "nested/credentials.json",
             "secrets.toml",
             "nested/secrets.toml",
+            ".npmrc",
+            ".pypirc",
+            ".envrc",
+            ".git-credentials",
+            "id_rsa",
+            "nested/id_ed25519",
+            ".docker/config.json",
+            ".kube/config",
             "private.pem",
         ]
 
@@ -394,10 +506,41 @@ class TestPersonalOpsRepositoryPlugin(unittest.TestCase):
             tool_call_id="not-red",
             session_id="session-b",
         )
+        self.plugin._pre_tool_call(
+            tool_name="clarify",
+            args={
+                "questions": [
+                    {
+                        "question": (
+                            "Decision needed: approve git push? Why it matters: external write. "
+                            "Options: approve or stop. Hermes recommendation: stop."
+                        )
+                    }
+                ]
+            },
+            tool_call_id="complete-red",
+            session_id="session-c",
+        )
 
         events = [json.loads(line) for line in self.events.read_text().splitlines()]
-        self.assertEqual([row["red_boundary"] for row in events], [True, False])
+        self.assertEqual([row["red_boundary"] for row in events], [True, False, True])
+        self.assertEqual([row["consultation_complete"] for row in events], [False, False, True])
         self.assertNotIn("Approve git push?", self.events.read_text())
+
+    def test_event_log_redacts_sensitive_keys_bearer_tokens_and_assignments(self):
+        self.plugin._write_event(
+            {
+                "tool": "personalops_run_check",
+                "authorization": "Bearer auth-secret",
+                "api_key": "key-secret",
+                "output": "API_KEY=output-secret TOKEN:token-secret",
+            }
+        )
+
+        saved = self.events.read_text(encoding="utf-8")
+        for secret in ("auth-secret", "key-secret", "output-secret", "token-secret"):
+            self.assertNotIn(secret, saved)
+        self.assertIn("[REDACTED]", saved)
 
 
 if __name__ == "__main__":
