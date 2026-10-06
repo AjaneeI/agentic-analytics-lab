@@ -7,12 +7,12 @@ _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-
 ### Hermes Personal Ops product track
 
 - Issue #91 defines Hermes Desktop Lite as a separate product track built from current `main`; it does not modify or depend on the draft M0 diagnostic PR #90.
-- The versioned `personalops` package now contains the approved Green/Yellow/Red policy, local-only model contract, repository-scoped tools, isolated profile installer/validator, frozen Hermes worker guard, one-shot delegation hook, and deterministic single-attempt smoke scorer.
-- Product implementation evidence through Task 4 is local and deterministic: contract tests, repository-tool tests, profile/guard tests, smoke acceptance fixtures, and the live Hermes retirement guard all pass.
-- The one permitted natural-language Qwen smoke ran exactly once at execution head `46d2f1a2c87f1932bf33dc9098eed455d98bfc6b` and was deterministically rejected. Fourteen of fifteen acceptance dimensions passed; `red_uses_approval` failed because Hermes recorded a non-empty decision for Ajanee but did not call `clarify`.
-- The run correctly recovered the live repository identity, found draft PR #93, chose and completed the full verification action (326/326 tests), stayed on the approved local model/tool surface, made no delegation or patch, used no ClickHouse or Red execution tool, produced a structured outcome, and incurred `$0` paid spend.
-- The observed blocker is product orchestration/state interpretation, not infrastructure/runtime: Hermes treated the currently executing smoke as a future external gate, then asked Ajanee whether it passed instead of using the required structured approval path. Per the frozen protocol, the failure was preserved without prompt/configuration repair or retry.
-- Desktop Lite therefore remains an implementation candidate and is **not** marked operational. The next experiment must be separately preregistered; the smallest suggested intervention is an explicit, deterministic execution-context signal that distinguishes an in-progress acceptance run from a future action, tested without weakening the Red approval contract.
+- The versioned `personalops` package now contains the approved Green/Yellow/Red policy, local-only model contract, repository-scoped tools, isolated profile installer/validator, frozen Hermes worker guard, session-scoped one-shot delegation, parent-owned Yellow manifests, independent diff verification, strict evidence handling/redaction, and deterministic single-attempt smoke scoring.
+- Deterministic hardening passed 65 focused product tests, 368 full repository tests, and five focused Hermes one-worker/retirement tests. Installed-profile validation and plugin doctor also passed, and a fresh trust-boundary review found no unresolved Critical or High issue before the live attempt.
+- The post-hardening smoke was preregistered at `12ba6b0a38894de228ad06705cf7baf8678c33d3` and invoked exactly once. Its frozen deterministic scorer returned **PASS** with all 22 checks true. It used the local `hermes-local:qwen3.5-9b` path, recovered the exact repository identity, ran the recommended full check successfully (368 tests), launched no child, used no ClickHouse or Red execution tool, produced complete session-attributed evidence, and incurred `$0` paid spend.
+- The preserved user-visible answer nevertheless contradicts the observed evidence: it calls the `12ba6b0` smoke a failure, reports 326 rather than 368 tests, and asks whether to open an issue while its structured outcome says `decision_needed: none` without a `clarify` event.
+- The deterministic PASS remains unchanged, but the product-readiness requirement for a concise, useful, evidence-consistent final result was not met. This reveals an output-consistency/acceptance-coverage gap that was not caught by the frozen scorer.
+- Desktop Lite therefore remains an implementation candidate and is **not** marked operational. No retry or same-run tuning was performed. Any future work requires separate authorization and should first add a deterministic regression binding user-visible final text to structured outcome and observed check evidence.
 - Incremental paid spend remains `$0`. No ClickHouse-first workflow, benchmark treatment, model change, Hermes-core change, or new orchestration layer was added.
 
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
@@ -72,7 +72,7 @@ this slice.
 
 ## Next bounded experiment
 
-For the Personal Ops product track, stop after recording the single failed smoke on issue #91 and draft PR #93. Do not rerun it in this implementation pass. A later, separately approved experiment may test the smallest execution-context intervention described above.
+For the Personal Ops product track, stop after recording the single post-hardening smoke on issue #91 and draft PR #93. Do not rerun it or tune the system in this implementation pass. A later, separately authorized hardening pass should begin with deterministic final-output/structured-outcome consistency coverage before any new live invocation.
 
 The older benchmark instruction below is retained as historical context and is superseded by issues #89/#90 for M0 status; it is not an instruction to rerun SB-D01 during Desktop Lite work.
 

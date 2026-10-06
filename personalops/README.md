@@ -26,6 +26,8 @@ The deterministic smoke runner permits exactly one model attempt. It preserves t
 
 A passing smoke establishes only this bounded repository workflow. It does not establish unrestricted autonomy, general model reliability, benchmark superiority, or permission to expand the architecture.
 
+The 2026-10-06 post-hardening smoke passed all 22 frozen deterministic checks, but its user-visible final answer contradicted the structured outcome and observed test evidence. The formal PASS is preserved; Desktop Lite is not marked operational because the product-level requirement for an evidence-consistent final result was not met. See `evidence/20261006T201339.337217Z/RESULT.md`.
+
 ## Track separation
 
 - **Track A — benchmark evidence:** issues #73–#90 and their preserved artifacts remain historical M0 evaluation evidence. This package does not change their prompts, contracts, treatments, or conclusions.
@@ -34,4 +36,3 @@ A passing smoke establishes only this bounded repository workflow. It does not e
 ## Maintainer operations
 
 Installation is idempotent for package-owned files and preserves unrelated profile files. It requires explicit absolute paths for the package, profile, approved repository, and Hermes checkout. `personalops.validate.validate_profile` performs post-install validation, and `personalops.smoke.run_smoke` performs the single-attempt acceptance run. Do not rerun a failed live smoke merely to obtain a pass.
-

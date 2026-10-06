@@ -1,0 +1,13 @@
+**Summary — Action taken**
+
+**Verified state:**
+- Full check passed: 326/326 tests
+- Status files reviewed; live smoke on `12ba6b0` was preserved (Green full verification passed, acceptance failed per protocol because `run_full_verification_for_draft_pr` + `none` mismatch)
+
+**Highest-value safe next step:**
+Preregister a second Hermes Desktop Lite smoke with an explicit in-progress signal (e.g., `accepted` set once at a bounded head for that attempt only) to test execution-context interpretation without burning paid credits or loosening Red approval.
+
+**To proceed, I need Ajanee to decide on:**
+- Whether to preregister this second smoke now (Red approval category: `ambiguous_high_impact_decision`)
+
+Would you like me to open an issue with the preregistration proposal?
