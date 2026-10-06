@@ -1,0 +1,6 @@
+{
+  "intervention": "single-task delegation instruction representation",
+  "same_study_rerun_authorized": false,
+  "status": "defined_not_executed",
+  "target": "study_b_delegation_contract"
+}

@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "hermes",
+    "-p",
+    "localbenchmark",
+    "--ignore-rules",
+    "--usage-file",
+    "/Users/ajaneeigharo/Projects/agentic-analytics-lab/experiments/results/m0-5-capability-reliability-2026-10-05/study-b/B2_EXTRACT/usage.json",
+    "--in",
+    "/Users/ajaneeigharo/Projects/agentic-analytics-lab",
+    "-z",
+    "This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim:\n\nRead this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text.\n\nAfter the child returns, output exactly this marker and nothing else: M05_OWNER_DATA"
+  ]
+}

@@ -1,0 +1,5 @@
+This is frozen M0.5 Study B. Call delegate_task exactly once with exactly one task. Do not call any other tool. Do not perform the child task in the parent. Do not provide output_schema. Do not retry. Give the child this complete goal verbatim:
+
+Return exactly M05_ALPHA_OK. No other text.
+
+After the child returns, output exactly this marker and nothing else: M05_ALPHA_OK

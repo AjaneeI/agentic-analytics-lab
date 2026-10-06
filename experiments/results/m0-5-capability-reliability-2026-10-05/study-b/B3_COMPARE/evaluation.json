@@ -1,0 +1,81 @@
+{
+  "accepted": false,
+  "attempted_delegations": 2,
+  "attempted_extra_delegations": 1,
+  "case_id": "B3_COMPARE",
+  "elapsed_seconds": 42.094095124994055,
+  "enforcement_interventions": 2,
+  "events": [
+    {
+      "arguments": {
+        "tasks": [
+          {
+            "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+          }
+        ]
+      },
+      "delegate_sequence": 1,
+      "event": "delegate_pre",
+      "ok": true,
+      "tool": "delegate_task",
+      "tool_call_id": "dubscEEMohbSyTaepq0DUmlKPyrqS1fQ"
+    },
+    {
+      "arguments": {
+        "tasks": [
+          {
+            "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+          }
+        ]
+      },
+      "error_type": null,
+      "event": "delegate_post",
+      "ok": true,
+      "status": "ok",
+      "tool": "delegate_task",
+      "tool_call_id": "dubscEEMohbSyTaepq0DUmlKPyrqS1fQ"
+    },
+    {
+      "arguments": {
+        "tasks": [
+          {
+            "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+          }
+        ]
+      },
+      "delegate_sequence": 2,
+      "event": "delegate_pre",
+      "ok": false,
+      "reason_code": "delegate_budget_exceeded",
+      "tool": "delegate_task",
+      "tool_call_id": "jyvtGVOhy4Ku1oRqFxdKHZ6ULWOlOIKT"
+    },
+    {
+      "arguments": {
+        "tasks": [
+          {
+            "goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text."
+          }
+        ]
+      },
+      "error_type": "plugin_block",
+      "event": "delegate_post",
+      "ok": false,
+      "status": "blocked",
+      "tool": "delegate_task",
+      "tool_call_id": "jyvtGVOhy4Ku1oRqFxdKHZ6ULWOlOIKT"
+    }
+  ],
+  "expected_marker": "M05_MAX_7",
+  "failure_categories": [
+    "orchestration_decomposition",
+    "enforcement_intervention"
+  ],
+  "final_completion": true,
+  "observed_stdout": "M05_MAX_7\n",
+  "parent_level_work_attempts": 0,
+  "reason_code": "delegation_contract_failed",
+  "returncode": 0,
+  "successful_delegate_requests": 1,
+  "successful_worker_launches": 1
+}

@@ -1,0 +1,210 @@
+{
+  "contract_sha256": {
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/plugin.yaml": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0",
+    "experiments/hermes-successor-ab-v1/profile/config.yaml": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
+    "experiments/m0-5-capability-reliability/README.md": "0a477d9e50c0cd6bdbe828cb531acd27df405e13804b8e1a1b2c161daa910e4a",
+    "experiments/m0-5-capability-reliability/run_studies.py": "4b8c4ad32f8c7703d5fa105f2b9bbef4be3c27f1af8ca76d9f5fab0d13c95099",
+    "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+    "src/agents/single_agent.py": "2a6aed58041b95ceaef5a32431bded19322a81e5f2981a77e0caceb5a4df5793",
+    "src/evals/capability_reliability.py": "ed314f3dba7a095880ca8fa537fa0605938f1a29e9d86817089e3e09a87b6c1c",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9"
+  },
+  "evidence_destination": "experiments/results/m0-5-capability-reliability-2026-10-05",
+  "hypotheses": {
+    "study_a": "The frozen local Qwen setup produces one validator-compliant query_clickhouse call with exact expected rows for every frozen realistic SQL shape.",
+    "study_b": "Hermes produces exactly one valid delegation, one successful child, no parent work or enforcement intervention, and the exact final marker for every frozen bounded request."
+  },
+  "incremental_paid_spend_usd": 0,
+  "installed_state": {
+    "files": [
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/config.yaml",
+        "sha256": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/__init__.py",
+        "sha256": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/plugin.yaml",
+        "sha256": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/hermes_cli/config_defaults.py",
+        "sha256": "5cc622aae4ef7cc33b1ccfeb3435994fc84c2a44b88c35277721e417f315c5a7"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool.py",
+        "sha256": "91df0e5c338fa2212f7aac8ff96aaf7d7406b644185ad75129b3ee5ae3d25fc0"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool_toolsets.py",
+        "sha256": "e540eb4418467c3483ebad4f34d89f6acf6c29892dfa2d0418958491bb5fdd74"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/agent/delegation_context.py",
+        "sha256": "456d2f7815ba5d81c992810f6d8b4305394cc41056ffa79f71974c63ab89d1fc"
+      }
+    ],
+    "profile": "localbenchmark",
+    "visible_tools": [
+      "delegate_task",
+      "query_clickhouse",
+      "retrieve_policy"
+    ]
+  },
+  "interpretation_boundary": "The seven frozen cases characterize only the tested SQL shapes and delegation requests. They do not estimate general reliability or authorize M0.6 execution.",
+  "one_worker_enforcement": {
+    "assets": [
+      {
+        "path": "/Users/ajaneeigharo/Documents/Codex/2026-10-02/set-up-the-foundation-for-a/work/hermes-foundation/herdr-managed-worker/manager.py",
+        "sha256": "42e236276edf0542c5ee4bcee83328f5f6e6d6b790a858a6345d184e3605bbae"
+      },
+      {
+        "path": "/Users/ajaneeigharo/Documents/Codex/2026-10-02/set-up-the-foundation-for-a/work/hermes-foundation/herdr-managed-worker/managed_worker.sh",
+        "sha256": "c2872f780794a7ba7edb00960d3ab7fb681754c18a016461a7d9161545e568b5"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/herdr-worker/__init__.py",
+        "sha256": "d83b861f38e71a8ac1419c9d3fe18c51456ac4206b7a56b81e1480aed50fe969"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localfoundation/config.yaml",
+        "sha256": "0a0e1c934ec7df3150814954c3b121e49b9eb0e7f150e25b83f28d9edad491fb"
+      }
+    ],
+    "max_concurrent_children": 1,
+    "max_spawn_depth": 1,
+    "oneshot_max_children": 1,
+    "opencode_parallel_enabled": false,
+    "worker_identity": "Herdr-managed OpenCode local worker"
+  },
+  "repository": {
+    "evidence_branch": "m0/tool-contract-gate",
+    "freeze_ref": "refs/tags/m0-5-capability-reliability-v1",
+    "historical_issues": [
+      73,
+      82,
+      84
+    ],
+    "review_pull_request": 83
+  },
+  "retry_policy": "one scheduled attempt per case; zero retries",
+  "runtime": {
+    "context_length": 65536,
+    "herdr_version": "0.9.3",
+    "hermes": {
+      "source_commit": "2ec7703012e5e356b8df383026397160ed9b0bed",
+      "version": "0.21.5+4410.g2ec7703"
+    },
+    "model": {
+      "family": "qwen35",
+      "file_type": "Q4_K_M",
+      "manifest_path": "/Users/ajaneeigharo/.ollama/models/manifests/registry.ollama.ai/library/hermes-local/qwen3.5-9b",
+      "manifest_sha256": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+      "name": "hermes-local:qwen3.5-9b",
+      "ollama_id": "0df9cd2e3545",
+      "parameter_size": "9.0B",
+      "worker_temperature": 0
+    },
+    "ollama": {
+      "client_version": "0.34.4",
+      "model_config_digest": "sha256:055501390333b9dfb77db59953edd4c1d36413ffe9376cb209c0913ea19f3e87",
+      "model_layer_digest": "sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8",
+      "params_digest": "sha256:74c152a9c92ebb7976f5b325dfa75d0e7361ae173af121ea56ea9338a941e238",
+      "server_version": "0.35.0"
+    },
+    "opencode_version": "2.0.20",
+    "python_version": "3.14.7"
+  },
+  "schema_version": "m0-5-capability-reliability-v1",
+  "studies": {
+    "study_a": {
+      "acceptance": "One query_clickhouse tool call; non-empty SQL; unchanged validator acceptance; successful execution; exact expected rows.",
+      "allowed_tools": [
+        "query_clickhouse"
+      ],
+      "cases": [
+        {
+          "case_id": "A1_TOTAL_COUNT",
+          "expected_rows": [
+            {
+              "row_count": 500
+            }
+          ],
+          "user_prompt": "How many work items are in the delivery dataset? Use the available analytics tool and return the result field as row_count."
+        },
+        {
+          "case_id": "A2_LARGEST_TEAM",
+          "expected_rows": [
+            {
+              "item_count": 139,
+              "team": "Data"
+            }
+          ],
+          "user_prompt": "Which team owns the most delivery work items, and how many does it own? Use the available analytics tool and return fields team and item_count."
+        },
+        {
+          "case_id": "A3_CRITICAL_COUNT",
+          "expected_rows": [
+            {
+              "critical_count": 136
+            }
+          ],
+          "user_prompt": "How many delivery work items have critical priority? Use the available analytics tool and return the result field as critical_count."
+        },
+        {
+          "case_id": "A4_STATUS_COUNTS",
+          "expected_rows": [
+            {
+              "item_count": 61,
+              "status": "blocked"
+            },
+            {
+              "item_count": 330,
+              "status": "done"
+            },
+            {
+              "item_count": 109,
+              "status": "in_progress"
+            }
+          ],
+          "user_prompt": "Return the number of delivery work items for each status, sorted by status. Use the available analytics tool and return fields status and item_count."
+        }
+      ],
+      "pass_threshold": 4,
+      "sample_size": 4,
+      "study_id": "m0-5-qwen-sql-contract-v1",
+      "system_prompt": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification."
+    },
+    "study_b": {
+      "acceptance": "Exactly one attempted and successful single-task delegation; one successful child completion; no extra delegation, parent evidence work, or enforcement intervention; process exit zero; exact final marker.",
+      "allowed_parent_visible_tools": [
+        "delegate_task",
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "cases": [
+        {
+          "case_id": "B1_LITERAL",
+          "child_goal": "Return exactly M05_ALPHA_OK. No other text.",
+          "expected_marker": "M05_ALPHA_OK"
+        },
+        {
+          "case_id": "B2_EXTRACT",
+          "child_goal": "Read this inline record: owner=Data; severity=low. Return exactly M05_OWNER_DATA. No other text.",
+          "expected_marker": "M05_OWNER_DATA"
+        },
+        {
+          "case_id": "B3_COMPARE",
+          "child_goal": "Compare the inline integers 7 and 3. Return exactly M05_MAX_7. No other text.",
+          "expected_marker": "M05_MAX_7"
+        }
+      ],
+      "pass_threshold": 3,
+      "sample_size": 3,
+      "study_id": "m0-5-hermes-single-delegation-v1"
+    }
+  }
+}
