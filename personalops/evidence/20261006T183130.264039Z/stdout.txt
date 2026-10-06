@@ -1,0 +1,20 @@
+### Summary
+
+**Highest-value safe next step:** Execute the live Personal Ops smoke test.
+
+**Current state:**
+- All 326 tests pass
+- Personal Ops profile installed and validated
+- Draft PR #93 ready for review
+- Only gate remaining: natural-language smoke execution
+
+**Evidence gathered:**
+- Contract tests validate Policy/Workflow bounds
+- Profile installation is idempotent and isolated
+- Repository tools pass Green/Yellow/Red boundary checks
+- One delegation, no ClickHouse, safe local Qwen3.5-9B
+
+**What's next:**
+Run `python3 personalops/smoke.py` with the workspace paths. The output evidence directory will contain `acceptance.json` — if `accepted: true`, I'll commit documentation and mark Desktop Lite operational within the bounded workflow.
+
+Ajanee: did the smoke pass or fail?

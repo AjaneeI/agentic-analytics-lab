@@ -9,7 +9,10 @@ _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-
 - Issue #91 defines Hermes Desktop Lite as a separate product track built from current `main`; it does not modify or depend on the draft M0 diagnostic PR #90.
 - The versioned `personalops` package now contains the approved Green/Yellow/Red policy, local-only model contract, repository-scoped tools, isolated profile installer/validator, frozen Hermes worker guard, one-shot delegation hook, and deterministic single-attempt smoke scorer.
 - Product implementation evidence through Task 4 is local and deterministic: contract tests, repository-tool tests, profile/guard tests, smoke acceptance fixtures, and the live Hermes retirement guard all pass.
-- The one permitted natural-language Qwen smoke remains the final product acceptance gate. Until its preserved `acceptance.json` passes, Desktop Lite is an implementation candidate rather than an operational product workflow.
+- The one permitted natural-language Qwen smoke ran exactly once at execution head `46d2f1a2c87f1932bf33dc9098eed455d98bfc6b` and was deterministically rejected. Fourteen of fifteen acceptance dimensions passed; `red_uses_approval` failed because Hermes recorded a non-empty decision for Ajanee but did not call `clarify`.
+- The run correctly recovered the live repository identity, found draft PR #93, chose and completed the full verification action (326/326 tests), stayed on the approved local model/tool surface, made no delegation or patch, used no ClickHouse or Red execution tool, produced a structured outcome, and incurred `$0` paid spend.
+- The observed blocker is product orchestration/state interpretation, not infrastructure/runtime: Hermes treated the currently executing smoke as a future external gate, then asked Ajanee whether it passed instead of using the required structured approval path. Per the frozen protocol, the failure was preserved without prompt/configuration repair or retry.
+- Desktop Lite therefore remains an implementation candidate and is **not** marked operational. The next experiment must be separately preregistered; the smallest suggested intervention is an explicit, deterministic execution-context signal that distinguishes an in-progress acceptance run from a future action, tested without weakening the Red approval contract.
 - Incremental paid spend remains `$0`. No ClickHouse-first workflow, benchmark treatment, model change, Hermes-core change, or new orchestration layer was added.
 
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
@@ -69,7 +72,7 @@ this slice.
 
 ## Next bounded experiment
 
-For the Personal Ops product track, install and validate the isolated `personalops` profile, create the draft product PR, and execute the exact natural-language smoke once. Preserve a failure without prompt/configuration repair or retry.
+For the Personal Ops product track, stop after recording the single failed smoke on issue #91 and draft PR #93. Do not rerun it in this implementation pass. A later, separately approved experiment may test the smallest execution-context intervention described above.
 
 The older benchmark instruction below is retained as historical context and is superseded by issues #89/#90 for M0 status; it is not an instruction to rerun SB-D01 during Desktop Lite work.
 
