@@ -47,7 +47,9 @@ RouteFn = Callable[[SystemBenchmarkTask], RoutingDecision]
 _QUERY_TOOL = {
     "name": "query_clickhouse",
     "description": (
-        "Run one read-only SQL query against "
+        "Run one read-only SQL query. The only approved table is "
+        "agentic_analytics.delivery_work_items. SQL passed to this tool must "
+        "reference this exact fully qualified table name: "
         "agentic_analytics.delivery_work_items. For blocker percentage, "
         "return the percentage from ClickHouse and alias it as blocked_pct."
     ),
