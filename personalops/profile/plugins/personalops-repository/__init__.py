@@ -19,11 +19,19 @@ _MAX_PROCESS_OUTPUT = 20_000
 _MAX_SEARCH_MATCHES = 50
 _SENSITIVE_PARTS = {".env", ".git", ".ssh", "credentials", "secrets"}
 _REQUIRED_CONTEXT = ["PROJECT.md", "STATUS.md", "DECISIONS.md", "ARCHITECTURE.md"]
+_WORKER_FIELDS = ["Objective", "Inputs", "Allowed changes", "Acceptance", "Evidence", "Stop"]
 _lock = threading.Lock()
+_settings: dict[str, Any] = {}
+_delegation_count = 0
+
+
+def _setting(name: str, environment: str) -> str:
+    value = _settings.get(name) or os.environ.get(environment, "")
+    return str(value) if value else ""
 
 
 def _repo_root() -> Path:
-    raw = os.environ.get("PERSONALOPS_REPO_ROOT", "")
+    raw = _setting("repository_root", "PERSONALOPS_REPO_ROOT")
     if not raw:
         raise RuntimeError("PERSONALOPS_REPO_ROOT is required")
     root = Path(raw)
@@ -45,7 +53,7 @@ def _repo_root() -> Path:
 
 
 def _contract_root() -> Path:
-    raw = os.environ.get("PERSONALOPS_CONTRACT_ROOT", "")
+    raw = _setting("contract_root", "PERSONALOPS_CONTRACT_ROOT")
     if not raw:
         raise RuntimeError("PERSONALOPS_CONTRACT_ROOT is required")
     root = Path(raw)
@@ -65,7 +73,7 @@ def _workflow() -> dict[str, Any]:
 
 
 def _event_log() -> Path:
-    raw = os.environ.get("PERSONALOPS_EVIDENCE_LOG", "")
+    raw = _setting("evidence_log", "PERSONALOPS_EVIDENCE_LOG")
     if not raw:
         raise RuntimeError("PERSONALOPS_EVIDENCE_LOG is required")
     path = Path(raw)
@@ -408,6 +416,72 @@ def _record_outcome(args: dict[str, Any] | None, **_: Any) -> str:
     return _emit("personalops_record_outcome", {"ok": True, "outcome": {field: arguments[field].strip() for field in required}})
 
 
+def _runtime_guard_status() -> tuple[bool, list[str]]:
+    raw = _setting("hermes_root", "PERSONALOPS_HERMES_ROOT")
+    if not raw:
+        return False, ["PERSONALOPS_HERMES_ROOT is required"]
+    try:
+        hermes = Path(raw).resolve(strict=True)
+        contract = json.loads((_contract_root() / "runtime-contract.json").read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError, RuntimeError) as exc:
+        return False, [f"runtime guard load failed: {exc}"]
+    rows = contract.get("files") if isinstance(contract, dict) else None
+    if not isinstance(rows, list) or not rows:
+        return False, ["runtime guard contract is empty"]
+    errors: list[str] = []
+    for row in rows:
+        relative = row.get("path") if isinstance(row, dict) else None
+        expected = row.get("sha256") if isinstance(row, dict) else None
+        if not isinstance(relative, str) or not isinstance(expected, str):
+            errors.append("runtime guard file entry is invalid")
+            continue
+        candidate = (hermes / relative).resolve()
+        try:
+            candidate.relative_to(hermes)
+        except ValueError:
+            errors.append(f"runtime guard path escape: {relative}")
+            continue
+        if not candidate.is_file():
+            errors.append(f"runtime guard file missing: {relative}")
+        elif hashlib.sha256(candidate.read_bytes()).hexdigest() != expected:
+            errors.append(f"runtime guard hash mismatch: {relative}")
+    return not errors, errors
+
+
+def _pre_tool_call(tool_name: str = "", args: Any = None, tool_call_id: str = "", **_: Any):
+    global _delegation_count
+    if tool_name != "delegate_task":
+        return None
+    arguments = args if isinstance(args, dict) else {}
+    guard_ok, guard_errors = _runtime_guard_status()
+    if not guard_ok:
+        message = "Personal Ops blocked delegation because the runtime guard is invalid: " + "; ".join(guard_errors)
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "runtime_guard_invalid"})
+        return {"action": "block", "message": message}
+    if _delegation_count >= 1:
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "one_delegation_limit"})
+        return {"action": "block", "message": "Personal Ops permits exactly one delegation per session."}
+    tasks = arguments.get("tasks")
+    if not isinstance(tasks, list) or len(tasks) != 1 or not isinstance(tasks[0], dict):
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "one_task_required"})
+        return {"action": "block", "message": "Personal Ops requires exactly one delegated task using the six-field worker contract."}
+    goal = tasks[0].get("goal")
+    lines = set()
+    if isinstance(goal, str):
+        lines = {line.split(":", 1)[0] for line in goal.splitlines() if ":" in line and line.split(":", 1)[1].strip()}
+    if lines != set(_WORKER_FIELDS):
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "block", "reason_code": "six_field_contract_required"})
+        return {"action": "block", "message": "Personal Ops requires the exact six-field worker contract: " + ", ".join(_WORKER_FIELDS) + "."}
+    _delegation_count += 1
+    _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "allow", "delegation_number": _delegation_count})
+    return None
+
+
+def _post_tool_call(tool_name: str = "", tool_call_id: str = "", result: Any = None, **_: Any) -> None:
+    if tool_name == "delegate_task":
+        _write_event({"tool": tool_name, "phase": "post", "tool_call_id": tool_call_id, "completed": True, "result_present": result is not None})
+
+
 def _schema(name: str, description: str, properties: dict[str, Any], required: list[str]) -> dict[str, Any]:
     return {"name": name, "description": description, "parameters": {"type": "object", "properties": properties, "required": required}}
 
@@ -416,7 +490,15 @@ _PROMPT = """You are Hermes Desktop Lite for Ajanee. Use personalops_inspect_rep
 
 
 def register(ctx) -> None:
+    global _settings, _delegation_count
+    _settings = {
+        name: ctx.get_config(name, "")
+        for name in ("repository_root", "contract_root", "evidence_log", "hermes_root")
+    }
+    _delegation_count = 0
     ctx.register_system_prompt_section("personalops.desktop-lite", _PROMPT, position="after_memory", max_chars=4000)
+    ctx.register_hook("pre_tool_call", _pre_tool_call)
+    ctx.register_hook("post_tool_call", _post_tool_call)
     definitions = [
         ("personalops_inspect_repository", "Inspect the approved repository, Git state, context files, and read-only GitHub metadata.", {}, [], _inspect_repository),
         ("personalops_read_file", "Read one bounded UTF-8 file inside the approved repository.", {"path": {"type": "string"}}, ["path"], _read_file),

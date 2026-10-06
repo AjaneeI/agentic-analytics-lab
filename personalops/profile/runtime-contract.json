@@ -1,0 +1,16 @@
+{
+  "contract_version": 1,
+  "files": [
+    {
+      "path": "tools/delegate_tool.py",
+      "sha256": "df65f6506c03d8533ee695a1266cc23739b4d0ad43715d0408e79fb8a2e35405"
+    },
+    {
+      "path": "tests/tools/test_delegate_oneshot_retirement.py",
+      "sha256": "f8913b495fd1a02a83a01fec11ea8cccfc86e0aecd11b5e6d809dc6e251b53bc"
+    }
+  ],
+  "focused_tests": [
+    "tests/tools/test_delegate_oneshot_retirement.py"
+  ]
+}
