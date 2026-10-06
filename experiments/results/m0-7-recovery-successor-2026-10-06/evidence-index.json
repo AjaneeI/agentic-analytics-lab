@@ -1,0 +1,12 @@
+{
+  "files": {
+    "RESULTS.md": "d2c94d95fb89d940a0b4c767c4de61df8e80cf42074c8e83f88fa92b2f04029c",
+    "analysis.json": "35d837dd524bea3d7415cf366d6591076b00c86f857228740aa1b2c7c70cb014",
+    "decision.json": "bb423ceb8eef6217146f16e4124fe22a92dc2f4bd8d519015201171ba77b50ad",
+    "frozen-state.json": "bc594026a8cdda529bb4007d1e6bd47130444983276eb94c5624687dc4ef1b8c",
+    "postflight.json": "183891f82e120f87589c7e608ced7faa4cc96eda9aa79c39d8dc9f19a5862cc4",
+    "preflight-environment.json": "2fd4f0a62e947a0e2b437cbb80ddff27dffdad4e0ee85ddcf7504cc3dfb18fe0",
+    "preflight-frozen-state.json": "dd0a37b8d49b8e442a4a94d2a5e6288ead1b01f276b061f0ec62f8e6636f65a1",
+    "study-report.json": "0681ca654ecb376c0d95cea05c5c9b452e5cba09d1d6ef506618029e40d3695b"
+  }
+}
