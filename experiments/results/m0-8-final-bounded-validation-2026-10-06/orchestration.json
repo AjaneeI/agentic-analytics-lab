@@ -1,0 +1,30 @@
+{
+  "attempted_extra_delegations": 0,
+  "child_count": 1,
+  "delegation_attempts": 1,
+  "delegation_count": 1,
+  "enforcement_interventions": 6,
+  "evidence_tool_calls": 8,
+  "orchestration_accepted": false,
+  "parent_evidence_tool_calls": 6,
+  "post_success_delegate_task_retired": true,
+  "successful_evidence_tool_calls": 2,
+  "successful_worker_launches": 1,
+  "tool_retirement": {
+    "accepted": true,
+    "parent_request_count": 2,
+    "parent_session_id": "20261006_011205_460300",
+    "parent_tools_by_request": [
+      [
+        "delegate_task",
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ]
+    ],
+    "reason_code": "accepted"
+  }
+}

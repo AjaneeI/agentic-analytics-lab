@@ -4,12 +4,20 @@ from pathlib import Path
 import tempfile
 import unittest
 
+from src.evals.system_benchmark.local_worker import _SYSTEM_PROMPT
+
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNNER = (
     ROOT
     / "experiments"
     / "m0-8-final-bounded-validation"
+    / "run_validation.py"
+)
+RECOVERY_RUNNER = (
+    ROOT
+    / "experiments"
+    / "m0-8-recovery-successor"
     / "run_validation.py"
 )
 
@@ -37,6 +45,32 @@ def request(session_id, timestamp, tools):
 
 
 class TestM08Runner(unittest.TestCase):
+    def test_recovery_runner_loads_without_invoking_hermes(self):
+        import subprocess
+        import sys
+
+        completed = subprocess.run(
+            [sys.executable, str(RECOVERY_RUNNER), "--help"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertIn("--verify-only", completed.stdout)
+
+    def test_worker_prompt_requires_one_sequential_call_per_evidence_tool(self):
+        normalized = " ".join(_SYSTEM_PROMPT.split())
+        self.assertIn(
+            "Call retrieve_policy exactly once before query_clickhouse.",
+            normalized,
+        )
+        self.assertIn(
+            "Do not batch them in the same assistant response",
+            normalized,
+        )
+
     def test_retirement_accepts_every_post_success_parent_request_without_delegate(self):
         runner = load_runner()
         dumps = [

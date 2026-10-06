@@ -1,0 +1,43 @@
+{
+  "corrected_raw_attribution": {
+    "child_evidence_attempts": 8,
+    "child_session_id": "20261006_011459_715177",
+    "explanation": "Budget-blocked events omit delegated_child, so orchestration.json conservatively counted them as parent evidence. Raw request session IDs show all eight evidence attempts belonged to the child. The parent had two requests: one delegation request and one post-child finalization request.",
+    "parent_evidence_attempts": 0,
+    "parent_request_count": 2,
+    "parent_session_id": "20261006_011205_460300"
+  },
+  "failure_categories": [
+    "model_instruction_following",
+    "orchestration_decomposition",
+    "enforcement_intervention"
+  ],
+  "observed_behavior": {
+    "child_first_response_tool_order": [
+      "query_clickhouse",
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "enforcement_interventions": 6,
+    "extra_delegations": 0,
+    "parent_delegations": 1,
+    "policy_retrieval_succeeded": false,
+    "post_success_delegate_task_retired": true,
+    "second_worker_launched": false,
+    "successful_child_queries": 2,
+    "successful_children": 1
+  },
+  "result": {
+    "accepted": false,
+    "human_interventions": 0,
+    "incremental_paid_spend_usd": 0,
+    "m1_authorized_by_evidence": false,
+    "retries": 0
+  },
+  "smallest_successor": {
+    "intervention": "Change only the child worker instruction to call retrieve_policy exactly once first, wait for its result, then call query_clickhouse exactly once; prohibit batching and repeated evidence calls.",
+    "same_run_retried": false,
+    "status": "defined_not_executed",
+    "stop_rule": "If the single successor fails, stop M0 and do not execute M1 in this run."
+  }
+}

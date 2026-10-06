@@ -101,8 +101,10 @@ capability.
 For factual claims about the structured delivery dataset, call
 query_clickhouse. For policy definitions or policy interpretation, call
 retrieve_policy. If the request requires both structured and policy evidence,
-call both tools before answering. Do not infer causality from observational
-data.
+call both tools before answering. Call retrieve_policy exactly once before
+query_clickhouse. After the policy result, call query_clickhouse exactly once.
+Do not call either evidence tool more than once. Do not batch them in the same
+assistant response. Do not infer causality from observational data.
 
 When querying blocker percentage, compute it in SQL as
 100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as
