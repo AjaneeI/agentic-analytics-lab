@@ -1,0 +1,26 @@
+{
+  "contract_sha256": {
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "d44f465672ca7428198d9af74c21dbe4e621750c1f2f60b45af69f278bb5b835",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "f7c353be4ba6dd3c18484ea380a6e1ef567f1c9a585812f368ee16fc63f09b69",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/plugin.yaml": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0",
+    "experiments/hermes-successor-ab-v1/profile/config.yaml": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
+    "experiments/hermes-successor-ab-v1/run_benchmark.py": "881993b25f8d2e9aaa3bd1befde26c802d9600f36e2f09c60dd39fa179bb3c8b",
+    "experiments/m0-6-fresh-sb-d01-ab/run_benchmark.py": "7c6fc514d9ab658ad5521c451ccaeacb81c148be1203628180d6f7f20233df8f",
+    "experiments/m0-8-final-bounded-validation/run_validation.py": "99cb1e6980bd2e29ae7529fc884b54519ea3f1565672239bfa39f6ce07f416af",
+    "experiments/m0-8-recovery-successor/README.md": "f1c4aeec80b018648b68477d1379c4f8d5ba03a9ab050a0dcf0500e15bcb57b6",
+    "experiments/m0-8-recovery-successor/run_validation.py": "38e36a54e93b5a91068626b4d189cbf9e7993b412cf33623cba39b6b9419f524",
+    "experiments/results/m0-8-final-bounded-validation-2026-10-06/evidence-index.json": "882f4eaa42ffbd457b2f610ca7927ce58b2ebcaa40bdd2d8cff6c5edad009966",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/local_worker.py": "074f37c32b9cb56c3bd64d5b18acae0d7492b1b9a40e2663124730487c232baa",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+    "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27",
+    "tests/system_benchmark/test_m0_8_runner.py": "11f7d55e970f574194927b27f796acc57901c3afb64c5ae5280cc1334ddccb7f"
+  },
+  "freeze_ref": "refs/tags/m0-8-recovery-successor-v1",
+  "head": "4da9586c97a4ca81dc9174414685e5144287931e",
+  "passed": true,
+  "profile": "localbenchmark",
+  "tool_count": 3
+}

@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "hermes",
+    "-p",
+    "localbenchmark",
+    "--ignore-rules",
+    "--usage-file",
+    "/Users/ajaneeigharo/Documents/Codex/2026-10-05/whe/work/agentic-analytics-lab-hermes-roadmap/experiments/results/m0-8-recovery-successor-2026-10-06/usage.json",
+    "--in",
+    "/Users/ajaneeigharo/Documents/Codex/2026-10-05/whe/work/agentic-analytics-lab-hermes-roadmap",
+    "-z",
+    "This is frozen Treatment B for SB-D01. Call delegate_task exactly once with exactly one task. Do not call query_clickhouse or retrieve_policy from the parent. Do not provide output_schema. Do not retry. Give the child the following complete goal verbatim:\n\nYou are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Call retrieve_policy exactly once before\nquery_clickhouse. After the policy result, call query_clickhouse exactly once.\nDo not call either evidence tool more than once. Do not batch them in the same\nassistant response. Do not infer causality from observational data.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.\n\nTask: Identify the highest blocker-rate team and interpret it using the KPI definition without claiming causality.\n\nAfter the child returns, emit the child's final response as one JSON object only. Do not add prose, Markdown fences, evidence references, or manual corrections."
+  ]
+}

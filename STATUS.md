@@ -1,5 +1,40 @@
 # Verified Project Status
 
+## Hermes Personal Ops roadmap M0 stop — 2026-10-06
+
+- Roadmap evidence is tracked on issue #89 and branch
+  `hermes-personal-ops-roadmap`. Historical issues #73, #82, #84, #85, #86,
+  #87 and draft PRs #83/#88 remain unchanged.
+- M0.7's original three-case probe failed 0/3. Its frozen, bounded recovery
+  passed 3/3: local Qwen produced validator-compliant fully qualified SQL,
+  correct blocker-rate formulas, and exact rows with zero retries or spend.
+- The first M0.8 Hermes validation failed: one child batched two SQL calls
+  before policy, exhausted the evidence budget, and returned no policy
+  interpretation. The failure is preserved at commit `4da9586` beneath tag
+  `m0-8-final-bounded-validation-v1`.
+- The final prompt-only M0.8 recovery was frozen at commit `4da9586` and tag
+  `m0-8-recovery-successor-v1`, published before invocation, and run exactly
+  once. It failed. The child retrieved policy successfully, then its qualified
+  and formula-correct ClickHouse query received HTTP 404. Four child retries
+  and two parent evidence attempts were blocked by existing enforcement.
+- Exactly one delegation and one child occurred; no second worker or extra
+  delegation occurred; post-child `delegate_task` retirement held. The
+  deterministic scorer rejected eligibility because the observed trajectory
+  did not contain exactly two evidence-tool calls.
+- Frozen-state checks passed before and after execution. Retries and human
+  interventions were zero. Incremental paid spend remained `$0`.
+- Evidence is preserved under
+  `experiments/results/m0-8-recovery-successor-2026-10-06` with hash-indexed,
+  Authorization-redacted request copies; original local request dumps remain
+  untouched.
+- **M0 exit criterion: not met.** The preregistered stop rule blocks dependent
+  M1-M11 implementation in this run. Hermes Desktop is not yet verified as
+  Ajanee's primary local interface.
+- Next bounded work, in a future authorized run: a model-free subprocess probe
+  comparing ClickHouse configuration/request construction in the successful
+  parent preflight and the delegated-child runtime. Do not invoke Hermes again
+  until the discrepancy is explained and covered by a deterministic test.
+
 ## M0.6 fresh SB-D01 A/B — 2026-10-06
 
 - M0.6 was frozen at commit `0d93415a7a9c4aa0a88eed07aa0c932464613d29`
