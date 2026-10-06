@@ -1,8 +1,12 @@
+from io import BytesIO
 import unittest
+from urllib.error import HTTPError
+from unittest.mock import patch
 
 from src.tools.clickhouse_readonly import (
     QueryRejected,
     _validate_clickhouse_url,
+    query_clickhouse,
     validate_read_only,
 )
 
@@ -132,6 +136,58 @@ class TestClickHouseUrlValidation(unittest.TestCase):
 
     def test_https_allowed(self):
         _validate_clickhouse_url("https://clickhouse.example.com")
+
+
+class _Response:
+    def __init__(self, body: bytes):
+        self._body = body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_args):
+        return None
+
+    def read(self):
+        return self._body
+
+
+class TestClickHouseErrorReporting(unittest.TestCase):
+    def test_parent_success_and_child_unknown_identifier_are_distinguishable(self):
+        def urlopen(request, timeout):
+            self.assertEqual(timeout, 15)
+            sql = request.data.decode("utf-8")
+            if "team_id" not in sql:
+                return _Response(b'{"row_count":500}\n')
+
+            raise HTTPError(
+                request.full_url,
+                404,
+                "Not Found",
+                {"X-ClickHouse-Exception-Code": "47"},
+                BytesIO(
+                    b"Code: 47. DB::Exception: Unknown expression identifier "
+                    b"`team_id`. (UNKNOWN_IDENTIFIER)"
+                ),
+            )
+
+        parent_sql = (
+            "SELECT count() AS row_count "
+            "FROM agentic_analytics.delivery_work_items"
+        )
+        child_sql = (
+            "SELECT team_id, 100 * SUM(blocked) / COUNT(*) AS blocked_pct "
+            "FROM agentic_analytics.delivery_work_items "
+            "GROUP BY team_id ORDER BY blocked_pct DESC LIMIT 1"
+        )
+
+        with patch("src.tools.clickhouse_readonly.urllib.request.urlopen", urlopen):
+            self.assertEqual(query_clickhouse(parent_sql), [{"row_count": 500}])
+            with self.assertRaisesRegex(
+                RuntimeError,
+                r"ClickHouse query failed.*code 47.*team_id.*UNKNOWN_IDENTIFIER",
+            ):
+                query_clickhouse(child_sql)
 
 
 if __name__ == "__main__":
