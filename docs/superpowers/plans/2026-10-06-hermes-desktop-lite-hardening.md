@@ -35,4 +35,4 @@
 - [x] Run focused product tests, full repository suite once stable, Hermes retirement/one-worker tests, and profile/plugin validation.
 - [x] Perform a fresh read-only trust-boundary review and resolve deterministic critical/high findings with RED→GREEN.
 - [x] Preregister and execute one live smoke with zero retries after the deterministic gates were clean.
-- [ ] Record exact evidence on issue #91 and draft PR #93, preserving #89/#90.
+- [x] Record exact evidence on issue #91 and draft PR #93, preserving #89/#90.
