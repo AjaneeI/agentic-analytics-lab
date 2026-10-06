@@ -451,6 +451,7 @@ def _runtime_guard_status() -> tuple[bool, list[str]]:
 def _pre_tool_call(tool_name: str = "", args: Any = None, tool_call_id: str = "", **_: Any):
     global _delegation_count
     if tool_name != "delegate_task":
+        _write_event({"tool": tool_name, "phase": "pre", "tool_call_id": tool_call_id, "action": "allow"})
         return None
     arguments = args if isinstance(args, dict) else {}
     guard_ok, guard_errors = _runtime_guard_status()
@@ -478,8 +479,7 @@ def _pre_tool_call(tool_name: str = "", args: Any = None, tool_call_id: str = ""
 
 
 def _post_tool_call(tool_name: str = "", tool_call_id: str = "", result: Any = None, **_: Any) -> None:
-    if tool_name == "delegate_task":
-        _write_event({"tool": tool_name, "phase": "post", "tool_call_id": tool_call_id, "completed": True, "result_present": result is not None})
+    _write_event({"tool": tool_name, "phase": "post", "tool_call_id": tool_call_id, "completed": True, "result_present": result is not None})
 
 
 def _schema(name: str, description: str, properties: dict[str, Any], required: list[str]) -> dict[str, Any]:
