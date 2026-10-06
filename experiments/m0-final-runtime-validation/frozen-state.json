@@ -1,0 +1,167 @@
+{
+  "schema_version": "m0-final-runtime-validation-v1",
+  "repository": {
+    "base_evidence_commit": "f0a42dcec69fe8d7cbfaae234eafae3d6ee11f7c",
+    "evidence_branch": "hermes-personal-ops-roadmap",
+    "freeze_ref": "refs/tags/m0-final-runtime-validation-v1",
+    "roadmap_issue": 89,
+    "evidence_pull_request": 90,
+    "historical_issues": [73, 82, 84, 85, 86, 87],
+    "historical_pull_requests": [83, 88]
+  },
+  "preregistration": {
+    "hypothesis": "After the deterministic wrapper repair, the unchanged bounded Hermes workflow can complete SB-D01 with one child, two first-attempt evidence calls, an accepted SystemBenchmarkResponse, and no intervention.",
+    "alternative": "The unchanged model or orchestration will still violate the frozen SQL, evidence, response, or delegation contract; the raw failure will identify a non-infrastructure blocker under the repaired error reporting.",
+    "sample_size": 1,
+    "pass_threshold": "1/1 accepted",
+    "retry_policy": "zero retries; no prompt or contract repair after observing the result",
+    "evidence_destination": "experiments/results/m0-final-runtime-validation-2026-10-06",
+    "interpretation_boundary": "A pass establishes only that the M0 foundation is sufficient for bounded use on this workflow and permits M1 planning. It does not establish general Hermes superiority, general reliability, or unrestricted autonomy. A failure is preserved and stops this run."
+  },
+  "intervention": {
+    "changed": "The read-only ClickHouse wrapper preserves at most 4096 bytes of HTTP error detail plus X-ClickHouse-Exception-Code instead of reducing every server-side query error to a generic HTTP status.",
+    "unchanged": [
+      "model",
+      "context_length",
+      "temperature",
+      "parent_prompt",
+      "child_prompt",
+      "query_clickhouse model-visible contract",
+      "retrieve_policy model-visible contract",
+      "validator",
+      "SQL semantics",
+      "dataset",
+      "evidence budget",
+      "one-worker enforcement",
+      "post-success delegation retirement",
+      "task",
+      "scorer",
+      "reference",
+      "paid fallback policy"
+    ],
+    "not_added": [
+      "retry",
+      "SQL normalization or repair",
+      "validator relaxation",
+      "fallback networking",
+      "agent or runtime layer"
+    ]
+  },
+  "workflow": {
+    "case_id": "SB-D01",
+    "request": "Identify the highest blocker-rate team and interpret it using the KPI definition without claiming causality.",
+    "response_contract": "SystemBenchmarkResponse",
+    "allowed_child_tools": ["query_clickhouse", "retrieve_policy"],
+    "expected_child_tool_order": ["retrieve_policy", "query_clickhouse"],
+    "parent_delegations": 1,
+    "max_children": 1,
+    "retries": 0,
+    "prompt_source": "src/evals/system_benchmark/local_worker.py:_SYSTEM_PROMPT and experiments/hermes-successor-ab-v1/run_benchmark.py:build_hermes_prompt",
+    "tool_contract_source": "src/evals/system_benchmark/local_worker.py:_QUERY_TOOL/_POLICY_TOOL and experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py"
+  },
+  "acceptance": "Existing deterministic score passes; exactly one delegation and child; exactly one successful policy call followed by exactly one successful query; no extra or failed calls, parent evidence, second worker, concurrency, or enforcement intervention; delegate_task absent from every post-child parent request; independent verification passes; zero human intervention, retries, and paid spend.",
+  "stop_rule": "Execute exactly once. Pass marks M0 sufficient for bounded use and permits M1 planning only. Failure preserves the evidence, classifies the blocker, and stops without another M0.x experiment.",
+  "incremental_paid_spend_usd": 0,
+  "runtime": {
+    "python_version": "3.14.7",
+    "context_length": 65536,
+    "hermes": {
+      "version": "0.21.5+4410.g2ec7703",
+      "source_commit": "2ec7703012e5e356b8df383026397160ed9b0bed"
+    },
+    "model": {
+      "name": "hermes-local:qwen3.5-9b",
+      "ollama_id": "0df9cd2e3545",
+      "family": "qwen35",
+      "parameter_size": "9.0B",
+      "file_type": "Q4_K_M",
+      "worker_temperature": 0,
+      "manifest_path": "/Users/ajaneeigharo/.ollama/models/manifests/registry.ollama.ai/library/hermes-local/qwen3.5-9b",
+      "manifest_sha256": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c"
+    },
+    "ollama": {
+      "server_version": "0.35.0",
+      "client_version": "0.34.4"
+    },
+    "opencode_version": "2.0.20",
+    "herdr_version": "0.9.3"
+  },
+  "installed_state": {
+    "profile": "localbenchmark",
+    "request_dump_directory": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions",
+    "visible_tools_before_success": [
+      "delegate_task",
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "visible_tools_after_success": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "fallback_providers": [],
+    "files": [
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/config.yaml",
+        "sha256": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/__init__.py",
+        "sha256": "f7c353be4ba6dd3c18484ea380a6e1ef567f1c9a585812f368ee16fc63f09b69"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/plugin.yaml",
+        "sha256": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool.py",
+        "sha256": "df65f6506c03d8533ee695a1266cc23739b4d0ad43715d0408e79fb8a2e35405"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tests/tools/test_delegate_oneshot_retirement.py",
+        "sha256": "f8913b495fd1a02a83a01fec11ea8cccfc86e0aecd11b5e6d809dc6e251b53bc"
+      }
+    ]
+  },
+  "one_worker_enforcement": {
+    "worker_identity": "Herdr-managed OpenCode local worker",
+    "max_concurrent_children": 1,
+    "max_spawn_depth": 1,
+    "oneshot_max_children": 1,
+    "opencode_parallel_enabled": false,
+    "assets": [
+      {
+        "path": "/Users/ajaneeigharo/Documents/Codex/2026-10-02/set-up-the-foundation-for-a/work/hermes-foundation/herdr-managed-worker/manager.py",
+        "sha256": "42e236276edf0542c5ee4bcee83328f5f6e6d6b790a858a6345d184e3605bbae"
+      },
+      {
+        "path": "/Users/ajaneeigharo/Documents/Codex/2026-10-02/set-up-the-foundation-for-a/work/hermes-foundation/herdr-managed-worker/managed_worker.sh",
+        "sha256": "c2872f780794a7ba7edb00960d3ab7fb681754c18a016461a7d9161545e568b5"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/herdr-worker/__init__.py",
+        "sha256": "d83b861f38e71a8ac1419c9d3fe18c51456ac4206b7a56b81e1480aed50fe969"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localfoundation/config.yaml",
+        "sha256": "0a0e1c934ec7df3150814954c3b121e49b9eb0e7f150e25b83f28d9edad491fb"
+      }
+    ]
+  },
+  "contract_sha256": {
+    "experiments/m0-final-runtime-validation/README.md": "ed6a3e24287a01bdc6d9063d5c6ee525edf2db5712f637e1fef641cd5ac852ef",
+    "experiments/m0-8-recovery-successor/run_validation.py": "38e36a54e93b5a91068626b4d189cbf9e7993b412cf33623cba39b6b9419f524",
+    "experiments/m0-8-final-bounded-validation/run_validation.py": "99cb1e6980bd2e29ae7529fc884b54519ea3f1565672239bfa39f6ce07f416af",
+    "experiments/m0-clickhouse-runtime-diagnostic/diagnosis.json": "4ca40d7d816908591b7234af88813c218accf7515ecc801427d1cefeb078faef",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "f7c353be4ba6dd3c18484ea380a6e1ef567f1c9a585812f368ee16fc63f09b69",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/plugin.yaml": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0",
+    "experiments/hermes-successor-ab-v1/profile/config.yaml": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
+    "src/evals/system_benchmark/local_worker.py": "074f37c32b9cb56c3bd64d5b18acae0d7492b1b9a40e2663124730487c232baa",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "evals/system_benchmark/development_tasks.json": "d44f465672ca7428198d9af74c21dbe4e621750c1f2f60b45af69f278bb5b835",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "src/tools/clickhouse_readonly.py": "90f3c50490258a3f0854dc16e71c00bb375377605b432eda605e9305d1a3c310",
+    "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27",
+    "tests/test_clickhouse_readonly.py": "7e4fab2ed288fac65c34513fb741d3e7315524ba4331c803f7be3ef60792cd45"
+  }
+}
