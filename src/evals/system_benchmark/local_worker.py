@@ -47,9 +47,12 @@ RouteFn = Callable[[SystemBenchmarkTask], RoutingDecision]
 _QUERY_TOOL = {
     "name": "query_clickhouse",
     "description": (
-        "Run one read-only SQL query against "
+        "Run one read-only SQL query. The only approved table is "
+        "agentic_analytics.delivery_work_items. SQL passed to this tool must "
+        "reference this exact fully qualified table name: "
         "agentic_analytics.delivery_work_items. For blocker percentage, "
-        "return the percentage from ClickHouse and alias it as blocked_pct."
+        "compute 100 * SUM(blocked) / COUNT(*) (or an equivalent expression) "
+        "and use blocked_pct only as the result alias."
     ),
     "input_schema": {
         "type": "object",
@@ -98,8 +101,10 @@ capability.
 For factual claims about the structured delivery dataset, call
 query_clickhouse. For policy definitions or policy interpretation, call
 retrieve_policy. If the request requires both structured and policy evidence,
-call both tools before answering. Do not infer causality from observational
-data.
+call both tools before answering. Call retrieve_policy exactly once before
+query_clickhouse. After the policy result, call query_clickhouse exactly once.
+Do not call either evidence tool more than once. Do not batch them in the same
+assistant response. Do not infer causality from observational data.
 
 When querying blocker percentage, compute it in SQL as
 100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as

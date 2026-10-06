@@ -1,0 +1,78 @@
+{
+  "files": [
+    {
+      "original_sha256": "6a355ab7268d6c2e0ab8123dbb45fe7ae0b84fbe71450bde0e0576531404b3b6",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011205_460300_20261006_011205_790427.json",
+      "sanitized_sha256": "77124cb761da7b6edf21486767d5145321e3b15daa21b6ec83ab21e5703af62e",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011205_460300_20261006_011205_790427.json"
+    },
+    {
+      "original_sha256": "970bd67ded4c063f42c152541f363c333daf1f0459b74432e18652e48daa62db",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011205_460300_20261006_115356_240074.json",
+      "sanitized_sha256": "c0b2c097095283e202a9f037fe7c1058312276321c6f9af836b5fd7a8af86454",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011205_460300_20261006_115356_240074.json"
+    },
+    {
+      "original_sha256": "6d9c6f5c6252539966b84d3a1097d381d0a170cac04460f1c334f71017b234c6",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011459_715177_20261006_011459_738193.json",
+      "sanitized_sha256": "4ca9e17ce605909604f88467f406a1333493128753469d00f12abd9c814dac90",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011459_715177_20261006_011459_738193.json"
+    },
+    {
+      "original_sha256": "2657dff985865b845f7fc2e2f0a4e034ffb285a0a45858a89a025f97bb3197a9",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011459_715177_20261006_011704_575201.json",
+      "sanitized_sha256": "b9e17da85f19a56f8f52a4e09c8af3b63d667e25d8db52c794f12394ccd18b76",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011459_715177_20261006_011704_575201.json"
+    },
+    {
+      "original_sha256": "11667faefcedebbe0c10085b6a0a8ab45fa09b119906909d6ba4eb3d296a1c12",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011459_715177_20261006_011745_219680.json",
+      "sanitized_sha256": "54d9eb744fcdaac654405408d485295f642ba8a62500ec29b846844fa0fb67b5",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011459_715177_20261006_011745_219680.json"
+    },
+    {
+      "original_sha256": "1f747f15a7fb58c694da9383435e08f7675f9ea598ca08bbd6a86ae6f28b6591",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011459_715177_20261006_011816_626917.json",
+      "sanitized_sha256": "a83a3abe15179b9dcc310b0c71808f8fb14cc90b9184dad11e7791c56c298a3e",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011459_715177_20261006_011816_626917.json"
+    },
+    {
+      "original_sha256": "faef3d3b66efe0bc1a7d872c6c05e74a3c0fdc6d86377ccc8287828d99e0afc0",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011459_715177_20261006_011843_895109.json",
+      "sanitized_sha256": "cc7f51c4530139d27bba983701b08a2eca9cffb17704a36900db7d68f68a0f70",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011459_715177_20261006_011843_895109.json"
+    },
+    {
+      "original_sha256": "935e6d00e60a91dcec43198db9cc9ca9f7268322883236028d0042e0c39bad36",
+      "redacted_fields": [
+        "request.headers.Authorization"
+      ],
+      "repository_copy": "request_dump_20261006_011459_715177_20261006_011912_295104.json",
+      "sanitized_sha256": "f2f37f9c5dd0bfaa343807a641aa0d807ced22c52b8d78b8dc691f4d584acb47",
+      "source_path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions/request_dump_20261006_011459_715177_20261006_011912_295104.json"
+    }
+  ],
+  "policy": "Repository copies replace only request.headers.Authorization. Local originals remain untouched.",
+  "schema_version": "m0-8-request-redaction-v1"
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": "m0-7-recovery-successor-v1",
+  "repository": {
+    "base_evidence_commit": "13397fdb1e0b04a9291b59a51d0304ae099909d9",
+    "evidence_branch": "hermes-personal-ops-roadmap",
+    "freeze_ref": "refs/tags/m0-7-recovery-successor-v1",
+    "roadmap_issue": 89,
+    "historical_issues": [73, 82, 84, 85, 86, 87],
+    "historical_pull_requests": [83, 88]
+  },
+  "hypothesis": "With only the clarified blocker-rate formula and alias instruction, frozen local Qwen produces a first-response validator-compliant query with exact rows for every unchanged M0.7 case.",
+  "intervention": {
+    "model_visible_change": "For blocker percentage, compute 100 * SUM(blocked) / COUNT(*) (or an equivalent expression) and use blocked_pct only as the result alias.",
+    "infrastructure_guard": "Require the existing ClickHouse environment and a live read-only row-count preflight before any model invocation.",
+    "unchanged": [
+      "model",
+      "context_length",
+      "temperature",
+      "validator",
+      "dataset",
+      "SQL execution",
+      "case prompts",
+      "expected rows",
+      "qualification wording",
+      "normalization policy",
+      "retry policy",
+      "security boundaries"
+    ]
+  },
+  "retry_policy": "one scheduled model call per case; zero retries, repair, or normalization",
+  "incremental_paid_spend_usd": 0,
+  "evidence_destination": "experiments/results/m0-7-recovery-successor-2026-10-06",
+  "interpretation_boundary": "Passing supports one M0.8 bounded Hermes workflow. Failing stops the M0 model-intervention loop in this run; it does not authorize prompt repair or another retry.",
+  "runtime": {
+    "python_version": "3.14.7",
+    "context_length": 65536,
+    "model": {
+      "name": "hermes-local:qwen3.5-9b",
+      "family": "qwen35",
+      "parameter_size": "9.0B",
+      "file_type": "Q4_K_M",
+      "ollama_id": "0df9cd2e3545",
+      "temperature": 0,
+      "manifest_path": "/Users/ajaneeigharo/.ollama/models/manifests/registry.ollama.ai/library/hermes-local/qwen3.5-9b",
+      "manifest_sha256": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c"
+    },
+    "ollama": {
+      "server_version": "0.35.0",
+      "client_version": "0.34.4"
+    }
+  },
+  "study": {
+    "study_id": "m0-7-qwen-blocker-formula-successor-v1",
+    "sample_size": 3,
+    "pass_threshold": 3,
+    "allowed_tools": ["query_clickhouse"],
+    "acceptance": "One first-response query_clickhouse call; non-empty unedited SQL; unchanged validator acceptance; successful execution; exact expected rows.",
+    "system_prompt": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+    "cases": [
+      {
+        "case_id": "M07R_HIGHEST_RATE",
+        "user_prompt": "Which team has the highest blocker rate in the delivery dataset? Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+        "expected_rows": [
+          {"team": "Data", "blocked_pct": 20.9}
+        ]
+      },
+      {
+        "case_id": "M07R_LOWEST_RATE",
+        "user_prompt": "Which team has the lowest blocker rate in the delivery dataset? Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+        "expected_rows": [
+          {"team": "Platform", "blocked_pct": 11.4}
+        ]
+      },
+      {
+        "case_id": "M07R_ALL_RATES",
+        "user_prompt": "Return every delivery team's blocker rate from highest to lowest. Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+        "expected_rows": [
+          {"team": "Data", "blocked_pct": 20.9},
+          {"team": "AI", "blocked_pct": 15.0},
+          {"team": "Product", "blocked_pct": 14.7},
+          {"team": "Platform", "blocked_pct": 11.4}
+        ]
+      }
+    ]
+  },
+  "contract_sha256": {
+    "experiments/m0-7-recovery-successor/README.md": "f373b1500ea8dfd0d44b8b5cfd6b11bd27ab360a8c441d4969fa44fde9c2dbe3",
+    "experiments/m0-7-recovery-successor/run_study.py": "d0d8d3009ee2d8d62bbbd07127c56e123ef6fffa5de5ecd509a1f60a029fb4e1",
+    "experiments/m0-7-tool-contract-usability/run_study.py": "94905cb8e5ffc5228431daad6a15aeaddc01ec16d7d55090e2c34a58dfd3e560",
+    "experiments/results/m0-7-tool-contract-usability-2026-10-06/evidence-index.json": "6619586917864eb051d4161fed4a9a62e92e5f578abfeb4dde41da36fa920761",
+    "src/evals/system_benchmark/local_worker.py": "846740a24c64fd509f3e7ef6658f3021f05c6b6b19d683cf1dc7b58ab5ebb89e",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "f7c353be4ba6dd3c18484ea380a6e1ef567f1c9a585812f368ee16fc63f09b69",
+    "src/evals/capability_reliability.py": "ed314f3dba7a095880ca8fa537fa0605938f1a29e9d86817089e3e09a87b6c1c",
+    "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+    "tests/system_benchmark/test_m0_7_tool_contract.py": "220dbaeb77a53f7ee68114b61316253b5832900fdcccc1cb206a0bf003e59ec0"
+  }
+}

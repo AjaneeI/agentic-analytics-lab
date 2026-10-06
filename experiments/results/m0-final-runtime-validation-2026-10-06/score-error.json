@@ -1,0 +1,34 @@
+{
+  "error": "ValueError: Treatment B requires exactly two evidence-tool calls",
+  "orchestration": {
+    "attempted_extra_delegations": 0,
+    "child_count": 1,
+    "delegation_attempts": 1,
+    "delegation_count": 1,
+    "enforcement_interventions": 5,
+    "evidence_tool_calls": 6,
+    "orchestration_accepted": false,
+    "parent_evidence_tool_calls": 4,
+    "post_success_delegate_task_retired": true,
+    "successful_evidence_tool_calls": 1,
+    "successful_worker_launches": 1,
+    "tool_retirement": {
+      "accepted": true,
+      "parent_request_count": 2,
+      "parent_session_id": "20261006_122538_7a55bb",
+      "parent_tools_by_request": [
+        [
+          "delegate_task",
+          "query_clickhouse",
+          "retrieve_policy"
+        ],
+        [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      ],
+      "reason_code": "accepted"
+    }
+  },
+  "scored": false
+}

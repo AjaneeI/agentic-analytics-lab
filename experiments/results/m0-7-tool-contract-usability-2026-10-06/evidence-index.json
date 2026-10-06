@@ -1,0 +1,11 @@
+{
+  "files": {
+    "RESULTS.md": "c95d4edaa778a4e5af2a5aed127ae63f1eecc72e3c38640828b488008ba65e12",
+    "analysis.json": "cb3b1333398fc958354ad0b8e8d406dd63ca13a1144146849689529d68ef0d6f",
+    "decision.json": "820424c71a19271e3c83b1cc80c985cf46393261af02c8f41f1edd16eeead786",
+    "frozen-state.json": "bda12cf4c5c3873101ec2a75fecda128e54c8ceaf9668559f3a30a9defe0006e",
+    "postflight.json": "20ef1ee9b3a4e274f0d250c47e4777d554e38430f49069eabb1cc5193b67e418",
+    "preflight.json": "da21a3ed2ef25b8d1ee368ebf1180179e3a8b5358e8bb1b9110f5e6216ecf3c1",
+    "study-report.json": "78a708339e5ecc10694ee959f7218139fc2d26307c6843e44a39f0fe5767ac06"
+  }
+}

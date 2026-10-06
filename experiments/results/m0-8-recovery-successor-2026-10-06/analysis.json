@@ -1,0 +1,59 @@
+{
+  "schema_version": "m0-8-recovery-successor-analysis-v1",
+  "verdict": "failed",
+  "m0_exit_criterion_met": false,
+  "m1_authorized": false,
+  "execution": {
+    "invocations": 1,
+    "retries": 0,
+    "human_interventions": 0,
+    "incremental_paid_spend_usd": 0,
+    "elapsed_seconds": 416.2457502920006,
+    "process_returncode": 0
+  },
+  "delegation": {
+    "delegations": 1,
+    "children": 1,
+    "extra_delegations": 0,
+    "second_worker": false,
+    "post_success_delegate_task_retired": true
+  },
+  "raw_evidence_sequence": [
+    "child retrieve_policy succeeded",
+    "child query_clickhouse failed with HTTP 404",
+    "four additional child query_clickhouse attempts were blocked by the evidence-tool budget",
+    "two parent query_clickhouse attempts were blocked by the parent-evidence boundary"
+  ],
+  "true_attribution_from_request_session_ids": {
+    "parent_session_id": "20261006_120128_87ab42",
+    "child_session_id": "20261006_120251_53754a",
+    "child_evidence_attempts": 6,
+    "parent_evidence_attempts": 2,
+    "note": "Blocked child events omit delegated_child metadata. Raw request session IDs, not the generated parent_evidence_tool_calls field, are authoritative."
+  },
+  "failure_classification": [
+    {
+      "category": "infrastructure/runtime",
+      "evidence": "The child query used validator-compliant SQL but received HTTP 404 even though the parent-process live preflight passed against the same frozen dataset."
+    },
+    {
+      "category": "model instruction-following",
+      "evidence": "After the failed SQL call, the child made four additional SQL attempts despite the frozen exactly-once instruction."
+    },
+    {
+      "category": "orchestration/decomposition",
+      "evidence": "After the child returned, the parent attempted two evidence calls instead of emitting only the child's result."
+    },
+    {
+      "category": "enforcement intervention",
+      "evidence": "Enforcement blocked four over-budget child calls and two forbidden parent calls. orchestration.json reports seven failed/intervention events because it also counts the HTTP 404 tool error."
+    }
+  ],
+  "scoring": {
+    "scored": false,
+    "error": "ValueError: Treatment B requires exactly two evidence-tool calls"
+  },
+  "interpretation_boundary": "This run demonstrates that the prompt-only sequencing change did not produce a reliable end-to-end bounded Hermes workflow. It does not establish that Qwen, Hermes, or the tool contract is generally incapable; the child runtime HTTP 404 must be isolated deterministically before any further model invocation.",
+  "next_experiment": "In a future authorized work session, use a model-free subprocess probe to compare ClickHouse configuration and request construction in the parent preflight and delegated-child runtime. Do not invoke Hermes until that discrepancy is explained and covered by a deterministic regression test.",
+  "stop_rule_applied": "This was the final M0 recovery in this run. M0 remains incomplete and M1-M11 implementation stops."
+}

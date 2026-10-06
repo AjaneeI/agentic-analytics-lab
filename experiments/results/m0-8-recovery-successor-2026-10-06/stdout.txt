@@ -1,0 +1,12 @@
+The child task ran and returned an incomplete result due to ClickHouse access failures during execution. The child's final response is already available in the delegation results. I should emit just the child's returned JSON as the final output.
+
+Child's result:
+```json
+{
+  "disposition": "incomplete",
+  "answer_text": "Could not identify the highest blocker-rate team. Retrieved policy definitions confirming blocker rate is the count of blocked active work items divided by all active work items in the selected scope, reported as a percentage. ClickHouse queries failed with HTTP 404 and tool budget exceeded errors, preventing access to the delivery_work_items table data needed to compute blocker rates by team.",
+  "uncertainty": "high",
+  "clarification": "Unable to proceed without successful ClickHouse access. The table agentic_analytics.delivery_work_items is the only approved table per the tool contract, but queries are failing.",
+  "handoff": "Request access to ClickHouse or verify table permissions for agentic_analytics.delivery_work_items."
+}
+```

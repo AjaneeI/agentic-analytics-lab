@@ -1,0 +1,59 @@
+{
+  "schema_version": "m0-final-runtime-validation-analysis-v1",
+  "verdict": "fail",
+  "m0_foundation_sufficient_for_bounded_use": false,
+  "m1_authorized_by_evidence": false,
+  "execution": {
+    "runs": 1,
+    "elapsed_seconds": 628.6460744999931,
+    "retries": 0,
+    "human_interventions": 0,
+    "incremental_paid_spend_usd": 0.0,
+    "preflight_passed": true,
+    "postflight_passed": true
+  },
+  "orchestration": {
+    "delegations": 1,
+    "children": 1,
+    "extra_delegations": 0,
+    "second_workers": 0,
+    "post_success_delegate_task_retired": true,
+    "child_evidence_attempts": 6,
+    "parent_evidence_attempts": 0,
+    "successful_evidence_calls": 1,
+    "enforcement_blocks": 4,
+    "tool_errors": 1,
+    "runner_parent_attribution_is_artifact": true,
+    "attribution_basis": "All evidence events occur after delegate_pre and before delegate_post; blocked rows omit delegated_child metadata."
+  },
+  "first_query": {
+    "sql": "SELECT team_id, COUNT(*) as total_items, SUM(blocked) as blocked_count, 100 * SUM(blocked) / COUNT(*) as blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team_id ORDER BY blocked_pct DESC LIMIT 1",
+    "table_qualified": true,
+    "formula_compliant": true,
+    "schema_identifier_compliant": false,
+    "result": "RuntimeError: ClickHouse query failed: timed out"
+  },
+  "failure_classes": [
+    {
+      "category": "model_tool_contract_understanding",
+      "evidence": "The child used nonexistent team_id instead of team."
+    },
+    {
+      "category": "infrastructure_runtime",
+      "evidence": "The first child ClickHouse request timed out after the parent live preflight passed."
+    },
+    {
+      "category": "model_instruction_following",
+      "evidence": "The child attempted four evidence calls after its allowed query and returned fenced JSON."
+    },
+    {
+      "category": "enforcement_intervention",
+      "evidence": "The evidence budget blocked four extra child calls."
+    }
+  ],
+  "deterministic_scorer": {
+    "scored": false,
+    "error": "ValueError: Treatment B requires exactly two evidence-tool calls"
+  },
+  "stop_decision": "Preserve the failure; M0 remains incomplete; do not run another benchmark or begin M1 planning."
+}

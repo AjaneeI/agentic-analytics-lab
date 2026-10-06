@@ -1,5 +1,73 @@
 # Verified Project Status
 
+## M0 diagnostic and final runtime validation — 2026-10-06
+
+- The issue #89 ClickHouse 404 was reproduced without Qwen or Hermes. Parent
+  and child host, port, protocol, path, auth source, table, encoding, query
+  parameters, timeout/retry policy, environment, effective profile, working
+  directory, tool wrapper, and request adapter matched.
+- The actual prior server response was ClickHouse exception code 47:
+  `UNKNOWN_IDENTIFIER` for nonexistent `team_id`. The parent used a valid
+  count body; the child body grouped by `team_id` instead of schema column
+  `team`. The 404 was therefore not evidence of endpoint routing failure.
+- The read-only wrapper had discarded the ClickHouse error body. Commit
+  `f0a42dc` now preserves bounded server error context without changing auth,
+  retries, validation, SQL semantics, fallback networking, architecture, or
+  model-visible tool contracts. RED→GREEN regression passed; focused tests
+  passed 35/35 and the full suite passed 349/349.
+- Exactly one unchanged-controls validation was frozen at commit `f92f709` and
+  tag `m0-final-runtime-validation-v1`, recorded on issue #89, and run once.
+- The run failed. One policy call succeeded; the child again used nonexistent
+  `team_id`, and its query timed out. Four later child evidence attempts were
+  enforcement-blocked. The final response was fenced JSON and incomplete.
+- Exactly one delegation/child occurred, no second worker or extra delegation
+  launched, and post-child `delegate_task` retirement held. Raw event order
+  proves all six evidence attempts came from the child; the generated
+  orchestration summary's four parent calls are a metadata artifact.
+- Frozen-state preflight/postflight passed. Runtime was 628.646 seconds;
+  retries and human intervention were zero; incremental paid spend was `$0`.
+- **M0 remains incomplete; M1 is not authorized.** The blocker is mixed:
+  model/tool-contract understanding (`team_id`), child query timeout
+  (infrastructure/runtime), instruction-following/orchestration, and correctly
+  triggered enforcement. The stop rule forbids another M0.x chain in this run.
+- Evidence is preserved under
+  `experiments/results/m0-final-runtime-validation-2026-10-06`.
+
+## Hermes Personal Ops roadmap M0 stop — 2026-10-06
+
+- Roadmap evidence is tracked on issue #89 and branch
+  `hermes-personal-ops-roadmap`. Historical issues #73, #82, #84, #85, #86,
+  #87 and draft PRs #83/#88 remain unchanged.
+- M0.7's original three-case probe failed 0/3. Its frozen, bounded recovery
+  passed 3/3: local Qwen produced validator-compliant fully qualified SQL,
+  correct blocker-rate formulas, and exact rows with zero retries or spend.
+- The first M0.8 Hermes validation was frozen at commit `8cd4cef` and tag
+  `m0-8-final-bounded-validation-v1`. It failed: one child batched two SQL
+  calls before policy, exhausted the evidence budget, and returned no policy
+  interpretation. Its result evidence was preserved in commit `4da9586`.
+- The final prompt-only M0.8 recovery was frozen at commit `4da9586` and tag
+  `m0-8-recovery-successor-v1`, published before invocation, and run exactly
+  once. It failed. The child retrieved policy successfully, then its qualified
+  and formula-correct ClickHouse query received HTTP 404. Four child retries
+  and two parent evidence attempts were blocked by existing enforcement.
+- Exactly one delegation and one child occurred; no second worker or extra
+  delegation occurred; post-child `delegate_task` retirement held. The
+  deterministic scorer rejected eligibility because the observed trajectory
+  did not contain exactly two evidence-tool calls.
+- Frozen-state checks passed before and after execution. Retries and human
+  interventions were zero. Incremental paid spend remained `$0`.
+- Evidence is preserved under
+  `experiments/results/m0-8-recovery-successor-2026-10-06` with hash-indexed,
+  Authorization-redacted request copies; original local request dumps remain
+  untouched.
+- **M0 exit criterion: not met.** The preregistered stop rule blocks dependent
+  M1-M11 implementation in this run. Hermes Desktop is not yet verified as
+  Ajanee's primary local interface.
+- Next bounded work, in a future authorized run: a model-free subprocess probe
+  comparing ClickHouse configuration/request construction in the successful
+  parent preflight and the delegated-child runtime. Do not invoke Hermes again
+  until the discrepancy is explained and covered by a deterministic test.
+
 ## M0.6 fresh SB-D01 A/B — 2026-10-06
 
 - M0.6 was frozen at commit `0d93415a7a9c4aa0a88eed07aa0c932464613d29`

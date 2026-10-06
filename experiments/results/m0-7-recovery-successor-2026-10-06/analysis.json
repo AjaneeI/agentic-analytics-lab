@@ -1,0 +1,16 @@
+{
+  "accepted_attempts": 3,
+  "failure_categories": [],
+  "incremental_paid_spend_usd": 0,
+  "m0_8_authorized_by_evidence": true,
+  "observations": [
+    "All three first responses called query_clickhouse exactly once.",
+    "All three SQL statements referenced agentic_analytics.delivery_work_items.",
+    "All three computed blocker rate from blocked and used blocked_pct only as an alias.",
+    "The unchanged validator accepted every SQL statement and ClickHouse returned the preregistered exact rows."
+  ],
+  "passed": true,
+  "retries": 0,
+  "sample_size": 3,
+  "threshold": "3/3"
+}

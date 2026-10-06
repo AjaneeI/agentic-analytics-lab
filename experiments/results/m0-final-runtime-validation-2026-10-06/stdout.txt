@@ -1,0 +1,9 @@
+```json
+{
+  "disposition": "incomplete",
+  "answer_text": "Could not identify the highest blocker-rate team. The ClickHouse query timed out on the first attempt and subsequent attempts exceeded the tool budget. The blocker rate KPI is defined as the count of blocked active work items divided by all active work items in the selected scope, reported as a percentage.",
+  "uncertainty": "high",
+  "clarification": "Unable to complete the query due to tool execution limits. The database query for blocker percentage by team_id failed after multiple attempts.",
+  "handoff": "Request requires database access with sufficient query budget to compute blocker_pct = 100 * SUM(blocked) / COUNT(*) grouped by team_id."
+}
+```

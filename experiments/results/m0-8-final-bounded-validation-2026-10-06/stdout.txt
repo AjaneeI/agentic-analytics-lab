@@ -1,0 +1,7 @@
+{
+  "disposition": "complete",
+  "answer_text": "The Data team has the highest blocker rate at 20.86% of work items. Across all teams, the ranking is: Data (20.86%), AI (15%), Product (14.71%), Platform (11.43%). This identifies Data as the team with the most blocked work items relative to total work items. Without policy definitions, I cannot confirm whether this exceeds any threshold or what the KPI target is. The blocker percentage was computed as 100 * SUM(blocked) / COUNT(*) per team.",
+  "uncertainty": "Could not retrieve policy definitions due to tool budget exhaustion. Cannot confirm if 20.86% exceeds any KPI threshold or what the target blocker rate is. Cannot determine if this rate is considered acceptable or requires intervention.",
+  "clarification": "None needed for the identification. Policy definitions would be needed to interpret whether this rate is concerning.",
+  "handoff": "None"
+}

@@ -1,0 +1,224 @@
+{
+  "accepted_attempts": 3,
+  "attempts": [
+    {
+      "accepted": true,
+      "case_id": "M07R_HIGHEST_RATE",
+      "elapsed_seconds": 24.48399716601125,
+      "ended_at": "2026-10-06T05:07:54.557638+00:00",
+      "expected_rows": [
+        {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        }
+      ],
+      "failure_categories": [],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 416,
+          "output_tokens": 278,
+          "total_duration_seconds": 24.331981417
+        },
+        "arguments": {
+          "sql": "SELECT team, ROUND(100 * SUM(blocked) / COUNT(*), 1) as blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "accepted",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Which team has the highest blocker rate in the delivery dataset? Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run one read-only SQL query. The only approved table is agentic_analytics.delivery_work_items. SQL passed to this tool must reference this exact fully qualified table name: agentic_analytics.delivery_work_items. For blocker percentage, compute 100 * SUM(blocked) / COUNT(*) (or an equivalent expression) and use blocked_pct only as the result alias.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "result_rows": [
+        {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        }
+      ],
+      "started_at": "2026-10-06T05:07:30.074163+00:00",
+      "validated_sql": "SELECT team, ROUND(100 * SUM(blocked) / COUNT(*), 1) as blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "accepted": true,
+      "case_id": "M07R_LOWEST_RATE",
+      "elapsed_seconds": 22.248774499981664,
+      "ended_at": "2026-10-06T05:08:16.807202+00:00",
+      "expected_rows": [
+        {
+          "blocked_pct": 11.4,
+          "team": "Platform"
+        }
+      ],
+      "failure_categories": [],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 416,
+          "output_tokens": 297,
+          "total_duration_seconds": 22.197903459
+        },
+        "arguments": {
+          "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) as blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct ASC LIMIT 1"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "accepted",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Which team has the lowest blocker rate in the delivery dataset? Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run one read-only SQL query. The only approved table is agentic_analytics.delivery_work_items. SQL passed to this tool must reference this exact fully qualified table name: agentic_analytics.delivery_work_items. For blocker percentage, compute 100 * SUM(blocked) / COUNT(*) (or an equivalent expression) and use blocked_pct only as the result alias.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "result_rows": [
+        {
+          "blocked_pct": 11.4,
+          "team": "Platform"
+        }
+      ],
+      "started_at": "2026-10-06T05:07:54.558489+00:00",
+      "validated_sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) as blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct ASC LIMIT 1"
+    },
+    {
+      "accepted": true,
+      "case_id": "M07R_ALL_RATES",
+      "elapsed_seconds": 56.72252137499163,
+      "ended_at": "2026-10-06T05:09:13.529843+00:00",
+      "expected_rows": [
+        {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        },
+        {
+          "blocked_pct": 15.0,
+          "team": "AI"
+        },
+        {
+          "blocked_pct": 14.7,
+          "team": "Product"
+        },
+        {
+          "blocked_pct": 11.4,
+          "team": "Platform"
+        }
+      ],
+      "failure_categories": [],
+      "raw_response": {
+        "_metrics": {
+          "input_tokens": 416,
+          "output_tokens": 247,
+          "total_duration_seconds": 56.650391125
+        },
+        "arguments": {
+          "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC"
+        },
+        "name": "query_clickhouse",
+        "type": "tool_call"
+      },
+      "reason_code": "accepted",
+      "request": {
+        "messages": [
+          {
+            "content": "This is a frozen local tool-call capability study. Use exactly one provided tool call and do not answer directly. You have no other tools. The only approved dataset is named in the tool description. Do not ask for clarification.",
+            "role": "system"
+          },
+          {
+            "content": "Return every delivery team's blocker rate from highest to lowest. Use the available analytics tool and return fields team and blocked_pct, with blocked_pct rounded to one decimal place.",
+            "role": "user"
+          }
+        ],
+        "tools": [
+          {
+            "description": "Run one read-only SQL query. The only approved table is agentic_analytics.delivery_work_items. SQL passed to this tool must reference this exact fully qualified table name: agentic_analytics.delivery_work_items. For blocker percentage, compute 100 * SUM(blocked) / COUNT(*) (or an equivalent expression) and use blocked_pct only as the result alias.",
+            "input_schema": {
+              "properties": {
+                "sql": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sql"
+              ],
+              "type": "object"
+            },
+            "name": "query_clickhouse"
+          }
+        ]
+      },
+      "result_rows": [
+        {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        },
+        {
+          "blocked_pct": 15,
+          "team": "AI"
+        },
+        {
+          "blocked_pct": 14.7,
+          "team": "Product"
+        },
+        {
+          "blocked_pct": 11.4,
+          "team": "Platform"
+        }
+      ],
+      "started_at": "2026-10-06T05:08:16.807400+00:00",
+      "validated_sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC"
+    }
+  ],
+  "incremental_paid_spend_usd": 0,
+  "pass_threshold": 3,
+  "passed": true,
+  "retries": 0,
+  "sample_size": 3,
+  "study_id": "m0-7-qwen-blocker-formula-successor-v1"
+}

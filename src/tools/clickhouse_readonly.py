@@ -7,6 +7,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 from typing import Any
@@ -235,6 +236,18 @@ def query_clickhouse(sql: str) -> list[dict[str, Any]]:
     try:
         with urllib.request.urlopen(request, timeout=15) as response:
             body = response.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        try:
+            detail = exc.read(4096).decode("utf-8", errors="replace").strip()
+        finally:
+            exc.close()
+        exception_code = exc.headers.get("X-ClickHouse-Exception-Code")
+        context = f"HTTP {exc.code}"
+        if exception_code:
+            context += f", ClickHouse code {exception_code}"
+        if detail:
+            context += f": {detail}"
+        raise RuntimeError(f"ClickHouse query failed ({context})") from exc
     except Exception as exc:
         raise RuntimeError(f"ClickHouse query failed: {exc}") from exc
 

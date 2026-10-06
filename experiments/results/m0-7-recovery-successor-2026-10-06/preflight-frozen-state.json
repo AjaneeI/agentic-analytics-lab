@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-06T05:07:30.042072+00:00",
+  "contract_sha256": {
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "f7c353be4ba6dd3c18484ea380a6e1ef567f1c9a585812f368ee16fc63f09b69",
+    "experiments/m0-7-recovery-successor/README.md": "f373b1500ea8dfd0d44b8b5cfd6b11bd27ab360a8c441d4969fa44fde9c2dbe3",
+    "experiments/m0-7-recovery-successor/run_study.py": "d0d8d3009ee2d8d62bbbd07127c56e123ef6fffa5de5ecd509a1f60a029fb4e1",
+    "experiments/m0-7-tool-contract-usability/run_study.py": "94905cb8e5ffc5228431daad6a15aeaddc01ec16d7d55090e2c34a58dfd3e560",
+    "experiments/results/m0-7-tool-contract-usability-2026-10-06/evidence-index.json": "6619586917864eb051d4161fed4a9a62e92e5f578abfeb4dde41da36fa920761",
+    "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+    "src/evals/capability_reliability.py": "ed314f3dba7a095880ca8fa537fa0605938f1a29e9d86817089e3e09a87b6c1c",
+    "src/evals/system_benchmark/local_worker.py": "846740a24c64fd509f3e7ef6658f3021f05c6b6b19d683cf1dc7b58ab5ebb89e",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+    "tests/system_benchmark/test_m0_7_tool_contract.py": "220dbaeb77a53f7ee68114b61316253b5832900fdcccc1cb206a0bf003e59ec0"
+  },
+  "freeze_ref": "refs/tags/m0-7-recovery-successor-v1",
+  "head": "4d5ec3f85bc29cca297343f12c3efa780b7ec36f",
+  "model_manifest_sha256": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+  "passed": true
+}
