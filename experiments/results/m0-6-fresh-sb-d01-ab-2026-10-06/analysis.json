@@ -1,0 +1,111 @@
+{
+  "analysis_version": "m0-6-post-run-analysis-v1",
+  "benchmark_outputs_unedited": true,
+  "repository_request_copies_authorization_redacted": true,
+  "request_redaction_manifest": "redaction-manifest.json",
+  "rerun_performed": false,
+  "incremental_paid_spend_usd": 0,
+  "fixed_state_integrity": {
+    "preflight_a": true,
+    "preflight_b": true,
+    "postflight": true,
+    "freeze_commit": "0d93415a7a9c4aa0a88eed07aa0c932464613d29",
+    "freeze_tag": "m0-6-fresh-sb-d01-ab-v1"
+  },
+  "treatment_a": {
+    "deterministic_acceptance": false,
+    "score": null,
+    "score_status": "ineligible_unscored",
+    "failure": "QueryRejected: Only agentic_analytics.delivery_work_items may be queried.",
+    "failure_categories": [
+      "model_instruction_following",
+      "tool_contract_understanding"
+    ],
+    "observed_sql": "SELECT team, 100 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items GROUP BY team ORDER BY blocked_pct DESC LIMIT 1",
+    "elapsed_seconds": 43.935776,
+    "model_calls": 1,
+    "evidence_tool_attempts": 1,
+    "retries": 0,
+    "human_interventions": 0,
+    "accepted_result": false
+  },
+  "treatment_b": {
+    "deterministic_acceptance": false,
+    "score": null,
+    "score_status": "ineligible_unscored",
+    "process_returncode": 0,
+    "raw_final_disposition": "incomplete",
+    "raw_final_answered_task": false,
+    "elapsed_seconds": 762.7174227079959,
+    "parent_model_calls": 7,
+    "child_model_calls": 6,
+    "observable_model_calls_total": 13,
+    "delegation_attempts": 1,
+    "successful_delegations": 1,
+    "successful_children": 1,
+    "attempted_extra_delegations": 0,
+    "second_worker_launches": 0,
+    "evidence_tool_attempts": 13,
+    "successful_evidence_tool_calls": 1,
+    "child_query_rejections": 1,
+    "child_tool_budget_interventions": 5,
+    "parent_evidence_tool_attempts": 6,
+    "parent_evidence_enforcement_interventions": 6,
+    "enforcement_or_validation_interventions_total": 12,
+    "post_success_delegate_task_retired": true,
+    "parent_request_count": 7,
+    "post_success_parent_request_count": 6,
+    "post_success_parent_requests_exposing_delegate_task": 0,
+    "duplicate_delegation_interventions": 0,
+    "retries": 0,
+    "human_interventions": 0,
+    "accepted_result": false,
+    "failure_categories": [
+      "model_instruction_following",
+      "tool_contract_understanding",
+      "orchestration_decomposition",
+      "enforcement_intervention"
+    ],
+    "observed_sequence": [
+      "Parent made one valid single-task delegation.",
+      "Child used an unqualified table name; the unchanged validator rejected the query.",
+      "Child successfully retrieved the KPI policy definition.",
+      "The two-call evidence budget was exhausted; five later child evidence attempts were blocked.",
+      "Child returned an incomplete SystemBenchmarkResponse after six model calls.",
+      "delegate_task was absent from all six subsequent parent requests.",
+      "Parent attempted six forbidden evidence calls; all were blocked; no second worker launched.",
+      "Parent returned the child's incomplete response and the treatment was not score-eligible."
+    ]
+  },
+  "harness_analysis_note": {
+    "original_artifact": "treatment-b-orchestration.json",
+    "finding": "The inherited M0.5B retirement evaluator required exactly two parent requests and therefore labeled retirement false when the real benchmark produced seven parent requests. The preregistered M0.6 criterion required delegate_task to be absent from the subsequent parent request, not exactly one follow-up request.",
+    "raw_evidence": "The first parent request exposed delegate_task; every one of the six later parent requests exposed only query_clickhouse and retrieve_policy.",
+    "corrected_interpretation": "Post-success delegate_task retirement held. No model message, tool array, tool result, benchmark output, or score artifact was edited; repository request copies redact only Authorization headers with original and sanitized hashes in redaction-manifest.json. The benchmark was not rerun, and this correction does not change the failing treatment or M1 verdict.",
+    "second_finding": "The original orchestration summary counted five child budget-blocked evidence attempts as parent work because those event rows omit delegated_child. Event order around delegate_post proves six, not eleven, parent evidence attempts.",
+    "verdict_impact": "none"
+  },
+  "comparison": {
+    "accepted_results": 0,
+    "ajanee_hands_on_minutes_each": 0,
+    "hands_on_minutes_per_accepted_result": null,
+    "reason_primary_metric_undefined": "Neither treatment produced an accepted result.",
+    "shared_failure": "Both direct execution and the delegated child generated the same unqualified delivery_work_items table reference on their first SQL attempt.",
+    "hermes_specific_behavior": "Hermes preserved the one-delegation/one-child limit and post-success delegation retirement, but the child exhausted the evidence budget after the rejected query and the parent repeatedly attempted forbidden evidence work.",
+    "superiority_claim_supported": false
+  },
+  "m1_readiness": {
+    "ready": false,
+    "verdict": "M0.6 does not support transition to M1",
+    "reason": "Hermes did not produce a score-eligible accepted result and required repeated enforcement of child budget and parent evidence boundaries, despite correct single-child delegation retirement."
+  },
+  "next_experiment": {
+    "name": "M0.7 blocker-rate SQL qualification micro-study",
+    "smallest_observed_blocker": "The frozen Qwen path omitted the required fully qualified ClickHouse table name for the realistic blocker-rate aggregate in both treatments.",
+    "single_intervention": "Change only the query_clickhouse model-visible contract wording to state explicitly that SQL must reference the exact fully qualified table agentic_analytics.delivery_work_items. Keep the validator, dataset, model, context, temperature, SQL normalization policy, and evidence semantics unchanged.",
+    "design": "Preregister three distinct realistic blocker-rate aggregate prompts; one scheduled attempt per prompt; query_clickhouse only; zero retry, repair, or normalization; require 3/3 first calls to pass the unchanged validator and return exact expected rows.",
+    "why_no_control_rerun": "The current frozen contract already produced the same qualification failure in two independent M0.6 paths; rerunning it would spend local compute without adding a new engineering fact.",
+    "decision_rule": "If 3/3 pass, define a fresh successor A/B without reusing or overwriting M0.6. If any case fails, preserve it and test bounded validator-feedback recovery as a separate intervention.",
+    "executed": false
+  }
+}

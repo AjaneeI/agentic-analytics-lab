@@ -1,5 +1,36 @@
 # Verified Project Status
 
+## M0.6 fresh SB-D01 A/B — 2026-10-06
+
+- M0.6 was frozen at commit `0d93415a7a9c4aa0a88eed07aa0c932464613d29`
+  and tag `m0-6-fresh-sb-d01-ab-v1` on successor branch
+  `m0-6-fresh-sb-d01-ab`; issue #87 is the durable preregistration/evidence
+  record. Historical issues #73, #82, #84, #85, #86 and draft PR #83 remain
+  unchanged.
+- Treatment A ran once and was unscored: the local model used unqualified
+  `delivery_work_items`, which the unchanged validator rejected. Elapsed time
+  was 43.936 seconds; retries, Ajanee intervention, and paid spend were zero.
+- Treatment B ran once and was unscored: one child reproduced the unqualified
+  SQL failure, retrieved policy evidence, then exhausted its evidence-tool
+  budget; the parent later attempted six forbidden evidence calls. Elapsed time
+  was 762.717 seconds; retries, Ajanee intervention, and paid spend were zero.
+- Hermes made exactly one valid delegation, created exactly one child, launched
+  no second worker, and made no extra delegation attempt. Raw parent requests
+  prove `delegate_task` was present initially and absent from all six
+  post-child parent requests. Post-success retirement therefore held even
+  though overall Treatment B failed.
+- Fixed-state checks passed before A, before B, and after B. Raw evidence and
+  deterministic post-run analysis are preserved under
+  `experiments/results/m0-6-fresh-sb-d01-ab-2026-10-06`.
+- M1 readiness: **not supported**. Neither treatment produced an accepted
+  result, and Hermes required repeated enforcement of child budget and parent
+  evidence boundaries.
+- Next bounded experiment: preregister a three-case blocker-rate SQL
+  qualification micro-study that changes only the model-visible
+  `query_clickhouse` wording to explicitly require the exact fully qualified
+  table. Keep the validator, model, context, temperature, data, and
+  no-normalization policy unchanged. Do not rerun M0.6.
+
 _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
 
 ## Current verified state

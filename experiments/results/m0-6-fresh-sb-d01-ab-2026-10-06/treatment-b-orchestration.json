@@ -1,0 +1,48 @@
+{
+  "attempted_extra_delegations": 0,
+  "child_count": 1,
+  "delegation_attempts": 1,
+  "delegation_count": 1,
+  "enforcement_interventions": 12,
+  "orchestration_accepted": false,
+  "parent_evidence_tool_calls": 11,
+  "post_success_delegate_task_retired": false,
+  "successful_worker_launches": 1,
+  "tool_retirement": {
+    "accepted": false,
+    "parent_request_count": 7,
+    "parent_session_id": "20261006_003213_d54f4b",
+    "parent_tools_by_request": [
+      [
+        "delegate_task",
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      [
+        "query_clickhouse",
+        "retrieve_policy"
+      ]
+    ],
+    "reason_code": "delegate_tool_not_retired"
+  }
+}

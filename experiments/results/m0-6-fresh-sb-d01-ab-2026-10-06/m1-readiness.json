@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "child_count": false,
+    "delegation_count": false,
+    "deterministic_acceptance": false,
+    "enforcement_interventions": false,
+    "hermes_scored": false,
+    "incremental_paid_spend_usd": false,
+    "orchestration_accepted": false,
+    "parent_evidence_tool_calls": false,
+    "post_success_delegate_task_retired": false,
+    "retries": false
+  },
+  "errors": {
+    "direct": "QueryRejected: Only agentic_analytics.delivery_work_items may be queried.",
+    "hermes": "ValueError: Treatment B requires exactly two evidence-tool calls"
+  },
+  "failed_checks": [
+    "hermes_scored",
+    "deterministic_acceptance",
+    "orchestration_accepted",
+    "delegation_count",
+    "child_count",
+    "enforcement_interventions",
+    "parent_evidence_tool_calls",
+    "post_success_delegate_task_retired",
+    "retries",
+    "incremental_paid_spend_usd"
+  ],
+  "m1_executed": false,
+  "m1_scope_if_ready": [],
+  "ready": false,
+  "verdict": "M0.6 does not support transition to M1"
+}

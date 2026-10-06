@@ -1,0 +1,208 @@
+{
+  "benchmark": {
+    "acceptance": "existing deterministic scorer passes without manual output editing; Hermes additionally passes the frozen bounded orchestration contract",
+    "allowed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "context_length": 65536,
+    "evidence_destination": "experiments/results/m0-6-fresh-sb-d01-ab-2026-10-06",
+    "incremental_paid_spend_usd": 0,
+    "prompt_contract": {
+      "direct_system_prompt_sha256": "e9e29e0ed6ce4e98698ddf328e611ad6ba207c98451e2bd63869b6373914b623",
+      "direct_system_prompt_source": "src/evals/system_benchmark/local_worker.py:_SYSTEM_PROMPT",
+      "hermes_child_goal_sha256": "8cda7f4f74caa3b2886f3cd9fea03224d75c1b62d4a9cc0d8d1a86095a50dae9",
+      "hermes_parent_prompt_sha256": "9360d39fe38e764d3117b35a2a2c6136fa9e528e1453c5befbfb45a4da9b6feb",
+      "hermes_parent_prompt_source": "experiments/hermes-successor-ab-v1/run_benchmark.py:build_hermes_prompt"
+    },
+    "response_contract": "SystemBenchmarkResponse",
+    "retry_policy": "one_attempt_per_treatment_no_retries",
+    "sample_size": 1,
+    "scorer": {
+      "function": "score_response",
+      "reference_solution_id": "REF-D01"
+    },
+    "task": "Identify the highest blocker-rate team and interpret it using the KPI definition without claiming causality.",
+    "task_id": "SB-D01",
+    "temperature": 0,
+    "treatment_definitions": {
+      "direct": "Existing BoundedLocalExecutor with the repository-owned SB-D01 prompt, two evidence tools, six model steps, temperature 0, no Hermes, and no retry.",
+      "hermes": "Hermes localbenchmark parent calls delegate_task exactly once with one child; only the child may call each evidence tool; no concurrency, parent evidence work, retry, or paid fallback; post-success raw parent request omits delegate_task."
+    },
+    "treatment_order": [
+      "direct",
+      "hermes"
+    ]
+  },
+  "contract_sha256": {
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "d44f465672ca7428198d9af74c21dbe4e621750c1f2f60b45af69f278bb5b835",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/__init__.py": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290",
+    "experiments/hermes-successor-ab-v1/plugin/system-benchmark-tools/plugin.yaml": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0",
+    "experiments/hermes-successor-ab-v1/profile/config.yaml": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
+    "experiments/hermes-successor-ab-v1/run_benchmark.py": "881993b25f8d2e9aaa3bd1befde26c802d9600f36e2f09c60dd39fa179bb3c8b",
+    "experiments/m0-5b-delegation-retirement/hermes-runtime-post-success-retirement.patch": "c54ad4e5f57fcecea0ca8b7e57d655ac57088d62d7f6266f0db0e0ba6a1bc21e",
+    "experiments/m0-5b-delegation-retirement/run_study.py": "78fd1acff4a775ad0a29d87c67b90522f0ce857a4c83557c026ef0656861d014",
+    "experiments/m0-6-fresh-sb-d01-ab/README.md": "6fd36f974f4df9f6c94cb495439f76d8fd8c7287b2be7f96b9588c6e72586c22",
+    "experiments/m0-6-fresh-sb-d01-ab/run_benchmark.py": "7c6fc514d9ab658ad5521c451ccaeacb81c148be1203628180d6f7f20233df8f",
+    "src/agents/single_agent.py": "2a6aed58041b95ceaef5a32431bded19322a81e5f2981a77e0caceb5a4df5793",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/local_worker.py": "e2a5599d7a3c7ceb0a9378cdf818880d76ad264d996a0b6e5ab3392170199d7f",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+    "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27",
+    "tests/system_benchmark/test_m0_6_runner.py": "6e016d46ea0d4203bb495c31cd20926a79ad311a8a2d7035069916d49f6bd308"
+  },
+  "hypotheses": {
+    "comparison": "Hermes may support constrained M1 readiness through reliable bounded orchestration even if it does not beat direct execution on latency; no general superiority claim is permitted.",
+    "treatment_a": "The frozen direct local path can produce an unedited SystemBenchmarkResponse accepted by the existing deterministic scorer.",
+    "treatment_b": "The repaired Hermes path can produce an unedited deterministically accepted response while obeying exactly one delegation, one child, no parent evidence work, no enforcement intervention, and observed post-success delegate_task retirement."
+  },
+  "implementation": {
+    "external_enforcement_changed": false,
+    "intervention": "After one successful synchronous child in a one-shot parent with oneshot_max_children=1, remove delegate_task from parent_agent.tools and parent_agent.valid_tool_names; return the raw child result unchanged.",
+    "location": "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool.py",
+    "patched_sha256": "df65f6506c03d8533ee695a1266cc23739b4d0ad43715d0408e79fb8a2e35405",
+    "test_path": "/Users/ajaneeigharo/.hermes/hermes-agent/tests/tools/test_delegate_oneshot_retirement.py",
+    "test_sha256": "f8913b495fd1a02a83a01fec11ea8cccfc86e0aecd11b5e6d809dc6e251b53bc",
+    "versioned_patch": "experiments/m0-5b-delegation-retirement/hermes-runtime-post-success-retirement.patch",
+    "versioned_patch_sha256": "c54ad4e5f57fcecea0ca8b7e57d655ac57088d62d7f6266f0db0e0ba6a1bc21e"
+  },
+  "installed_state": {
+    "fallback_providers": [],
+    "files": [
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/config.yaml",
+        "sha256": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/__init__.py",
+        "sha256": "68757db3f161e254750342e579f5f801e44fc5770690e5c62b0afe026102c290"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/system-benchmark-tools/plugin.yaml",
+        "sha256": "55206585af6581ce45b98bd67aad8edcfd27f7f46bbb4e02e12efb6db64110e0"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tools/delegate_tool.py",
+        "sha256": "df65f6506c03d8533ee695a1266cc23739b4d0ad43715d0408e79fb8a2e35405"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/hermes-agent/tests/tools/test_delegate_oneshot_retirement.py",
+        "sha256": "f8913b495fd1a02a83a01fec11ea8cccfc86e0aecd11b5e6d809dc6e251b53bc"
+      }
+    ],
+    "profile": "localbenchmark",
+    "profile_config_sha256": "b89cd933ca4b6531f3217832d5b1fac69d379235ef80b95e159982fe79fe8efc",
+    "request_dump_directory": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/sessions",
+    "visible_tools_after_success": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "visible_tools_before_success": [
+      "delegate_task",
+      "query_clickhouse",
+      "retrieve_policy"
+    ]
+  },
+  "interpretation_boundaries": [
+    "One SB-D01 comparison cannot establish general Hermes superiority or inferiority.",
+    "A Hermes pass can support only constrained M1 readiness, not unrestricted autonomy.",
+    "No hidden chain-of-thought is inferred.",
+    "A failure or ineligible response remains valid evidence and is not repaired or rerun."
+  ],
+  "m1_acceptance": {
+    "does_not_require": "Hermes latency lower than direct latency",
+    "if_failed": "Preserve the result and define the smallest evidence-supported next experiment without rerunning M0.6.",
+    "if_passed": "Recommend constrained M1 scope but do not implement it.",
+    "requires": [
+      "Hermes result is deterministically accepted",
+      "exactly one valid delegation and one child",
+      "zero parent evidence calls",
+      "zero enforcement interventions",
+      "post-success delegate_task retirement proven from raw requests",
+      "zero retries",
+      "incremental paid spend is zero"
+    ]
+  },
+  "one_worker_enforcement": {
+    "acceptance": {
+      "deterministic_tests": "10/10 passed",
+      "legitimate_worker": "succeeded_exit_0",
+      "native_overlap": "action_block",
+      "second_external_submit": "worker_busy_exit_75"
+    },
+    "assets": [
+      {
+        "path": "/Users/ajaneeigharo/Documents/Codex/2026-10-02/set-up-the-foundation-for-a/work/hermes-foundation/herdr-managed-worker/manager.py",
+        "sha256": "42e236276edf0542c5ee4bcee83328f5f6e6d6b790a858a6345d184e3605bbae"
+      },
+      {
+        "path": "/Users/ajaneeigharo/Documents/Codex/2026-10-02/set-up-the-foundation-for-a/work/hermes-foundation/herdr-managed-worker/managed_worker.sh",
+        "sha256": "c2872f780794a7ba7edb00960d3ab7fb681754c18a016461a7d9161545e568b5"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localbenchmark/plugins/herdr-worker/__init__.py",
+        "sha256": "d83b861f38e71a8ac1419c9d3fe18c51456ac4206b7a56b81e1480aed50fe969"
+      },
+      {
+        "path": "/Users/ajaneeigharo/.hermes/profiles/localfoundation/config.yaml",
+        "sha256": "0a0e1c934ec7df3150814954c3b121e49b9eb0e7f150e25b83f28d9edad491fb"
+      }
+    ],
+    "max_concurrent_children": 1,
+    "max_spawn_depth": 1,
+    "oneshot_max_children": 1,
+    "opencode_parallel_enabled": false,
+    "worker_identity": "Herdr-managed OpenCode local worker"
+  },
+  "prior_evidence_sha256": {
+    "experiments/results/m0-5b-delegation-retirement-2026-10-05/evidence-index.json": "5e3e6aaddf5dc64d8834dbb5ff92c5557dbea5533afd95566108b8cab5289acf",
+    "experiments/results/m0-5b-delegation-retirement-2026-10-05/summary.json": "86d2a8e2bc0362a4504439d15e953a371b5f91f24b91b83432a75f09984374f9"
+  },
+  "repository": {
+    "base_commit": "655e5891398e1b8d2be2a3eea13df9251a90b232",
+    "branch": "m0-6-fresh-sb-d01-ab",
+    "freeze_ref": "refs/tags/m0-6-fresh-sb-d01-ab-v1",
+    "historical_issues": [
+      73,
+      82,
+      84,
+      85,
+      86
+    ],
+    "historical_pull_request": 83,
+    "repository": "AjaneeI/agentic-analytics-lab",
+    "successor_issue": "created_after_freeze_ref_resolves",
+    "successor_pull_request": "created_after_evidence_commit"
+  },
+  "research_question": "Can the repaired Hermes orchestration path complete the real frozen bounded SB-D01 workflow, and does it provide useful bounded orchestration or reliability value relative to the direct local path?",
+  "runtime": {
+    "context_length": 65536,
+    "herdr_version": "0.9.3",
+    "hermes": {
+      "source_commit": "2ec7703012e5e356b8df383026397160ed9b0bed",
+      "version": "0.21.5+4410.g2ec7703"
+    },
+    "model": {
+      "family": "qwen35",
+      "file_type": "Q4_K_M",
+      "manifest_path": "/Users/ajaneeigharo/.ollama/models/manifests/registry.ollama.ai/library/hermes-local/qwen3.5-9b",
+      "manifest_sha256": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+      "name": "hermes-local:qwen3.5-9b",
+      "ollama_id": "0df9cd2e3545",
+      "parameter_size": "9.0B",
+      "worker_temperature": 0
+    },
+    "ollama": {
+      "client_version": "0.34.4",
+      "model_config_digest": "sha256:055501390333b9dfb77db59953edd4c1d36413ffe9376cb209c0913ea19f3e87",
+      "model_layer_digest": "sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8",
+      "params_digest": "sha256:74c152a9c92ebb7976f5b325dfa75d0e7361ae173af121ea56ea9338a941e238",
+      "server_version": "0.35.0"
+    },
+    "opencode_version": "2.0.20",
+    "python_version": "3.14.7"
+  },
+  "schema_version": "m0-6-fresh-sb-d01-ab-v1"
+}
