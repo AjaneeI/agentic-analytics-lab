@@ -1,8 +1,18 @@
 # Verified Project Status
 
-_Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
+_Phase 2 preparation checkpoint: 2026-10-12. Historical implementation details below retain their original evidence boundaries._
 
-## Current verified state
+## Phase 2 readiness checkpoint — 2026-10-12
+
+The active gate remains issue #73: one bounded Treatment A run on development task SB-D01, followed by evidence capture and a stop. Treatment B and later research phases are not part of this continuation.
+
+This isolated preparation branch combines current main `58add5e58e581be21d3511fc4cd2cb5be44f49b7` (the already-landed active-work SB-D01 correction from #80) with the exact two-file local-runtime repair previously recorded at `84263bfdadfd3f07a81ed7133456287e687146ba`. It restores the intended local request limits, `num_predict=512` and `num_ctx=65536`. No new prompt, tool, SQL-guard, scorer, reference, dataset, model-identity, or task changes are introduced here. This branch is prepared solely for the authorized SB-D01 slice, not a new frozen Q1–Q6 run.
+
+The current session could inspect GitHub and run deterministic mocked checks, but could not access the required Mac workspace, Ollama model, or ClickHouse service. **No fresh Treatment A run or deterministic benchmark score was produced. Phase 2 remains incomplete.** See `docs/phase2-treatment-a-continuation-2026-10-12.md` for the pinned continuation procedure and evidence requirements.
+
+Historical #73 and successor SB-D01 attempts remain unsuccessful/unscored. Passing capability micro-studies in successor branches are not accepted SB-D01 results. Those branches also have separate enforcement controls and protocols; do not silently substitute them for this A-only continuation.
+
+## Previous verified implementation state
 
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
 - The project keeps the single-agent, oracle-metadata routed, and

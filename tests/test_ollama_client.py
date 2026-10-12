@@ -19,6 +19,22 @@ class FakeResponse:
 
 class TestOllamaModelClient(unittest.TestCase):
     @patch("src.agents.ollama_client.urllib.request.urlopen")
+    def test_request_preserves_fixed_local_model_limits(self, mock_urlopen):
+        mock_urlopen.return_value = FakeResponse(
+            {"message": {"content": "done"}}
+        )
+
+        OllamaModelClient(model="hermes-local:qwen3.5-9b").respond(
+            [{"role": "user", "content": "Use the bounded tool."}],
+            [],
+        )
+
+        request = mock_urlopen.call_args.args[0]
+        payload = json.loads(request.data.decode("utf-8"))
+        self.assertEqual(payload["options"]["num_ctx"], 65536)
+        self.assertGreaterEqual(payload["options"]["num_predict"], 512)
+
+    @patch("src.agents.ollama_client.urllib.request.urlopen")
     def test_tool_call_response_includes_usage_metrics(self, mock_urlopen):
         mock_urlopen.return_value = FakeResponse(
             {
