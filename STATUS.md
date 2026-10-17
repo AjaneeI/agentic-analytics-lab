@@ -74,3 +74,11 @@ or publication-ready benchmark results.
 This file is not authoritative when it conflicts with repository evidence.
 GitHub issues, PRs, commits, workflow runs, tests, and benchmark artifacts take
 precedence.
+
+## October 17 sprint governance checkpoint (planning, not experimental evidence)
+
+- Owner authorized bounded Codex engineering and analysis through October 23 in issue #94; the prior blanket zero-Codex restriction is superseded only for this sprint. Frozen methods/scorers, held-out protections, security boundaries and scientific claims still require owner approval for changes. No unapproved paid fallback, automatic Codex review triggers or auto-merge.
+- Issue #95 defines the scope freeze and evidence-based Phase 2–5 gates. Park unrelated Hermes product/expansion, new specialist agents, code-bloat experiments and publishing polish; preserve historical artifacts.
+- **Phase 2 remains active and unqualified.** October 12 pinned Treatment A preparation is not a live result. Local Mac Ollama/ClickHouse access is still needed. No Phase 3–5 acceptance is claimed by this checkpoint.
+- Phase 3/4 independent model-free preparation may overlap; each phase advances only on verified gate evidence. Notion is the program roadmap and Asana the action queue.
+- This governance update does not replace the October 4 technical evidence snapshot above or establish current Mac runtime state.
