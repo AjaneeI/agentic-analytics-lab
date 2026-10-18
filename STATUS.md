@@ -1,5 +1,28 @@
 # Verified Project Status
 
+## October 17 sprint — Phase 4 preparation
+
+- Sprint issues #94/#95 authorize independent model-free statistical preparation;
+  their bounded authorization supersedes the older no-Codex rule only for the
+  October 17–23 sprint. No automatic reviews are requested.
+- The [analysis-plan proposal](docs/phase4-analysis-plan-proposal-2026-10-17.md)
+  audits the task-only documentation versus task+independent-arm-run code
+  mismatch and lists owner decisions on estimand/population, pairing, weights,
+  interval, exclusions, timeout/retry/harness failures, multiplicity and
+  practical threshold.
+- [Synthetic interval diagnostics](experiments/phase4-calibration-20261017/README.md)
+  exercise the existing unchanged interval; these are nonconfirmatory
+  implementation diagnostics, not model/architecture-performance results.
+- Phase 4 is **not accepted and no analysis plan is frozen**. Phase 2 recorded
+  an error with no score ([draft #97](https://github.com/AjaneeI/agentic-analytics-lab/pull/97));
+  Phase 3 has nine unresolved evaluator mismatches
+  ([draft #98](https://github.com/AjaneeI/agentic-analytics-lab/pull/98)).
+  Phase 5 entry and held-out execution remain gated. No frozen inference,
+  scoring, task, security or historical benchmark rules changed here.
+
+The historical implementation snapshot below remains preserved; its pending
+Treatment A next step is superseded by the October 17 error evidence above.
+
 _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
 
 ## Current verified state
