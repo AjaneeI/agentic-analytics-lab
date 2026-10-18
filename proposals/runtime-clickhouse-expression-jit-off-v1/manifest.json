@@ -1,0 +1,28 @@
+{
+  "proposal_id": "runtime-clickhouse-expression-jit-off-v1",
+  "status": "inactive_offline_proposal",
+  "parent_execution_commit": "bd717bb844aba39fd2edba69aa6094d8fe926340",
+  "proposal_base_commit": "87d2eb282cad6849fba346e1b60f65b2a6028040",
+  "patch_sha256": "2a8bb4c3c6c8794a1414ab3c51f279e8f7b1a2d74e03326c9df840336c1b6aca",
+  "candidate_configuration_sha256": "75b2519ce5c24779f414a5afb9dfa6ca4277973d7cda3fbba58668964e2e93c2",
+  "candidate_test_sha256": "e3c2965f96ee86faa0e8faf30851decaf230e4cd0a3d1174642889ab23eb1d20",
+  "files": {
+    "src/tools/clickhouse_readonly.py": {
+      "base_sha256": "3f4667601120d0a660274a66da5608da4de2461ff4a5b86385a731d3daa5f1c1",
+      "candidate_sha256": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c"
+    }
+  },
+  "baseline_contract_fingerprint": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+  "candidate_contract_fingerprint": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+  "request_difference": {
+    "compile_expressions": "0"
+  },
+  "unchanged_server_execution_limit_seconds": 10,
+  "unchanged_client_timeout_seconds": 15,
+  "active_source_changed": false,
+  "activation_authorized": false,
+  "live_attempts_authorized": 0,
+  "fixed_live_timeout_demonstrated": false,
+  "causal_confidence": "server timeout confirmed; JIT-stage stall leading explanation, exclusive causation not proven",
+  "required_future_decision": "separate reviewed execution configuration and explicit owner authorization before any activation or live attempt; no guarantee of success"
+}

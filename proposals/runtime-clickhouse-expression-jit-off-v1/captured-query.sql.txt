@@ -1,0 +1,9 @@
+SELECT team, 
+       100.0 * SUM(blocked) / COUNT(*) AS blocked_pct,
+       COUNT(*) AS total_items,
+       SUM(blocked) AS blocked_count
+FROM agentic_analytics.delivery_work_items
+WHERE status != 'done'
+GROUP BY team
+ORDER BY blocked_pct DESC
+LIMIT 1

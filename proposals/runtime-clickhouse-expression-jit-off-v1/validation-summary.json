@@ -1,0 +1,25 @@
+{
+  "proposal_python311": {
+    "tests": 364,
+    "log": "proposal-python311-full.txt"
+  },
+  "proposal_python312": {
+    "tests": 364,
+    "log": "proposal-python312-full.txt"
+  },
+  "candidate_python311": {
+    "tests": 363,
+    "log": "candidate-python311-full.txt"
+  },
+  "candidate_python312": {
+    "tests": 363,
+    "log": "candidate-python312-full.txt"
+  },
+  "candidate_focused_each_version": 6,
+  "baseline_focused_failures": 1,
+  "validation_checkout_commit": "2252aed9803d9276934951676b76b889857c411f",
+  "only_validated_candidate_runtime_difference": "compile_expressions=0 HTTP request parameter",
+  "model_calls": 0,
+  "live_SQL_calls": 0,
+  "captured_SQL_replays": 0
+}

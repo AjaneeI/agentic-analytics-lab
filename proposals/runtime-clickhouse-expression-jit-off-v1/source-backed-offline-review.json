@@ -1,0 +1,35 @@
+{
+  "classification": "deterministic_source_backed_review_not_independent_person_or_live_validation",
+  "frozen_files_preserved_in_proposal": 70,
+  "candidate_changed_frozen_files": [
+    "src/tools/clickhouse_readonly.py"
+  ],
+  "entire_transport_AST_equal_after_removing_only_added_parameter": true,
+  "removed_candidate_parameter": [
+    [
+      "compile_expressions",
+      "0"
+    ]
+  ],
+  "SQL_validator_error_handling_timeouts_and_budgets_AST_preserved": true,
+  "old_and_new_contract_fingerprints_verified": true,
+  "inactive_configuration_and_unknown_runner_ID_verified": true,
+  "baseline_RED_and_candidate_GREEN_logs_verified": true,
+  "full_suites_verified": {
+    "proposal_python311": 364,
+    "proposal_python312": 364,
+    "candidate_python311": 363,
+    "candidate_python312": 363
+  },
+  "reviewer_script_sha256": "9a04113d50950db88ff6d5a3987ce5d58b4b3f7a6b5a4a9b44ced6b533f59897",
+  "captured_SQL_replayed": false,
+  "model_calls": 0,
+  "live_SQL_calls": 0,
+  "live_timeout_resolution_verified": false,
+  "no_must_fix_identified_in_this_source_review": true,
+  "uncertainties": [
+    "Exclusive JIT causation not established",
+    "No live effective setting or numerical equivalence verification",
+    "No architecture parity or research gate acceptance"
+  ]
+}

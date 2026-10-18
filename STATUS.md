@@ -1,3 +1,9 @@
+# Latest checkpoint — ClickHouse timeout diagnosed; inactive JIT-off proposal
+
+Preserved server query887e2a23 confirms code159 TIMEOUT_EXCEEDED with delayed handling after an ExpressionJIT trace. JIT-stage stall is the leading explanation, not exclusive proven cause. proposals/runtime-clickhouse-expression-jit-off-v1 contains a one-parameter inactive candidate; no active source/configuration or frozen method changed. Local offline suites pass364proposal/363candidate tests on both Python3.11/3.12, plus6candidate probes. Historical20+4+4 hashes and five archives unchanged. No SQL replay, model call or TreatmentA retry. Phase2 unqualified; no live authorization remains. See docs/clickhouse-timeout-diagnosis-v1.md.
+
+Historical checkpoints follow.
+
 # Current result — response-format v1 attempt failed; Phase 2 unqualified
 
 The owner-approved single attempt at bd717bb844aba39fd2edba69aa6094d8fe926340 ended with ClickHouse query failed: timed out. One model return, one failed evidence call, no final response or deterministic score. Collector complete/no errors; postflight unchanged. Zero retries; no authorization remains. Both previous failures and all evidence are preserved. See docs/phase2-response-format-v1-terminal-result-2026-10-17.md. Phase 3/4 remain unaccepted and comparisons blocked.

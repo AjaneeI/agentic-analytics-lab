@@ -1,0 +1,45 @@
+{
+  "configuration_id": "phase2-runtime-schema-v1-scope-observation-v1-response-format-v1-expression-jit-off-v1",
+  "schema_version": "delivery-work-items-schema-v1",
+  "schema_source": "proposals/phase2-runtime-schema-v1/schema-diagnostic.json",
+  "query_tool_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+  "benchmark_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+  "standalone_qualification": true,
+  "architecture_comparison_allowed": false,
+  "future_comparison_gate": "strong-single adapter implemented and schema parity independently verified",
+  "scope_observation_version": "runtime-sql-scope-v1",
+  "runtime_offline_validity_gate": "proposal_only_not_activated",
+  "model": {
+    "name": "hermes-local:qwen3.5-9b",
+    "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+    "base_url": "http://127.0.0.1:11434",
+    "temperature": 0,
+    "num_predict": 512,
+    "num_ctx": 65536,
+    "timeout_seconds": 120
+  },
+  "limits": {
+    "model_steps": 6,
+    "evidence_calls": 2,
+    "retries": 0,
+    "reprompts": 0
+  },
+  "task_id": "SB-D01",
+  "allowed_tools": [
+    "query_clickhouse",
+    "retrieve_policy"
+  ],
+  "activation_authorization": "NOT AUTHORIZED: offline inactive proposal only; no live attempt permitted.",
+  "owner_observation_approval": "approved",
+  "runtime_offline_validity_scope": "Exact approved response-format prompt, strict parser and bounded runtime/capture checks; final verification must pass before entry. Does not accept Phase3 evaluator or scientific comparisons.",
+  "approval_record": "proposals/runtime-clickhouse-expression-jit-off-v1/README.md",
+  "response_format_version": "phase2-response-format-v1",
+  "response_format_activation_approval": "historical_approval_consumed",
+  "response_format_prompt_sha256": "56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce",
+  "clickhouse_transport_version": "runtime-clickhouse-expression-jit-off-v1",
+  "clickhouse_request_settings_amendment": {
+    "compile_expressions": "0"
+  },
+  "active": false,
+  "live_attempts_authorized": 0
+}
