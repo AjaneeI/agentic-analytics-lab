@@ -1,0 +1,42 @@
+{
+  "classification": "offline_inactive_response_format_proposal_validation",
+  "proposal_id": "phase2-response-format-v1",
+  "base_execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+  "offline_validation_commit": "d4922de83113fa5477aaadfca8f110e600770eb5",
+  "full_suites": {
+    "proposal_python311": 359,
+    "proposal_python312": 359,
+    "candidate_python311": 359,
+    "candidate_python312": 359
+  },
+  "candidate_focused_tests": {
+    "baseline_expected_failures": 3,
+    "patched_python311_passed": 3,
+    "patched_python312_passed": 3
+  },
+  "strict_parser_regression_methods": 9,
+  "live_model_calls": 0,
+  "live_database_calls": 0,
+  "experimental_retries": 0,
+  "network_guard": "All full-suite invocations deny socket connect/connect_ex/create_connection and DNS; candidate tests additionally deny native urlopen except explicit fakeHTTP.",
+  "fixture_correction": "Initial fake PolicyEvidence fixture used positional fields incorrectly; replaced with named fields. Failure log retained. No production or experimental outcome changed.",
+  "independent_review": "pending_final_branch_review",
+  "live_model_compliance_established": false,
+  "activation_authorized": false,
+  "source_change_on_proposal_branch": false,
+  "candidate_contract_fingerprint": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+  "logs_sha256": {
+    "baseline-red.txt": "343b2cdb25456f7f5d4ad848d2ac58a51f365dd6689c982732937a87aed4a7f8",
+    "baseline-red-final.txt": "41d157830face3715314f9a30657cfbac436132c4b51a6990a32fed2e3aea376",
+    "candidate-fixture-failure.txt": "4f7f79e8f8384cf99ffb84258424cb511db2bb4a7f10d7ddfe0aad0bf3771769",
+    "candidate-green.txt": "a84c4529d28d906099ea6c9818c3b679fee720392e84f6ab59ba239c1666af9c",
+    "parser-focused.txt": "db07a049c5c24d52cf90b73b0ccbb002fe6457b7ae9cb48f9f1e2bbd45c9b739",
+    "proposal-python311-full.txt": "49b3ecbbb7ece49e567f227c71c522aea338e930142f84fe0eedb71fbdd8c64d",
+    "proposal-python312-full.txt": "ab6a54a2e6142094ae6b6f31dfe239fbe6d6aa7138d5398b7febbdae06178b45",
+    "validation-python311-full.txt": "c4b8ba8eef2d64b27082c1d922bbc2a9d2afc74208986b8caba737a833f0e991",
+    "validation-python312-full.txt": "ab6a54a2e6142094ae6b6f31dfe239fbe6d6aa7138d5398b7febbdae06178b45",
+    "candidate-python311-focused.txt": "edb4e2159c923ea45a32656078835cdf531c3d7b414c670dd786978875cb0678",
+    "candidate-python312-focused.txt": "199ba496f288116d36c62f29346d4fbf0bd75745a1c893abfcbdaa4c6d5b1033",
+    "preservation-and-inactive-guard.json": "8c9abc2a1c81c8d908ef3e23ce2acf6da2746794b314c9268814faca9a2b45a6"
+  }
+}

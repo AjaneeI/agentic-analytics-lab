@@ -1,0 +1,28 @@
+{
+  "parent_execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+  "offline_candidate_commit": "d4922de83113fa5477aaadfca8f110e600770eb5",
+  "unchanged_proposal_production_files": 87,
+  "candidate_only_runtime_ast_difference": "_SYSTEM_PROMPT assignment value",
+  "baseline_contract_fingerprint": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+  "candidate_contract_fingerprint": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+  "inactive_candidate_execution_blockers": [
+    "configuration_scope_version_or_standalone_boundary_differs",
+    "runtime_offline_validity_gate_not_passed"
+  ],
+  "inactive_qualifier_refusal": "configuration_scope_version_or_standalone_boundary_differs, runtime_offline_validity_gate_not_passed",
+  "candidate_probe_service_calls": 0,
+  "candidate_probe_worker_entries": 0,
+  "runtime_modules_imported": false,
+  "sealed_experiments": {
+    "treatment-a-20261017": {
+      "files": 20,
+      "all_hashes_match": true
+    },
+    "treatment-a-scope-v1-20261017": {
+      "files": 4,
+      "all_hashes_match": true
+    }
+  },
+  "no_model_or_database_calls": true,
+  "candidate_checkout_clean": true
+}

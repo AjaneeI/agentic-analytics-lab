@@ -1,0 +1,14 @@
+test_all_existing_dispositions_remain_parseable (tests.test_response_format_contract.TestResponseFormatContract.test_all_existing_dispositions_remain_parseable) ... ok
+test_answer_and_disposition_validation_remain_strict (tests.test_response_format_contract.TestResponseFormatContract.test_answer_and_disposition_validation_remain_strict) ... ok
+test_clarification_rejects_all_non_object_non_null_types (tests.test_response_format_contract.TestResponseFormatContract.test_clarification_rejects_all_non_object_non_null_types) ... ok
+test_evidence_refs_remain_runtime_generated (tests.test_response_format_contract.TestResponseFormatContract.test_evidence_refs_remain_runtime_generated) ... ok
+test_explicit_null_fields_remain_none (tests.test_response_format_contract.TestResponseFormatContract.test_explicit_null_fields_remain_none) ... ok
+test_handoff_rejects_all_non_object_non_null_types (tests.test_response_format_contract.TestResponseFormatContract.test_handoff_rejects_all_non_object_non_null_types) ... ok
+test_objects_are_preserved_without_coercion_or_new_schema (tests.test_response_format_contract.TestResponseFormatContract.test_objects_are_preserved_without_coercion_or_new_schema) ... ok
+test_optional_fields_omitted_remain_none (tests.test_response_format_contract.TestResponseFormatContract.test_optional_fields_omitted_remain_none) ... ok
+test_uncertainty_preserves_string_or_null_boundary (tests.test_response_format_contract.TestResponseFormatContract.test_uncertainty_preserves_string_or_null_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+OK

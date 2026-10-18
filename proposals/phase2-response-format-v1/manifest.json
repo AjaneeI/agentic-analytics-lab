@@ -1,0 +1,25 @@
+{
+  "proposal_id": "phase2-response-format-v1",
+  "status": "inactive_proposal",
+  "parent_execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+  "baseline_prompt_sha256": "e9e29e0ed6ce4e98698ddf328e611ad6ba207c98451e2bd63869b6373914b623",
+  "candidate_prompt_sha256": "56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce",
+  "prompt_hash_encoding": "UTF-8 exact stripped runtime prompt, no trailing newline",
+  "candidate_patch_sha256": "cb494c47cdcb38fe41b0f30b0718ee8d56c9bec25d2a8535d382cd7cba9e62a9",
+  "baseline_worker_sha256": "bf871d3bf7b33abbf2d006f39508a0ebb745c19107138fa11e9ceb2182b27cba",
+  "candidate_worker_sha256": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa",
+  "baseline_contract_fingerprint": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+  "candidate_contract_fingerprint": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+  "changed_contract_files": [
+    "src/evals/system_benchmark/local_worker.py"
+  ],
+  "candidate_configuration_sha256": "7d9640bb187222efd9b866f71a51aa39ea2d7da051a373153e6ac8b6add0ca21",
+  "active_configuration_changed": false,
+  "activation_authorized": false,
+  "live_attempts_authorized": 0,
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase4_frozen": false,
+  "comparisons_authorized": false,
+  "exact_change": "Append response-field types to existing system prompt; no other candidate source difference."
+}

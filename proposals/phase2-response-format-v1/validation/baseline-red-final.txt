@@ -1,0 +1,47 @@
+FFF
+======================================================================
+FAIL: test_explicit_field_type_guidance_is_delivered (test_candidate_prompt.TestCandidatePrompt.test_explicit_field_type_guidance_is_delivered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py", line 37, in test_explicit_field_type_guidance_is_delivered
+    self.assertIn(GUIDANCE, _SYSTEM_PROMPT)
+AssertionError: 'Response field types:\n- disposition: one of "answer", "clarify", "unsupported", "handoff".\n- answer_text: a non-empty JSON string.\n- uncertainty: a JSON string or JSON null.\n- clarification: a JSON object or JSON null.\n- handoff: a JSON object or JSON null.\nUse JSON null (without quotation marks) for clarification or handoff when inapplicable.\nDo not substitute strings, booleans, arrays, or numbers for those object-or-null fields.' not found in 'You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.'
+
+======================================================================
+FAIL: test_original_prompt_prefix_and_no_answers_are_preserved (test_candidate_prompt.TestCandidatePrompt.test_original_prompt_prefix_and_no_answers_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py", line 40, in test_original_prompt_prefix_and_no_answers_are_preserved
+    self.assertTrue(_SYSTEM_PROMPT.endswith(GUIDANCE))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_real_client_fake_http_preserves_tools_options_and_runtime_evidence (test_candidate_prompt.TestCandidatePrompt.test_real_client_fake_http_preserves_tools_options_and_runtime_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py", line 89, in test_real_client_fake_http_preserves_tools_options_and_runtime_evidence
+    execution = BoundedLocalExecutor(model=OllamaModelClient(model='hermes-local:qwen3.5-9b'),
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/src/evals/system_benchmark/local_worker.py", line 169, in __call__
+    raw = self.model.respond(messages, tools)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/src/agents/ollama_client.py", line 125, in respond
+    with urllib.request.urlopen(
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/unittest/mock.py", line 1189, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py", line 61, in http
+    self.assertIn(GUIDANCE, body['messages'][0]['content'])
+AssertionError: 'Response field types:\n- disposition: one of "answer", "clarify", "unsupported", "handoff".\n- answer_text: a non-empty JSON string.\n- uncertainty: a JSON string or JSON null.\n- clarification: a JSON object or JSON null.\n- handoff: a JSON object or JSON null.\nUse JSON null (without quotation marks) for clarification or handoff when inapplicable.\nDo not substitute strings, booleans, arrays, or numbers for those object-or-null fields.' not found in 'You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+FAILED (failures=3)
