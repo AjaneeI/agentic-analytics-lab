@@ -61,7 +61,9 @@ this slice.
 
 ## Next bounded experiment
 
-Resume issue #73 by rerunning **Treatment A only** with the new bounded local worker on the same SB-D01 task and deterministic scorer. Do not use generic OpenCode for this rerun. If Treatment A is accepted, preserve that evidence and stop. Treatment B remains blocked until Hermes enforces a hard one-worker/no-concurrency invariant at the delegation boundary; do not rerun Hermes by prompt instruction alone. Keep spend at $0 and do not change benchmark semantics, add workers, or start new infrastructure.
+The one authorized pinned SB-D01 Treatment A invocation on October 17 ended in an execution error after 52.42 seconds: `ClickHouse query failed: HTTP Error 404: Not Found`. It returned no final response or deterministic score. **Phase 2 remains active and unqualified.** Before/after commit `5f36bfd4633c7b80dccefb7179da0c46fbb918f4` and clean state matched; authenticated 500-row preflight passed. No retry, Treatment B or method change followed.
+
+See [the result and limitations](docs/phase2-treatment-a-result-2026-10-17.md) and [reviewed evidence](experiments/results/phase2-treatment-a-20261017/manifest.json). Issues #94/#95 authorize only bounded independent model-free Phase 3–5 preparation while prerequisites remain blocked. Owner review of the failed result and a separate versioned authorization are required before another live experiment. Do not infer Phase 5 entry from preparation or bypass evaluator/statistical approval gates.
 
 ## Evidence boundary
 

@@ -1,0 +1,19 @@
+{
+  "execution_pin": "5f36bfd4633c7b80dccefb7179da0c46fbb918f4",
+  "clean_worktree": true,
+  "remote_branch_matches_pin": true,
+  "authenticated_readonly_clickhouse_rows": 500,
+  "preflight_status": "pass",
+  "route_reason": "oracle_metadata",
+  "capability_profile": "multi_source",
+  "allowed_tools": ["query_clickhouse", "retrieve_policy"],
+  "max_tool_calls": 2,
+  "max_model_steps": 6,
+  "model": "hermes-local:qwen3.5-9b",
+  "model_digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+  "python": "3.14.7",
+  "ollama_server_version": "0.35.0",
+  "ollama_client_version": "0.34.4",
+  "focused_mocked_tests": {"passed": 5, "failed": 0},
+  "interpretation": "Setup checks only; no model inference in preflight. Client/server version difference observed without changing either runtime."
+}

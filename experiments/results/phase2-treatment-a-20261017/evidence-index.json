@@ -1,0 +1,33 @@
+{
+  "local_raw_sha256": {
+    "INVOCATION_STARTED.json": "eb3fbece5a72858b58cba4c882110c5f62c791e2c20d7135b72fd2b39628ebb1",
+    "api-ps-after.json": "35e9786be4a46067f40d8059dc46d4edac7370815b1cefb5020075e1eac33c5a",
+    "api-ps-before.json": "a6fe9ec6e26a38d99fca418b69826e0238b7a2bb319ff05eb153a6fcfd1fa28d",
+    "api-tags-after.json": "b9b4be4cf0fd44333da716bf083ca921c1c4c7bb43b75d9753763f604d5c6af0",
+    "api-tags-before.json": "b9b4be4cf0fd44333da716bf083ca921c1c4c7bb43b75d9753763f604d5c6af0",
+    "error.txt": "af174b8de0b695774e453b2936c9be3299a3cee3b1011a43afd6d43761baa30e",
+    "manifest.json": "04bf57492d9e793e90ba8aa4863e2ec4d283b57c4f7d2762a1973c50a3e69139",
+    "memory-after.txt": "e7e09b820eda4f4c84b2cce3fb83c161404ffb749412e9260a0f920bf6544f26",
+    "memory-before.txt": "a5b4cf525b7aa18254850c3b6c7df02ebc3cc7a574edf0d4271278930649711f",
+    "ollama-after.txt": "b2eceab084675660c03a6ebcd4af1cbbdb47ce4c3b98e343c6ad1aa92ae6b10a",
+    "ollama-before.txt": "e3bd0fe8f9ac39f92c095af0d4c5e8d3277a83f56cba6a9bafe00cef52061584",
+    "outer-result.json": "80ef864d67827cb0d0d699d8f44c6215335fcba68da56537f5486807b478d2e4",
+    "preflight.json": "a13a5cfb834757f6e31072c8dbc6d2ba30c95fbd8b132f6716e605ec2dd4fb63",
+    "resource-observations.jsonl": "2c21bc37e2f8d0e2aef550f4cb58543cc0eef63771108db1c12a6dc95290d7d3",
+    "stderr.txt": "af174b8de0b695774e453b2936c9be3299a3cee3b1011a43afd6d43761baa30e",
+    "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "version-after.txt": "da6b49c2e530db90166fa3786d92bf93ce24e63524c175b7f0d2c5031db3cbda",
+    "version-before.txt": "da6b49c2e530db90166fa3786d92bf93ce24e63524c175b7f0d2c5031db3cbda",
+    "vm-stat-after.txt": "96ed707ffae8c4a69a613a4742b6de940d49a1d477f76b42b877d1a607db6b62",
+    "vm-stat-before.txt": "eca7ac134d4f0f62a3d18122477d7f62362f38e215c6179b89d7541458b1ac42"
+  },
+  "published_files": [
+    "manifest.json",
+    "outer-result.json",
+    "preflight.json",
+    "error-path-normalized.txt"
+  ],
+  "normalization": "Only local absolute path prefixes in traceback replaced; raw original preserved locally.",
+  "score_status": "not_produced",
+  "phase2_qualified": false
+}
