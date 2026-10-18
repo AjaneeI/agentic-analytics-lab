@@ -50,6 +50,13 @@ _QUERY_TOOL = {
         "Run one read-only SQL query against "
         "agentic_analytics.delivery_work_items. For blocker percentage, "
         "return the percentage from ClickHouse and alias it as blocked_pct."
+        " Schema: work_item_id String; team LowCardinality(String); "
+        "priority LowCardinality(String); status LowCardinality(String); "
+        "created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); "
+        "planned_hours UInt16; actual_hours Float32; blocked UInt8; "
+        "blocker_type LowCardinality(String); rework_count UInt8; "
+        "customer_impact UInt8. Only these columns exist. The seed-42 snapshot "
+        "is dataset provenance, not a column or a row filter."
     ),
     "input_schema": {
         "type": "object",

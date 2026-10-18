@@ -7,6 +7,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 from typing import Any
@@ -82,6 +83,29 @@ _BLOCKER_RATE_AVG_COMPLEMENT = re.compile(
 
 class QueryRejected(ValueError):
     pass
+
+
+class ClickHouseQueryError(RuntimeError):
+    """Safe HTTP/server error identifiers; no raw SQL, URL or body in message."""
+
+    def __init__(self, error: urllib.error.HTTPError):
+        self.http_status = error.code
+        try:
+            body = error.read(8192).decode("utf-8", errors="replace")
+        except Exception:
+            body = ""
+        finally:
+            error.close()
+        code = re.search(r"(?:^|\n)Code:\s*(\d{1,6})\.", body)
+        names = re.findall(r"\(([A-Z][A-Z0-9_]{1,63})\)", body)
+        self.server_code = int(code.group(1)) if code else None
+        self.server_error_name = names[-1] if names and code else None
+        detail = f"HTTP {self.http_status}"
+        if self.server_code is not None:
+            detail += f"; server code {self.server_code}"
+        if self.server_error_name:
+            detail += f" ({self.server_error_name})"
+        super().__init__(f"ClickHouse query failed: {detail}")
 
 
 def _strip_comments(sql: str) -> str:
@@ -235,6 +259,8 @@ def query_clickhouse(sql: str) -> list[dict[str, Any]]:
     try:
         with urllib.request.urlopen(request, timeout=15) as response:
             body = response.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        raise ClickHouseQueryError(exc) from exc
     except Exception as exc:
         raise RuntimeError(f"ClickHouse query failed: {exc}") from exc
 

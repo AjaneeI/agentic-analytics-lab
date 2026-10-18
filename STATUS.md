@@ -2,6 +2,27 @@
 
 _Last reviewed for the inactive ClickHouse 404 fix proposal on 2026-10-17._
 
+## Approved schema v1 activation, scope validity still blocked
+
+The user approved `phase2-runtime-schema-v1` activation and one new bounded
+standalone Treatment A after offline/preflight success. The exact reviewed patch
+is applied on this isolated branch; its runtime fingerprint matches the approved
+candidate. PR101 and the original execution pin are preserved, not merged.
+
+Actual model-facing query-tool payloads match across existing structured and
+multi-source System Benchmark paths. Document/no-tool paths retain their limits.
+The strong-single adapter and independent parity review remain future comparison
+gates; no historical configuration without equivalent schema may be compared.
+
+A real fixture integration characterization found that a valid active-work query
+without a returned scope alias scores `missing_expected_value`. The user chose
+runtime SQL evidence and to resolve this before any live attempt. No attempt has
+been consumed. A separate versioned scope-observation amendment must be reviewed
+before activation; frozen scorer and task/reference criteria remain unchanged.
+
+The obsolete inactive-proposal-only test is preserved on PR101; this activation
+branch replaces it with actual model-payload parity and the six candidate tests.
+
 ## Post-run diagnosis and inactive fix proposal v1
 
 The October 17 pinned Treatment A remains failed and unscored. Existing server
