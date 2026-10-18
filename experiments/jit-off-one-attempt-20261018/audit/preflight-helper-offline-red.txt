@@ -1,0 +1,8 @@
+Offline helper import test failed before any service/model/SQL/worker access:
+Traceback (most recent call last):
+  File "<stdin>", line 15, in <module>
+  File "work/jit_one_attempt_preflight.py", line 47, in source
+    from scripts import qualify_phase2_once as runner
+ModuleNotFoundError: No module named 'scripts'
+
+Cause: source() depended on its CLI caller having already added the pinned repository to sys.path; a direct imported helper call did not. Fixed by adding that same pinned repository path inside source() before import. No benchmark/runtime/configuration source or scientific criterion changed. No live preflight or experiment had begun.

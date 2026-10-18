@@ -1,0 +1,8 @@
+{
+  "offline_dataset_type_attestation_positive_and_negative_pass": true,
+  "exact_pinned_source_gate_pass": true,
+  "network_DNS_denied": true,
+  "live_model_SQL_calls": 0,
+  "worker_entries": 0,
+  "scope": "Preflight engineering fixture, not an experiment"
+}

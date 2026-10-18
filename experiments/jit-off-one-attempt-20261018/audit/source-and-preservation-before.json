@@ -1,0 +1,195 @@
+{
+  "activation_evidence_inventory_verified": 98,
+  "configuration_changes_only_authorization_fields": {
+    "authorization_configuration_parent_commit": {
+      "after": "4d98b8f09b89e9d44aad39d41409cfcec67740ee",
+      "before": null
+    },
+    "authorization_configuration_parent_sha256": {
+      "after": "5da27c405734b48cb64dd731180c3d6db447d72073166ea8f2329697d2f42df9",
+      "before": null
+    },
+    "authorization_consumption": {
+      "after": "One exclusive outer launch record plus the existing passive capture invocation marker; no retry/replacement/output reuse. Immutable configuration remains a historical authorization record after consumption.",
+      "before": null
+    },
+    "authorization_record_id": {
+      "after": "runtime-clickhouse-expression-jit-off-v1-one-attempt-20261018",
+      "before": null
+    },
+    "authorized_evidence_directory": {
+      "after": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/treatment-a-jit-off-v1-20261018",
+      "before": null
+    },
+    "authorized_live_attempts": {
+      "after": 1,
+      "before": 0
+    },
+    "live_authorization_record": {
+      "after": "docs/jit-off-v1-one-attempt-authorization-2026-10-18.md",
+      "before": null
+    },
+    "live_authorization_source": {
+      "after": "Explicit owner message in current chat, October 18, 2026 America/New_York; exactly one new bounded standalone attempt after final preflight.",
+      "before": null
+    },
+    "live_treatment_a_authorization": {
+      "after": "approved",
+      "before": "not_granted"
+    }
+  },
+  "configuration_sha256": "f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b",
+  "eight_historical_archives": {
+    "outputs/clickhouse-timeout-diagnosis-v1/clickhouse-timeout-diagnosis-v1.zip": "e8ae606e2f4199b3ab1b408adec4035d801f0acae0d70c12182ae82042cd12f6",
+    "outputs/gate-future-comparisons-20261017/gate-future-comparisons-evidence.zip": "add32ddd4cfd75d45aab9840c9061e3d893c005b21216ec39556a1e17c32fa56",
+    "outputs/jit-off-activation-v1/jit-off-activation-evidence.zip": "30af16da527325ce8c7630f289154304851bbc40e2cac636a91cc90cd7254636",
+    "outputs/jit-off-model-free-validation-v1/jit-off-model-free-validation-evidence.zip": "d1dabdad7c4616eb7499e850a84064822060069dc00da1cfe4f3b16aa30dca96",
+    "outputs/phase2-scope-v1-approved-20261017/approved-scope-v1-attempt-evidence.zip": "9f1c6ad296b3cd1d3fba6e69ac8039390ef08faeb04cee92a8a8463d978e9a05",
+    "outputs/response-format-v1-approved-20261017/response-format-v1-attempt-evidence.zip": "6ba83215e7825ce912dfd15c10f7d43ad1a0feeb79cdb28680b9fc650cb18b36",
+    "outputs/response-format-v1-offline-20261017/response-format-v1-offline-evidence.zip": "2c0e049ebcc3d062500241fd46b3ad5b4224d515466ea4e59f6b797a6521690f",
+    "outputs/sprint-evidence.zip": "2928fec379037ad1befd32d5008b0ed8cd07db47fda1cd76dbcb43d2433bc989"
+  },
+  "existing_dataset_csv_sha256": "cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef",
+  "experimental_contract": {
+    "benchmark_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+    "contract_files": {
+      "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+      "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+      "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+      "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+      "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+      "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+      "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+      "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+      "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+      "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+      "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+      "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+      "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+      "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+      "src/evals/system_benchmark/local_worker.py": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa",
+      "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+      "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+      "src/evals/system_benchmark/runner.py": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62",
+      "src/evals/system_benchmark/scope_observation_v1.py": "cbd4c010d80d5c3be443412ff0558bf3231c9999073354bb7c1491598552e49f",
+      "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+      "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25",
+      "src/tools/clickhouse_readonly.py": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c",
+      "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27"
+    }
+  },
+  "frozen_existing_source_and_configuration_files": {
+    "configurations/phase2-runtime-schema-v1-scope-observation-v1-response-format-v1-expression-jit-off-v1.activated.json": "5da27c405734b48cb64dd731180c3d6db447d72073166ea8f2329697d2f42df9",
+    "configurations/phase2-runtime-schema-v1-scope-observation-v1-response-format-v1.approved.json": "b215429b8e93a260b13d3f109758b908721d8d2f14b0491388672b135650be92",
+    "configurations/phase2-runtime-schema-v1-scope-observation-v1.approved.json": "832b76234e25d081736893c0eac50258447fb9e2ae17f8d54d6f029da2373c86",
+    "configurations/phase2-runtime-schema-v1-scope-observation-v1.proposal.json": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+    "configurations/phase2-runtime-schema-v1.json": "5f613b05f67ba64c345c58ccfc0d412ff395174edf3ffea5a6dde0cc56adf261",
+    "evals/assert_q3_requirements.json": "3b50abfe4226c38fc77e65eacae9085022300f19790c120a49235596b7e24455",
+    "evals/assert_q3_smoke.yaml": "242fe882419bc340a44f606a3b07b918cdf961445b1e749f1662a01c2e5bbe7f",
+    "evals/assert_q3_smoke_taxonomy.json": "d740bdd085b8bf0717c4ca70eb03d782e4b1cb2dd4e00317075879460c3e14ac",
+    "evals/assert_q3_smoke_test_set.jsonl": "6677881cb505986911001bd6558e9fa4fe7442a2198de1d946401b325c203f52",
+    "evals/natural_language_routing_dev.json": "0d494c731ddd23ab783a654ff9479f8b194904cf41c93e8e9c5d7d978e6e770a",
+    "evals/questions.json": "0dc047fbc378f0cf75f1c488e92fcb18dddcbfe976c79b1f16281e4b428654d1",
+    "evals/routing_fixtures.json": "b9ccbf1afba71f9db21461347fe00a7af75253c51da63c7e5cedd7d144db63b4",
+    "evals/rubric.md": "e3c9465cd038b24b9e2c82365f080dfffa6509935fa07fd2b4ec1e5d8290d389",
+    "evals/system_benchmark/README.md": "a5d8da4a6d371e2f6382757d8f26dca225b38bed311cbf47f1083fb0e029c55a",
+    "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+    "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+    "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+    "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+    "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+    "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+    "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+    "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "scripts/audit_system_benchmark_freeze.py": "704c00fd53a9a699ce4db3f3925af4afa030b3d7887fd7adf773b045b727f683",
+    "scripts/check_jit_off_model_free_v1_offline.py": "d57f855c69c0bdb4fc2e1cbe208394ea30c73a5d854991b4a07b920fc2a0ca98",
+    "scripts/check_project_context.py": "e7570e8033b78a0fcf3aa4a0bd1c4eee31b3a690237b9595627648cbb44a5f35",
+    "scripts/compare_architecture_evidence.py": "7f11d2432faa4f15587a8ee50c06616307d8a22e78ae059961be47875bbc9b6c",
+    "scripts/diagnose_failures.py": "11876fdcd8674aa123a35d92ee22c292114a0b4e75a54559bb68fc5b3ea1ce98",
+    "scripts/evaluate_natural_language_routing.py": "f580f2f2b7c65998ec566b5ccbda85bc77d929bf2e98206c0ec4a5cda8e35563",
+    "scripts/evaluate_routing.py": "90f28aa2cf002d10bb58109ad89d02b38ad1d4ac07eed368444ad4d6490554ab",
+    "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+    "scripts/passive_capture.py": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de",
+    "scripts/preflight_benchmark_env.py": "7505b79c6bb57d65ba1d94f4075ab2e72026aef78c8154bb8d8f516c53bb27a0",
+    "scripts/qualify_phase2_once.py": "be1bd5441bb439a525104c3da5d3ac3918ddb995f6a29bcc91e7a28d7ea27769",
+    "scripts/render_benchmark_report.py": "91fe20c9b769b9fff379cf98751b93d91bc7ed8d8da0c472fae38375cde4e914",
+    "scripts/render_project_health_report.py": "907d4ce8731fb5a4fbb290c1bc4f385387fe3f849ad9b08443c9aace07f3e030",
+    "scripts/run_oracle_metadata_routed_eval.py": "ccd3d881fecb9c78c9ebe1894d76123615ac9df069a0bb88d9b9cbb88dc83a56",
+    "scripts/run_oracle_routed_repeatability.py": "b55e612a7447ce0c1d5a6d426ee2d1b76308ed45ab9726e9fcc16bd951c753bb",
+    "scripts/run_repeatability_pass.py": "d4762d4edbafc5b861d3f8934a67efc84dc83ba329c4ba4ea05893f22925b4e0",
+    "scripts/run_single_agent_eval.py": "d19a925d82493d001af3460634def2367190c96525f4fb9e92f94f6619e4d4d4",
+    "scripts/run_smoke_eval.py": "e3cc1255c4f7e6951ccf47e6816631c2c4bd71d6a2aee0a26c08c319cbc4049b",
+    "scripts/summarize_repeatability.py": "77f6c18ecb230084068bdc38770c0c9e9269ba456dff3b8837066bf55a154c46",
+    "scripts/validate_jit_off_model_free_v1.py": "b48fcce90acdf38040ec7a73009c4391e9f25ed1c0a6eccbd241c09ddee49a23",
+    "scripts/validate_jit_off_model_free_v2.py": "334d973ba77a09743acbc0c0eae11683ea3589dc25a9c3186d88eb09373f2a5f",
+    "scripts/validate_system_benchmark.py": "483be37697c5cd55993fc1974ee600a07dce9e0263e8b48dff6fa1746f0745bc",
+    "scripts/verify_ground_truth.py": "d8758727b5eee4681e30ee212c4bb3dc4e258963e497eaa40d882ec1571e0b31",
+    "scripts/verify_qualification_runner_independent.py": "5749deba54068448fb2ece105b58987de03c354d3dd430a64e0fc513ebd77678",
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/agents/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/agents/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+    "src/agents/single_agent.py": "2a6aed58041b95ceaef5a32431bded19322a81e5f2981a77e0caceb5a4df5793",
+    "src/evals/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/evals/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/evals/assert_q3_target.py": "4f0f7a9dc5ff5b155eb0455e3325723a0a60e215529d926a8ffcecb36fcac84e",
+    "src/evals/benchmark_preflight.py": "f31130eb36cb17a9eaa65d0a07a6e932a0d39565bb0848144e84794801d0ffaf",
+    "src/evals/complexity_frontier.py": "89470d77664a42c5fad69c572fdb5e34c744cf5daf8e2d26c0a11507b9fb2c77",
+    "src/evals/diagnostics.py": "a8805bb60648e79d8e00384b118ca5fc9740870de9122f9e4b251303a4bcbb97",
+    "src/evals/failure_taxonomy.py": "55b62c6cae7270e6cd629fbb5175b6a06eb9701ce327702cbceacab0165ff946",
+    "src/evals/natural_language_routing.py": "0a313113bd2ba4ba68fe04191773fa7682a883dd7d9c23b32d9e7f0165c6198a",
+    "src/evals/provenance.py": "952da453aa01d00c7c2e8bfa4328cb629534377010e9b34d6c493ea9d7dbe002",
+    "src/evals/repeatability.py": "103f3a29ccb179ac0a950705bd4a4bf2549ca7f5bc569a2d8e2bd65562d51511",
+    "src/evals/reporting.py": "9ecce7bca87dc85195c04167ecb4c02fda2f9757668719c7b7323484f2c2f6b3",
+    "src/evals/routing_eval.py": "fb2b6ad2484997968770b7ce8b7b313771e2be797d05fc61bcdc1a313713fefe",
+    "src/evals/runner.py": "5081bbffade48132c267eea1b5fb230d9bacdd685dd581e32aca2ad719c81b6f",
+    "src/evals/scoring.py": "85dd8c19c9fa76305820a67ea16ccdb94606007f0baa46118668a21ee8376fc3",
+    "src/evals/statistical_evidence.py": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e",
+    "src/evals/system_benchmark/__init__.py": "e017784728a1c816b2afc2722c1cd4677209f1ead54c17079b72994f518ac1ab",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/freeze_audit.py": "7de8ef217f4b7f596e2c65a3b5e091bf2499981336a53fa180451e376b2d4045",
+    "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+    "src/evals/system_benchmark/local_worker.py": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa",
+    "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+    "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+    "src/evals/system_benchmark/runner.py": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62",
+    "src/evals/system_benchmark/scope_observation_v1.py": "cbd4c010d80d5c3be443412ff0558bf3231c9999073354bb7c1491598552e49f",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25",
+    "src/evals/trajectory_quality.py": "e2bfd4310edb2f007fe1e4cc2d3571e0dc34959823b849a84a109b72336cab20",
+    "src/routing/__init__.py": "c86b95ea9cceaadab923d9bc32f92239499fa2d21f3ddbbcb7073673dfe6cfee",
+    "src/routing/control_plane.py": "fc5211ef3a05514ba8e30fc9583c132ddfc5f0a075724eef22d95b963ddfcc2f",
+    "src/routing/deterministic_handlers.py": "fa060784fb5c476c28b0a6c96121cd036927caca4ca0fcff90a18a9c1783cca8",
+    "src/routing/executor.py": "ed112c0d939e0228269386b4900a3d59b1d5737b825b0aa6c551f36dcbbf9018",
+    "src/routing/natural_language_baseline.py": "1ac51f4ad33f00890c57369c9248dd7b30f89059141e1e7b4a4f49d5cd264d1e",
+    "src/routing/oracle_benchmark.py": "42c89cdece224df98b5c46825c6681ea21a91ddc5b864fde65218fc4a1fb9eb6",
+    "src/routing/telemetry.py": "a5a1625b01faa764ae7f5ee5885d4b489c5ae1471709c5503c522d8e0a61b554",
+    "src/routing/validation.py": "4bbc1a2386510c4b2f0e55a95c1bb6b6a48a306ac1d8e1b12564013cdc8589d3",
+    "src/tools/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/tools/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/tools/clickhouse_readonly.py": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c",
+    "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27"
+  },
+  "historical_raw_runs": {
+    "treatment-a-20261017": {
+      "files": 20,
+      "seal_sha256": "97cc69f4f80b2f729e41f5fb0a2c032e0bb05f3dcc32209719f892e3d90325c5",
+      "unchanged": true
+    },
+    "treatment-a-response-format-v1-20261017": {
+      "files": 4,
+      "seal_sha256": "cfc4c32843a5b6f51abc36484c2c978a80c9fb100cf83c683f986b2424fb8d9d",
+      "unchanged": true
+    },
+    "treatment-a-scope-v1-20261017": {
+      "files": 4,
+      "seal_sha256": "2144b8dc8aed85a48825e4c8941ab78b95e6e7f7e99307a38ca3e998e0256707",
+      "unchanged": true
+    }
+  },
+  "new_Treatment_A_attempts_at_verification": 0,
+  "parent_activation_commit": "4d98b8f09b89e9d44aad39d41409cfcec67740ee",
+  "runtime_source_changes": []
+}

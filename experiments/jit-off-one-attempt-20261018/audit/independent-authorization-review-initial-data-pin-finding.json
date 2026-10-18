@@ -1,0 +1,94 @@
+{
+  "reviewed_commit": "688f62dcedb3116e8ae46579cea0fd135eba94ce",
+  "parent_activation_commit": "4d98b8f09b89e9d44aad39d41409cfcec67740ee",
+  "configuration_sha256": "f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b",
+  "must_fix": [
+    {
+      "id": "AUTH-PREFLIGHT-DATA-PIN-01",
+      "finding": "Final setup and launcher must bind expected CSV to the previously pinned seed42 SHA, rather than only checking current CSV/database agreement.",
+      "expected_sha256": "cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef"
+    }
+  ],
+  "classification": "bounded_independent_offline_authorization_delta_review",
+  "verified": {
+    "changed_files": [
+      "STATUS.md",
+      "configurations/phase2-runtime-schema-v1-scope-observation-v1-response-format-v1-expression-jit-off-v1.one-attempt-20261018.json",
+      "docs/jit-off-v1-one-attempt-authorization-2026-10-18.md"
+    ],
+    "configuration_delta_fields": [
+      "authorization_configuration_parent_commit",
+      "authorization_configuration_parent_sha256",
+      "authorization_consumption",
+      "authorization_record_id",
+      "authorized_evidence_directory",
+      "authorized_live_attempts",
+      "live_authorization_record",
+      "live_authorization_source",
+      "live_treatment_a_authorization"
+    ],
+    "live_treatment_a_authorization": "approved",
+    "authorized_live_attempts": 1,
+    "authorized_live_attempts_is_integer": true,
+    "all_existing_tracked_files_except_STATUS_unchanged": 334,
+    "runtime_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+    "all_runtime_prompt_model_data_scorer_security_runner_capture_bytes_unchanged": true,
+    "activation_only_configuration_preserved": true,
+    "current_source_preflight": {
+      "activation_ready": true,
+      "execution_ready": true,
+      "execution_blockers": [],
+      "source_preflight_only": true,
+      "services_contacted": false
+    },
+    "parent_config_source_preflight": {
+      "activation_ready": true,
+      "execution_ready": false,
+      "execution_blockers": [
+        "live_treatment_a_not_authorized"
+      ]
+    },
+    "negative_gates": [
+      "wrong config SHA refused",
+      "wrong pinned source commit refused"
+    ],
+    "task_service_model_factory_HTTP_delegates_called": 0,
+    "designated_evidence_directory_absent": true,
+    "preservation_recomputed": {
+      "prior_raw_files": 28,
+      "archives": 8,
+      "activation_inventory_files": 98,
+      "existing_source_configuration_files": 92
+    },
+    "worktree_clean_before_and_after": true
+  },
+  "full_suite_evidence": {
+    "311": {
+      "sha256": "f561cef7c5bac8473bdb60ebb3e75c5f539f0de9f084bae7421815bfe116ad60",
+      "result": "375 tests OK; existing fresh log inspected, not rerun by reviewer"
+    },
+    "312": {
+      "sha256": "a5ddff7baebbea4cea136af687a342823e052a1ad308a82e9f18e2306f076da8",
+      "result": "375 tests OK; existing fresh log inspected, not rerun by reviewer"
+    }
+  },
+  "one_attempt_boundary": "Unchanged exclusive output mkdir and x-mode invocation marker plus one worker entry guard remain. Immutable approved/count1 JSON is an authorization record, not a global consumed-attempt ledger; the final outer exclusive launch record and fixed output directory must bind the sole actual invocation.",
+  "new_activity": {
+    "SQL_calls": 0,
+    "model_calls": 0,
+    "service_calls": 0,
+    "Treatment_A_entries": 0,
+    "historical_rescores": 0,
+    "source_changes": 0,
+    "automated_review_requests": 0
+  },
+  "limitations": [
+    "Source preflight readiness is conditional local integrity/authorization readiness, not successful fresh model/data/schema/settings preflight or permission for the reviewer to execute.",
+    "The sole live attempt and mandatory final preflight remain for the authorized parent executor. This review neither performs nor accepts an experiment.",
+    "Existing fresh full-suite logs were inspected; the reviewer did not duplicate the full suite.",
+    "Future interpretation must separate a returned evidence query from universal timeout resolution, JIT causation and scientific phase acceptance.",
+    "Reviewer independently reviewed this authorization delta; reviewer previously contributed to the inherited runner."
+  ],
+  "reproducer_path": "work/independent_jit_authorization_review.py",
+  "review_status": "pending_administrative_preflight_guard_retake"
+}

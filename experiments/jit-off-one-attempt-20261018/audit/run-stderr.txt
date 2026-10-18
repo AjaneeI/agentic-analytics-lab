@@ -1,0 +1,62 @@
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/src/tools/clickhouse_readonly.py", line 261, in query_clickhouse
+    with urllib.request.urlopen(request, timeout=15) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 525, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 634, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 563, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 643, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 408: Request Time-out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/qualify_phase2_once.py", line 296, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/qualify_phase2_once.py", line 278, in main
+    result = qualify_once(request, args.out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/qualify_phase2_once.py", line 257, in qualify_once
+    return capture.capture_once(request, out, execute, snapshot=snapshot)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/passive_capture.py", line 387, in capture_once
+    returned = execute(session)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/qualify_phase2_once.py", line 250, in execute
+    result = run_trial(task, reference, trial_number=1, executor=session.wrap_executor(preserve_execution))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/src/evals/system_benchmark/runner.py", line 49, in run_trial
+    execution = executor(task, trial_number, Path(tmp))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/passive_capture.py", line 294, in invoke
+    returned = delegate(*args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/qualify_phase2_once.py", line 232, in preserve_execution
+    execution = worker(*args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/src/evals/system_benchmark/local_worker.py", line 227, in __call__
+    result_payload = self._run_query_tool(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/src/evals/system_benchmark/local_worker.py", line 276, in _run_query_tool
+    rows = self.query_fn(sql)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/scripts/passive_capture.py", line 314, in invoke
+    returned = delegate(*args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/src/tools/clickhouse_readonly.py", line 264, in query_clickhouse
+    raise ClickHouseQueryError(exc) from exc
+src.tools.clickhouse_readonly.ClickHouseQueryError: ClickHouse query failed: HTTP 408; server code 159 (TIMEOUT_EXCEEDED)

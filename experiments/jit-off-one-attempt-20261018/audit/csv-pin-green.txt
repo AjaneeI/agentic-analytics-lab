@@ -1,0 +1,7 @@
+test_changed_seed_csv_refuses_before_source_gate (__main__.CsvPinGuard.test_changed_seed_csv_refuses_before_source_gate) ... ok
+test_original_csv_and_pinned_sources_pass (__main__.CsvPinGuard.test_original_csv_and_pinned_sources_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.074s
+
+OK

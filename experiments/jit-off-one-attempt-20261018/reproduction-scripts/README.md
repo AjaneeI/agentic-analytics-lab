@@ -1,0 +1,1 @@
+Historical exact scripts for inspection. The live authorization is CONSUMED. DO NOT execute launch_jit_one_attempt.py or service-preflight again under this approval. Source/paths are historical pins. Offline evidence hashing does not authorize replay, scorer use or a new attempt.

@@ -1,0 +1,15 @@
+test_changed_seed_csv_refuses_before_source_gate (__main__.CsvPinGuard.test_changed_seed_csv_refuses_before_source_gate) ... FAIL
+test_original_csv_and_pinned_sources_pass (__main__.CsvPinGuard.test_original_csv_and_pinned_sources_pass) ... ok
+
+======================================================================
+FAIL: test_changed_seed_csv_refuses_before_source_gate (__main__.CsvPinGuard.test_changed_seed_csv_refuses_before_source_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/test_jit_preflight_csv_pin.py", line 7, in test_changed_seed_csv_refuses_before_source_gate
+    with self.assertRaisesRegex(AssertionError,'seed42 CSV'):
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.284s
+
+FAILED (failures=1)

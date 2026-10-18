@@ -1,0 +1,17 @@
+# Independent authorization review
+
+Reviewed commit: `688f62dcedb3116e8ae46579cea0fd135eba94ce`, compared with activation `4d98b8f09b89e9d44aad39d41409cfcec67740ee`. Configuration SHA256: `f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b`.
+
+**No outstanding must-fix findings.** This is an offline authorization review. Mandatory final service preflight and the sole actual attempt remain for the parent executor.
+
+Exactly three tracked files change: STATUS, a new authorization document and a new immutable configuration. The config changes only approval to approved, integer attempt count1 and seven administrative binding fields. All334 pre-existing tracked files except STATUS, including runtime, prompt, model client, scorer, security, runner, capture and the parent activation-only config, are unchanged. The complete runtime contract remains `6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4`.
+
+I independently reran pinned source preflight with networking/DNS denied. The new config is ready with no execution blockers; the original activation-only config remains blocked. Wrong source commit and config SHA are rejected. No task, service, model factory, HTTP delegate or worker was invoked. Existing fresh logs each record375 tests OK on Python3.11/3.12; I did not duplicate the full suite. I independently rehashed28 historical rawfiles,8 archives,98 activation evidencefiles and92 source/configuration files.
+
+The command vector, shell invocation and final-invocation file match exactly, including interpreter, script, root, commit, config SHA, fixed evidence directory and one --run flag. This command was inspected as text only. The unchanged worker/output guards remain. The administrative launcher has one subprocess.run, no retry loop, and an exclusive launch.json record fsynced before child entry. That outer record consumes the authorization even if the child later refuses; immutable count1 alone is not a consumed-attempt ledger.
+
+One finding was resolved before finalizing: setup/launch originally bound database equality to whatever CSV currently existed. They now require original seed42 SHA `cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef` before source/services and again at launch. I independently verified the original CSV passes, changed disposable CSV refuses before source preflight, typed500-row equality passes and a one-field data mutation refuses. The recorded red/green regression is retained. No runtime/configuration/scoring bytes changed.
+
+Administrative preflight helper SHA: `ccaf775e31105e171cca703107f3f701a85050841a3a4ca873be16515cb363bc`. One-shot launcher SHA: `881bb4fe6b63cbaa6066a8aad68d714849adfdcfc105778a676c3954498e690a`. These files are outside the commit; the review is bound to these hashes and final-preflight-binding.json. Service mode and launcher were never executed by this reviewer. The launch marker and worker output directory were absent at review.
+
+Limitations: this does not verify current service state, execute or accept an experiment, establish timeout resolution/JIT causation, or accept Phase2/3/4 or architecture comparisons. The authorized executor must complete final preflight, preserve every observed outcome, consume exactly one launch, reconcile/report and stop. Reviewer was independent of this authorization implementation and previously contributed to the inherited runner.

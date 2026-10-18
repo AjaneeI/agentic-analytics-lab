@@ -1,0 +1,7 @@
+{
+  "http_status": 408,
+  "message": "ClickHouse query failed: HTTP 408; server code 159 (TIMEOUT_EXCEEDED)",
+  "server_code": 159,
+  "server_error_name": "TIMEOUT_EXCEEDED",
+  "type": "ClickHouseQueryError"
+}
