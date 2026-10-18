@@ -1,0 +1,12 @@
+test_corrupted_flags_widths_summary_seeds_and_truth_are_detected (__main__.AuditTests.test_corrupted_flags_widths_summary_seeds_and_truth_are_detected) ... ok
+test_no_repository_runtime_or_random_imports (__main__.AuditTests.test_no_repository_runtime_or_random_imports) ... ok
+test_original_is_not_mutated (__main__.AuditTests.test_original_is_not_mutated) ... ok
+test_preserved_all_scenarios_and_trials (__main__.AuditTests.test_preserved_all_scenarios_and_trials) ... ok
+test_reversed_or_nonfinite_endpoints_rejected (__main__.AuditTests.test_reversed_or_nonfinite_endpoints_rejected) ... ok
+test_wilson_bounds_satisfy_score_equation (__main__.AuditTests.test_wilson_bounds_satisfy_score_equation) ... ok
+test_wilson_zero_and_all_events_not_degenerate (__main__.AuditTests.test_wilson_zero_and_all_events_not_degenerate) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.354s
+
+OK

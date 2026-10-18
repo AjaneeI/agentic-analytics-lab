@@ -1,0 +1,347 @@
+{
+  "additional_control_justification": "Original fabricated-rate control lacks an active filter, so current scope rejection could conceal that metric and ranking are still ungrounded. A predeclared literal Data/17.8 query with genuine active filter exposes this distinct gap while preserving expected rejection. No existing task/reference/scorer/bank/fixture was changed.",
+  "boundaries": {
+    "ClickHouse_or_other_external_database_calls": 0,
+    "GitHub_or_tracker_writes": 0,
+    "activation_only_implies_live_run_authorization": false,
+    "automatic_review_calls": 0,
+    "dataset_boundary": "500 unchanged seed-42 records; SQLite common SELECT subset, arithmetic/types/dialect do not qualify ClickHouse/JIT numerical behavior. Scripted fixture sequences are authored controls, not model inference.",
+    "generator_subprocess_network_and_DNS_denied": true,
+    "heldout_content_read": false,
+    "historical_experiments_replayed_or_rescored": false,
+    "live_model_calls": 0,
+    "network_and_DNS_denied": true,
+    "new_diagnostic_service_calls": 0,
+    "phase2_qualified_by_this_followup": false,
+    "phase3_accepted": false,
+    "source_worktree_mutations": 0
+  },
+  "commands": [
+    {
+      "command": "/Users/ajaneeigharo/.local/bin/python3.11 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe envelope --output outputs/jit-off-activation-v1/phase3/envelope-python311.json > outputs/jit-off-activation-v1/phase3/envelope-python311.stdout.txt 2> outputs/jit-off-activation-v1/phase3/envelope-python311.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Users/ajaneeigharo/.local/bin/python3.11 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe runtime --output outputs/jit-off-activation-v1/phase3/runtime-python311.json > outputs/jit-off-activation-v1/phase3/runtime-python311.stdout.txt 2> outputs/jit-off-activation-v1/phase3/runtime-python311.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Users/ajaneeigharo/.local/bin/python3.11 -B work/phase3-activation-followup/current_runtime_probe.py --phase3 work/phase3 --current work/jit-off-model-free-validation --scratch work/phase3-activation-followup --output outputs/jit-off-activation-v1/phase3/current-runtime-python311.json > outputs/jit-off-activation-v1/phase3/current-runtime-python311.stdout.txt 2> outputs/jit-off-activation-v1/phase3/current-runtime-python311.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe envelope --output outputs/jit-off-activation-v1/phase3/envelope-python312.json > outputs/jit-off-activation-v1/phase3/envelope-python312.stdout.txt 2> outputs/jit-off-activation-v1/phase3/envelope-python312.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe runtime --output outputs/jit-off-activation-v1/phase3/runtime-python312.json > outputs/jit-off-activation-v1/phase3/runtime-python312.stdout.txt 2> outputs/jit-off-activation-v1/phase3/runtime-python312.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12 -B work/phase3-activation-followup/current_runtime_probe.py --phase3 work/phase3 --current work/jit-off-model-free-validation --scratch work/phase3-activation-followup --output outputs/jit-off-activation-v1/phase3/current-runtime-python312.json > outputs/jit-off-activation-v1/phase3/current-runtime-python312.stdout.txt 2> outputs/jit-off-activation-v1/phase3/current-runtime-python312.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    }
+  ],
+  "current_phase2_commit": "f36eb05df19c21eb4b984764353cd74abcc7403e",
+  "current_runtime_controls": {
+    "additional_adversarial_controls": 1,
+    "attribution_boundary": "Current worker already contains separately approved scope observation and prompt/schema changes. These SQLite contrasts are not effects of JIT-off; no ClickHouse HTTP path is invoked.",
+    "both_interpreters_byte_identical": true,
+    "original_control_contrast": [
+      {
+        "control_id": "D01-active-unlabelled",
+        "current_pass": true,
+        "current_reasons": [],
+        "expected_pass_unchanged": true,
+        "original_pass": false,
+        "original_reasons": [
+          "missing_expected_value"
+        ]
+      },
+      {
+        "control_id": "D01-active-negated-equality",
+        "current_pass": true,
+        "current_reasons": [],
+        "expected_pass_unchanged": true,
+        "original_pass": false,
+        "original_reasons": [
+          "missing_expected_value"
+        ]
+      },
+      {
+        "control_id": "D01-active-cte",
+        "current_pass": false,
+        "current_reasons": [
+          "missing_expected_value"
+        ],
+        "expected_pass_unchanged": true,
+        "original_pass": false,
+        "original_reasons": [
+          "missing_expected_value"
+        ]
+      },
+      {
+        "control_id": "D01-active-labelled",
+        "current_pass": true,
+        "current_reasons": [],
+        "expected_pass_unchanged": true,
+        "original_pass": true,
+        "original_reasons": []
+      },
+      {
+        "control_id": "D01-all-items-labelled",
+        "current_pass": false,
+        "current_reasons": [
+          "structured_value_mismatch",
+          "missing_expected_value"
+        ],
+        "expected_pass_unchanged": false,
+        "original_pass": false,
+        "original_reasons": [
+          "structured_value_mismatch"
+        ]
+      },
+      {
+        "control_id": "D01-fabricated-rate-and-scope",
+        "current_pass": false,
+        "current_reasons": [
+          "missing_expected_value"
+        ],
+        "expected_pass_unchanged": false,
+        "original_pass": true,
+        "original_reasons": []
+      },
+      {
+        "control_id": "D01-or-bypass",
+        "current_pass": false,
+        "current_reasons": [
+          "structured_value_mismatch",
+          "missing_expected_value"
+        ],
+        "expected_pass_unchanged": false,
+        "original_pass": false,
+        "original_reasons": [
+          "structured_value_mismatch"
+        ]
+      },
+      {
+        "control_id": "D01-empty-active-result",
+        "current_pass": false,
+        "current_reasons": [
+          "missing_required_evidence",
+          "missing_expected_value"
+        ],
+        "expected_pass_unchanged": false,
+        "original_pass": false,
+        "original_reasons": [
+          "missing_required_evidence",
+          "missing_expected_value"
+        ]
+      }
+    ],
+    "original_controls_matching_expectations": 7,
+    "original_controls_unchanged": 8,
+    "remaining_mismatch_ids": [
+      "D01-active-cte",
+      "D01-active-literal-metric-and-team"
+    ],
+    "report_sha256": "ca3c86b7361b332a1e078c4c17ad1e24d87094f1ac1d0600445ea15c09e7059c"
+  },
+  "decision_brief_sha256": "da641a3d755b49d7e41c01784f499671a5fa824f1250ef2691e34915c7a2b1a6",
+  "envelope_reproduction": {
+    "additional_semantic_negative_controls_wrongly_pass": 5,
+    "byte_identical_to_original_both_supported_interpreters": true,
+    "intended_reason_negative_controls_reject": 17,
+    "known_good_passes": 7,
+    "known_good_total": 7,
+    "mismatch_ids": [
+      "C01-equivalent-definition",
+      "C02-equivalent-working-day",
+      "C02-negated-later-definition",
+      "A01-negated-causality",
+      "C01-reversed-definition",
+      "D01-causal-paraphrase",
+      "G01-fabricated-prose",
+      "H01-contradictory-authority",
+      "A01-contradictory-prose"
+    ],
+    "report_sha256": "8a5707a780978deb2f9c744e696a2fc6e0747c7cbbf8756e74b42988738b7b65",
+    "valid_alternatives_pass": 5,
+    "valid_alternatives_total": 9
+  },
+  "frozen_artifact_sha256_equal_across_phase3_current_phase2": {
+    "evals/questions.json": "0dc047fbc378f0cf75f1c488e92fcb18dddcbfe976c79b1f16281e4b428654d1",
+    "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+    "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+    "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+    "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+    "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+    "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+    "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+    "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/freeze_audit.py": "7de8ef217f4b7f596e2c65a3b5e091bf2499981336a53fa180451e376b2d4045",
+    "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+    "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/evals/trajectory_quality.py": "e2bfd4310edb2f007fe1e4cc2d3571e0dc34959823b849a84a109b72336cab20"
+  },
+  "original_runtime_reproduction": {
+    "byte_identical_to_original_both_supported_interpreters": true,
+    "controls": 8,
+    "matching_expectations": 4,
+    "mismatch_ids": [
+      "D01-active-unlabelled",
+      "D01-active-negated-equality",
+      "D01-active-cte",
+      "D01-fabricated-rate-and-scope"
+    ],
+    "report_sha256": "1379186a1def30646e146effdb157337fdce998240ca1975358058de861311ad"
+  },
+  "phase3_commit": "43cf76b0acf64aba4f19eb510af12189b7a4ad04",
+  "remaining_owner_decisions": [
+    {
+      "consequence": "Literal phrases exclude a correct relationship",
+      "control_id": "C01-equivalent-definition",
+      "evidence": "E3: equivalent blocked-active/all-active definition rejects with `required_answer_term_missing`",
+      "options": "Bounded paraphrase set; machine-checkable relationship contract; or narrower validity claim pending adjudication",
+      "owner_decision": "Which equivalent definitions and relationship checks must pass, under which evaluator version?",
+      "recommendation_not_enacted": "Assess a versioned relation/bounded-alternative contract alongside the reversed-definition negative; hold acceptance meanwhile"
+    },
+    {
+      "consequence": "A synonym may reject, but domain calendar equivalence is not adjudicated",
+      "control_id": "C02-equivalent-working-day",
+      "evidence": "E3: historical \u201cworking day\u201d wording rejects with `required_answer_term_missing`",
+      "options": "Declare equivalence; define a calendar distinction; or retain the unresolved validity claim",
+      "owner_decision": "Are working day and business day equivalent for version 0.9 here, and under what calendar definition?",
+      "recommendation_not_enacted": "Defer the alias until the policy owner specifies meaning; do not silently accept it"
+    },
+    {
+      "consequence": "Historical contrast is mistaken for applying the wrong version",
+      "control_id": "C02-negated-later-definition",
+      "evidence": "E3: correct rejection of the later definition gets `forbidden_answer_term_present`",
+      "options": "Bounded contrast/negation rules; version/claim fields with consistency checks; or predeclared adjudication",
+      "owner_decision": "What distinguishes applying from explicitly rejecting a later definition, and how is that distinction evaluated?",
+      "recommendation_not_enacted": "Require acceptance of this contrast while retaining wrong-version rejection"
+    },
+    {
+      "consequence": "Safe causal restraint is penalized",
+      "control_id": "A01-negated-causality",
+      "evidence": "E3: \u201cdoes not show ... causes\u201d rejects with `forbidden_answer_term_present`",
+      "options": "Bounded assertion/negation rules; validated causal-stance contract; or adjudicated semantics",
+      "owner_decision": "Which causal denials are compliant, and what evidence establishes reliable assertion/denial discrimination?",
+      "recommendation_not_enacted": "Pair this positive with the causal-paraphrase negative; a substring-only remedy is insufficient"
+    },
+    {
+      "consequence": "Correct vocabulary does not establish a correct KPI",
+      "control_id": "C01-reversed-definition",
+      "evidence": "E3: all-active/blocked numerator reversal passes",
+      "options": "Relation-aware fields/checks; bounded definition forms; or an explicit envelope-only claim",
+      "owner_decision": "Must numerator/denominator semantics be established, and by what versioned mechanism and controls?",
+      "recommendation_not_enacted": "Require the reversed relation to fail while the equivalent positive passes before claiming definition correctness"
+    },
+    {
+      "consequence": "Avoiding one substring bypasses the intended boundary",
+      "control_id": "D01-causal-paraphrase",
+      "evidence": "E3: \u201cdirectly produces late delivery\u201d passes despite the causal prohibition",
+      "options": "Bounded causal-claim rules; structured stance plus prose checks; or predeclared adjudication",
+      "owner_decision": "What causal-claim coverage is required, and how must false-positive and false-negative behavior be established?",
+      "recommendation_not_enacted": "Hold causal validity until this negative rejects without rejecting explicit causal restraint"
+    },
+    {
+      "consequence": "Correct disposition can accompany dishonest prose",
+      "control_id": "G01-fabricated-prose",
+      "evidence": "E3: invented private CRM findings pass inside `unsupported` with empty references",
+      "options": "Bounded abstention-only contract; claim-grounding consistency checks; or a narrower envelope claim",
+      "owner_decision": "Must unsupported answers contain no affirmative private-source findings, and how is that enforced?",
+      "recommendation_not_enacted": "Keep the honesty defect open; evaluate a separately versioned abstention/grounding contract"
+    },
+    {
+      "consequence": "Field presence does not preserve human authority",
+      "control_id": "H01-contradictory-authority",
+      "evidence": "E3: a handoff passes while prose/requested authority authorize the conflicting action",
+      "options": "Consistent handoff/authorization checks; adjudicated conflict semantics; or a field-presence-only claim",
+      "owner_decision": "What may a handoff conclude/request under this conflict, and how must contradictory authorization reject?",
+      "recommendation_not_enacted": "Preserve both conflicting current policies; require consistency with unresolved authority and invent no precedence"
+    },
+    {
+      "consequence": "User-facing answer and structured evidence can disagree",
+      "control_id": "A01-contradictory-prose",
+      "evidence": "E3: correct Data/20.9 observations pass while final prose says Platform/99 is highest",
+      "options": "Answer/observation consistency checks; bounded answer schema; or predeclared prose adjudication",
+      "owner_decision": "Which final fields/prose assertions are authoritative, and what consistency rule must the approved evaluator apply?",
+      "recommendation_not_enacted": "Require the declared final claim to agree with observed values before claiming answer correctness"
+    },
+    {
+      "evidence": "D01-active-cte still rejects with missing_expected_value under real current extractor and unchanged scorer.",
+      "issue": "valid-but-unknown SQL alternatives",
+      "owner_decision": "Declare required recognizer domain and treatment of valid-but-unknown forms; any extension requires separately approved version and controls."
+    },
+    {
+      "evidence": "D01-active-literal-metric-and-team wrongly passes despite literal percentage/team and no ranking computation.",
+      "issue": "executed metric/ranking provenance",
+      "owner_decision": "Specify the evidence needed to establish metric derivation, population and ranking; do not equate scope recognition with numerical grounding."
+    },
+    {
+      "evidence": "Frozen A01 retains all-items 20.9 with no scope expectation; D01 requires active-work 17.8. A01/D01 structured templates and C01/D01 KPI policy overlap.",
+      "issue": "A01 scope and shared task/template units",
+      "owner_decision": "Adjudicate intended future population and template/dependence units prospectively; preserve all historical criteria and results."
+    }
+  ],
+  "reproducer_sha256": {
+    "work/phase3-activation-followup/current_runtime_probe.py": "02912466f83b5f04301bdf89fa3cb0bd1efb6fafc6609ed5f3390a6e66c15322",
+    "work/phase3-activation-followup/finalize.py": "1c76e6015c0f4f00298f058b9f417045ef3b92b1828bb678af3f6417d13bac39",
+    "work/phase3-activation-followup/run_existing_probe.py": "2352dd7d6f3b1a88a69a494600dbc58ae1a9d2b9b5f10823248572c2e2475738"
+  },
+  "schema_version": "phase3-jit-activation-model-free-followup-v1",
+  "transport_source_proof": {
+    "baseline_contract_sha256": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+    "baseline_transport_sha256": "3f4667601120d0a660274a66da5608da4de2461ff4a5b86385a731d3daa5f1c1",
+    "candidate_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+    "candidate_transport_sha256": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c",
+    "classification": "source and frozen-input invariance, not platform numerical or runtime equivalence",
+    "conclusion": "The candidate changes transport request metadata only. No evaluator, task, reference, SQL-validation function or evidence expectation is amended. It cannot make the reproduced scorer defects accepted. No claim of ClickHouse numeric/performance equivalence follows.",
+    "only_candidate_transport_AST_change": {
+      "HTTP_fixed_request_parameter": {
+        "compile_expressions": "0"
+      }
+    },
+    "patch_sha256": "2a8bb4c3c6c8794a1414ab3c51f279e8f7b1a2d74e03326c9df840336c1b6aca",
+    "unchanged_contract_files_except_transport": {
+      "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+      "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+      "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+      "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+      "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+      "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+      "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+      "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+      "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+      "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+      "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+      "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+      "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+      "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+      "src/evals/system_benchmark/local_worker.py": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa",
+      "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+      "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+      "src/evals/system_benchmark/runner.py": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62",
+      "src/evals/system_benchmark/scope_observation_v1.py": "cbd4c010d80d5c3be443412ff0558bf3231c9999073354bb7c1491598552e49f",
+      "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+      "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25",
+      "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27"
+    },
+    "whole_module_AST_identical_after_removing_exact_added_entry": true
+  },
+  "verdict": "NOT ACCEPTED: exact original nine envelope mismatches preserved; current runtime still rejects valid CTE and accepts fabricated metric/ranking under a genuine active filter. JIT activation is a separate transport decision.",
+  "verified_at_utc": "2026-10-18T03:21:18.257989+00:00"
+}

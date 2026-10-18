@@ -1,0 +1,1 @@
+{"additional_adversarial_controls": 1, "mismatch_ids": ["D01-active-cte", "D01-active-literal-metric-and-team"], "original_controls": 8, "phase3_accepted": false, "report_sha256": "ca3c86b7361b332a1e078c4c17ad1e24d87094f1ac1d0600445ea15c09e7059c"}

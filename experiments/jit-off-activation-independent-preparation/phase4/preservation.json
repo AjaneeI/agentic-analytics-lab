@@ -1,0 +1,98 @@
+{
+  "source_commit": "403eda9b0ea47da9d6690e8750517b883ddaf4a9",
+  "files": [
+    {
+      "path": "docs/agent-evaluation-evidence-method.md",
+      "sha256": "0f0667ee8e05982ef89f4391c738ce566b332ff446037161c702c7866876401b",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "docs/phase4-analysis-plan-proposal-2026-10-17.md",
+      "sha256": "c4a77bb5bca481295bdcc82d0085c110b516e244a7d5f96ca735c674c3976d0b",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "docs/phase4-evidence-validation-2026-10-17.md",
+      "sha256": "3174fcf87b238b4386b343183afd5ab490f146764834f1d274c53ba14ada43b7",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/README.md",
+      "sha256": "b72475d2f484270b3e252191d2891c3c3bb7841d25160629069e096fb706c10e",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/existing-interval-simulation.json",
+      "sha256": "81a41a2f31cb28e0480416e63b8eba58d877f3bd866174cf5c794906ca273768",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/independent-summary-validation.json",
+      "sha256": "5052c06003275fa9c57ef2043910756b61a13772e4cfed69a920023c11329b33",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/independent-validation-focused-tests.txt",
+      "sha256": "530f6c39db0d52c4ff8d942caa507ae852741ab0998d53bdf05b2f419cd93a61",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/independent-validation-full-tests.txt",
+      "sha256": "69734257918b869722b52d24a1a94b143ddd3d9e307ec0902c23562286ff3681",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/independent-validation-verification.json",
+      "sha256": "103ca070b07d26603d5c421b180305acf074b420f0a58aad3b8fd0186ee33bdb",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/unittest-focused.txt",
+      "sha256": "76b60da6d0a42f45ca0334668bce6d204369ad58281ddb4d767c8fc856e2b152",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/unittest-full.txt",
+      "sha256": "3078b2b3401e95a94733ab84168a1e5aa00ce74d2972dc8fdc1631796175372c",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "experiments/phase4-calibration-20261017/verification.json",
+      "sha256": "fefc279fa336febb67bd7742932e009104dad693fe3c83027ae964902bf52840",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "scripts/calibrate_statistical_interval.py",
+      "sha256": "f3ba578b31074eb57cb88d9870d46d9caef4f1f4e95056fd26bef84ec1650fac",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "scripts/validate_statistical_calibration.py",
+      "sha256": "27b1c6d18eb46f084e38d1d6e031a5dd7e3a3d58a55401c16beacca474855cb8",
+      "matches_pinned_commit": true
+    },
+    {
+      "path": "src/evals/statistical_evidence.py",
+      "sha256": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e",
+      "matches_pinned_commit": true
+    }
+  ],
+  "all_match_pinned_commit": true,
+  "new_simulations": 0,
+  "new_bootstrap_draws": 0,
+  "runtime_or_service_calls": 0,
+  "decision_ids": [
+    "P4-01",
+    "P4-02",
+    "P4-03",
+    "P4-04",
+    "P4-05",
+    "P4-06",
+    "P4-07",
+    "P4-08",
+    "P4-09",
+    "P4-10",
+    "P4-11",
+    "P4-12"
+  ]
+}

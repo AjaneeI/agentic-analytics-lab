@@ -1,0 +1,104 @@
+{
+  "status": "open_owner_decisions_not_method_selection",
+  "source_commit": "403eda9b0ea47da9d6690e8750517b883ddaf4a9",
+  "read_only_source_audit": {
+    "point_estimate": {
+      "path": "src/evals/statistical_evidence.py",
+      "lines": "202-209, 262",
+      "finding": "Arithmetic mean of candidate-minus-baseline per-task success proportions; equal task weights.",
+      "source_sha256": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e"
+    },
+    "outer_unit": {
+      "path": "src/evals/statistical_evidence.py",
+      "lines": "155-160",
+      "finding": "Uniform task ID draw reused for both architectures; task identity is paired.",
+      "source_sha256": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e"
+    },
+    "inner_unit": {
+      "path": "src/evals/statistical_evidence.py",
+      "lines": "164-170",
+      "finding": "Separate rng.randrange calls for baseline and candidate repeat slots; no paired repeat index and no family/run block draw.",
+      "source_sha256": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e"
+    },
+    "endpoints": {
+      "path": "src/evals/statistical_evidence.py",
+      "lines": "118-132, 175-178",
+      "finding": "Sorted effects; percentile endpoints at .025/.975 with linear interpolation; default 10000 draws differs from preserved 500.",
+      "source_sha256": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e"
+    },
+    "pairing_validation": {
+      "path": "src/evals/statistical_evidence.py",
+      "lines": "84-95",
+      "finding": "Task order and repeat counts align; these checks do not validate repeat IDs or shared seeds.",
+      "source_sha256": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e"
+    },
+    "method_note": {
+      "path": "docs/agent-evaluation-evidence-method.md",
+      "lines": "23-31",
+      "finding": "States resample precomputed task-level deltas, not individual repeats; differs from pinned code.",
+      "source_sha256": "0f0667ee8e05982ef89f4391c738ce566b332ff446037161c702c7866876401b"
+    }
+  },
+  "owner_decisions": [
+    {
+      "id": "P4-01",
+      "state": "Open",
+      "exact_next_decision": "Specify the population, parameter and uncertainty target: fixed tasks conditional on repeats, or sampled tasks/families."
+    },
+    {
+      "id": "P4-02",
+      "state": "Open",
+      "exact_next_decision": "Specify task/family weights and absent/invalid-family handling before selecting the estimator. Equal-task and balanced equal-family arithmetic do not supply approval."
+    },
+    {
+      "id": "P4-03",
+      "state": "Open \u2014 demonstrated mismatch",
+      "exact_next_decision": "Name the approved interval procedure and exact code/document versions. Task-delta resampling and task plus independent-arm-repeat resampling differ."
+    },
+    {
+      "id": "P4-04",
+      "state": "Open",
+      "exact_next_decision": "Define matched repeat IDs, seeds, ordering and shared blocks; identify independent sampling units. Equal repeat counts do not prove pairing."
+    },
+    {
+      "id": "P4-05",
+      "state": "Open",
+      "exact_next_decision": "Specify confidence/tails, draw budget, calibration scenarios/seeds and scientific coverage/FPR/width acceptance criteria. No new numerical tolerances are supplied here."
+    },
+    {
+      "id": "P4-06",
+      "state": "Open",
+      "exact_next_decision": "Specify invalid-task/artifact exclusions, outcome-blind adjudication and required sensitivity reporting; preserve original attempts."
+    },
+    {
+      "id": "P4-07",
+      "state": "Open",
+      "exact_next_decision": "Specify common timeout budget, interpretable-artifact requirements and endpoint/denominator handling. Do not invent a Boolean result for an unscored contract error."
+    },
+    {
+      "id": "P4-08",
+      "state": "Open for prospective protocol",
+      "exact_next_decision": "Specify any future infrastructure-only recovery policy, action authorization and preservation of originals. This audit authorizes no retry or run."
+    },
+    {
+      "id": "P4-09",
+      "state": "Open",
+      "exact_next_decision": "Specify pre-invocation, worker, transport, contract and scorer failure categories, missingness and denominators; absent score is not zero."
+    },
+    {
+      "id": "P4-10",
+      "state": "Open",
+      "exact_next_decision": "Name the primary comparison/endpoint and any hierarchy or multiplicity rule. Zero exclusion remains an implementation diagnostic, not an approved confirmatory test."
+    },
+    {
+      "id": "P4-11",
+      "state": "Open",
+      "exact_next_decision": "Set meaningful success improvement and acceptable latency/call/cost/maintenance burdens. D-011 keeps quality and burden separate; no new weighted winner score."
+    },
+    {
+      "id": "P4-12",
+      "state": "Not satisfied \u2014 freeze deferred",
+      "exact_next_decision": "Record accepted prerequisites, exact task/scorer/protocol/analysis hashes, named gate owner and explicit signoff before a pre-held-out freeze. JIT-off activation does not supply statistical acceptance."
+    }
+  ]
+}

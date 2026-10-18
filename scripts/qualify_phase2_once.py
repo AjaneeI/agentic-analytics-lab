@@ -23,11 +23,17 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts import passive_capture as capture
 
-VERSION = 'phase2-qualification-runner-v1-response-format-v1'
+VERSION = 'phase2-qualification-runner-v1-response-format-v1-expression-jit-off-v1'
 CONFIGURATION_ID = 'phase2-runtime-schema-v1-scope-observation-v1'
 RESPONSE_FORMAT_CONFIGURATION_ID = CONFIGURATION_ID + '-response-format-v1'
 RESPONSE_FORMAT_VERSION = 'phase2-response-format-v1'
 RESPONSE_FORMAT_PROMPT_SHA256 = '56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce'
+JIT_OFF_CONFIGURATION_ID = RESPONSE_FORMAT_CONFIGURATION_ID + '-expression-jit-off-v1'
+JIT_OFF_VERSION = 'runtime-clickhouse-expression-jit-off-v1'
+JIT_OFF_TRANSPORT_SHA256 = 'aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c'
+JIT_OFF_PARAMETERS = {'default_format':'JSONEachRow','readonly':'1','max_execution_time':'10',
+    'max_result_rows':'1000','result_overflow_mode':'break','max_rows_to_read':'10000',
+    'max_bytes_to_read':'10485760','max_memory_usage':'134217728','max_threads':'2','compile_expressions':'0'}
 SCOPE_VERSION = 'runtime-sql-scope-v1'
 TABLE = 'agentic_analytics.delivery_work_items'
 SCHEMA_SQL = f'DESCRIBE TABLE {TABLE}'
@@ -63,8 +69,9 @@ def source_preflight(request: capture.CaptureRequest) -> dict:
             raise capture.CaptureRefused('loaded adapter/runtime source differs from pinned source')
     config = checks['config']
     blockers = []
-    format_configuration = config.get('configuration_id') == RESPONSE_FORMAT_CONFIGURATION_ID
-    if (config.get('configuration_id') not in {CONFIGURATION_ID, RESPONSE_FORMAT_CONFIGURATION_ID}
+    jit_configuration = config.get('configuration_id') == JIT_OFF_CONFIGURATION_ID
+    format_configuration = config.get('configuration_id') in {RESPONSE_FORMAT_CONFIGURATION_ID, JIT_OFF_CONFIGURATION_ID}
+    if (config.get('configuration_id') not in {CONFIGURATION_ID, RESPONSE_FORMAT_CONFIGURATION_ID, JIT_OFF_CONFIGURATION_ID}
             or config.get('schema_version') != 'delivery-work-items-schema-v1'
             or config.get('scope_observation_version') != SCOPE_VERSION
             or config.get('standalone_qualification') is not True
@@ -85,7 +92,24 @@ def source_preflight(request: capture.CaptureRequest) -> dict:
         blockers.append('owner_observation_approval_not_approved')
     if config.get('runtime_offline_validity_gate') != 'passed':
         blockers.append('runtime_offline_validity_gate_not_passed')
+    if jit_configuration:
+        if (config.get('runtime_transport_version') != JIT_OFF_VERSION
+                or config.get('runtime_activation_approval') != 'approved'
+                or config.get('clickhouse_request_settings_amendment') != {'compile_expressions':'0'}
+                or config.get('clickhouse_transport_sha256') != JIT_OFF_TRANSPORT_SHA256
+                or _sha(request.root / 'src/tools/clickhouse_readonly.py') != JIT_OFF_TRANSPORT_SHA256
+                or config.get('clickhouse_fixed_request_parameters') != JIT_OFF_PARAMETERS
+                or type(config.get('clickhouse_client_timeout_seconds')) is not int
+                or config['clickhouse_client_timeout_seconds'] != 15):
+            blockers.append('jit_off_transport_configuration_differs')
+    activation_blockers = list(blockers)
+    if jit_configuration and (config.get('live_treatment_a_authorization') != 'approved'
+            or type(config.get('authorized_live_attempts')) is not int
+            or config['authorized_live_attempts'] != 1):
+        blockers.append('live_treatment_a_not_authorized')
     return {'runner_version': VERSION, 'checks': checks, 'execution_blockers': blockers,
+            'activation_blockers': activation_blockers, 'activation_ready': not activation_blockers,
+            'execution_ready': not blockers,
             'adapter_sha256': _sha(Path(__file__)), 'capture_sha256': _sha(Path(capture.__file__)),
             'source_preflight_only': not request.run, 'services_contacted': False,
             'qualification_or_phase_accepted': False}

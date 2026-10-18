@@ -1,3 +1,9 @@
+# Current gate — expression JIT-off activated; live TreatmentA unauthorized
+
+Owner approved runtime-clickhouse-expression-jit-off-v1 activation only. Exact transport adds compile_expressions0; existing SQL/model/scoring/time/resource contract and historical evidence preserved. New immutable configuration has activationapproved and zero authorized live attempts; source preflight activationreadytrue but executionblocked.375tests pass Python3.11/3.12 offline; effective settings bound to sealedPR112 identical transport, no freshSQL. Phase3 knownmismatches persist; Phase4 all12decisions open/freeze deferred. No TreatmentA, diagnosticexperiment, model/SQL call or PR111/112merge. See docs/runtime-clickhouse-expression-jit-off-v1-activation.md and review packet for exact pins/invocation/remainingauthorization.
+
+Historical checkpoints follow.
+
 # Latest checkpoint — bounded model-free JIT-off checks complete
 
 Six predeclared unrelated synthetic SQL requests: effective candidate JITfalse/originaltrue, all existing limits match, scalar/aggregate fixtures agree. V1 Boolean-string checker stop remains sealed asfailed; V2 versions correction and issues onlyfive previously unissued requests, no retries/replacements. Full364tests passPy3.11/3.12; original20+4+4 hashes/sixarchives unchanged. No originalSQLreplay, TreatmentA/model/scorer call, benchmark activation or PR111merge. Phase2remainsunqualified. See docs/jit-off-model-free-validation-results.md; separate reviewed runtimeconfiguration and explicit experiment authorization remain necessary.
