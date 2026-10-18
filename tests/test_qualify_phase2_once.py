@@ -1,7 +1,7 @@
 """Qualification wiring tests use temporary pins and injected offline delegates."""
 
 from dataclasses import replace
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import hashlib
 import json
 import io
@@ -124,6 +124,19 @@ class TestQualificationRunner(unittest.TestCase):
                 runner.qualify_once(request, self.out, service_json_get=self.get)
         self.get.assert_not_called()
 
+    def test_loaded_corpus_must_match_every_pinned_contract_file_before_services(self):
+        path = self.root / 'evals/system_benchmark/corpus/kpi_dictionary_v1.md'
+        path.write_text(path.read_text() + '\nOffline candidate corpus differs.\n')
+        self.pin()  # Legitimate temporary candidate pin; loaded corpus is still different.
+        factory = Mock(side_effect=AssertionError('model constructor must not run'))
+        with self.assertRaises(capture.CaptureRefused):
+            runner.qualify_once(self.request, self.out, model_factory=factory,
+                service_json_get=self.get, service_query_fn=self.setup_query)
+        factory.assert_not_called()
+        self.get.assert_not_called()
+        self.setup_query.assert_not_called()
+        self.assertFalse(self.out.exists())
+
     def test_success_uses_exact_runner_and_two_evidence_calls_separate_from_setup(self):
         query = Mock(return_value=[{'team': 'Data', 'blocked_pct': 17.77777777777778}])
         model = ScriptedModel(self.model_steps())
@@ -203,7 +216,7 @@ class TestQualificationRunner(unittest.TestCase):
             task_path.write_text(json.dumps(payload))
             self.pin()
             factory = Mock()
-            with self.subTest(field=field), self.assertRaises(capture.CaptureRefused):
+            with self.subTest(field=field), patch.object(runner, 'ROOT', self.root), self.assertRaises(capture.CaptureRefused):
                 runner.qualify_once(self.request, self.out, model_factory=factory,
                     service_json_get=self.get, service_query_fn=self.setup_query)
             factory.assert_not_called()
@@ -217,6 +230,29 @@ class TestQualificationRunner(unittest.TestCase):
         with patch.object(sys, 'argv', arguments), patch('urllib.request.urlopen', side_effect=AssertionError('network forbidden')), redirect_stdout(io.StringIO()):
             self.assertEqual(runner.main(), 2)
         self.assertFalse(self.out.exists())
+
+    def test_cli_keeps_task_success_but_blocks_incomplete_capture_qualification(self):
+        result = {'task_success': True, 'unaltered_result': 'offline'}
+        arguments = ['qualify_phase2_once.py', '--root', str(self.root), '--expected-commit', self.request.expected_commit,
+                     '--config', str(self.config_path), '--config-sha256', self.request.config_sha256,
+                     '--out', str(self.out), '--run', '--approval-reference', 'offline-cli-fixture']
+        for bad_field in ('collector_status', 'postflight', 'worker_invocations'):
+            manifest = {'collector_status': 'complete', 'postflight': {'valid': True}, 'worker_invocations': 1}
+            manifest[bad_field] = {'collector_status': 'incomplete', 'postflight': {'valid': False}, 'worker_invocations': 0}[bad_field]
+            self.out.mkdir(exist_ok=True)
+            (self.out / 'manifest.json').write_text(json.dumps(manifest))
+            (self.out / 'raw-result.json').write_text(json.dumps(result))
+            raw_before = (self.out / 'raw-result.json').read_bytes()
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with self.subTest(field=bad_field), patch.object(sys, 'argv', arguments), \
+                 patch.object(runner, 'qualify_once', return_value=result) as delegate, \
+                 redirect_stdout(stdout), redirect_stderr(stderr):
+                self.assertEqual(runner.main(), 2)
+            self.assertIn('qualification blocked', stderr.getvalue())
+            self.assertEqual(json.loads(stdout.getvalue()), result)
+            self.assertEqual((self.out / 'raw-result.json').read_bytes(), raw_before)
+            self.assertTrue(result['task_success'])
+            delegate.assert_called_once()
 
 
 if __name__ == '__main__':

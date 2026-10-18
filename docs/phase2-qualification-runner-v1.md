@@ -51,6 +51,9 @@ platform, without an environment dump. Service records include fresh UTC times.
 The ordinary capture manifest retains configuration/contract/source pins,
 partial model/tool metrics, collector errors, resource/timing boundaries and
 source postflight. Instrumentation overhead remains part of observed timings.
+Loaded-source checks compare every declared contract file, including corpus,
+tasks and references, with the pinned checkout; equal Python code alone cannot
+qualify another checkout whose retriever corpus differs.
 
 `execution.json` and `raw-result.json` preserve unedited public JSON copies of
 the actual existing executor/runner return objects. They do not change returned
@@ -62,6 +65,9 @@ and pre-query SQL remain available for partial failures. Failed secondary eviden
 writes mark collection incomplete without replacing the delegate outcome.
 The JSON-envelope privacy fix filters named private fields in trace copies;
 ordinary/opaque text remains unparsed. This is not full raw transport capture.
+The CLI reports qualification blocked and exits 2 if final collection is
+incomplete, source postflight is invalid/missing or one worker entry is not
+established. It leaves the raw result and its task-success field unchanged.
 
 Offline verification uses injected models, query/service transports and resource
 samplers in temporary Git repositories. Those fixtures explicitly approve their

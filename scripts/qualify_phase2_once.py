@@ -52,7 +52,7 @@ def source_preflight(request: capture.CaptureRequest) -> dict:
     checks = capture.preflight(request)
     # Imported adapter/capture/runtime source must be the pinned bytes, even if
     # a caller supplies another checkout with a superficially matching config.
-    paths = [name for name in checks['benchmark_contract']['contract_files'] if name.endswith('.py')]
+    paths = list(checks['benchmark_contract']['contract_files'])
     paths += ['scripts/qualify_phase2_once.py', 'scripts/passive_capture.py']
     for name in paths:
         if _sha(ROOT / name) != _sha(request.root / name):
@@ -224,6 +224,18 @@ def main():
         parser.error('--out is required for an explicitly authorized run')
     result = qualify_once(request, args.out)
     print(json.dumps(result, indent=2, sort_keys=True))
+    try:
+        manifest = json.loads((args.out / 'manifest.json').read_text())
+        complete = (manifest.get('collector_status') == 'complete'
+                    and isinstance(manifest.get('postflight'), dict)
+                    and manifest['postflight'].get('valid') is True
+                    and type(manifest.get('worker_invocations')) is int
+                    and manifest['worker_invocations'] == 1)
+    except (OSError, ValueError, TypeError, AttributeError):
+        complete = False
+    if not complete:
+        print('qualification blocked: final collector/postflight/worker-entry evidence is incomplete', file=sys.stderr)
+        return 2
     return 0 if result['task_success'] else 2
 
 
