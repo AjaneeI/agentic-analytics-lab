@@ -241,6 +241,7 @@ def query_clickhouse(sql: str) -> list[dict[str, Any]]:
             "max_bytes_to_read": str(10 * 1024 * 1024),
             "max_memory_usage": str(128 * 1024 * 1024),
             "max_threads": "2",
+            "compile_expressions": "0",
         }
     )
 

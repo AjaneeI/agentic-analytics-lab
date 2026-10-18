@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROPOSAL = ROOT / 'proposals/runtime-clickhouse-expression-jit-off-v1'
 
 class TestInactiveClickHouseTimeoutProposal(unittest.TestCase):
-    def test_pinned_patch_is_inactive_and_passes_fake_http_contracts_in_disposable_copy(self):
+    def test_historical_pinned_patch_is_reproduced_and_checked_in_disposable_copy(self):
         manifest = json.loads((PROPOSAL/'manifest.json').read_text())
         patch_file = PROPOSAL/'candidate.patch'
         self.assertFalse(manifest['activation_authorized'])
@@ -23,11 +23,19 @@ class TestInactiveClickHouseTimeoutProposal(unittest.TestCase):
         self.assertFalse(json.loads(config.read_text())['active'])
         probe = PROPOSAL/'test_candidate_transport.py'
         self.assertEqual(hashlib.sha256(probe.read_bytes()).hexdigest(), manifest['candidate_test_sha256'])
+        base_sources = {}
         for relative, hashes in manifest['files'].items():
-            self.assertEqual(hashlib.sha256((ROOT/relative).read_bytes()).hexdigest(), hashes['base_sha256'])
+            baseline = subprocess.check_output(
+                ['git', 'show', manifest['parent_execution_commit'] + ':' + relative], cwd=ROOT)
+            self.assertEqual(hashlib.sha256(baseline).hexdigest(), hashes['base_sha256'])
+            self.assertIn(hashlib.sha256((ROOT/relative).read_bytes()).hexdigest(),
+                          (hashes['base_sha256'], hashes['candidate_sha256']))
+            base_sources[relative] = baseline
         with tempfile.TemporaryDirectory(prefix='clickhouse-timeout-offline-') as directory:
             target = Path(directory)
             shutil.copytree(ROOT/'src', target/'src', ignore=shutil.ignore_patterns('__pycache__'))
+            for relative, baseline in base_sources.items():
+                (target/relative).write_bytes(baseline)
             result = subprocess.run(['git','apply','--check',str(patch_file)],cwd=target,capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
             subprocess.run(['git','apply',str(patch_file)],cwd=target,check=True)

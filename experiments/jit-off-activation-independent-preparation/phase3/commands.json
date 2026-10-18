@@ -1,0 +1,36 @@
+{
+  "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+  "exit_boundary": "Exit 2 deliberately preserves unresolved evaluator mismatches; it is not a transport error.",
+  "runs": [
+    {
+      "command": "/Users/ajaneeigharo/.local/bin/python3.11 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe envelope --output outputs/jit-off-activation-v1/phase3/envelope-python311.json > outputs/jit-off-activation-v1/phase3/envelope-python311.stdout.txt 2> outputs/jit-off-activation-v1/phase3/envelope-python311.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Users/ajaneeigharo/.local/bin/python3.11 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe runtime --output outputs/jit-off-activation-v1/phase3/runtime-python311.json > outputs/jit-off-activation-v1/phase3/runtime-python311.stdout.txt 2> outputs/jit-off-activation-v1/phase3/runtime-python311.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Users/ajaneeigharo/.local/bin/python3.11 -B work/phase3-activation-followup/current_runtime_probe.py --phase3 work/phase3 --current work/jit-off-model-free-validation --scratch work/phase3-activation-followup --output outputs/jit-off-activation-v1/phase3/current-runtime-python311.json > outputs/jit-off-activation-v1/phase3/current-runtime-python311.stdout.txt 2> outputs/jit-off-activation-v1/phase3/current-runtime-python311.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe envelope --output outputs/jit-off-activation-v1/phase3/envelope-python312.json > outputs/jit-off-activation-v1/phase3/envelope-python312.stdout.txt 2> outputs/jit-off-activation-v1/phase3/envelope-python312.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12 -B work/phase3-activation-followup/run_existing_probe.py --root work/phase3 --probe runtime --output outputs/jit-off-activation-v1/phase3/runtime-python312.json > outputs/jit-off-activation-v1/phase3/runtime-python312.stdout.txt 2> outputs/jit-off-activation-v1/phase3/runtime-python312.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12 -B work/phase3-activation-followup/current_runtime_probe.py --phase3 work/phase3 --current work/jit-off-model-free-validation --scratch work/phase3-activation-followup --output outputs/jit-off-activation-v1/phase3/current-runtime-python312.json > outputs/jit-off-activation-v1/phase3/current-runtime-python312.stdout.txt 2> outputs/jit-off-activation-v1/phase3/current-runtime-python312.stderr.txt",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2
+    }
+  ]
+}

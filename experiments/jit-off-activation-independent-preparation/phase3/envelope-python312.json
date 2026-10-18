@@ -1,0 +1,3003 @@
+{
+  "audit_checks_pass": false,
+  "baseline_commit": "58add5e58e581be21d3511fc4cd2cb5be44f49b7",
+  "benchmark_model_calls": 0,
+  "changed_frozen_paths": [],
+  "control_counts": {
+    "known_bad": 22,
+    "valid_alternative": 9
+  },
+  "controls": [
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 20.9,
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "DATA: 20.90% in this delivery snapshot. No causal conclusion follows.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": true,
+      "id": "A01-case-format",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Case and numeric formatting preserve the same answer.",
+      "response_overrides": {
+        "answer_text": "DATA: 20.90% in this delivery snapshot. No causal conclusion follows."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 17.8,
+            "scope": "active_work_items",
+            "team": "Data"
+          },
+          "tool_calls": [
+            "retrieve_policy",
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI counts blocked active work over all active work in the same scope and snapshot; this does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items",
+            "policy:kpi-dictionary@1.0#blocker-rate"
+          ]
+        }
+      },
+      "expected_pass": true,
+      "id": "D01-reversed-tool-order",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "tool_calls": [
+          "retrieve_policy",
+          "query_clickhouse"
+        ]
+      },
+      "rationale": "The task imposes a two-call budget but no source order.",
+      "response_overrides": {},
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-D01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 17.9,
+            "scope": "active_work_items",
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Data has the highest active-work blocker rate at approximately 17.9%. Blocked active work is divided by all active work in scope; no causal conclusion follows.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items",
+            "policy:kpi-dictionary@1.0#blocker-rate"
+          ]
+        }
+      },
+      "expected_pass": true,
+      "id": "D01-rounded-value",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "structured_values": {
+          "blocked_pct": 17.9,
+          "scope": "active_work_items",
+          "team": "Data"
+        }
+      },
+      "rationale": "17.9 lies inside the predeclared tolerance of 0.2.",
+      "response_overrides": {
+        "answer_text": "Data has the highest active-work blocker rate at approximately 17.9%. Blocked active work is divided by all active work in scope; no causal conclusion follows."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-D01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": []
+        },
+        "response": {
+          "answer_text": "What date range should this report and its comparison cover?",
+          "clarification": {
+            "concept": "reporting period"
+          },
+          "disposition": "clarify",
+          "evidence_refs": []
+        }
+      },
+      "expected_pass": true,
+      "id": "E01-rephrased-question",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "The prose varies while preserving the canonical concept payload.",
+      "response_overrides": {
+        "answer_text": "What date range should this report and its comparison cover?"
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-E01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "The current escalation and service-level P1 authority sections conflict. Resolve the authority conflict with the service owner and policy owners before authorizing an exception.",
+          "disposition": "handoff",
+          "evidence_refs": [
+            "policy:service-level-policy@1.0#p1-exception-authority",
+            "policy:escalation-policy@1.0#p1-temporary-authority"
+          ],
+          "handoff": {
+            "actions_taken": [
+              "Compared both P1 authority sections."
+            ],
+            "evidence_refs": [
+              "policy:escalation-policy@1.0#p1-temporary-authority",
+              "policy:service-level-policy@1.0#p1-exception-authority"
+            ],
+            "requested_authority": "Service owner and policy owners must resolve the conflict before authorization.",
+            "trigger": "Two applicable current policies conflict on prior approval.",
+            "unresolved_uncertainty": "No precedence rule resolves the contradictory authority."
+          }
+        }
+      },
+      "expected_pass": true,
+      "id": "H01-evidence-order",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Citation order does not resolve or alter the policy conflict.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:service-level-policy@1.0#p1-exception-authority",
+          "policy:escalation-policy@1.0#p1-temporary-authority"
+        ]
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-H01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Divide the number of blocked active work items by the number of all active work items in the selected scope, then multiply by 100.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "policy:kpi-dictionary@1.0#blocker-rate"
+          ]
+        }
+      },
+      "expected_pass": true,
+      "id": "C01-equivalent-definition",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "Blocked active work over the entire active population is the same KPI without the literal reference substrings.",
+      "response_overrides": {
+        "answer_text": "Divide the number of blocked active work items by the number of all active work items in the selected scope, then multiply by 100."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "required_answer_term_missing"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "required_answer_term_missing"
+        ]
+      },
+      "task_id": "SB-C01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Under version 0.9, blocked work had waited longer than one working day for an external dependency.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "policy:blocker-definition@0.9#blocked-item"
+          ]
+        }
+      },
+      "expected_pass": true,
+      "id": "C02-equivalent-working-day",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "Working day is an ordinary equivalent of business day in this bounded historical definition.",
+      "response_overrides": {
+        "answer_text": "Under version 0.9, blocked work had waited longer than one working day for an external dependency."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "required_answer_term_missing"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "required_answer_term_missing"
+        ]
+      },
+      "task_id": "SB-C02"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "On 2025-06-01, blocked meant waiting more than one business day for an external dependency. The later material progress definition did not yet apply.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "policy:blocker-definition@0.9#blocked-item"
+          ]
+        }
+      },
+      "expected_pass": true,
+      "id": "C02-negated-later-definition",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "The answer explicitly rejects applying the later definition.",
+      "response_overrides": {
+        "answer_text": "On 2025-06-01, blocked meant waiting more than one business day for an external dependency. The later material progress definition did not yet apply."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_term_present"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_term_present"
+        ]
+      },
+      "task_id": "SB-C02"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 20.9,
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Data has the highest blocker rate at 20.9%. This does not show that blocked work causes lateness.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": true,
+      "id": "A01-negated-causality",
+      "intended_reason_codes": [],
+      "kind": "valid_alternative",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "Explicitly denying a causal inference satisfies the forbidden-claim boundary.",
+      "response_overrides": {
+        "answer_text": "Data has the highest blocker rate at 20.9%. This does not show that blocked work causes lateness."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_term_present"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_term_present"
+        ]
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 1.0,
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Data has the highest blocker rate, 20.9%, in the structured delivery snapshot. This association does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "A01-wrong-value",
+      "intended_reason_codes": [
+        "structured_value_mismatch"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "structured_values": {
+          "blocked_pct": 1.0,
+          "team": "Data"
+        }
+      },
+      "rationale": "The observed rate is outside tolerance.",
+      "response_overrides": {},
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "structured_value_mismatch"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "structured_value_mismatch"
+        ]
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Data has the highest blocker rate, 20.9%, in the structured delivery snapshot. This association does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "A01-missing-value",
+      "intended_reason_codes": [
+        "missing_expected_value"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "structured_values": {
+          "team": "Data"
+        }
+      },
+      "rationale": "The rate observation is absent.",
+      "response_overrides": {},
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 20.9,
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Data has the highest blocker rate, 20.9%, in the structured delivery snapshot. This association does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": []
+        }
+      },
+      "expected_pass": false,
+      "id": "A01-missing-evidence",
+      "intended_reason_codes": [
+        "missing_required_evidence"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "No required structured evidence citation.",
+      "response_overrides": {
+        "evidence_refs": []
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence"
+        ]
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 20.9,
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Data has the highest blocker rate, 20.9%, in the structured delivery snapshot. This association does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "A01-forbidden-tool",
+      "intended_reason_codes": [
+        "forbidden_tool_used"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "Adds a prohibited policy tool.",
+      "response_overrides": {},
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_tool_used"
+            ]
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_tool_used"
+        ]
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 20.9,
+            "team": "Data"
+          },
+          "tool_calls": []
+        },
+        "response": {
+          "answer_text": "Data has the highest blocker rate, 20.9%, in the structured delivery snapshot. This association does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "A01-missing-tool",
+      "intended_reason_codes": [
+        "missing_required_tool"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "tool_calls": []
+      },
+      "rationale": "Required structured tool was not observed.",
+      "response_overrides": {},
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_tool"
+            ]
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_tool"
+        ]
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 20.9,
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Data has the highest rate at 20.9%; blocked work causes lateness.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "A01-explicit-causality",
+      "intended_reason_codes": [
+        "forbidden_answer_term_present"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Asserts the forbidden causal conclusion.",
+      "response_overrides": {
+        "answer_text": "Data has the highest rate at 20.9%; blocked work causes lateness."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_term_present"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_term_present"
+        ]
+      },
+      "task_id": "SB-A01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "As of 2025-06-01, an item was blocked after waiting more than one business day for an external dependency under version 0.9.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "policy:blocker-definition@1.0#blocked-item"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "C02-wrong-version",
+      "intended_reason_codes": [
+        "wrong_policy_version"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Applies the current identity to a historical as-of request.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:blocker-definition@1.0#blocked-item"
+        ]
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "wrong_policy_version"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "wrong_policy_version"
+        ]
+      },
+      "task_id": "SB-C02"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Blocker rate is blocked items among active work divided by all active items in the selected scope, reported as a percentage.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "policy:kpi-dictionary@1.0#aging-work"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "C01-wrong-section",
+      "intended_reason_codes": [
+        "missing_required_evidence",
+        "unsupported_evidence_source"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Cites an unrelated section from the correct policy.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:kpi-dictionary@1.0#aging-work"
+        ]
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence",
+              "unsupported_evidence_source"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence",
+          "unsupported_evidence_source"
+        ]
+      },
+      "task_id": "SB-C01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 17.8,
+            "scope": "all_work_items",
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI counts blocked active work over all active work in the same scope and snapshot; this does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items",
+            "policy:kpi-dictionary@1.0#blocker-rate"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "D01-wrong-scope",
+      "intended_reason_codes": [
+        "structured_value_mismatch"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "structured_values": {
+          "blocked_pct": 17.8,
+          "scope": "all_work_items",
+          "team": "Data"
+        }
+      },
+      "rationale": "All-work scope contradicts the active-work contract.",
+      "response_overrides": {},
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "structured_value_mismatch"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "structured_value_mismatch"
+        ]
+      },
+      "task_id": "SB-D01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 17.8,
+            "scope": "active_work_items",
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI counts blocked active work over all active work in the same scope and snapshot; this does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "D01-missing-policy",
+      "intended_reason_codes": [
+        "missing_required_evidence"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Cross-source support requires the KPI citation too.",
+      "response_overrides": {
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ]
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence"
+        ]
+      },
+      "task_id": "SB-D01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 17.8,
+            "scope": "active_work_items",
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse",
+            "retrieve_policy",
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI counts blocked active work over all active work in the same scope and snapshot; this does not establish causality.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items",
+            "policy:kpi-dictionary@1.0#blocker-rate"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "D01-over-budget",
+      "intended_reason_codes": [
+        "trajectory_call_budget_exceeded",
+        "trajectory_repeated_call"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy",
+          "query_clickhouse"
+        ]
+      },
+      "rationale": "Three calls exceed the unchanged two-call budget.",
+      "response_overrides": {},
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": false,
+            "reason_codes": [
+              "trajectory_repeated_call",
+              "trajectory_call_budget_exceeded"
+            ]
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "trajectory_repeated_call",
+          "trajectory_call_budget_exceeded"
+        ]
+      },
+      "task_id": "SB-D01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": []
+        },
+        "response": {
+          "answer_text": "Which reporting period and comparison period should I use?",
+          "clarification": null,
+          "disposition": "answer",
+          "evidence_refs": []
+        }
+      },
+      "expected_pass": false,
+      "id": "E01-omitted-clarification",
+      "intended_reason_codes": [
+        "required_clarification_omitted"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Answers despite the unresolved reporting period.",
+      "response_overrides": {
+        "clarification": null,
+        "disposition": "answer"
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_disposition",
+              "required_clarification_omitted"
+            ]
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_disposition",
+          "required_clarification_omitted"
+        ]
+      },
+      "task_id": "SB-E01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": []
+        },
+        "response": {
+          "answer_text": "Which reporting period and comparison period should I use?",
+          "clarification": {
+            "concept": "team"
+          },
+          "disposition": "clarify",
+          "evidence_refs": []
+        }
+      },
+      "expected_pass": false,
+      "id": "E01-wrong-concept",
+      "intended_reason_codes": [
+        "clarification_concept_mismatch"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Asks about a team rather than the required period.",
+      "response_overrides": {
+        "clarification": {
+          "concept": "team"
+        }
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": false,
+            "reason_codes": [
+              "clarification_concept_mismatch"
+            ]
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "clarification_concept_mismatch"
+        ]
+      },
+      "task_id": "SB-E01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": []
+        },
+        "response": {
+          "answer_text": "Private CRM notes are unavailable to the permitted evidence tools. I cannot use those notes or explain why Data is blocked.",
+          "disposition": "unsupported",
+          "evidence_refs": [
+            "structured:private_crm"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "G01-invented-reference",
+      "intended_reason_codes": [
+        "unsupported_evidence_source"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Invents a private CRM evidence identity.",
+      "response_overrides": {
+        "evidence_refs": [
+          "structured:private_crm"
+        ]
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "unsupported_evidence_source"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "unsupported_evidence_source"
+        ]
+      },
+      "task_id": "SB-G01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "The current escalation and service-level P1 authority sections conflict. Resolve the authority conflict with the service owner and policy owners before authorizing an exception.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "handoff": null
+        }
+      },
+      "expected_pass": false,
+      "id": "H01-omitted-handoff",
+      "intended_reason_codes": [
+        "required_handoff_omitted",
+        "forbidden_answer_disposition"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Silently answers despite conflicting policy authority.",
+      "response_overrides": {
+        "disposition": "answer",
+        "handoff": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_disposition",
+              "required_handoff_omitted"
+            ]
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_disposition",
+          "required_handoff_omitted"
+        ]
+      },
+      "task_id": "SB-H01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "The current escalation and service-level P1 authority sections conflict. Resolve the authority conflict with the service owner and policy owners before authorizing an exception.",
+          "disposition": "handoff",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "handoff": {
+            "actions_taken": [
+              "Compared both P1 authority sections."
+            ],
+            "evidence_refs": [
+              "policy:escalation-policy@1.0#p1-temporary-authority",
+              "policy:service-level-policy@1.0#p1-exception-authority"
+            ],
+            "requested_authority": "",
+            "trigger": "Two applicable current policies conflict on prior approval.",
+            "unresolved_uncertainty": "No precedence rule resolves the contradictory authority."
+          }
+        }
+      },
+      "expected_pass": false,
+      "id": "H01-missing-authority",
+      "intended_reason_codes": [
+        "missing_handoff_field:requested_authority"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Missing requested authority from handoff package.",
+      "response_overrides": {
+        "handoff": {
+          "actions_taken": [
+            "Compared both P1 authority sections."
+          ],
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "requested_authority": "",
+          "trigger": "Two applicable current policies conflict on prior approval.",
+          "unresolved_uncertainty": "No precedence rule resolves the contradictory authority."
+        }
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": false,
+            "reason_codes": [
+              "missing_handoff_field:requested_authority"
+            ]
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_handoff_field:requested_authority"
+        ]
+      },
+      "task_id": "SB-H01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "The current escalation and service-level P1 authority sections conflict. Resolve the authority conflict with the service owner and policy owners before authorizing an exception.",
+          "disposition": "handoff",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority"
+          ],
+          "handoff": {
+            "actions_taken": [
+              "Compared both P1 authority sections."
+            ],
+            "evidence_refs": [
+              "policy:escalation-policy@1.0#p1-temporary-authority",
+              "policy:service-level-policy@1.0#p1-exception-authority"
+            ],
+            "requested_authority": "Service owner and policy owners must resolve the conflict before authorization.",
+            "trigger": "Two applicable current policies conflict on prior approval.",
+            "unresolved_uncertainty": "No precedence rule resolves the contradictory authority."
+          }
+        }
+      },
+      "expected_pass": false,
+      "id": "H01-missing-conflicting-source",
+      "intended_reason_codes": [
+        "missing_required_evidence"
+      ],
+      "kind": "known_bad",
+      "matches_expectation": true,
+      "observation_overrides": {},
+      "rationale": "Only one side of the conflict is cited.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority"
+        ]
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence"
+        ]
+      },
+      "task_id": "SB-H01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Blocker rate is all active items divided by blocked items in scope, multiplied by 100.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "policy:kpi-dictionary@1.0#blocker-rate"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "C01-reversed-definition",
+      "intended_reason_codes": [],
+      "kind": "known_bad",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "The literal terms are present but numerator and denominator are reversed.",
+      "response_overrides": {
+        "answer_text": "Blocker rate is all active items divided by blocked items in scope, multiplied by 100."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-C01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 17.8,
+            "scope": "active_work_items",
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse",
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "Data is highest at 17.8% among active work. Blocked active work divided by all active work is the KPI; blocked work directly produces late delivery.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items",
+            "policy:kpi-dictionary@1.0#blocker-rate"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "D01-causal-paraphrase",
+      "intended_reason_codes": [],
+      "kind": "known_bad",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "Asserts causality without the exact forbidden substring.",
+      "response_overrides": {
+        "answer_text": "Data is highest at 17.8% among active work. Blocked active work divided by all active work is the KPI; blocked work directly produces late delivery."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-D01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": []
+        },
+        "response": {
+          "answer_text": "The private CRM notes confirm Data is blocked because its manager ignored the customer escalation.",
+          "disposition": "unsupported",
+          "evidence_refs": []
+        }
+      },
+      "expected_pass": false,
+      "id": "G01-fabricated-prose",
+      "intended_reason_codes": [],
+      "kind": "known_bad",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "An unsupported label cannot justify inventing private evidence in answer text.",
+      "response_overrides": {
+        "answer_text": "The private CRM notes confirm Data is blocked because its manager ignored the customer escalation."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-G01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "tool_calls": [
+            "retrieve_policy"
+          ]
+        },
+        "response": {
+          "answer_text": "The incident commander is authorized now; service-owner approval is unnecessary.",
+          "disposition": "handoff",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "handoff": {
+            "actions_taken": [
+              "Compared both P1 authority sections."
+            ],
+            "evidence_refs": [
+              "policy:escalation-policy@1.0#p1-temporary-authority",
+              "policy:service-level-policy@1.0#p1-exception-authority"
+            ],
+            "requested_authority": "No approval is required; proceed now.",
+            "trigger": "Two applicable current policies conflict on prior approval.",
+            "unresolved_uncertainty": "No precedence rule resolves the contradictory authority."
+          }
+        }
+      },
+      "expected_pass": false,
+      "id": "H01-contradictory-authority",
+      "intended_reason_codes": [],
+      "kind": "known_bad",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "A handoff envelope also silently authorizes the exact forbidden action.",
+      "response_overrides": {
+        "answer_text": "The incident commander is authorized now; service-owner approval is unnecessary.",
+        "handoff": {
+          "actions_taken": [
+            "Compared both P1 authority sections."
+          ],
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "requested_authority": "No approval is required; proceed now.",
+          "trigger": "Two applicable current policies conflict on prior approval.",
+          "unresolved_uncertainty": "No precedence rule resolves the contradictory authority."
+        }
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-H01"
+    },
+    {
+      "evaluated_candidate": {
+        "observation": {
+          "structured_values": {
+            "blocked_pct": 20.9,
+            "team": "Data"
+          },
+          "tool_calls": [
+            "query_clickhouse"
+          ]
+        },
+        "response": {
+          "answer_text": "Data is not highest. Platform has the highest blocker rate at 99%.",
+          "disposition": "answer",
+          "evidence_refs": [
+            "structured:delivery_work_items"
+          ]
+        }
+      },
+      "expected_pass": false,
+      "id": "A01-contradictory-prose",
+      "intended_reason_codes": [],
+      "kind": "known_bad",
+      "matches_expectation": false,
+      "observation_overrides": {},
+      "rationale": "The final prose contradicts the correct observation; the substring Data still appears.",
+      "response_overrides": {
+        "answer_text": "Data is not highest. Platform has the highest blocker rate at 99%."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "task_id": "SB-A01"
+    }
+  ],
+  "controls_matching_expectations": 22,
+  "development_bank_freeze_audit": {
+    "expected_task_count": 24,
+    "family_counts": {
+      "A": 1,
+      "B": 0,
+      "C": 2,
+      "D": 1,
+      "E": 1,
+      "F": 0,
+      "G": 1,
+      "H": 1
+    },
+    "invalid_reference_ids": [],
+    "missing_reference_ids": [],
+    "ready": false,
+    "reasons": [
+      "development_task_count_incomplete",
+      "family_A_coverage_incomplete",
+      "family_B_coverage_incomplete",
+      "family_C_coverage_incomplete",
+      "family_D_coverage_incomplete",
+      "family_E_coverage_incomplete",
+      "family_F_coverage_incomplete",
+      "family_G_coverage_incomplete",
+      "family_H_coverage_incomplete"
+    ],
+    "task_count": 7
+  },
+  "evidence_runtime_calls": 0,
+  "freeze_unchanged": true,
+  "known_good": {
+    "passed": 7,
+    "results": [
+      {
+        "score": {
+          "dimensions": [
+            {
+              "name": "disposition",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "evidence",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "tools",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "trajectory",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "structured_values",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "clarification",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "handoff",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "answer_bounds",
+              "passed": true,
+              "reason_codes": []
+            }
+          ],
+          "passed": true,
+          "reason_codes": []
+        },
+        "task_id": "SB-A01"
+      },
+      {
+        "score": {
+          "dimensions": [
+            {
+              "name": "disposition",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "evidence",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "tools",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "trajectory",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "structured_values",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "clarification",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "handoff",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "answer_bounds",
+              "passed": true,
+              "reason_codes": []
+            }
+          ],
+          "passed": true,
+          "reason_codes": []
+        },
+        "task_id": "SB-C01"
+      },
+      {
+        "score": {
+          "dimensions": [
+            {
+              "name": "disposition",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "evidence",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "tools",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "trajectory",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "structured_values",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "clarification",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "handoff",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "answer_bounds",
+              "passed": true,
+              "reason_codes": []
+            }
+          ],
+          "passed": true,
+          "reason_codes": []
+        },
+        "task_id": "SB-C02"
+      },
+      {
+        "score": {
+          "dimensions": [
+            {
+              "name": "disposition",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "evidence",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "tools",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "trajectory",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "structured_values",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "clarification",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "handoff",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "answer_bounds",
+              "passed": true,
+              "reason_codes": []
+            }
+          ],
+          "passed": true,
+          "reason_codes": []
+        },
+        "task_id": "SB-D01"
+      },
+      {
+        "score": {
+          "dimensions": [
+            {
+              "name": "disposition",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "evidence",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "tools",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "trajectory",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "structured_values",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "clarification",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "handoff",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "answer_bounds",
+              "passed": true,
+              "reason_codes": []
+            }
+          ],
+          "passed": true,
+          "reason_codes": []
+        },
+        "task_id": "SB-E01"
+      },
+      {
+        "score": {
+          "dimensions": [
+            {
+              "name": "disposition",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "evidence",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "tools",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "trajectory",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "structured_values",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "clarification",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "handoff",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "answer_bounds",
+              "passed": true,
+              "reason_codes": []
+            }
+          ],
+          "passed": true,
+          "reason_codes": []
+        },
+        "task_id": "SB-G01"
+      },
+      {
+        "score": {
+          "dimensions": [
+            {
+              "name": "disposition",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "evidence",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "tools",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "trajectory",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "structured_values",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "clarification",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "handoff",
+              "passed": true,
+              "reason_codes": []
+            },
+            {
+              "name": "answer_bounds",
+              "passed": true,
+              "reason_codes": []
+            }
+          ],
+          "passed": true,
+          "reason_codes": []
+        },
+        "task_id": "SB-H01"
+      }
+    ],
+    "total": 7
+  },
+  "phase2_prerequisite": "not_qualified_by_this_audit",
+  "phase3_accepted": false,
+  "schema_version": "phase3-evaluator-audit-v1",
+  "scope": "development-only, model-free preparation; no Phase 3 gate acceptance",
+  "sha256": {
+    "evals/questions.json": "0dc047fbc378f0cf75f1c488e92fcb18dddcbfe976c79b1f16281e4b428654d1",
+    "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+    "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+    "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+    "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+    "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+    "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+    "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+    "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "experiments/evaluator-validation-20261017/controls.json": "b11d1a1c6a0fa29d00d90f32b7527b76c3a7eb9fbbf64d847a1b74e3890864d4",
+    "experiments/evaluator-validation-20261017/frozen-inputs.json": "51fa659ff2bc5545e7296a5cd2b18b5a8f341282f7a43a518cf0bebaf1af73fa",
+    "scripts/audit_system_benchmark_evaluator.py": "be2b8d63ca4e9f88991238179ef669184321b222d66680b5045b2d838ab8281e",
+    "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/freeze_audit.py": "7de8ef217f4b7f596e2c65a3b5e091bf2499981336a53fa180451e376b2d4045",
+    "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+    "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/evals/trajectory_quality.py": "e2bfd4310edb2f007fe1e4cc2d3571e0dc34959823b849a84a109b72336cab20"
+  },
+  "unresolved_control_ids": [
+    "C01-equivalent-definition",
+    "C02-equivalent-working-day",
+    "C02-negated-later-definition",
+    "A01-negated-causality",
+    "C01-reversed-definition",
+    "D01-causal-paraphrase",
+    "G01-fabricated-prose",
+    "H01-contradictory-authority",
+    "A01-contradictory-prose"
+  ]
+}

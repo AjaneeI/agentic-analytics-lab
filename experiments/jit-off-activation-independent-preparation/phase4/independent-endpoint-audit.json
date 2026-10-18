@@ -1,0 +1,582 @@
+{
+  "checked_trials": 3000,
+  "claim_boundary": "Endpoint arithmetic and summary verification only. No bootstrap endpoints independently regenerated; no method selection, scientific acceptance, model inference, database/held-out access or phase advancement.",
+  "errors": [],
+  "input_manifest_sha256": {
+    "work/phase4/docs/agent-evaluation-evidence-method.md": "0f0667ee8e05982ef89f4391c738ce566b332ff446037161c702c7866876401b",
+    "work/phase4/experiments/phase4-calibration-20261017/existing-interval-simulation.json": "81a41a2f31cb28e0480416e63b8eba58d877f3bd866174cf5c794906ca273768",
+    "work/phase4/experiments/phase4-calibration-20261017/independent-summary-validation.json": "5052c06003275fa9c57ef2043910756b61a13772e4cfed69a920023c11329b33",
+    "work/phase4/scripts/calibrate_statistical_interval.py": "f3ba578b31074eb57cb88d9870d46d9caef4f1f4e95056fd26bef84ec1650fac",
+    "work/phase4/scripts/validate_statistical_calibration.py": "27b1c6d18eb46f084e38d1d6e031a5dd7e3a3d58a55401c16beacca474855cb8",
+    "work/phase4/src/evals/statistical_evidence.py": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e"
+  },
+  "network_and_dns_denied": true,
+  "numeric_agreement_tolerance": 1e-11,
+  "preserved_files_unchanged": true,
+  "python_version": "3.14.7",
+  "raw_scope": {
+    "bootstrap_draw_arrays_stored": false,
+    "bootstrap_endpoint_replays": 0,
+    "new_simulations": 0,
+    "point_estimate_replays": 0,
+    "raw_boolean_matrices_stored": false,
+    "stored_endpoint_records": 3000
+  },
+  "scenarios": [
+    {
+      "dependence": "independent",
+      "name": "small_independent",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 296,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.9662244697474673,
+            0.9948030382606412
+          ],
+          "rate": 0.9866666666666667,
+          "trials": 300
+        },
+        "mean_estimate": -0.004074074074074074,
+        "mean_width": 0.7737638888888888,
+        "mean_width_mc_normal_95_interval": [
+          0.7606831641794105,
+          0.7868446135983671
+        ],
+        "positive_null_false_positive": {
+          "count": 1,
+          "mc_standard_error": 0.003327773140415986,
+          "mc_wilson_95_interval": [
+            0.0005886577218511581,
+            0.018636693694531234
+          ],
+          "rate": 0.0033333333333333335,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 4,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.005196961739358857,
+            0.03377553025253262
+          ],
+          "rate": 0.013333333333333334,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.006673839137488908,
+        "zero_exclusion_rate": {
+          "count": 4,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.005196961739358857,
+            0.03377553025253262
+          ],
+          "rate": 0.013333333333333334,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 6,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "independent",
+      "name": "independent",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 298,
+          "mc_standard_error": 0.0046983054470813275,
+          "mc_wilson_95_interval": [
+            0.9760224167496929,
+            0.9981698516420883
+          ],
+          "rate": 0.9933333333333333,
+          "trials": 300
+        },
+        "mean_estimate": 0.00550925925925926,
+        "mean_width": 0.4100763888888888,
+        "mean_width_mc_normal_95_interval": [
+          0.4064874369997411,
+          0.4136653407780365
+        ],
+        "positive_null_false_positive": {
+          "count": 2,
+          "mc_standard_error": 0.0046983054470813275,
+          "mc_wilson_95_interval": [
+            0.0018301483579117846,
+            0.023977583250306966
+          ],
+          "rate": 0.006666666666666667,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 2,
+          "mc_standard_error": 0.0046983054470813275,
+          "mc_wilson_95_interval": [
+            0.0018301483579117846,
+            0.023977583250306966
+          ],
+          "rate": 0.006666666666666667,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.0018310979026263754,
+        "zero_exclusion_rate": {
+          "count": 2,
+          "mc_standard_error": 0.0046983054470813275,
+          "mc_wilson_95_interval": [
+            0.0018301483579117846,
+            0.023977583250306966
+          ],
+          "rate": 0.006666666666666667,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "paired",
+      "name": "perfect_pairing",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 300,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.9873570287754541,
+            1.0
+          ],
+          "rate": 1.0,
+          "trials": 300
+        },
+        "mean_estimate": 0.0,
+        "mean_width": 0.26308101851851845,
+        "mean_width_mc_normal_95_interval": [
+          0.2609426950025872,
+          0.2652193420344497
+        ],
+        "positive_null_false_positive": {
+          "count": 0,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.0,
+            0.01264297122454603
+          ],
+          "rate": 0.0,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 0,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.0,
+            0.01264297122454603
+          ],
+          "rate": 0.0,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.0010909813856792175,
+        "zero_exclusion_rate": {
+          "count": 0,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.0,
+            0.01264297122454603
+          ],
+          "rate": 0.0,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "antithetic",
+      "name": "negative_pairing",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 288,
+          "mc_standard_error": 0.01131370849898476,
+          "mc_wilson_95_interval": [
+            0.9313957879613601,
+            0.9769726785120578
+          ],
+          "rate": 0.96,
+          "trials": 300
+        },
+        "mean_estimate": -0.0012962962962962967,
+        "mean_width": 0.5163159722222221,
+        "mean_width_mc_normal_95_interval": [
+          0.5112421986110481,
+          0.5213897458333961
+        ],
+        "positive_null_false_positive": {
+          "count": 4,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.005196961739358857,
+            0.03377553025253262
+          ],
+          "rate": 0.013333333333333334,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 12,
+          "mc_standard_error": 0.01131370849898476,
+          "mc_wilson_95_interval": [
+            0.023027321487942315,
+            0.06860421203864003
+          ],
+          "rate": 0.04,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.002588660005701044,
+        "zero_exclusion_rate": {
+          "count": 12,
+          "mc_standard_error": 0.01131370849898476,
+          "mc_wilson_95_interval": [
+            0.023027321487942315,
+            0.06860421203864003
+          ],
+          "rate": 0.04,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "independent",
+      "name": "heterogeneous_difficulty",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 296,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.9662244697474673,
+            0.9948030382606412
+          ],
+          "rate": 0.9866666666666667,
+          "trials": 300
+        },
+        "mean_estimate": 0.002222222222222223,
+        "mean_width": 0.3428530092592592,
+        "mean_width_mc_normal_95_interval": [
+          0.33921563756942685,
+          0.34649038094909157
+        ],
+        "positive_null_false_positive": {
+          "count": 2,
+          "mc_standard_error": 0.0046983054470813275,
+          "mc_wilson_95_interval": [
+            0.0018301483579117846,
+            0.023977583250306966
+          ],
+          "rate": 0.006666666666666667,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 4,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.005196961739358857,
+            0.03377553025253262
+          ],
+          "rate": 0.013333333333333334,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.0018558018825675308,
+        "zero_exclusion_rate": {
+          "count": 4,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.005196961739358857,
+            0.03377553025253262
+          ],
+          "rate": 0.013333333333333334,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "independent",
+      "name": "heterogeneous_effect",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 300,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.9873570287754541,
+            1.0
+          ],
+          "rate": 1.0,
+          "trials": 300
+        },
+        "mean_estimate": -0.005138888888888888,
+        "mean_width": 0.5792395833333333,
+        "mean_width_mc_normal_95_interval": [
+          0.5743115872488425,
+          0.584167579417824
+        ],
+        "positive_null_false_positive": {
+          "count": 0,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.0,
+            0.01264297122454603
+          ],
+          "rate": 0.0,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 0,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.0,
+            0.01264297122454603
+          ],
+          "rate": 0.0,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.0025142837165769596,
+        "zero_exclusion_rate": {
+          "count": 0,
+          "mc_standard_error": 0.0,
+          "mc_wilson_95_interval": [
+            0.0,
+            0.01264297122454603
+          ],
+          "rate": 0.0,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "family",
+      "name": "family_shock",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 237,
+          "mc_standard_error": 0.023515952032609692,
+          "mc_wilson_95_interval": [
+            0.7403888774230658,
+            0.8322781992666977
+          ],
+          "rate": 0.79,
+          "trials": 300
+        },
+        "mean_estimate": -0.000555555555555556,
+        "mean_width": 0.39987731481481475,
+        "mean_width_mc_normal_95_interval": [
+          0.39375473616489093,
+          0.4059998934647386
+        ],
+        "positive_null_false_positive": {
+          "count": 33,
+          "mc_standard_error": 0.018064698539785637,
+          "mc_wilson_95_interval": [
+            0.07940528531126051,
+            0.15045623224388538
+          ],
+          "rate": 0.11,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 63,
+          "mc_standard_error": 0.023515952032609692,
+          "mc_wilson_95_interval": [
+            0.1677218007333024,
+            0.2596111225769343
+          ],
+          "rate": 0.21,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.003123764617308073,
+        "zero_exclusion_rate": {
+          "count": 63,
+          "mc_standard_error": 0.023515952032609692,
+          "mc_wilson_95_interval": [
+            0.1677218007333024,
+            0.2596111225769343
+          ],
+          "rate": 0.21,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "run",
+      "name": "run_shock",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 97,
+          "mc_standard_error": 0.02700548641102945,
+          "mc_wilson_95_interval": [
+            0.27292539608374755,
+            0.3782084537489253
+          ],
+          "rate": 0.3233333333333333,
+          "trials": 300
+        },
+        "mean_estimate": -0.005555555555555555,
+        "mean_width": 0.2562106481481481,
+        "mean_width_mc_normal_95_interval": [
+          0.24775562041590107,
+          0.2646656758803951
+        ],
+        "positive_null_false_positive": {
+          "count": 98,
+          "mc_standard_error": 0.027077392510823216,
+          "mc_wilson_95_interval": [
+            0.27607843894826856,
+            0.38163779107624074
+          ],
+          "rate": 0.32666666666666666,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 203,
+          "mc_standard_error": 0.02700548641102945,
+          "mc_wilson_95_interval": [
+            0.6217915462510748,
+            0.7270746039162523
+          ],
+          "rate": 0.6766666666666666,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.004313789659309698,
+        "zero_exclusion_rate": {
+          "count": 203,
+          "mc_standard_error": 0.02700548641102945,
+          "mc_wilson_95_interval": [
+            0.6217915462510748,
+            0.7270746039162523
+          ],
+          "rate": 0.6766666666666666,
+          "trials": 300
+        },
+        "zero_width_count": 16
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "independent",
+      "name": "near_ceiling",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 299,
+          "mc_standard_error": 0.003327773140415986,
+          "mc_wilson_95_interval": [
+            0.9813633063054688,
+            0.9994113422781488
+          ],
+          "rate": 0.9966666666666667,
+          "trials": 300
+        },
+        "mean_estimate": -5.782411586589357e-21,
+        "mean_width": 0.06306134259259258,
+        "mean_width_mc_normal_95_interval": [
+          0.05802290008094394,
+          0.06809978510424122
+        ],
+        "positive_null_false_positive": {
+          "count": 1,
+          "mc_standard_error": 0.003327773140415986,
+          "mc_wilson_95_interval": [
+            0.0005886577218511581,
+            0.018636693694531234
+          ],
+          "rate": 0.0033333333333333335,
+          "trials": 300
+        },
+        "two_sided_null_false_positive": {
+          "count": 1,
+          "mc_standard_error": 0.003327773140415986,
+          "mc_wilson_95_interval": [
+            0.0005886577218511581,
+            0.018636693694531234
+          ],
+          "rate": 0.0033333333333333335,
+          "trials": 300
+        },
+        "width_mc_standard_error": 0.0025706339345146116,
+        "zero_exclusion_rate": {
+          "count": 1,
+          "mc_standard_error": 0.003327773140415986,
+          "mc_wilson_95_interval": [
+            0.0005886577218511581,
+            0.018636693694531234
+          ],
+          "rate": 0.0033333333333333335,
+          "trials": 300
+        },
+        "zero_width_count": 73
+      },
+      "tasks": 24,
+      "true_effect": 0.0
+    },
+    {
+      "dependence": "independent",
+      "name": "positive_effect",
+      "repeats": 3,
+      "summary": {
+        "coverage": {
+          "count": 296,
+          "mc_standard_error": 0.006622073078111706,
+          "mc_wilson_95_interval": [
+            0.9662244697474673,
+            0.9948030382606412
+          ],
+          "rate": 0.9866666666666667,
+          "trials": 300
+        },
+        "mean_estimate": 0.20069444444444445,
+        "mean_width": 0.3952905092592592,
+        "mean_width_mc_normal_95_interval": [
+          0.39144477853000387,
+          0.3991362399885145
+        ],
+        "positive_null_false_positive": null,
+        "two_sided_null_false_positive": null,
+        "width_mc_standard_error": 0.0019621075149261766,
+        "zero_exclusion_rate": {
+          "count": 153,
+          "mc_standard_error": 0.028861739379323622,
+          "mc_wilson_95_interval": [
+            0.45366418945602693,
+            0.5660829511194823
+          ],
+          "rate": 0.51,
+          "trials": 300
+        },
+        "zero_width_count": 0
+      },
+      "tasks": 24,
+      "true_effect": 0.2
+    }
+  ],
+  "status": "verified_summaries_only_not_method_acceptance",
+  "unique_seeds": 6000,
+  "verifier_sha256": "8124542ed6692ab1db8834bbb0a0826a4d1db866f1ba6a98ddb860fd2e5dbed0"
+}

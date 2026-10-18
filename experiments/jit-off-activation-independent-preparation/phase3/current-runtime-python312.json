@@ -1,0 +1,940 @@
+{
+  "additional_adversarial_count": 1,
+  "cases": [
+    {
+      "expected_pass": true,
+      "id": "D01-active-unlabelled",
+      "matches_expectation": true,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 17.77777777777778,
+          "scope": "active_work_items",
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "The required active-work population is selected; the SQL need not emit a scope label.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 17.77777777777778,
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "expected_pass": true,
+      "id": "D01-active-negated-equality",
+      "matches_expectation": true,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 17.77777777777778,
+          "scope": "active_work_items",
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE NOT (status = 'done') GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "Negated equality selects the same active population on this non-null fixture.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 17.77777777777778,
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE NOT (status = 'done') GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "expected_pass": true,
+      "id": "D01-active-cte",
+      "matches_expectation": false,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 17.77777777777778,
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "WITH active AS (SELECT * FROM agentic_analytics.delivery_work_items WHERE status != 'done') SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM active GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "The CTE applies the active predicate before aggregation over the same population.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 17.77777777777778,
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      },
+      "scripted_steps": 3,
+      "sql": "WITH active AS (SELECT * FROM agentic_analytics.delivery_work_items WHERE status != 'done') SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM active GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "expected_pass": true,
+      "id": "D01-active-labelled",
+      "matches_expectation": true,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 17.77777777777778,
+          "scope": "active_work_items",
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "The same correct computation happens to include the exact row label required by the extractor.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 17.77777777777778,
+          "scope": "active_work_items",
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "expected_pass": false,
+      "id": "D01-all-items-labelled",
+      "matches_expectation": true,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 20.863309352517987,
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "A constant active label cannot make an unfiltered all-work denominator active.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 20.863309352517987,
+          "scope": "active_work_items",
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "structured_value_mismatch",
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "structured_value_mismatch",
+          "missing_expected_value"
+        ]
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "expected_pass": false,
+      "id": "D01-fabricated-rate-and-scope",
+      "matches_expectation": true,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 17.8,
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, 17.8 AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE team = 'Data' LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "Neither the literal percentage nor the literal scope is derived from the selected rows; no ranking is computed.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 17.8,
+          "scope": "active_work_items",
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT team, 17.8 AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE team = 'Data' LIMIT 1"
+    },
+    {
+      "expected_pass": false,
+      "id": "D01-or-bypass",
+      "matches_expectation": true,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 20.863309352517987,
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE status != 'done' OR 1 = 1 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "The OR branch includes completed work despite the active predicate and asserted scope label.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 20.863309352517987,
+          "scope": "active_work_items",
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "structured_value_mismatch",
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "structured_value_mismatch",
+          "missing_expected_value"
+        ]
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE status != 'done' OR 1 = 1 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "expected_pass": false,
+      "id": "D01-empty-active-result",
+      "matches_expectation": true,
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE status != 'done' AND 1 = 0 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "An empty result cannot establish the winning team or supply structured evidence.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence",
+          "missing_expected_value"
+        ]
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, 'active_work_items' AS scope FROM agentic_analytics.delivery_work_items WHERE status != 'done' AND 1 = 0 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
+    },
+    {
+      "expected_pass": false,
+      "id": "D01-active-literal-metric-and-team",
+      "matches_expectation": false,
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 17.8,
+          "scope": "active_work_items",
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT 'Data' AS team, 17.8 AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' LIMIT 1"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "rationale": "A genuine active filter proves population scope only: literal team/percentage and no ranking do not establish the requested computed maximum. This is a new authored adversarial control, not a task/reference/scorer change.",
+      "response": {
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI divides blocked active work by all active work in scope; this does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "rows": [
+        {
+          "blocked_pct": 17.8,
+          "team": "Data"
+        }
+      ],
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      },
+      "scripted_steps": 3,
+      "sql": "SELECT 'Data' AS team, 17.8 AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' LIMIT 1"
+    }
+  ],
+  "classification": "new model-free authored evaluator controls, not historical experiment rescoring",
+  "current_source_commit": "f36eb05df19c21eb4b984764353cd74abcc7403e",
+  "dataset": {
+    "csv_sha256": "cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef",
+    "rows": 500,
+    "seed": 42
+  },
+  "external_network_model_database_calls": 0,
+  "frozen_files_unchanged": {
+    "evals/questions.json": "0dc047fbc378f0cf75f1c488e92fcb18dddcbfe976c79b1f16281e4b428654d1",
+    "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+    "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+    "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+    "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+    "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+    "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+    "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+    "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/freeze_audit.py": "7de8ef217f4b7f596e2c65a3b5e091bf2499981336a53fa180451e376b2d4045",
+    "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+    "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/evals/trajectory_quality.py": "e2bfd4310edb2f007fe1e4cc2d3571e0dc34959823b849a84a109b72336cab20"
+  },
+  "limits": "SQLite common SELECT arithmetic/types only, no ClickHouse/JIT behavior or numerical-equivalence qualification. Fixed scripted decisions are authored controls, not observed model behavior.",
+  "local_policy_retrievals": 9,
+  "local_sqlite_selects": 9,
+  "mismatch_ids": [
+    "D01-active-cte",
+    "D01-active-literal-metric-and-team"
+  ],
+  "original_control_count": 8,
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase3_source_commit": "43cf76b0acf64aba4f19eb510af12189b7a4ad04",
+  "source_sha256": {
+    "src/evals/system_benchmark/local_worker.py": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa",
+    "src/evals/system_benchmark/scope_observation_v1.py": "cbd4c010d80d5c3be443412ff0558bf3231c9999073354bb7c1491598552e49f",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/tools/clickhouse_readonly.py": "3f4667601120d0a660274a66da5608da4de2461ff4a5b86385a731d3daa5f1c1"
+  }
+}

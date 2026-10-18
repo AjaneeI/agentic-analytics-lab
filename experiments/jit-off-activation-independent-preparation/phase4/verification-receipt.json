@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "tests_per_interpreter": 7,
+  "interpreter_versions": {
+    "python3.11": "Python 3.11.16",
+    "python3.12": "Python 3.12.6"
+  },
+  "network_guard": "socket.socket, socket.create_connection and socket.getaddrinfo denied before verifier import",
+  "new_simulations": 0,
+  "new_bootstrap_draws": 0,
+  "source_suite_rerun": false,
+  "source_worktree_clean": true
+}
