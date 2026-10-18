@@ -1,0 +1,130 @@
+[
+  {
+    "case": "candidate-settings",
+    "lane": "candidate",
+    "kind": "settings",
+    "rows": [
+      {
+        "server_version": "26.8.4.11",
+        "compile_expressions": "false",
+        "readonly": "1",
+        "max_execution_time": "10",
+        "max_result_rows": "1000",
+        "result_overflow_mode": "break",
+        "max_rows_to_read": "10000",
+        "max_bytes_to_read": "10485760",
+        "max_memory_usage": "134217728",
+        "max_threads": "2"
+      }
+    ],
+    "inherited_observation_for_v2": true,
+    "original_v1_session_status": "failed_stopped_without_retry"
+  },
+  {
+    "case": "baseline-settings",
+    "lane": "baseline",
+    "kind": "settings",
+    "rows": [
+      {
+        "server_version": "26.8.4.11",
+        "compile_expressions": "true",
+        "readonly": "1",
+        "max_execution_time": "10",
+        "max_result_rows": "1000",
+        "result_overflow_mode": "break",
+        "max_rows_to_read": "10000",
+        "max_bytes_to_read": "10485760",
+        "max_memory_usage": "134217728",
+        "max_threads": "2"
+      }
+    ],
+    "wall_seconds": 0.018021583964582533,
+    "passed": true
+  },
+  {
+    "case": "baseline-scalar",
+    "lane": "baseline",
+    "kind": "scalar",
+    "rows": [
+      {
+        "x": -2.5,
+        "affine": -4.5,
+        "seventh": 0.07142857142857142
+      },
+      {
+        "x": 0,
+        "affine": 0.5,
+        "seventh": 0.42857142857142855
+      },
+      {
+        "x": 1.25,
+        "affine": 3,
+        "seventh": 0.6071428571428571
+      },
+      {
+        "x": 7.75,
+        "affine": 16,
+        "seventh": 1.5357142857142858
+      }
+    ],
+    "wall_seconds": 0.5139369170065038,
+    "passed": true
+  },
+  {
+    "case": "candidate-scalar",
+    "lane": "candidate",
+    "kind": "scalar",
+    "rows": [
+      {
+        "x": -2.5,
+        "affine": -4.5,
+        "seventh": 0.07142857142857142
+      },
+      {
+        "x": 0,
+        "affine": 0.5,
+        "seventh": 0.42857142857142855
+      },
+      {
+        "x": 1.25,
+        "affine": 3,
+        "seventh": 0.6071428571428571
+      },
+      {
+        "x": 7.75,
+        "affine": 16,
+        "seventh": 1.5357142857142858
+      }
+    ],
+    "wall_seconds": 0.007711042009759694,
+    "passed": true
+  },
+  {
+    "case": "baseline-aggregate",
+    "lane": "baseline",
+    "kind": "aggregate",
+    "rows": [
+      {
+        "sum_x": 6.5,
+        "min_x": -2.5,
+        "max_x": 7.75
+      }
+    ],
+    "wall_seconds": 0.03110658301739022,
+    "passed": true
+  },
+  {
+    "case": "candidate-aggregate",
+    "lane": "candidate",
+    "kind": "aggregate",
+    "rows": [
+      {
+        "sum_x": 6.5,
+        "min_x": -2.5,
+        "max_x": 7.75
+      }
+    ],
+    "wall_seconds": 0.004254000028595328,
+    "passed": true
+  }
+]

@@ -1,0 +1,103 @@
+{
+  "version": "jit-off-model-free-validation-v1",
+  "authorization": "Owner approved bounded model-free PR111 validation using unrelated synthetic SQL; no failed SQL replay, Treatment A or merge.",
+  "proposal_commit": "7f010f242c9b8bfe10f83f0bfd19650ea8867305",
+  "candidate_commit": "2252aed9803d9276934951676b76b889857c411f",
+  "baseline_transport_sha256": "3f4667601120d0a660274a66da5608da4de2461ff4a5b86385a731d3daa5f1c1",
+  "candidate_transport_sha256": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c",
+  "maximum_SQL_requests": 6,
+  "total_start_new_request_budget_seconds": 120,
+  "client_timeout_seconds": 15,
+  "request_parameters": {
+    "default_format": "JSONEachRow",
+    "readonly": "1",
+    "max_execution_time": "10",
+    "max_result_rows": "1000",
+    "result_overflow_mode": "break",
+    "max_rows_to_read": "10000",
+    "max_bytes_to_read": "10485760",
+    "max_memory_usage": "134217728",
+    "max_threads": "2"
+  },
+  "candidate_only_parameter": {
+    "compile_expressions": "0"
+  },
+  "plan": [
+    {
+      "id": "candidate-settings",
+      "lane": "candidate",
+      "kind": "settings",
+      "sql": "SELECT version() AS server_version, toString(getSetting('compile_expressions')) AS compile_expressions, toString(getSetting('readonly')) AS readonly, toString(getSetting('max_execution_time')) AS max_execution_time, toString(getSetting('max_result_rows')) AS max_result_rows, toString(getSetting('result_overflow_mode')) AS result_overflow_mode, toString(getSetting('max_rows_to_read')) AS max_rows_to_read, toString(getSetting('max_bytes_to_read')) AS max_bytes_to_read, toString(getSetting('max_memory_usage')) AS max_memory_usage, toString(getSetting('max_threads')) AS max_threads"
+    },
+    {
+      "id": "baseline-settings",
+      "lane": "baseline",
+      "kind": "settings",
+      "sql": "SELECT version() AS server_version, toString(getSetting('compile_expressions')) AS compile_expressions, toString(getSetting('readonly')) AS readonly, toString(getSetting('max_execution_time')) AS max_execution_time, toString(getSetting('max_result_rows')) AS max_result_rows, toString(getSetting('result_overflow_mode')) AS result_overflow_mode, toString(getSetting('max_rows_to_read')) AS max_rows_to_read, toString(getSetting('max_bytes_to_read')) AS max_bytes_to_read, toString(getSetting('max_memory_usage')) AS max_memory_usage, toString(getSetting('max_threads')) AS max_threads"
+    },
+    {
+      "id": "baseline-scalar",
+      "lane": "baseline",
+      "kind": "scalar",
+      "sql": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT x, x * 2.0 + 0.5 AS affine, (x + 3.0) / 7.0 AS seventh FROM validation_rows ORDER BY x"
+    },
+    {
+      "id": "candidate-scalar",
+      "lane": "candidate",
+      "kind": "scalar",
+      "sql": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT x, x * 2.0 + 0.5 AS affine, (x + 3.0) / 7.0 AS seventh FROM validation_rows ORDER BY x"
+    },
+    {
+      "id": "baseline-aggregate",
+      "lane": "baseline",
+      "kind": "aggregate",
+      "sql": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT sum(x) AS sum_x, min(x) AS min_x, max(x) AS max_x FROM validation_rows"
+    },
+    {
+      "id": "candidate-aggregate",
+      "lane": "candidate",
+      "kind": "aggregate",
+      "sql": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT sum(x) AS sum_x, min(x) AS min_x, max(x) AS max_x FROM validation_rows"
+    }
+  ],
+  "expected_scalar_rows": [
+    {
+      "x": -2.5,
+      "affine": -4.5,
+      "seventh": 0.07142857142857142
+    },
+    {
+      "x": 0.0,
+      "affine": 0.5,
+      "seventh": 0.42857142857142855
+    },
+    {
+      "x": 1.25,
+      "affine": 3.0,
+      "seventh": 0.6071428571428571
+    },
+    {
+      "x": 7.75,
+      "affine": 16.0,
+      "seventh": 1.5357142857142858
+    }
+  ],
+  "expected_aggregate_rows": [
+    {
+      "sum_x": 6.5,
+      "min_x": -2.5,
+      "max_x": 7.75
+    }
+  ],
+  "numeric_tolerance": {
+    "relative": 1e-12,
+    "absolute": 1e-12,
+    "finite_only": true
+  },
+  "stop_rule": "Stop at first request error, settings/numeric mismatch or budget violation; zero retries, no replacement queries.",
+  "no_application_tables_or_table_functions": true,
+  "model_calls": 0,
+  "benchmark_worker_entries": 0,
+  "qualification_or_comparative_acceptance": false,
+  "limits": "Checks validate delivery, effective settings and these synthetic values only. No proof of original timeout causation, all-query equivalence, JIT-on execution, cold/warm independence or speedup."
+}

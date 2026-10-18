@@ -1,3 +1,9 @@
+# Latest checkpoint — bounded model-free JIT-off checks complete
+
+Six predeclared unrelated synthetic SQL requests: effective candidate JITfalse/originaltrue, all existing limits match, scalar/aggregate fixtures agree. V1 Boolean-string checker stop remains sealed asfailed; V2 versions correction and issues onlyfive previously unissued requests, no retries/replacements. Full364tests passPy3.11/3.12; original20+4+4 hashes/sixarchives unchanged. No originalSQLreplay, TreatmentA/model/scorer call, benchmark activation or PR111merge. Phase2remainsunqualified. See docs/jit-off-model-free-validation-results.md; separate reviewed runtimeconfiguration and explicit experiment authorization remain necessary.
+
+Historical checkpoints follow.
+
 # Latest checkpoint — ClickHouse timeout diagnosed; inactive JIT-off proposal
 
 Preserved server query887e2a23 confirms code159 TIMEOUT_EXCEEDED with delayed handling after an ExpressionJIT trace. JIT-stage stall is the leading explanation, not exclusive proven cause. proposals/runtime-clickhouse-expression-jit-off-v1 contains a one-parameter inactive candidate; no active source/configuration or frozen method changed. Local offline suites pass364proposal/363candidate tests on both Python3.11/3.12, plus6candidate probes. Historical20+4+4 hashes and five archives unchanged. No SQL replay, model call or TreatmentA retry. Phase2 unqualified; no live authorization remains. See docs/clickhouse-timeout-diagnosis-v1.md.

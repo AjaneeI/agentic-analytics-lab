@@ -1,0 +1,16 @@
+{
+  "version": "jit-off-model-free-validation-v1",
+  "status": "failed_stopped_without_retry",
+  "start_utc": "2026-10-18T03:07:42.487215+00:00",
+  "end_utc": "2026-10-18T03:07:42.639172+00:00",
+  "wall_seconds": 0.15164633403765038,
+  "SQL_attempts": 1,
+  "completed_cases": 0,
+  "maximum_SQL_requests": 6,
+  "retries": 0,
+  "model_calls": 0,
+  "Treatment_A_entries": 0,
+  "scorer_calls": 0,
+  "script_commit": "3ad3b85abe7c09cd2c190781a83894361cb1778f",
+  "benchmark_activation": false
+}

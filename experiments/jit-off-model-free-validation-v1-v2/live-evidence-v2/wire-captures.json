@@ -1,0 +1,129 @@
+[
+  {
+    "case": "baseline-settings",
+    "SQL_utf8": "SELECT version() AS server_version, toString(getSetting('compile_expressions')) AS compile_expressions, toString(getSetting('readonly')) AS readonly, toString(getSetting('max_execution_time')) AS max_execution_time, toString(getSetting('max_result_rows')) AS max_result_rows, toString(getSetting('result_overflow_mode')) AS result_overflow_mode, toString(getSetting('max_rows_to_read')) AS max_rows_to_read, toString(getSetting('max_bytes_to_read')) AS max_bytes_to_read, toString(getSetting('max_memory_usage')) AS max_memory_usage, toString(getSetting('max_threads')) AS max_threads",
+    "SQL_sha256": "029595498ac10bde1f234d1bf20c4540aaad328335b30f9ad6e65dc3969a1c4d",
+    "timeout_seconds": 15,
+    "parameters": {
+      "default_format": "JSONEachRow",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2"
+    },
+    "http_status": 200,
+    "response_headers": {
+      "X-ClickHouse-Query-Id": "2d7172ed-3cf2-4ac8-82a1-f204692c7509",
+      "X-ClickHouse-Summary": "{\"read_rows\":\"1\",\"read_bytes\":\"1\",\"written_rows\":\"0\",\"written_bytes\":\"0\",\"total_rows_to_read\":\"1\",\"result_rows\":\"0\",\"result_bytes\":\"0\",\"elapsed_ns\":\"4575667\",\"memory_usage\":\"1296143\"}",
+      "Content-Type": "application/x-ndjson; charset=UTF-8"
+    },
+    "body_utf8": "{\"server_version\":\"26.8.4.11\",\"compile_expressions\":\"true\",\"readonly\":\"1\",\"max_execution_time\":\"10\",\"max_result_rows\":\"1000\",\"result_overflow_mode\":\"break\",\"max_rows_to_read\":\"10000\",\"max_bytes_to_read\":\"10485760\",\"max_memory_usage\":\"134217728\",\"max_threads\":\"2\"}\n",
+    "body_sha256": "bf0a46f0f463a3faa582d6573830154da7d93fff7ac2ddf7e83ee92eb4825dcf"
+  },
+  {
+    "case": "baseline-scalar",
+    "SQL_utf8": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT x, x * 2.0 + 0.5 AS affine, (x + 3.0) / 7.0 AS seventh FROM validation_rows ORDER BY x",
+    "SQL_sha256": "f075ca5ca4fd44ec9bdfd34e85fe24d788d3d321c1b179d581d4b11e39402a2f",
+    "timeout_seconds": 15,
+    "parameters": {
+      "default_format": "JSONEachRow",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2"
+    },
+    "http_status": 200,
+    "response_headers": {
+      "X-ClickHouse-Query-Id": "b18802a9-b70e-4a99-bc75-30fe290a842a",
+      "X-ClickHouse-Summary": "{\"read_rows\":\"4\",\"read_bytes\":\"4\",\"written_rows\":\"0\",\"written_bytes\":\"0\",\"total_rows_to_read\":\"4\",\"result_rows\":\"0\",\"result_bytes\":\"0\",\"elapsed_ns\":\"509149459\",\"memory_usage\":\"1451855\"}",
+      "Content-Type": "application/x-ndjson; charset=UTF-8"
+    },
+    "body_utf8": "{\"x\":-2.5,\"affine\":-4.5,\"seventh\":0.07142857142857142}\n{\"x\":0,\"affine\":0.5,\"seventh\":0.42857142857142855}\n{\"x\":1.25,\"affine\":3,\"seventh\":0.6071428571428571}\n{\"x\":7.75,\"affine\":16,\"seventh\":1.5357142857142858}\n",
+    "body_sha256": "d00e8403e14d56b7cb8c881ba6640e8d136c23b410b5d72cd0bf9bc9fe41f39d"
+  },
+  {
+    "case": "candidate-scalar",
+    "SQL_utf8": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT x, x * 2.0 + 0.5 AS affine, (x + 3.0) / 7.0 AS seventh FROM validation_rows ORDER BY x",
+    "SQL_sha256": "f075ca5ca4fd44ec9bdfd34e85fe24d788d3d321c1b179d581d4b11e39402a2f",
+    "timeout_seconds": 15,
+    "parameters": {
+      "default_format": "JSONEachRow",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2",
+      "compile_expressions": "0"
+    },
+    "http_status": 200,
+    "response_headers": {
+      "X-ClickHouse-Query-Id": "fbe63ae2-96c5-4df0-afc2-dbbba3985d97",
+      "X-ClickHouse-Summary": "{\"read_rows\":\"4\",\"read_bytes\":\"4\",\"written_rows\":\"0\",\"written_bytes\":\"0\",\"total_rows_to_read\":\"4\",\"result_rows\":\"0\",\"result_bytes\":\"0\",\"elapsed_ns\":\"3160833\",\"memory_usage\":\"1425111\"}",
+      "Content-Type": "application/x-ndjson; charset=UTF-8"
+    },
+    "body_utf8": "{\"x\":-2.5,\"affine\":-4.5,\"seventh\":0.07142857142857142}\n{\"x\":0,\"affine\":0.5,\"seventh\":0.42857142857142855}\n{\"x\":1.25,\"affine\":3,\"seventh\":0.6071428571428571}\n{\"x\":7.75,\"affine\":16,\"seventh\":1.5357142857142858}\n",
+    "body_sha256": "d00e8403e14d56b7cb8c881ba6640e8d136c23b410b5d72cd0bf9bc9fe41f39d"
+  },
+  {
+    "case": "baseline-aggregate",
+    "SQL_utf8": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT sum(x) AS sum_x, min(x) AS min_x, max(x) AS max_x FROM validation_rows",
+    "SQL_sha256": "93fc7cfc205aa9576d0f840da6e9cee8d07dd05c868b75f2cd2c21b2c5baa1cf",
+    "timeout_seconds": 15,
+    "parameters": {
+      "default_format": "JSONEachRow",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2"
+    },
+    "http_status": 200,
+    "response_headers": {
+      "X-ClickHouse-Query-Id": "285785ff-d5c5-4e59-bdff-6147abf6852e",
+      "X-ClickHouse-Summary": "{\"read_rows\":\"4\",\"read_bytes\":\"4\",\"written_rows\":\"0\",\"written_bytes\":\"0\",\"total_rows_to_read\":\"4\",\"result_rows\":\"0\",\"result_bytes\":\"0\",\"elapsed_ns\":\"25445083\",\"memory_usage\":\"1372255\"}",
+      "Content-Type": "application/x-ndjson; charset=UTF-8"
+    },
+    "body_utf8": "{\"sum_x\":6.5,\"min_x\":-2.5,\"max_x\":7.75}\n",
+    "body_sha256": "150e085c6c2defb1086e910ba7f72f92f6d89416f6f67755f851e487bb21ef23"
+  },
+  {
+    "case": "candidate-aggregate",
+    "SQL_utf8": "WITH validation_rows AS (SELECT toFloat64(-2.5) AS x UNION ALL SELECT toFloat64(0) AS x UNION ALL SELECT toFloat64(1.25) AS x UNION ALL SELECT toFloat64(7.75) AS x) SELECT sum(x) AS sum_x, min(x) AS min_x, max(x) AS max_x FROM validation_rows",
+    "SQL_sha256": "93fc7cfc205aa9576d0f840da6e9cee8d07dd05c868b75f2cd2c21b2c5baa1cf",
+    "timeout_seconds": 15,
+    "parameters": {
+      "default_format": "JSONEachRow",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2",
+      "compile_expressions": "0"
+    },
+    "http_status": 200,
+    "response_headers": {
+      "X-ClickHouse-Query-Id": "074e6e68-beac-4b81-a4bd-66ee88ff2598",
+      "X-ClickHouse-Summary": "{\"read_rows\":\"4\",\"read_bytes\":\"4\",\"written_rows\":\"0\",\"written_bytes\":\"0\",\"total_rows_to_read\":\"4\",\"result_rows\":\"0\",\"result_bytes\":\"0\",\"elapsed_ns\":\"1635084\",\"memory_usage\":\"1368199\"}",
+      "Content-Type": "application/x-ndjson; charset=UTF-8"
+    },
+    "body_utf8": "{\"sum_x\":6.5,\"min_x\":-2.5,\"max_x\":7.75}\n",
+    "body_sha256": "150e085c6c2defb1086e910ba7f72f92f6d89416f6f67755f851e487bb21ef23"
+  }
+]

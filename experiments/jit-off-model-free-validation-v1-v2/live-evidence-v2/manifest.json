@@ -1,0 +1,18 @@
+{
+  "version": "jit-off-model-free-validation-v2",
+  "status": "passed_bounded_synthetic_validation",
+  "start_utc": "2026-10-18T03:09:09.525005+00:00",
+  "end_utc": "2026-10-18T03:09:10.104236+00:00",
+  "wall_seconds": 0.5788494590087794,
+  "SQL_attempts": 5,
+  "completed_cases": 5,
+  "inherited_settings_observations": 1,
+  "combined_v1_v2_SQL_attempts": 6,
+  "maximum_SQL_requests": 5,
+  "retries": 0,
+  "model_calls": 0,
+  "Treatment_A_entries": 0,
+  "scorer_calls": 0,
+  "script_commit": "00bef0e9c416bfaadba0094c49e12772775f9f57",
+  "benchmark_activation": false
+}

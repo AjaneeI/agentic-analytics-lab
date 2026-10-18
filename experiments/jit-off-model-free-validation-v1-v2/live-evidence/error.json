@@ -1,0 +1,5 @@
+{
+  "type": "AssertionError",
+  "message": "unknown effective compilation mode",
+  "case": "candidate-settings"
+}
