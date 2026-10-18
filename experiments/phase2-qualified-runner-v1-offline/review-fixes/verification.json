@@ -1,0 +1,89 @@
+{
+  "benchmark_contract_sha256": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+  "external_database_calls": 0,
+  "findings_fixed": [
+    "all_declared_loaded_contract_files_match_pinned_source",
+    "CLI_blocks_incomplete_capture_without_editing_task_success"
+  ],
+  "historical_verification_preserved": "../verification.json pins da3eff3 before these separate review fixes",
+  "independent_runner_review": "pending",
+  "live_model_calls": 0,
+  "real_pending_config_probe": {
+    "adapter_sha256": "a4e71b8b6ca9a9ef10470e8354d364aea48120f214a8bfd0d1b70985d8808327",
+    "blockers": [
+      "owner_observation_approval_not_approved",
+      "runtime_offline_validity_gate_not_passed"
+    ],
+    "configuration_sha256": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+    "evidence_folder_created": false,
+    "implementation_commit": "75f754a67182811bf1873e639361bf31b88f44c5",
+    "model_constructor_calls": 0,
+    "refusal": "owner_observation_approval_not_approved, runtime_offline_validity_gate_not_passed",
+    "service_calls": 0
+  },
+  "runtime_or_configuration_activated": false,
+  "schema_version": "phase2-qualified-runner-review-fixes-v1",
+  "source_sha256": {
+    "configurations/phase2-runtime-schema-v1-scope-observation-v1.proposal.json": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+    "docs/phase2-qualification-runner-v1.md": "afec77ede6be23c26c20be5476c94ee29c15f569f248ed297c0d138c648f19a1",
+    "scripts/qualify_phase2_once.py": "a4e71b8b6ca9a9ef10470e8354d364aea48120f214a8bfd0d1b70985d8808327",
+    "tests/test_qualify_phase2_once.py": "033622ab2bfe134958cacfed78b30b78906493806405f46f267b1c5ac0c02030"
+  },
+  "test_runs": [
+    {
+      "command": [
+        "/Users/ajaneeigharo/.local/bin/python3.11",
+        "-B",
+        "-c",
+        "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Final qualification review retake forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+      ],
+      "exit_code": 0,
+      "log": "python311-focused.txt",
+      "log_sha256": "a730c99a1b9d957f2f494534092be4d58e5d5ce12902d32cb79574b382fa5f8b",
+      "network_blocked": true
+    },
+    {
+      "command": [
+        "/Users/ajaneeigharo/.local/bin/python3.11",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "python311-full.txt",
+      "log_sha256": "8aa45a2b00d0e5c262a3722bde2dd502614b8270b7b8b8ba7d419b44c6ceeb03",
+      "network_blocked": false
+    },
+    {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "-B",
+        "-c",
+        "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Final qualification review retake forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+      ],
+      "exit_code": 0,
+      "log": "python312-focused.txt",
+      "log_sha256": "3fc6526f7fbbf890a09a9a4186a391af8215c2680b9f0cd858ebfa76147736ff",
+      "network_blocked": true
+    },
+    {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "python312-full.txt",
+      "log_sha256": "056cc724b89726da1fed22c2f4b4f514792bd09efeec24e00be10cdbc518f2b5",
+      "network_blocked": false
+    }
+  ],
+  "verified_implementation_commit": "75f754a67182811bf1873e639361bf31b88f44c5"
+}

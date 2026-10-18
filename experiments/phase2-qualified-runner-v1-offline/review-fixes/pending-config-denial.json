@@ -1,0 +1,13 @@
+{
+  "adapter_sha256": "a4e71b8b6ca9a9ef10470e8354d364aea48120f214a8bfd0d1b70985d8808327",
+  "blockers": [
+    "owner_observation_approval_not_approved",
+    "runtime_offline_validity_gate_not_passed"
+  ],
+  "configuration_sha256": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+  "evidence_folder_created": false,
+  "implementation_commit": "75f754a67182811bf1873e639361bf31b88f44c5",
+  "model_constructor_calls": 0,
+  "refusal": "owner_observation_approval_not_approved, runtime_offline_validity_gate_not_passed",
+  "service_calls": 0
+}
