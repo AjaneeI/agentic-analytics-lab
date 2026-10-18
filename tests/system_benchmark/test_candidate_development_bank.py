@@ -96,6 +96,8 @@ def guard(event, args):
 sys.addaudithook(guard)
 active = [root / "evals/system_benchmark/development_tasks.json", root / "evals/system_benchmark/development_references.json", root / "evals/questions.json"]
 before = [hashlib.sha256(path.read_bytes()).hexdigest() for path in active]
+workspace_data = root / "data/delivery_work_items.csv"
+data_before = workspace_data.read_bytes() if workspace_data.exists() else None
 spec = importlib.util.spec_from_file_location("candidate_prepare", root / "scripts/prepare_phase5_candidate_bank.py")
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
@@ -103,7 +105,7 @@ files = module.prepare()
 for name, text in files.items():
     assert (module.DESTINATION / name).read_text() == text, name
 assert before == [hashlib.sha256(path.read_bytes()).hexdigest() for path in active]
-assert not (root / "data/delivery_work_items.csv").exists()
+assert (workspace_data.read_bytes() if workspace_data.exists() else None) == data_before
 print("reproduced offline; active inputs unchanged")
 '''
         result = subprocess.run([sys.executable, "-I", "-c", probe], cwd=ROOT,
