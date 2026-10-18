@@ -1,0 +1,189 @@
+test_alias_and_quoted_identifiers (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_alias_and_quoted_identifiers) ... FAIL
+test_empty_success_is_not_scope_evidence (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_empty_success_is_not_scope_evidence) ... ok
+test_executed_active_predicate_supplies_scope_without_row_label (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_executed_active_predicate_supplies_scope_without_row_label) ... FAIL
+test_query_failure_does_not_manufacture_observations (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_query_failure_does_not_manufacture_observations) ... ok
+test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) ... 
+  test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="status <> 'done'") ... FAIL
+  test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="NOT (status = 'done')") ... FAIL
+  test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="status NOT IN ('done')") ... FAIL
+  test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="((status != 'done'))") ... FAIL
+test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) ... 
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'DONE' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' OR 1=1 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' AND priority = 'high' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status IN ('active') GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE other.status != 'done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status NOT IN ('done', 'cancelled') GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items /* WHERE status != 'done' */ GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' UNION ALL SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="WITH active AS (SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done') SELECT * FROM active") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT 'active' AS status, team, 17.8 AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' LIMIT 1") ... FAIL
+  test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' HAVING count(*) > 0 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+test_unverified_returned_label_is_never_scope_proof (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unverified_returned_label_is_never_scope_proof) ... FAIL
+
+======================================================================
+FAIL: test_alias_and_quoted_identifiers (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_alias_and_quoted_identifiers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 35, in test_alias_and_quoted_identifiers
+    self.assertEqual(self.observe(sql).get('scope'), 'active_work_items')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'active_work_items'
+
+======================================================================
+FAIL: test_executed_active_predicate_supplies_scope_without_row_label (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_executed_active_predicate_supplies_scope_without_row_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 25, in test_executed_active_predicate_supplies_scope_without_row_label
+    self.assertEqual(self.observe(BASE + " WHERE status != 'done'" + TAIL).get('scope'), 'active_work_items')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'active_work_items'
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="status <> 'done'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 32, in test_supported_equivalent_predicates_preserve_literal_case
+    self.assertEqual(self.observe(BASE + ' WHERE ' + predicate + TAIL).get('scope'), 'active_work_items')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'active_work_items'
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="NOT (status = 'done')")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 32, in test_supported_equivalent_predicates_preserve_literal_case
+    self.assertEqual(self.observe(BASE + ' WHERE ' + predicate + TAIL).get('scope'), 'active_work_items')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'active_work_items'
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="status NOT IN ('done')")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 32, in test_supported_equivalent_predicates_preserve_literal_case
+    self.assertEqual(self.observe(BASE + ' WHERE ' + predicate + TAIL).get('scope'), 'active_work_items')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'active_work_items'
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) (predicate="((status != 'done'))")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 32, in test_supported_equivalent_predicates_preserve_literal_case
+    self.assertEqual(self.observe(BASE + ' WHERE ' + predicate + TAIL).get('scope'), 'active_work_items')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'active_work_items'
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'DONE' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' OR 1=1 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' AND priority = 'high' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status IN ('active') GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE other.status != 'done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status NOT IN ('done', 'cancelled') GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items /* WHERE status != 'done' */ GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' UNION ALL SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="WITH active AS (SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done') SELECT * FROM active")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT 'active' AS status, team, 17.8 AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' HAVING count(*) > 0 GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 46, in test_unsupported_or_false_proofs_remain_unknown_and_clear_stale
+    self.assertNotIn('scope', self.observe(sql, initial={'scope': 'active_work_items'}))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'scope': 'active_work_items', 'team': 'Data', 'blocked_pct': 17.7777777778}
+
+======================================================================
+FAIL: test_unverified_returned_label_is_never_scope_proof (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unverified_returned_label_is_never_scope_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 28, in test_unverified_returned_label_is_never_scope_proof
+    self.assertNotIn('scope', self.observe(BASE + TAIL, rows))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'team': 'Data', 'blocked_pct': 17.8, 'scope': 'active_work_items'}
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+FAILED (failures=18)
