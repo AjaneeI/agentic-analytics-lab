@@ -1,0 +1,19 @@
+test_deterministic_truth_has_exact_interval_and_counts (tests.test_statistical_calibration.TestStatisticalCalibration.test_deterministic_truth_has_exact_interval_and_counts) ... ok
+test_import_does_not_load_agent_model_or_tool_runtime (tests.test_statistical_calibration.TestStatisticalCalibration.test_import_does_not_load_agent_model_or_tool_runtime) ... ok
+test_invalid_precision_budget_rejected (tests.test_statistical_calibration.TestStatisticalCalibration.test_invalid_precision_budget_rejected) ... ok
+test_known_nonzero_truth_is_not_reported_as_null_false_positive (tests.test_statistical_calibration.TestStatisticalCalibration.test_known_nonzero_truth_is_not_reported_as_null_false_positive) ... ok
+test_paired_and_clustered_generators_preserve_dependence (tests.test_statistical_calibration.TestStatisticalCalibration.test_paired_and_clustered_generators_preserve_dependence) ... ok
+test_trial_replays_existing_implementation_exactly (tests.test_statistical_calibration.TestStatisticalCalibration.test_trial_replays_existing_implementation_exactly) ... ok
+test_wilson_interval_retains_uncertainty_at_boundaries (tests.test_statistical_calibration.TestStatisticalCalibration.test_wilson_interval_retains_uncertainty_at_boundaries) ... ok
+test_bootstrap_is_deterministic_for_fixed_seed (tests.test_statistical_evidence.TestStatisticalEvidence.test_bootstrap_is_deterministic_for_fixed_seed) ... ok
+test_bootstrap_reflects_run_level_variability (tests.test_statistical_evidence.TestStatisticalEvidence.test_bootstrap_reflects_run_level_variability) ... ok
+test_compares_repeats_at_task_level (tests.test_statistical_evidence.TestStatisticalEvidence.test_compares_repeats_at_task_level) ... ok
+test_provider_may_differ_across_architectures (tests.test_statistical_evidence.TestStatisticalEvidence.test_provider_may_differ_across_architectures) ... ok
+test_rejects_mismatched_contract_provenance (tests.test_statistical_evidence.TestStatisticalEvidence.test_rejects_mismatched_contract_provenance) ... ok
+test_rejects_non_boolean_task_success (tests.test_statistical_evidence.TestStatisticalEvidence.test_rejects_non_boolean_task_success) ... ok
+test_rejects_unmatched_run_counts (tests.test_statistical_evidence.TestStatisticalEvidence.test_rejects_unmatched_run_counts) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.275s
+
+OK

@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "compileall",
+        "-q",
+        "src",
+        "scripts/calibrate_statistical_interval.py",
+        "tests/test_statistical_calibration.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check_project_context.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "PASS: Project Context Protocol v1 checks passed\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "58add5e",
+        "--",
+        "src",
+        "evals",
+        "scripts/compare_architecture_evidence.py",
+        "tests/test_statistical_evidence.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "frozen_paths_unchanged_from": "58add5e",
+  "provenance_hashes_match": true,
+  "synthetic_datasets": 3000,
+  "synthetic_scenarios": 10,
+  "test_logs": {
+    "focused": "unittest-focused.txt",
+    "focused_passed": 14,
+    "full": "unittest-full.txt",
+    "full_passed": 296
+  }
+}

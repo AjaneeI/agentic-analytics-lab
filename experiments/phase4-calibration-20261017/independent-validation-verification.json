@@ -1,0 +1,105 @@
+{
+  "base_commit": "736f72a",
+  "checks": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/validate_statistical_calibration.py",
+        "--input",
+        "experiments/phase4-calibration-20261017/existing-interval-simulation.json",
+        "--output",
+        "experiments/phase4-calibration-20261017/independent-summary-validation.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "valid=True trials=3000 seeds=6000\n"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_validate_statistical_calibration",
+        "tests.test_statistical_calibration",
+        "tests.test_statistical_evidence",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "independent-validation-focused-tests.txt",
+      "log_sha256": "530f6c39db0d52c4ff8d942caa507ae852741ab0998d53bdf05b2f419cd93a61"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "independent-validation-full-tests.txt",
+      "log_sha256": "69734257918b869722b52d24a1a94b143ddd3d9e307ec0902c23562286ff3681"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "compileall",
+        "-q",
+        "scripts/validate_statistical_calibration.py",
+        "tests/test_validate_statistical_calibration.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/check_project_context.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "PASS: Project Context Protocol v1 checks passed\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "736f72a",
+        "--",
+        "src",
+        "evals",
+        "scripts/calibrate_statistical_interval.py",
+        "scripts/compare_architecture_evidence.py",
+        "tests/test_statistical_evidence.py",
+        "experiments/phase4-calibration-20261017/README.md",
+        "experiments/phase4-calibration-20261017/existing-interval-simulation.json",
+        "experiments/phase4-calibration-20261017/verification.json",
+        "experiments/phase4-calibration-20261017/unittest-full.txt",
+        "experiments/phase4-calibration-20261017/unittest-focused.txt"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "claim_boundary": "Local deterministic verification only; no hosted CI or CodeQL run and no methodology or phase acceptance.",
+  "focused_tests": 25,
+  "full_tests": 307,
+  "original_simulation_sha256": "81a41a2f31cb28e0480416e63b8eba58d877f3bd866174cf5c794906ca273768",
+  "validation_report_sha256": "5052c06003275fa9c57ef2043910756b61a13772e4cfed69a920023c11329b33"
+}
