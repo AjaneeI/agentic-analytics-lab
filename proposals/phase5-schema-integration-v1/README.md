@@ -69,3 +69,51 @@ review, use a clean detached checkout at the full reviewed commit recorded in
 `independent-review.json`, then run the versioned independent script against that
 checkout with `--expected-head`, an external `--output`, and `--run-tests`.
 Uncaptured architectures, including delegated Hermes Treatment B, remain unverified.
+
+## Actual HTTP request serialization — schema delivery only
+
+`wire-delivery.json` preserves 16 actual `urllib.request.Request.data` payloads
+and their byte hashes from the real `OllamaModelClient.respond` implementation:
+four implemented lanes × four capability probes. An HTTP fake returns one fixed
+final response; socket/DNS access and evidence callbacks are denied. Private and
+held-out Python file opens are blocked during the captures, and hidden task-ID,
+reference-ID and truth canaries are absent from complete wire bytes. A synthetic
+private response field is not recorded. These are bounded guards, not a general
+privacy guarantee. No inference, database/evidence call or held-out access occurs.
+
+The new audit independently extracts tool schemas/descriptions and the system
+prompt from AST of approved commit `644a68d`, rather than using proposal JSON or
+the client's serialization helpers as expected values. It compares the complete
+wire function definitions and system/user messages, fixed local `/api/chat`
+destination, POST/content type, timeout and explicitly supplied probe model ID.
+Mutation tests that drop wire tools or replace the wire prompt are rejected.
+
+**The runtime configurations differ.** The real development client still emits
+temperature 0, `num_predict=128`, `num_ctx=2048` and a 30-minute keep-alive. The
+Phase 2 qualification client source emits `512` and `65536`. Neither source was
+changed. Schema delivery parity does not establish the same model/runtime
+configuration, live model identity, model quality or architecture-comparison
+eligibility. The wire report explicitly retains those unverified/blocked states.
+Its supplied model ID is an offline forwarding probe, not a qualified model.
+
+Reproduce into a **new** artifact; an existing output is never overwritten:
+
+```sh
+python3 -B scripts/audit_schema_wire_delivery.py --output /tmp/schema-wire-delivery-new.json
+python3 -m unittest tests.system_benchmark.test_schema_wire_delivery tests.system_benchmark.test_schema_metadata_parity -v
+```
+
+Expected audit exit is 2: wire delivery verified, runtime equivalence and
+comparative approval absent. The optional `--repository` argument supports a
+separate-process audit of an activation checkout; it records only the three
+routed lanes when the strong-single adapter is absent. Matching options there
+would still not establish runtime equivalence. The approved `644a68d` Git object
+must be available: the standalone audit fails closed otherwise; integration
+tests explicitly skip when that external approved-source object is missing in a
+shallow checkout, without substituting runtime or proposal expectations.
+
+Local verification passed eight focused schema tests and all 325 repository
+tests on Python 3.14. The five new wire tests also passed on Python 3.11 and 3.12.
+Compilation, context protocol and whitespace checks pass. Runtime/task sources
+and the original three metadata JSON reports remain byte-identical to `590fd22`.
+These local checks do not substitute for hosted CI/CodeQL or accept any phase.

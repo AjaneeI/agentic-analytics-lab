@@ -1,0 +1,345 @@
+{
+  "actual_client_source_request": {
+    "keep_alive": "30m",
+    "options": {
+      "num_ctx": 2048,
+      "num_predict": 128,
+      "temperature": 0
+    },
+    "stream": false
+  },
+  "approved_source": {
+    "client_sha256": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+    "commit": "644a68d75cf6743d3daaace51f42a0571747417c",
+    "extraction": "independent AST from git show, no proposal JSON fallback",
+    "worker_sha256": "b0e9c39dbcc868fd6a346778a2a9c6b3418aa828d7b57e8852026623a3b8f289"
+  },
+  "auditor_sha256": "483a36624f712b6261aca386b3020c2b66e3e9e8fb88f5eef9be0d72b2eec5b4",
+  "capture_count": 16,
+  "captures": [
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "method": "POST",
+      "probe_capability": "structured",
+      "request_data_sha256": "01f1aeb70363abf0ccf7a040683c18e7b91bb167d39299d4ce2bc63bb95b6b9b",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Which team has the highest blocker rate in the structured delivery dataset?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "method": "POST",
+      "probe_capability": "documents",
+      "request_data_sha256": "15053b383788eb97fde96017e07acb09e73aff8362272e9ba7b57db1a0f4c366",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"According to the current KPI dictionary, how is blocker rate defined?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "method": "POST",
+      "probe_capability": "multi_source",
+      "request_data_sha256": "e00071ca30347e7a1e19c8d92e84593fce9e6c6ad7298cf238e2a6ee5b580430",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Compare team blocker rates in the dataset and interpret them using the policy dictionary.\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "method": "POST",
+      "probe_capability": "none",
+      "request_data_sha256": "6db0f77e83d0f41d26e7ffc78b84434d8ee7229b33656b6410864754db99b560",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Use private Slack messages to explain a delivery delay.\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "method": "POST",
+      "probe_capability": "structured",
+      "request_data_sha256": "f07b5b3697f4d4e82c3c1974bfda09abdc2bfe506151187fc1e288c8e77da680",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Which team has the highest blocker rate in the structured delivery dataset?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "method": "POST",
+      "probe_capability": "documents",
+      "request_data_sha256": "8fd4075fbc4374b031c167477382f4e13776781c9f5adc0ed6f8a7d33b5eb436",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"According to the current KPI dictionary, how is blocker rate defined?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "method": "POST",
+      "probe_capability": "multi_source",
+      "request_data_sha256": "e00071ca30347e7a1e19c8d92e84593fce9e6c6ad7298cf238e2a6ee5b580430",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Compare team blocker rates in the dataset and interpret them using the policy dictionary.\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "method": "POST",
+      "probe_capability": "none",
+      "request_data_sha256": "2e6185ee750e3b07ff7218766000596ef1cee7cee86e2a9846ef9ac4f6250062",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Use private Slack messages to explain a delivery delay.\"}], \"tools\": []}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "method": "POST",
+      "probe_capability": "structured",
+      "request_data_sha256": "f07b5b3697f4d4e82c3c1974bfda09abdc2bfe506151187fc1e288c8e77da680",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Which team has the highest blocker rate in the structured delivery dataset?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "method": "POST",
+      "probe_capability": "documents",
+      "request_data_sha256": "8fd4075fbc4374b031c167477382f4e13776781c9f5adc0ed6f8a7d33b5eb436",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"According to the current KPI dictionary, how is blocker rate defined?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "method": "POST",
+      "probe_capability": "multi_source",
+      "request_data_sha256": "e00071ca30347e7a1e19c8d92e84593fce9e6c6ad7298cf238e2a6ee5b580430",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Compare team blocker rates in the dataset and interpret them using the policy dictionary.\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "method": "POST",
+      "probe_capability": "none",
+      "request_data_sha256": "2e6185ee750e3b07ff7218766000596ef1cee7cee86e2a9846ef9ac4f6250062",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Use private Slack messages to explain a delivery delay.\"}], \"tools\": []}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "method": "POST",
+      "probe_capability": "structured",
+      "request_data_sha256": "f07b5b3697f4d4e82c3c1974bfda09abdc2bfe506151187fc1e288c8e77da680",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Which team has the highest blocker rate in the structured delivery dataset?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "method": "POST",
+      "probe_capability": "documents",
+      "request_data_sha256": "8fd4075fbc4374b031c167477382f4e13776781c9f5adc0ed6f8a7d33b5eb436",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"According to the current KPI dictionary, how is blocker rate defined?\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "method": "POST",
+      "probe_capability": "multi_source",
+      "request_data_sha256": "e00071ca30347e7a1e19c8d92e84593fce9e6c6ad7298cf238e2a6ee5b580430",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Compare team blocker rates in the dataset and interpret them using the policy dictionary.\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"query_clickhouse\", \"description\": \"Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\"}}, \"required\": [\"sql\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"retrieve_policy\", \"description\": \"Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}, \"as_of\": {\"type\": [\"string\", \"null\"]}, \"top_k\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 5}}, \"required\": [\"query\"]}}}]}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    },
+    {
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "fake_http_responses": 1,
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "method": "POST",
+      "probe_capability": "none",
+      "request_data_sha256": "2e6185ee750e3b07ff7218766000596ef1cee7cee86e2a9846ef9ac4f6250062",
+      "request_data_utf8": "{\"model\": \"offline-wire-delivery-probe\", \"stream\": false, \"keep_alive\": \"30m\", \"options\": {\"temperature\": 0, \"num_predict\": 128, \"num_ctx\": 2048}, \"messages\": [{\"role\": \"system\", \"content\": \"You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.\"}, {\"role\": \"user\", \"content\": \"Use private Slack messages to explain a delivery delay.\"}], \"tools\": []}",
+      "timeout_seconds": 120,
+      "url": "http://127.0.0.1:11434/api/chat",
+      "wire_messages_match": true,
+      "wire_tool_schema_and_descriptions_match": true
+    }
+  ],
+  "comparative_evaluation_approved": false,
+  "external_database_calls": 0,
+  "guards": {
+    "HTTP_transport": "fake response only",
+    "evidence_callbacks_denied": true,
+    "private_and_heldout_Python_file_opens_denied_during_captures": true,
+    "private_response_thinking_field_not_recorded": true,
+    "real_client_respond_and_request_serialization": true,
+    "socket_and_DNS_denied": true
+  },
+  "heldout_access": false,
+  "limitations": [
+    "Wire schema delivery only; no inference, live model digest, model quality, runtime or architecture equivalence evidence.",
+    "The explicit probe model ID tests forwarding and does not qualify any model or provider.",
+    "Audited client options are {'temperature': 0, 'num_predict': 128, 'num_ctx': 2048}; Phase 2 qualification source options are {'temperature': 0, 'num_predict': 512, 'num_ctx': 65536}. Matching wire options alone would not establish runtime equivalence.",
+    "A different repository root must be audited in a separate interpreter; strong-single is omitted when its adapter is absent.",
+    "Private-field guards and synthetic canaries are bounded checks, not complete semantic privacy redaction."
+  ],
+  "live_model_calls": 0,
+  "phase2_qualification_source_request": {
+    "keep_alive": "30m",
+    "options": {
+      "num_ctx": 65536,
+      "num_predict": 512,
+      "temperature": 0
+    },
+    "stream": false
+  },
+  "phase2_qualified": false,
+  "phase5_entry_accepted": false,
+  "rejected_attempts": [],
+  "runtime_equivalence_verified": false,
+  "runtime_source_sha256": {
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "src/agents/ollama_client.py": "4a716169b5ff78123ffb3956cdca9494a55bd72289d4df2a718c0769e6619812",
+    "src/evals/system_benchmark/baselines.py": "6030cba1e15a844f5be76e6376eb7d88dc728ed5aace2b40525735a3bfa04a15",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+    "src/evals/system_benchmark/local_worker.py": "34899a61688a5117ec4dfa409cf1314a784856a2c8fe83bdb05c475c6d2d4419",
+    "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+    "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25"
+  },
+  "same_model_runtime_configuration_as_phase2_qualification": false,
+  "status": "offline_wire_delivery_verified_not_runtime_equivalence",
+  "supplied_probe_model_id": "offline-wire-delivery-probe",
+  "unverified_lanes": [
+    "Hermes delegated Treatment B",
+    "architectures not explicitly captured"
+  ],
+  "wire_options_equal_phase2_qualification_source": false,
+  "wire_schema_delivery_verified": true
+}
