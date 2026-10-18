@@ -1,0 +1,172 @@
+{
+  "csv_sha256": "cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef",
+  "generator_sha256": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+  "limitations": "SQLite common SELECT arithmetic on generated CSV is not live ClickHouse qualification; Float32 transport precision remains unverified.",
+  "operations": {
+    "active_counts": {
+      "cross_check_passed": true,
+      "independent_python_values": {
+        "ai_active_items": 40,
+        "data_active_items": 45,
+        "platform_active_items": 32,
+        "product_active_items": 53
+      },
+      "observed_values": {
+        "ai_active_items": 40,
+        "data_active_items": 45,
+        "platform_active_items": 32,
+        "product_active_items": 53
+      },
+      "rows": [
+        {
+          "active_items": 40,
+          "team": "AI"
+        },
+        {
+          "active_items": 45,
+          "team": "Data"
+        },
+        {
+          "active_items": 32,
+          "team": "Platform"
+        },
+        {
+          "active_items": 53,
+          "team": "Product"
+        }
+      ],
+      "sql": "SELECT team, COUNT(*) AS active_items FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+    },
+    "active_rates": {
+      "cross_check_passed": true,
+      "independent_python_values": {
+        "ai_blocked_pct": 17.5,
+        "data_blocked_pct": 17.8,
+        "platform_blocked_pct": 15.6,
+        "product_blocked_pct": 11.3
+      },
+      "observed_values": {
+        "ai_blocked_pct": 17.5,
+        "data_blocked_pct": 17.8,
+        "platform_blocked_pct": 15.6,
+        "product_blocked_pct": 11.3
+      },
+      "rows": [
+        {
+          "blocked_pct": 17.5,
+          "team": "AI"
+        },
+        {
+          "blocked_pct": 17.8,
+          "team": "Data"
+        },
+        {
+          "blocked_pct": 15.6,
+          "team": "Platform"
+        },
+        {
+          "blocked_pct": 11.3,
+          "team": "Product"
+        }
+      ],
+      "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+    },
+    "all_rates": {
+      "cross_check_passed": true,
+      "independent_python_values": {
+        "ai_blocked_pct": 15.0,
+        "data_blocked_pct": 20.9,
+        "platform_blocked_pct": 11.4,
+        "product_blocked_pct": 14.7
+      },
+      "observed_values": {
+        "ai_blocked_pct": 15.0,
+        "data_blocked_pct": 20.9,
+        "platform_blocked_pct": 11.4,
+        "product_blocked_pct": 14.7
+      },
+      "rows": [
+        {
+          "blocked_pct": 15.0,
+          "team": "AI"
+        },
+        {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        },
+        {
+          "blocked_pct": 11.4,
+          "team": "Platform"
+        },
+        {
+          "blocked_pct": 14.7,
+          "team": "Product"
+        }
+      ],
+      "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY team"
+    },
+    "completed_lateness": {
+      "cross_check_passed": true,
+      "independent_python_values": {
+        "blocked_late_pct": 54.7,
+        "nonblocked_late_pct": 31.0
+      },
+      "observed_values": {
+        "blocked_late_pct": 54.7,
+        "nonblocked_late_pct": 31.0
+      },
+      "rows": [
+        {
+          "blocked": 0,
+          "completed_items": 277,
+          "late_items": 86,
+          "late_pct": 31.0
+        },
+        {
+          "blocked": 1,
+          "completed_items": 53,
+          "late_items": 29,
+          "late_pct": 54.7
+        }
+      ],
+      "sql": "SELECT blocked, COUNT(*) AS completed_items, SUM(CASE WHEN completed_at > due_at THEN 1 ELSE 0 END) AS late_items, ROUND(100.0 * SUM(CASE WHEN completed_at > due_at THEN 1 ELSE 0 END) / COUNT(*), 1) AS late_pct FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY blocked ORDER BY blocked"
+    },
+    "completed_ratios": {
+      "cross_check_passed": true,
+      "independent_python_values": {
+        "ai_effort_ratio": 1.1603494225644062,
+        "data_effort_ratio": 1.1417287294064544,
+        "platform_effort_ratio": 1.0812889812889812,
+        "product_effort_ratio": 1.10339558573854
+      },
+      "observed_values": {
+        "ai_effort_ratio": 1.1603494225644062,
+        "data_effort_ratio": 1.1417287294064544,
+        "platform_effort_ratio": 1.0812889812889812,
+        "product_effort_ratio": 1.10339558573854
+      },
+      "rows": [
+        {
+          "effort_ratio": 1.1603494225644062,
+          "team": "AI"
+        },
+        {
+          "effort_ratio": 1.1417287294064544,
+          "team": "Data"
+        },
+        {
+          "effort_ratio": 1.0812889812889812,
+          "team": "Platform"
+        },
+        {
+          "effort_ratio": 1.10339558573854,
+          "team": "Product"
+        }
+      ],
+      "sql": "SELECT team, SUM(actual_hours) / SUM(planned_hours) AS effort_ratio FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY team ORDER BY team"
+    }
+  },
+  "row_count": 500,
+  "seed": 42,
+  "source": "unchanged generator executed in TemporaryDirectory"
+}

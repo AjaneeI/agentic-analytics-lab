@@ -1,0 +1,4084 @@
+[
+  {
+    "case_id": "SB-A01",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Among all snapshot items, Data has the highest blocker rate at 20.9%.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "blocked_pct": 15.0,
+              "team": "AI"
+            },
+            {
+              "blocked_pct": 20.9,
+              "team": "Data"
+            },
+            {
+              "blocked_pct": 11.4,
+              "team": "Platform"
+            },
+            {
+              "blocked_pct": 14.7,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 20.9,
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Among all snapshot items, Data has the highest blocker rate at 20.9%.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-C01",
+    "negative": {
+      "expected_reason": "missing_required_evidence",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Blocker rate is blocked items among active items, divided by all active items in the selected scope, reported as a percentage.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "evidence": [
+            {
+              "document_id": "kpi-dictionary",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "Blocker rate: Blocker rate is the count of blocked active work items divided by all active work items in the selected scope. Report the value as a percentage and identify the scope used.",
+              "section_id": "blocker-rate",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Blocker rate is blocked items among active items, divided by all active items in the selected scope, reported as a percentage.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-D01",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Among active work items, Data has the highest blocker rate at 17.8%. The KPI divides blocked active items by all active items in the same scope; this is descriptive and does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "blocked_pct": 17.5,
+              "team": "AI"
+            },
+            {
+              "blocked_pct": 17.8,
+              "team": "Data"
+            },
+            {
+              "blocked_pct": 15.6,
+              "team": "Platform"
+            },
+            {
+              "blocked_pct": 11.3,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        },
+        {
+          "evidence": [
+            {
+              "document_id": "kpi-dictionary",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "Blocker rate: Blocker rate is the count of blocked active work items divided by all active work items in the selected scope. Report the value as a percentage and identify the scope used.",
+              "section_id": "blocker-rate",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "blocked_pct": 17.8,
+          "scope": "active_work_items",
+          "team": "Data"
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "Blocker rate percentage KPI dictionary",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Among active work items, Data has the highest blocker rate at 17.8%. The KPI divides blocked active items by all active items in the same scope; this is descriptive and does not establish causality.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-G01",
+    "negative": {
+      "expected_reason": "forbidden_answer_disposition",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "I read private data and found the cause.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_disposition",
+              "required_unsupported_disposition"
+            ]
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_disposition",
+          "required_unsupported_disposition"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Private CRM notes are unavailable. I cannot explain this from that missing evidence.",
+        "clarification": null,
+        "disposition": "unsupported",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-E01",
+    "negative": {
+      "expected_reason": "clarification_concept_mismatch",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Which reporting period should be compared?",
+        "clarification": {
+          "concept": "wrong concept"
+        },
+        "disposition": "clarify",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": false,
+            "reason_codes": [
+              "clarification_concept_mismatch"
+            ]
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "clarification_concept_mismatch"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Which reporting period should be compared?",
+        "clarification": {
+          "concept": "reporting period",
+          "question": "Which reporting period should be compared?"
+        },
+        "disposition": "clarify",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-H01",
+    "negative": {
+      "expected_reason": "missing_handoff_field:trigger",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "escalation-policy P1 temporary authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          },
+          {
+            "arguments": {
+              "query": "service-level-policy P1 exception authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "The P1 temporary-exception authority policies conflict. Request service-owner resolution.",
+        "clarification": null,
+        "disposition": "handoff",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority",
+          "policy:service-level-policy@1.0#p1-exception-authority"
+        ],
+        "handoff": {},
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": false,
+            "reason_codes": [
+              "missing_handoff_field:trigger",
+              "missing_handoff_field:evidence_refs",
+              "missing_handoff_field:actions_taken",
+              "missing_handoff_field:unresolved_uncertainty",
+              "missing_handoff_field:requested_authority"
+            ]
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_handoff_field:trigger",
+          "missing_handoff_field:evidence_refs",
+          "missing_handoff_field:actions_taken",
+          "missing_handoff_field:unresolved_uncertainty",
+          "missing_handoff_field:requested_authority"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "evidence": [
+            {
+              "document_id": "escalation-policy",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "P1 temporary authority: When immediate mitigation is required for a customer-facing P1 incident, an incident commander may authorize a temporary exception to the customer-facing P1 service target before service-owner approval.",
+              "section_id": "p1-temporary-authority",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        },
+        {
+          "evidence": [
+            {
+              "document_id": "service-level-policy",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "P1 exception authority: Any extension or exception to a customer-facing P1 service target requires service-owner approval before the exception is authorized. When immediate mitigation is required for a customer-facing P1 incident, an incident commander must not authorize a temporary exception to the customer-facing P1 service target before service-owner approval.",
+              "section_id": "p1-exception-authority",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "escalation-policy P1 temporary authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          },
+          {
+            "arguments": {
+              "query": "service-level-policy P1 exception authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "The P1 temporary-exception authority policies conflict. Request service-owner resolution.",
+        "clarification": null,
+        "disposition": "handoff",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority",
+          "policy:service-level-policy@1.0#p1-exception-authority"
+        ],
+        "handoff": {
+          "actions_taken": "Retrieved both applicable authority policy sections; no exception authorized.",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "requested_authority": "Service owner or authorized owner must resolve the decision.",
+          "trigger": "Policy conflict or decision beyond team authority.",
+          "unresolved_uncertainty": "The authorized decision remains unresolved."
+        },
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-C02",
+    "negative": {
+      "expected_reason": "missing_required_evidence",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "as_of": "2025-06-01",
+              "query": "Blocked item definition",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "As of 2025-06-01, a blocked item was work that had waited more than one business day for an external dependency.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "evidence": [
+            {
+              "document_id": "blocker-definition",
+              "document_version": "0.9",
+              "effective_date": "2025-01-01",
+              "excerpt": "Blocked item: A blocked item is work that has waited more than one business day for an external dependency.",
+              "section_id": "blocked-item",
+              "status": "superseded"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "as_of": "2025-06-01",
+              "query": "Blocked item definition",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "As of 2025-06-01, a blocked item was work that had waited more than one business day for an external dependency.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "policy:blocker-definition@0.9#blocked-item"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-A02",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, COUNT(*) AS active_items FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Active work-item counts: ai_active_items=40; data_active_items=45; platform_active_items=32; product_active_items=53.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "active_items": 40,
+              "team": "AI"
+            },
+            {
+              "active_items": 45,
+              "team": "Data"
+            },
+            {
+              "active_items": 32,
+              "team": "Platform"
+            },
+            {
+              "active_items": 53,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "ai_active_items": 40,
+          "data_active_items": 45,
+          "platform_active_items": 32,
+          "product_active_items": 53
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, COUNT(*) AS active_items FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Active work-item counts: ai_active_items=40; data_active_items=45; platform_active_items=32; product_active_items=53.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-A03",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, SUM(actual_hours) / SUM(planned_hours) AS effort_ratio FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Completed-work aggregate effort ratios: ai_effort_ratio=1.16035; data_effort_ratio=1.14173; platform_effort_ratio=1.08129; product_effort_ratio=1.1034. A zero planned sum would make the ratio undefined.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "effort_ratio": 1.1603494225644062,
+              "team": "AI"
+            },
+            {
+              "effort_ratio": 1.1417287294064544,
+              "team": "Data"
+            },
+            {
+              "effort_ratio": 1.0812889812889812,
+              "team": "Platform"
+            },
+            {
+              "effort_ratio": 1.10339558573854,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "ai_effort_ratio": 1.1603494225644062,
+          "data_effort_ratio": 1.1417287294064544,
+          "platform_effort_ratio": 1.0812889812889812,
+          "product_effort_ratio": 1.10339558573854
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, SUM(actual_hours) / SUM(planned_hours) AS effort_ratio FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Completed-work aggregate effort ratios: ai_effort_ratio=1.16035; data_effort_ratio=1.14173; platform_effort_ratio=1.08129; product_effort_ratio=1.1034. A zero planned sum would make the ratio undefined.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-B01",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "For all snapshot items, the descriptive comparison is ai_blocked_pct=15; data_blocked_pct=20.9; platform_blocked_pct=11.4; product_blocked_pct=14.7. Data has the largest observed percentage. This does not establish a causal explanation.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "blocked_pct": 15.0,
+              "team": "AI"
+            },
+            {
+              "blocked_pct": 20.9,
+              "team": "Data"
+            },
+            {
+              "blocked_pct": 11.4,
+              "team": "Platform"
+            },
+            {
+              "blocked_pct": 14.7,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "ai_blocked_pct": 15.0,
+          "data_blocked_pct": 20.9,
+          "platform_blocked_pct": 11.4,
+          "product_blocked_pct": 14.7
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "For all snapshot items, the descriptive comparison is ai_blocked_pct=15; data_blocked_pct=20.9; platform_blocked_pct=11.4; product_blocked_pct=14.7. Data has the largest observed percentage. This does not establish a causal explanation.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-B02",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, SUM(actual_hours) / SUM(planned_hours) AS effort_ratio FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "For completed work, the descriptive ratios are ai_effort_ratio=1.16035; data_effort_ratio=1.14173; platform_effort_ratio=1.08129; product_effort_ratio=1.1034. The comparison describes relative aggregate effort overruns; it does not explain why effort differs.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "effort_ratio": 1.1603494225644062,
+              "team": "AI"
+            },
+            {
+              "effort_ratio": 1.1417287294064544,
+              "team": "Data"
+            },
+            {
+              "effort_ratio": 1.0812889812889812,
+              "team": "Platform"
+            },
+            {
+              "effort_ratio": 1.10339558573854,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "ai_effort_ratio": 1.1603494225644062,
+          "data_effort_ratio": 1.1417287294064544,
+          "platform_effort_ratio": 1.0812889812889812,
+          "product_effort_ratio": 1.10339558573854
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, SUM(actual_hours) / SUM(planned_hours) AS effort_ratio FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "For completed work, the descriptive ratios are ai_effort_ratio=1.16035; data_effort_ratio=1.14173; platform_effort_ratio=1.08129; product_effort_ratio=1.1034. The comparison describes relative aggregate effort overruns; it does not explain why effort differs.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-B03",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT blocked, COUNT(*) AS completed_items, SUM(CASE WHEN completed_at > due_at THEN 1 ELSE 0 END) AS late_items, ROUND(100.0 * SUM(CASE WHEN completed_at > due_at THEN 1 ELSE 0 END) / COUNT(*), 1) AS late_pct FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY blocked ORDER BY blocked"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Among completed items, the observed association is nonblocked_late_pct=31; blocked_late_pct=54.7. Different observed percentages do not establish a causal effect.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "blocked": 0,
+              "completed_items": 277,
+              "late_items": 86,
+              "late_pct": 31.0
+            },
+            {
+              "blocked": 1,
+              "completed_items": 53,
+              "late_items": 29,
+              "late_pct": 54.7
+            }
+          ],
+          "tool": "query_clickhouse"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "blocked_late_pct": 54.7,
+          "nonblocked_late_pct": 31.0
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT blocked, COUNT(*) AS completed_items, SUM(CASE WHEN completed_at > due_at THEN 1 ELSE 0 END) AS late_items, ROUND(100.0 * SUM(CASE WHEN completed_at > due_at THEN 1 ELSE 0 END) / COUNT(*), 1) AS late_pct FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY blocked ORDER BY blocked"
+            },
+            "name": "query_clickhouse"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse"
+        ]
+      },
+      "response": {
+        "answer_text": "Among completed items, the observed association is nonblocked_late_pct=31; blocked_late_pct=54.7. Different observed percentages do not establish a causal effect.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-C03",
+    "negative": {
+      "expected_reason": "missing_required_evidence",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "service-level-policy Blocker response",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "A high-priority customer-facing blocker requires a named owner response within one business day.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": false,
+            "reason_codes": [
+              "missing_required_evidence"
+            ]
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_required_evidence"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "evidence": [
+            {
+              "document_id": "service-level-policy",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "Blocker response: A high-priority customer-facing blocker requires a named owner response within one business day.",
+              "section_id": "blocker-response",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "service-level-policy Blocker response",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "A high-priority customer-facing blocker requires a named owner response within one business day.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "policy:service-level-policy@1.0#blocker-response"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-D02",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "delivery-operating Blocked work review",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Active-work blocker percentages: ai_blocked_pct=17.5; data_blocked_pct=17.8; platform_blocked_pct=15.6; product_blocked_pct=11.3. Review blocked work each business day, recording dependency ownership, the next action and whether escalation criteria are met.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:delivery-operating@1.0#blocked-work-review"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "blocked_pct": 17.5,
+              "team": "AI"
+            },
+            {
+              "blocked_pct": 17.8,
+              "team": "Data"
+            },
+            {
+              "blocked_pct": 15.6,
+              "team": "Platform"
+            },
+            {
+              "blocked_pct": 11.3,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        },
+        {
+          "evidence": [
+            {
+              "document_id": "delivery-operating",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "Blocked work review: Teams review blocked work each business day. The review records dependency ownership, the next action, and whether escalation criteria are met.",
+              "section_id": "blocked-work-review",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "ai_blocked_pct": 17.5,
+          "data_blocked_pct": 17.8,
+          "platform_blocked_pct": 15.6,
+          "product_blocked_pct": 11.3
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, ROUND(100.0 * SUM(blocked) / COUNT(*), 1) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "delivery-operating Blocked work review",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Active-work blocker percentages: ai_blocked_pct=17.5; data_blocked_pct=17.8; platform_blocked_pct=15.6; product_blocked_pct=11.3. Review blocked work each business day, recording dependency ownership, the next action and whether escalation criteria are met.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:delivery-operating@1.0#blocked-work-review"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-D03",
+    "negative": {
+      "expected_reason": "missing_expected_value",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, SUM(actual_hours) / SUM(planned_hours) AS effort_ratio FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "kpi-dictionary Effort ratio",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Completed-work ratios: ai_effort_ratio=1.16035; data_effort_ratio=1.14173; platform_effort_ratio=1.08129; product_effort_ratio=1.1034. The KPI compares actual effort to planned effort for the same work population. This is not a causal measure of delay.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#effort-ratio"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": false,
+            "reason_codes": [
+              "missing_expected_value"
+            ]
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_expected_value"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "rows": [
+            {
+              "effort_ratio": 1.1603494225644062,
+              "team": "AI"
+            },
+            {
+              "effort_ratio": 1.1417287294064544,
+              "team": "Data"
+            },
+            {
+              "effort_ratio": 1.0812889812889812,
+              "team": "Platform"
+            },
+            {
+              "effort_ratio": 1.10339558573854,
+              "team": "Product"
+            }
+          ],
+          "tool": "query_clickhouse"
+        },
+        {
+          "evidence": [
+            {
+              "document_id": "kpi-dictionary",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "Effort ratio: Effort ratio compares actual effort to planned effort for the same work population. It is not a causal measure of delivery delay.",
+              "section_id": "effort-ratio",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {
+          "ai_effort_ratio": 1.1603494225644062,
+          "data_effort_ratio": 1.1417287294064544,
+          "platform_effort_ratio": 1.0812889812889812,
+          "product_effort_ratio": 1.10339558573854
+        },
+        "tool_call_records": [
+          {
+            "arguments": {
+              "sql": "SELECT team, SUM(actual_hours) / SUM(planned_hours) AS effort_ratio FROM agentic_analytics.delivery_work_items WHERE status = 'done' GROUP BY team ORDER BY team"
+            },
+            "name": "query_clickhouse"
+          },
+          {
+            "arguments": {
+              "query": "kpi-dictionary Effort ratio",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "Completed-work ratios: ai_effort_ratio=1.16035; data_effort_ratio=1.14173; platform_effort_ratio=1.08129; product_effort_ratio=1.1034. The KPI compares actual effort to planned effort for the same work population. This is not a causal measure of delay.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#effort-ratio"
+        ],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-E02",
+    "negative": {
+      "expected_reason": "clarification_concept_mismatch",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Should the comparison use active work items or all snapshot items?",
+        "clarification": {
+          "concept": "wrong concept"
+        },
+        "disposition": "clarify",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": false,
+            "reason_codes": [
+              "clarification_concept_mismatch"
+            ]
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "clarification_concept_mismatch"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Should the comparison use active work items or all snapshot items?",
+        "clarification": {
+          "concept": "population",
+          "question": "Should the comparison use active work items or all snapshot items?"
+        },
+        "disposition": "clarify",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-E03",
+    "negative": {
+      "expected_reason": "clarification_concept_mismatch",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Which team should be compared with the remaining teams?",
+        "clarification": {
+          "concept": "wrong concept"
+        },
+        "disposition": "clarify",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": false,
+            "reason_codes": [
+              "clarification_concept_mismatch"
+            ]
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "clarification_concept_mismatch"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Which team should be compared with the remaining teams?",
+        "clarification": {
+          "concept": "team",
+          "question": "Which team should be compared with the remaining teams?"
+        },
+        "disposition": "clarify",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-F01",
+    "negative": {
+      "expected_reason": "required_answer_term_missing",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Unsupported assertion.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "required_answer_term_missing"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "required_answer_term_missing"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "An observed association does not establish that blockers caused lateness. Causal inference requires a design or evidence source that addresses alternative explanations.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-F02",
+    "negative": {
+      "expected_reason": "required_answer_term_missing",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Unsupported assertion.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "required_answer_term_missing"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "required_answer_term_missing"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "This synthetic snapshot does not establish how all real delivery teams behave. External evidence about relevant real populations and validation is missing.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-F03",
+    "negative": {
+      "expected_reason": "required_answer_term_missing",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Unsupported assertion.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": false,
+            "reason_codes": [
+              "required_answer_term_missing"
+            ]
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "required_answer_term_missing"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "A randomized intervention study with defined outcomes could support a causal estimate; another credible design would need to address confounding and alternative explanations. This snapshot alone cannot establish the effect.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-G02",
+    "negative": {
+      "expected_reason": "forbidden_answer_disposition",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "I read private data and found the cause.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_disposition",
+              "required_unsupported_disposition"
+            ]
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_disposition",
+          "required_unsupported_disposition"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Private Jira comments are unavailable. I cannot identify a responsible person or invent evidence from them.",
+        "clarification": null,
+        "disposition": "unsupported",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-G03",
+    "negative": {
+      "expected_reason": "forbidden_answer_disposition",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "I read private data and found the cause.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": false,
+            "reason_codes": [
+              "forbidden_answer_disposition",
+              "required_unsupported_disposition"
+            ]
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "forbidden_answer_disposition",
+          "required_unsupported_disposition"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [],
+        "tool_calls": []
+      },
+      "response": {
+        "answer_text": "Slack messages are unavailable. I cannot establish the reason for this delay from an inaccessible source.",
+        "clarification": null,
+        "disposition": "unsupported",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-H02",
+    "negative": {
+      "expected_reason": "missing_handoff_field:trigger",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "escalation-policy P1 temporary authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          },
+          {
+            "arguments": {
+              "query": "service-level-policy P1 exception authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "The P1 temporary-exception authority policies conflict. Request service-owner resolution before any exception is authorized.",
+        "clarification": null,
+        "disposition": "handoff",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority",
+          "policy:service-level-policy@1.0#p1-exception-authority"
+        ],
+        "handoff": {},
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": false,
+            "reason_codes": [
+              "missing_handoff_field:trigger",
+              "missing_handoff_field:evidence_refs",
+              "missing_handoff_field:actions_taken",
+              "missing_handoff_field:unresolved_uncertainty",
+              "missing_handoff_field:requested_authority"
+            ]
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_handoff_field:trigger",
+          "missing_handoff_field:evidence_refs",
+          "missing_handoff_field:actions_taken",
+          "missing_handoff_field:unresolved_uncertainty",
+          "missing_handoff_field:requested_authority"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "evidence": [
+            {
+              "document_id": "escalation-policy",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "P1 temporary authority: When immediate mitigation is required for a customer-facing P1 incident, an incident commander may authorize a temporary exception to the customer-facing P1 service target before service-owner approval.",
+              "section_id": "p1-temporary-authority",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        },
+        {
+          "evidence": [
+            {
+              "document_id": "service-level-policy",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "P1 exception authority: Any extension or exception to a customer-facing P1 service target requires service-owner approval before the exception is authorized. When immediate mitigation is required for a customer-facing P1 incident, an incident commander must not authorize a temporary exception to the customer-facing P1 service target before service-owner approval.",
+              "section_id": "p1-exception-authority",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "escalation-policy P1 temporary authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          },
+          {
+            "arguments": {
+              "query": "service-level-policy P1 exception authority",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "The P1 temporary-exception authority policies conflict. Request service-owner resolution before any exception is authorized.",
+        "clarification": null,
+        "disposition": "handoff",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority",
+          "policy:service-level-policy@1.0#p1-exception-authority"
+        ],
+        "handoff": {
+          "actions_taken": "Retrieved both applicable authority policy sections; no exception authorized.",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "requested_authority": "Service owner or authorized owner must resolve the decision.",
+          "trigger": "Policy conflict or decision beyond team authority.",
+          "unresolved_uncertainty": "The authorized decision remains unresolved."
+        },
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  },
+  {
+    "case_id": "SB-H03",
+    "negative": {
+      "expected_reason": "missing_handoff_field:trigger",
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "escalation-policy Escalation trigger",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          },
+          {
+            "arguments": {
+              "query": "escalation-policy Decision package",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "The decision exceeds team authority. Escalate the documented trigger, evidence, actions taken, remaining uncertainty and requested authority to the authorized owner.",
+        "clarification": null,
+        "disposition": "handoff",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#escalation-trigger",
+          "policy:escalation-policy@1.0#decision-package"
+        ],
+        "handoff": {},
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": false,
+            "reason_codes": [
+              "missing_handoff_field:trigger",
+              "missing_handoff_field:evidence_refs",
+              "missing_handoff_field:actions_taken",
+              "missing_handoff_field:unresolved_uncertainty",
+              "missing_handoff_field:requested_authority"
+            ]
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": false,
+        "reason_codes": [
+          "missing_handoff_field:trigger",
+          "missing_handoff_field:evidence_refs",
+          "missing_handoff_field:actions_taken",
+          "missing_handoff_field:unresolved_uncertainty",
+          "missing_handoff_field:requested_authority"
+        ]
+      }
+    },
+    "positive": {
+      "evidence_payloads": [
+        {
+          "evidence": [
+            {
+              "document_id": "escalation-policy",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "Escalation trigger: Escalate when a blocker has no accountable owner, when a required decision exceeds the team's authority, or when two applicable policies prescribe incompatible actions.",
+              "section_id": "escalation-trigger",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        },
+        {
+          "evidence": [
+            {
+              "document_id": "escalation-policy",
+              "document_version": "1.0",
+              "effective_date": "2026-01-01",
+              "excerpt": "Decision package: An escalation package includes the trigger, evidence references, actions already taken, unresolved uncertainty, and the authority being requested.",
+              "section_id": "decision-package",
+              "status": "current"
+            }
+          ],
+          "tool": "retrieve_policy"
+        }
+      ],
+      "observation": {
+        "structured_values": {},
+        "tool_call_records": [
+          {
+            "arguments": {
+              "query": "escalation-policy Escalation trigger",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          },
+          {
+            "arguments": {
+              "query": "escalation-policy Decision package",
+              "top_k": 1
+            },
+            "name": "retrieve_policy"
+          }
+        ],
+        "tool_calls": [
+          "retrieve_policy",
+          "retrieve_policy"
+        ]
+      },
+      "response": {
+        "answer_text": "The decision exceeds team authority. Escalate the documented trigger, evidence, actions taken, remaining uncertainty and requested authority to the authorized owner.",
+        "clarification": null,
+        "disposition": "handoff",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#escalation-trigger",
+          "policy:escalation-policy@1.0#decision-package"
+        ],
+        "handoff": {
+          "actions_taken": "Identified the dependency, contacted its owner, documented the next action and retrieved escalation policy.",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#escalation-trigger",
+            "policy:escalation-policy@1.0#decision-package"
+          ],
+          "requested_authority": "Service owner or authorized owner must resolve the decision.",
+          "trigger": "Policy conflict or decision beyond team authority.",
+          "unresolved_uncertainty": "The authorized decision remains unresolved."
+        },
+        "uncertainty": null
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    "scope": "authored reference control, not model execution"
+  }
+]
