@@ -1,0 +1,34 @@
+{
+  "configuration_id": "phase2-runtime-schema-v1-scope-observation-v1",
+  "schema_version": "delivery-work-items-schema-v1",
+  "schema_source": "proposals/phase2-runtime-schema-v1/schema-diagnostic.json",
+  "query_tool_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+  "benchmark_contract_sha256": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+  "standalone_qualification": true,
+  "architecture_comparison_allowed": false,
+  "future_comparison_gate": "strong-single adapter implemented and schema parity independently verified",
+  "scope_observation_version": "runtime-sql-scope-v1",
+  "runtime_offline_validity_gate": "scope_controls_passed_overall_evaluator_unaccepted",
+  "model": {
+    "name": "hermes-local:qwen3.5-9b",
+    "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+    "base_url": "http://127.0.0.1:11434",
+    "temperature": 0,
+    "num_predict": 512,
+    "num_ctx": 65536,
+    "timeout_seconds": 120
+  },
+  "limits": {
+    "model_steps": 6,
+    "evidence_calls": 2,
+    "retries": 0,
+    "reprompts": 0
+  },
+  "task_id": "SB-D01",
+  "allowed_tools": [
+    "query_clickhouse",
+    "retrieve_policy"
+  ],
+  "activation_authorization": "PENDING owner approval of this exact runtime observation amendment; no live experiment authorized from proposal",
+  "owner_observation_approval": "pending"
+}

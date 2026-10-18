@@ -16,6 +16,7 @@ from src.evals.system_benchmark.contracts import (
     SystemBenchmarkTask,
 )
 from src.evals.system_benchmark.routing import RoutingDecision, oracle_route
+from src.evals.system_benchmark.scope_observation_v1 import derive_population_scope
 from src.evals.system_benchmark.runner import TrialExecution
 from src.evals.system_benchmark.scoring import ScoringObservation
 from src.evals.system_benchmark.workers import build_worker_invocation
@@ -269,9 +270,15 @@ class BoundedLocalExecutor:
         ):
             raise LocalWorkerError("query_clickhouse returned invalid rows")
 
-        if rows and _query_references_delivery_table(sql):
+        # Scope labels returned by SQL are assertions, not population proof.
+        # Clear prior scope even when this successful query is unsupported.
+        structured_values.pop("scope", None)
+        scope = derive_population_scope(sql) if rows else None
+        if rows and (_query_references_delivery_table(sql) or scope is not None):
             _append_unique(evidence_refs, "structured:delivery_work_items")
             _extract_structured_values(task, rows, structured_values)
+            if scope is not None:
+                structured_values["scope"] = scope
         return rows
 
     def _run_policy_tool(
@@ -313,6 +320,8 @@ def _extract_structured_values(
 ) -> None:
     aliases = {"blocked_pct": ("blocked_pct", "blocker_rate")}
     for expectation in task.expected_values:
+        if expectation.name == "scope":
+            continue
         keys = aliases.get(expectation.name, (expectation.name,))
         values: list[Any] = []
         for row in rows:

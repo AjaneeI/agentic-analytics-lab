@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_single_quoted_status_alias_remains_unknown (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_single_quoted_status_alias_remains_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_observation.py", line 52, in test_single_quoted_status_alias_remains_unknown
+    self.assertNotIn('scope', self.observe(sql))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scope' unexpectedly found in {'team': 'Data', 'blocked_pct': 17.7777777778, 'scope': 'active_work_items'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

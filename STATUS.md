@@ -2,6 +2,18 @@
 
 _Last reviewed for approved schema-v1 activation on 2026-10-17._
 
+## Scope observation v1 candidate — review required before execution
+
+This branch proposes a separate `runtime-sql-scope-v1` observation amendment.
+Executed canonical/aliased/equivalent active-work SQL now supplies scope without
+a fabricated result label; all-item, uppercase-literal and OR-bypass labels are
+ignored. Independent seed-42/SQLite controls use the real worker and unchanged
+scorer with live clients blocked. The supported scope controls pass; a valid CTE
+remains unknown and a literal-metric false positive remains a grader defect.
+No overall evaluator acceptance or new Treatment A is claimed. Owner approval
+of the versioned amendment is pending; frozen methods/fixtures stay unchanged.
+See `experiments/runtime-scope-v1/` and the separate proposed configuration.
+
 ## Approved schema v1 activation, scope validity still blocked
 
 The user approved `phase2-runtime-schema-v1` activation and one new bounded

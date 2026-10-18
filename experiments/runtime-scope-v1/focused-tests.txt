@@ -1,0 +1,13 @@
+test_alias_and_quoted_identifiers (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_alias_and_quoted_identifiers) ... ok
+test_empty_success_is_not_scope_evidence (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_empty_success_is_not_scope_evidence) ... ok
+test_executed_active_predicate_supplies_scope_without_row_label (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_executed_active_predicate_supplies_scope_without_row_label) ... ok
+test_query_failure_does_not_manufacture_observations (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_query_failure_does_not_manufacture_observations) ... ok
+test_single_quoted_status_alias_remains_unknown (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_single_quoted_status_alias_remains_unknown) ... ok
+test_supported_equivalent_predicates_preserve_literal_case (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_supported_equivalent_predicates_preserve_literal_case) ... ok
+test_unsupported_or_false_proofs_remain_unknown_and_clear_stale (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unsupported_or_false_proofs_remain_unknown_and_clear_stale) ... ok
+test_unverified_returned_label_is_never_scope_proof (tests.system_benchmark.test_scope_observation.TestScopeObservation.test_unverified_returned_label_is_never_scope_proof) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+OK
