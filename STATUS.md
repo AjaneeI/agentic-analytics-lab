@@ -65,6 +65,19 @@ Resume issue #73 by rerunning **Treatment A only** with the new bounded local wo
 
 ## Evidence boundary
 
+### October 17 sprint: Phase 5 model-free preparation
+
+The development readiness command
+`python3 scripts/audit_system_benchmark_readiness.py` inspects the existing
+seven-case bank without model or database execution and returns blocked status
+(exit 2). The 24-case target is short by 17 tasks, with families B/F absent.
+Seven task/reference expectations validate and four policy evidence identities
+are retrievable; these checks do not validate complete reference responses or
+prove runnable baseline treatments. Phase 2–4 acceptance, baseline execution,
+human audit and interface-freeze approval remain unverified here. The draft
+expansion in `docs/phase5-development-expansion-proposal.md` activates no cases.
+See `docs/phase5-readiness-2026-10-17.md` for reproducible commands and gaps.
+
 Landing PR C establishes the deterministic evaluation core only. It does not
 establish single-agent or routed-agent superiority, unseen-task generalization,
 or publication-ready benchmark results.
