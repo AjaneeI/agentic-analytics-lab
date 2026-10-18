@@ -1,0 +1,18 @@
+{
+  "parent_sha256": "f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b",
+  "pending_configuration_sha256": "2605daac78834215b1e5cb26ff934216f8b9ca90c629129512862632f0271c94",
+  "unchanged_runtime_fields": [
+    "model",
+    "limits",
+    "task_id",
+    "query_tool_sha256",
+    "benchmark_contract_sha256",
+    "response_format_prompt_sha256",
+    "clickhouse_fixed_request_parameters",
+    "clickhouse_client_timeout_seconds",
+    "clickhouse_transport_sha256"
+  ],
+  "pending_authorized_attempts": 0,
+  "contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+  "root_cause_classification": "CPU scheduling wait strongest supported contributor, specific competing workload/host mechanism unproven"
+}

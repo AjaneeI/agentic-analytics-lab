@@ -1,0 +1,74 @@
+{
+  "configuration_id": "phase2-runtime-schema-v1-scope-observation-v1-response-format-v1-expression-jit-off-v1",
+  "schema_version": "delivery-work-items-schema-v1",
+  "schema_source": "proposals/phase2-runtime-schema-v1/schema-diagnostic.json",
+  "query_tool_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+  "benchmark_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+  "standalone_qualification": true,
+  "architecture_comparison_allowed": false,
+  "future_comparison_gate": "strong-single adapter implemented and schema parity independently verified",
+  "scope_observation_version": "runtime-sql-scope-v1",
+  "runtime_offline_validity_gate": "passed",
+  "model": {
+    "name": "hermes-local:qwen3.5-9b",
+    "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+    "base_url": "http://127.0.0.1:11434",
+    "temperature": 0,
+    "num_predict": 512,
+    "num_ctx": 65536,
+    "timeout_seconds": 120
+  },
+  "limits": {
+    "model_steps": 6,
+    "evidence_calls": 2,
+    "retries": 0,
+    "reprompts": 0
+  },
+  "task_id": "SB-D01",
+  "allowed_tools": [
+    "query_clickhouse",
+    "retrieve_policy"
+  ],
+  "activation_authorization": "Owner explicitly approved runtime-clickhouse-expression-jit-off-v1 activation ONLY as a separate versioned Phase2 runtime configuration. No live TreatmentA authorized. Current chat October17,2026 America/New_York.",
+  "owner_observation_approval": "approved",
+  "runtime_offline_validity_scope": "Exact approved one-parameter transport amendment, unchanged prompt/scorer/model/data/security/budgets, separate activation/live-authorization guards. PR111/112 support testing only; original timeout resolution not established.",
+  "approval_record": "docs/runtime-clickhouse-expression-jit-off-v1-activation.md",
+  "response_format_version": "phase2-response-format-v1",
+  "response_format_activation_approval": "approved",
+  "response_format_prompt_sha256": "56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce",
+  "runtime_transport_version": "runtime-clickhouse-expression-jit-off-v1",
+  "runtime_activation_approval": "approved",
+  "clickhouse_request_settings_amendment": {
+    "compile_expressions": "0"
+  },
+  "clickhouse_transport_sha256": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c",
+  "clickhouse_client_timeout_seconds": 15,
+  "clickhouse_fixed_request_parameters": {
+    "default_format": "JSONEachRow",
+    "readonly": "1",
+    "max_execution_time": "10",
+    "max_result_rows": "1000",
+    "result_overflow_mode": "break",
+    "max_rows_to_read": "10000",
+    "max_bytes_to_read": "10485760",
+    "max_memory_usage": "134217728",
+    "max_threads": "2",
+    "compile_expressions": "0"
+  },
+  "live_treatment_a_authorization": "not_granted",
+  "authorized_live_attempts": 0,
+  "authorization_record_id": "phase2-cpu-scheduling-readiness-v1-PENDING",
+  "authorization_configuration_parent_commit": "688f62dcedb3116e8ae46579cea0fd135eba94ce",
+  "authorization_configuration_parent_sha256": "f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b",
+  "live_authorization_record": "docs/phase2-cpu-scheduling-readiness-v1.md",
+  "live_authorization_source": "NOT GRANTED: autonomous engineering/diagnostics do not authorize Treatment A.",
+  "authorized_evidence_directory": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/treatment-a-cpu-scheduling-v1-PENDING-NOT-AUTHORIZED",
+  "authorization_consumption": "One exclusive outer launch record plus the existing passive capture invocation marker; no retry/replacement/output reuse. Immutable configuration remains a historical authorization record after consumption.",
+  "proposal_id": "phase2-cpu-scheduling-readiness-v1",
+  "environment_decision": {
+    "status": "proposed_not_activated",
+    "protocol": "Predeclare background workload/resource context and any reversible isolation before a future attempt; keep per-query/model budgets unchanged. No unreviewed eligibility threshold, warm-up, service change, or optional stopping.",
+    "physical_interferer": "not_identified",
+    "separate_review_and_authorization_required": true
+  }
+}

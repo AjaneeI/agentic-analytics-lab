@@ -1,0 +1,15 @@
+{
+  "id": "2c8631e104475c64876c8ecba2a003e644ef50f2321118ef5deef3e58f56fb55",
+  "name": "/clickhouse-agentic-data-stack-clickhouse-1",
+  "image": "sha256:b1d9f9baec7727c779a6febb2a95eb08a8e1de3f463294e3ebb35c3d3fb30360",
+  "memory": 0,
+  "nano_cpus": 0,
+  "cpu_quota": 0,
+  "cpu_period": 0,
+  "cpuset_cpus": "",
+  "oom_killed": false,
+  "running": true,
+  "image_platform": "linux/arm64",
+  "host_machine": "arm64",
+  "observation": "Current configuration/state only; not historical per-query telemetry."
+}
