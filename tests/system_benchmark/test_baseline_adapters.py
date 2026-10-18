@@ -235,6 +235,22 @@ class TestDeterministicSimpleExecutor(unittest.TestCase):
                 DeterministicSimpleExecutor(query_fn=query)(task, 1, None)
         query.assert_not_called()
 
+    def test_handoff_family_and_answer_disposition_bounds_decline_before_query(self):
+        from src.evals.system_benchmark.baselines import DeterministicSimpleExecutor, DeterministicBaselineDeclined
+        query = Mock(return_value=self.rows())
+        request = self.tasks["SB-A01"].request
+        handoff = replace(self.tasks["SB-H01"], request=request,
+                          allowed_tools=("query_clickhouse",), forbidden_tools=())
+        for task in (
+            handoff,
+            replace(handoff, allowed_dispositions=(ResponseDisposition.ANSWER,), forbidden_dispositions=()),
+            replace(self.tasks["SB-A01"], allowed_dispositions=(ResponseDisposition.CLARIFY,)),
+            replace(self.tasks["SB-A01"], forbidden_dispositions=(ResponseDisposition.ANSWER,)),
+        ):
+            with self.subTest(task=task), self.assertRaises(DeterministicBaselineDeclined):
+                DeterministicSimpleExecutor(query_fn=query)(task, 1, None)
+        query.assert_not_called()
+
     def test_no_unique_or_valid_result_declines_without_fabrication(self):
         from src.evals.system_benchmark.baselines import DeterministicSimpleExecutor, DeterministicBaselineDeclined
         cases = [[], [{"team": "x"}], [dict(self.rows()[0]), dict(self.rows()[0], team="Tie")],

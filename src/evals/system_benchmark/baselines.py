@@ -128,6 +128,10 @@ class DeterministicSimpleExecutor:
         started = time.monotonic()
         if not self.supports(task.request):
             raise DeterministicBaselineDeclined("no approved deterministic operation for request")
+        if (task.family is BenchmarkFamily.HUMAN_HANDOFF_AUTHORITY_BOUNDARY
+                or ResponseDisposition.ANSWER not in task.allowed_dispositions
+                or ResponseDisposition.ANSWER in task.forbidden_dispositions):
+            raise DeterministicBaselineDeclined("task boundary does not permit a deterministic answer")
         if not _task_permits_tool(task, "query_clickhouse"):
             raise DeterministicBaselineDeclined("query_clickhouse is not permitted for this task")
         if task.trajectory.max_tool_calls is not None and task.trajectory.max_tool_calls < 1:
