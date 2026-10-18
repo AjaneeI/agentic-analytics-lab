@@ -1,0 +1,9 @@
+{
+  "draft_only": true,
+  "reviewer_requests": false,
+  "codex_mentions_or_review_tools": false,
+  "repository_rulesets": [],
+  "main_required_approval_count": 0,
+  "workflow_inspection": "No Codex review workflow found. Existing test andCodeQL checks preserved; no merges/ready-for-review transitions.",
+  "limitations": "Repository metadata does not attest every external integration preference; draft-only publication follows prior approved draft workflow."
+}

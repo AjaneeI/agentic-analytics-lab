@@ -1,0 +1,65 @@
+[
+  {
+    "source_collection": "metadata-log-slice",
+    "source_stdout_sha256": "9eeca54a2df0da2e7374aeb390d1ad715f3e027ccfd0b946b4a79e2690830e6c",
+    "export_line": 19,
+    "server_timestamp_no_offset": "2026.10.18 05:26:31.425192",
+    "observation": "Metadata-only SELECT received and executed; body matched pinned SQL SHA a76e8e8f70efb27011ea9defb3c145c373e2d0d71dcdb74ddfe9b13b9f2cde90."
+  },
+  {
+    "source_collection": "metadata-log-slice",
+    "source_stdout_sha256": "9eeca54a2df0da2e7374aeb390d1ad715f3e027ccfd0b946b4a79e2690830e6c",
+    "export_line": 139,
+    "server_timestamp_no_offset": "2026.10.18 05:26:36.727032",
+    "observation": "Cancellation requested at 5,000,000 microseconds."
+  },
+  {
+    "source_collection": "metadata-cancellation-slice",
+    "source_stdout_sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+    "export_line": 10,
+    "server_timestamp_no_offset": "2026.10.18 05:26:37.452020",
+    "observation": "Code159 server timeout: elapsed6226.043ms, limit5000ms."
+  },
+  {
+    "source_collection": "metadata-cancellation-slice",
+    "source_stdout_sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+    "export_line": 31,
+    "server_timestamp_no_offset": "2026.10.18 05:26:37.577802",
+    "observation": "Code159 server timeout: elapsed6226.043ms, limit5000ms."
+  },
+  {
+    "source_collection": "metadata-cancellation-slice",
+    "source_stdout_sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+    "export_line": 56,
+    "server_timestamp_no_offset": "2026.10.18 05:26:37.952586",
+    "observation": "Code210 broken pipe while sending exception after client timeout."
+  },
+  {
+    "source_collection": "metadata-cancellation-slice",
+    "source_stdout_sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+    "export_line": 73,
+    "server_timestamp_no_offset": "2026.10.18 05:26:37.969638",
+    "observation": "Query peak memory3.78MiB."
+  },
+  {
+    "source_collection": "metadata-cancellation-slice",
+    "source_stdout_sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+    "export_line": 655,
+    "server_timestamp_no_offset": "2026.10.18 05:26:37.452020",
+    "observation": "Code159 server timeout: elapsed6226.043ms, limit5000ms."
+  },
+  {
+    "source_collection": "metadata-cancellation-slice",
+    "source_stdout_sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+    "export_line": 676,
+    "server_timestamp_no_offset": "2026.10.18 05:26:37.577802",
+    "observation": "Code159 server timeout: elapsed6226.043ms, limit5000ms."
+  },
+  {
+    "source_collection": "metadata-cancellation-slice",
+    "source_stdout_sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+    "export_line": 697,
+    "server_timestamp_no_offset": "2026.10.18 05:26:37.952586",
+    "observation": "Code210 broken pipe while sending exception after client timeout."
+  }
+]

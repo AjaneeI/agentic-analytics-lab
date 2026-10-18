@@ -1,0 +1,21 @@
+.....FF
+======================================================================
+FAIL: test_socket_error_preserves_partial_header (test_phase2_diagnostic_observation.HeaderCaptureTests.test_socket_error_preserves_partial_header)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/tests/test_phase2_diagnostic_observation.py", line 25, in test_socket_error_preserves_partial_header
+    self.assertTrue(bytes(captured).endswith(data))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_timeout_preserves_partial_status (test_phase2_diagnostic_observation.HeaderCaptureTests.test_timeout_preserves_partial_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/tests/test_phase2_diagnostic_observation.py", line 21, in test_timeout_preserves_partial_status
+    self.assertEqual(bytes(captured),data)
+AssertionError: b'' != b'HTTP/1.1 200'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=2)

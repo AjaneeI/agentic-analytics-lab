@@ -1,0 +1,126 @@
+{
+  "collections": {
+    "metadata-log-slice": {
+      "receipt": {
+        "started_utc": "2026-10-18T06:09:42.777042+00:00",
+        "ended_utc": "2026-10-18T06:09:50.201865+00:00",
+        "elapsed_seconds": 7.425197875010781,
+        "exit_code": 0,
+        "termination": "completed",
+        "combined_output_bytes": 30501,
+        "stdout_bytes": 30501,
+        "stderr_bytes": 0,
+        "collection_launches": 1,
+        "remaining_collections": 0,
+        "partial_or_inconclusive": false,
+        "no_sql_model_experiment_or_service_mutation": true
+      },
+      "original_files_sha256": {
+        "LAUNCH_CONSUMED.json": "2264df79ae89a6f592817a82d81ee6e24b6117fde5d92ef9838928647389b33e",
+        "authorization-and-command.json": "87cfc069d8361357889233c8ab7ca0664c78338786efb0876a496a3cd94c949a",
+        "receipt.json": "503b3742dad808f8a3095d948a4e52b258b0771716415b2aa4afd1e6b03a072e",
+        "stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.bin": "9eeca54a2df0da2e7374aeb390d1ad715f3e027ccfd0b946b4a79e2690830e6c"
+      },
+      "manifest_sha256": "0f871c71fa443ffd1ec1b5d4f835988f5868eea5627ba1493297f18ebfcdfd84",
+      "original_private_path": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-autonomy-20261018/metadata-log-slice/private",
+      "full_logs_or_headers_published": false
+    },
+    "metadata-cancellation-slice": {
+      "receipt": {
+        "started_utc": "2026-10-18T06:11:03.799260+00:00",
+        "ended_utc": "2026-10-18T06:11:10.030937+00:00",
+        "elapsed_seconds": 6.2317239589756355,
+        "exit_code": 0,
+        "termination": "completed",
+        "combined_output_bytes": 127055,
+        "stdout_bytes": 127055,
+        "stderr_bytes": 0,
+        "collection_launches": 1,
+        "remaining_collections": 0,
+        "partial_or_inconclusive": false,
+        "no_sql_model_experiment_or_service_mutation": true
+      },
+      "original_files_sha256": {
+        "LAUNCH_CONSUMED.json": "24ef35e3b1a6f378f861e3886fff71942aeba2de9080acec61fbed014e1fc0c2",
+        "authorization-and-command.json": "8438bd99f26244f78de99925b95a01c77ba3661461e4058850962094cb7657b7",
+        "receipt.json": "b1bc74a1536e2dd907d5a35cd030568b1c41fdad09d3c89b17e30ede95a042e3",
+        "stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.bin": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b"
+      },
+      "manifest_sha256": "bb26e77869071802d1a08183cf86c76cb4451ebe7bd590153f89d916207a5e36",
+      "original_private_path": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-autonomy-20261018/metadata-cancellation-slice/private",
+      "full_logs_or_headers_published": false
+    },
+    "metadata-lookup-v2": {
+      "receipt": {
+        "start_utc": "2026-10-18T06:11:44.338865+00:00",
+        "end_utc": "2026-10-18T06:11:44.538214+00:00",
+        "elapsed_seconds": 0.1987637919955887,
+        "exit_code": 0,
+        "termination": "completed",
+        "captured_response_and_pipe_bytes": 1975,
+        "lookup_launches": 1,
+        "send_marker_exists": true,
+        "remaining_lookups": 0,
+        "no_retry_or_scope_expansion": true,
+        "model_calls": 0,
+        "Treatment_A_attempts": 0,
+        "service_or_experimental_configuration_changes": 0
+      },
+      "original_files_sha256": {
+        "HTTP_SEND_CONSUMED.json": "def7933b08505a96591bd2fb95347751697d79ade6ff24ad84129b308b3fc285",
+        "LAUNCH_CONSUMED.json": "57f0b7ae7e2c0d4cccc2a888524db7f21cda5928ecd0391f0638201b36f4f48e",
+        "authorization.json": "7243f8bd3f14fc4161d1ee38324bd116c5e65c8996740c7b42509a2c85b419f3",
+        "http-observation.json": "8ef585fe4fb14393ef36ac27058f9b73f8aefad6a28876b5bc2e21aad69d113c",
+        "lookup.sql": "a76e8e8f70efb27011ea9defb3c145c373e2d0d71dcdb74ddfe9b13b9f2cde90",
+        "receipt.json": "9b810a319fe12fd51a24c826b437ef7e4e324ff23e69bfebb95df0ad6d4f7c25",
+        "response-body.bin": "30a053788ee4f25f639c199eff42c37e672fec93f978fd37bdfaa30c29cad536",
+        "response-headers.bin": "38873f9136e0564853b54ff2b09df4febf1bea15539ef11e50411bb4011fe9b3",
+        "response-status.json": "af023ce012a51ada5cc6e7f0302f01be111d46dadadf7882ca7046245ed5327f",
+        "stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "manifest_sha256": "600b0c48bac78e5e2f7d003a91ccb2efb21ad9e38fc25ca4cac06972acfea041",
+      "original_private_path": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-autonomy-20261018/metadata-lookup-v2/private",
+      "full_logs_or_headers_published": false
+    },
+    "prior-timeout-metadata": {
+      "receipt": {
+        "start_utc": "2026-10-18T06:12:41.446860+00:00",
+        "end_utc": "2026-10-18T06:12:42.709352+00:00",
+        "elapsed_seconds": 1.2565828749793582,
+        "exit_code": 0,
+        "termination": "completed",
+        "captured_response_and_pipe_bytes": 835,
+        "lookup_launches": 1,
+        "send_marker_exists": true,
+        "remaining_lookups": 0,
+        "no_retry_or_scope_expansion": true,
+        "model_calls": 0,
+        "Treatment_A_attempts": 0,
+        "service_or_experimental_configuration_changes": 0
+      },
+      "original_files_sha256": {
+        "HTTP_SEND_CONSUMED.json": "30cc9d6071da73b1eaf78ff85ba00d9c13d6112d9c8d02cfda65c1ae8fb76e77",
+        "LAUNCH_CONSUMED.json": "ce030b9e90bed2800c64b251afa5730f1b4f64f3d25a9536f210b341d3bcff3f",
+        "authorization.json": "c74b704fbc1d1d80454cf589cce91ee1192326eb951e6c355954af7c1d7806c0",
+        "http-observation.json": "ae2ebdcef5cede80bc8be4c1040c5d1cbfe862d79cb5a49d4b071a84c3244d11",
+        "lookup.sql": "d4e7dca36c87b19ab47299c781e89b03e52c92b102915c63c52cb204a323b61e",
+        "receipt.json": "776a4aaddf0170ca3fdf5fb5fa6a280934bbdc855b22338b35262c24d0d31186",
+        "response-body.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "response-headers.bin": "c619335cbbd5e6a57243eaaac8879f91edaa4139ef4bb0f77fe4c27064add3ba",
+        "response-status.json": "af023ce012a51ada5cc6e7f0302f01be111d46dadadf7882ca7046245ed5327f",
+        "stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "manifest_sha256": "863f77357cf78cc0a1013bc76d72e88d150af5d375ddeab90d5c5818d182c2fa",
+      "original_private_path": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-autonomy-20261018/prior-timeout-metadata/private",
+      "full_logs_or_headers_published": false
+    }
+  },
+  "old_metadata_lookup_preserved_manifest_sha256": "12b782987f5a43e9e6f364d933340f64a07a2e32d5adef732bb4d3e640566939",
+  "old_passive_packet_manifest_sha256": "a8f9eb69a94900b3c53e0d0e7192b46563f2961752d7bcc2ff072d4e2ae51621",
+  "latest_prior_packet_manifest_sha256": "696fa3694632ff8bb2a2616be515508c1132abe531d46ae43b8f846dec740a8e",
+  "privacy": "Full logs, HTTP headers, usernames, network addresses and grants stay private. Public metadata row was allowlisted in the SELECT; source bytes are separately sealed."
+}

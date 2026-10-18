@@ -1,0 +1,33 @@
+SOURCE /sys/fs/cgroup/cpu.max
+max 100000
+SOURCE /sys/fs/cgroup/cpu.stat
+usage_usec 56134925717
+user_usec 43471133008
+system_usec 12663792708
+nr_periods 0
+nr_throttled 0
+throttled_usec 0
+nr_bursts 0
+burst_usec 0
+SOURCE /sys/fs/cgroup/memory.current
+2976366592
+SOURCE /sys/fs/cgroup/memory.max
+max
+SOURCE /sys/fs/cgroup/memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+SOURCE /proc/pressure/cpu
+some avg10=1.08 avg60=6.78 avg300=4.42 total=9238021774
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+SOURCE /proc/pressure/io
+some avg10=0.00 avg60=0.24 avg300=0.14 total=293966170
+full avg10=0.00 avg60=0.16 avg300=0.11 total=179877326
+SOURCE /proc/pressure/memory
+some avg10=0.00 avg60=0.35 avg300=0.17 total=33461930
+full avg10=0.00 avg60=0.32 avg300=0.15 total=24255935
+SOURCE /proc/loadavg
+10.37 9.59 10.23 2/1192 50213

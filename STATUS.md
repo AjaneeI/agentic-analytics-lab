@@ -1,3 +1,9 @@
+# CPU scheduling diagnosis — qualification still blocked
+
+Original JIT-off query metadata records7.850621s CPU scheduling wait versus2.862090s CPU, with500rows read and JIT-off/fixed settings recorded. Scheduling delay is the strongest supported contributor; exact interferer and prior-run recurrence remain unproven. All failed evidence remains unchanged. New diagnostics-only partial-header capture candidate is inactive; pending qualification config denies live authorization/count0 and preserves the complete frozen runtime contract. No TreatmentA/replay/service change/merge. See docs/phase2-cpu-scheduling-readiness-v1.md and experiments/phase2-cpu-scheduling-diagnosis-20261018. Independent Phase3/4 proposals do not accept either gate.
+
+Historical checkpoints follow unchanged.
+
 # Terminal result — JIT-off attempt timed out; Phase 2 unqualified
 
 Exactly one owner-authorized standalone Treatment A ran at688f62dcedb3116e8ae46579cea0fd135eba94ce under runtime-clickhouse-expression-jit-off-v1. Final preflight passed model/digest,13columns/all500data rows and effective JITfalse/unchanged limits. First ClickHouse evidence call failed HTTP408/server159 TIMEOUT_EXCEEDED. No normalized response or deterministic score; absence is not zero. Capture100.927974292s,839input/352output tokens,1modelreturn/1failedtoolattempt. Collector complete/noerrors, valid source/config/contract postflight and1workerentry. No retry/correction/replacement/diagnostic/merge. Authorization consumed; no further live work. Historical28raw/8archives preserved. See docs/jit-off-v1-terminal-result-2026-10-18.md and experiments/jit-off-one-attempt-20261018. Phase3/4 remain unaccepted; comparisons/heldout blocked.

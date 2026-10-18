@@ -1,0 +1,543 @@
+{
+  "review_kind": "independent_offline_causal_audit",
+  "audit_time_utc": "2026-10-18T06:14:27.655097+00:00",
+  "audit_runtime_service_network_model_calls": 0,
+  "source_mutations": 0,
+  "only_new_file_written": "independent-causal-audit.json",
+  "verdict": "CPU scheduling delay is the strongest supported contributor to the failed JIT-off query; the competing workload and host/VM cause remain unproven.",
+  "must_fix_before_reporting": [],
+  "input_integrity": {
+    "all_manifest_listed_hashes_match": true,
+    "all_private_directories_0700_files_0600": true,
+    "inventory": {
+      "metadata-lookup-v2": {
+        "directory_mode": "0700",
+        "files": {
+          "HTTP_SEND_CONSUMED.json": {
+            "sha256": "def7933b08505a96591bd2fb95347751697d79ade6ff24ad84129b308b3fc285",
+            "bytes": 127,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "LAUNCH_CONSUMED.json": {
+            "sha256": "57f0b7ae7e2c0d4cccc2a888524db7f21cda5928ecd0391f0638201b36f4f48e",
+            "bytes": 68,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "authorization.json": {
+            "sha256": "7243f8bd3f14fc4161d1ee38324bd116c5e65c8996740c7b42509a2c85b419f3",
+            "bytes": 2002,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "http-observation.json": {
+            "sha256": "8ef585fe4fb14393ef36ac27058f9b73f8aefad6a28876b5bc2e21aad69d113c",
+            "bytes": 349,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "lookup.sql": {
+            "sha256": "a76e8e8f70efb27011ea9defb3c145c373e2d0d71dcdb74ddfe9b13b9f2cde90",
+            "bytes": 2180,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "receipt.json": {
+            "sha256": "9b810a319fe12fd51a24c826b437ef7e4e324ff23e69bfebb95df0ad6d4f7c25",
+            "bytes": 458,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "response-body.bin": {
+            "sha256": "30a053788ee4f25f639c199eff42c37e672fec93f978fd37bdfaa30c29cad536",
+            "bytes": 1131,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "response-headers.bin": {
+            "sha256": "38873f9136e0564853b54ff2b09df4febf1bea15539ef11e50411bb4011fe9b3",
+            "bytes": 807,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "response-status.json": {
+            "sha256": "af023ce012a51ada5cc6e7f0302f01be111d46dadadf7882ca7046245ed5327f",
+            "bytes": 37,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "sha256.json": {
+            "sha256": "600b0c48bac78e5e2f7d003a91ccb2efb21ad9e38fc25ca4cac06972acfea041",
+            "bytes": 998,
+            "mode": "0600",
+            "manifest_match": null
+          },
+          "stderr.bin": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "stdout.bin": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "mode": "0600",
+            "manifest_match": true
+          }
+        }
+      },
+      "prior-timeout-metadata": {
+        "directory_mode": "0700",
+        "files": {
+          "HTTP_SEND_CONSUMED.json": {
+            "sha256": "30cc9d6071da73b1eaf78ff85ba00d9c13d6112d9c8d02cfda65c1ae8fb76e77",
+            "bytes": 127,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "LAUNCH_CONSUMED.json": {
+            "sha256": "ce030b9e90bed2800c64b251afa5730f1b4f64f3d25a9536f210b341d3bcff3f",
+            "bytes": 68,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "authorization.json": {
+            "sha256": "c74b704fbc1d1d80454cf589cce91ee1192326eb951e6c355954af7c1d7806c0",
+            "bytes": 1997,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "http-observation.json": {
+            "sha256": "ae2ebdcef5cede80bc8be4c1040c5d1cbfe862d79cb5a49d4b071a84c3244d11",
+            "bytes": 345,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "lookup.sql": {
+            "sha256": "d4e7dca36c87b19ab47299c781e89b03e52c92b102915c63c52cb204a323b61e",
+            "bytes": 2180,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "receipt.json": {
+            "sha256": "776a4aaddf0170ca3fdf5fb5fa6a280934bbdc855b22338b35262c24d0d31186",
+            "bytes": 457,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "response-body.bin": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "response-headers.bin": {
+            "sha256": "c619335cbbd5e6a57243eaaac8879f91edaa4139ef4bb0f77fe4c27064add3ba",
+            "bytes": 798,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "response-status.json": {
+            "sha256": "af023ce012a51ada5cc6e7f0302f01be111d46dadadf7882ca7046245ed5327f",
+            "bytes": 37,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "sha256.json": {
+            "sha256": "863f77357cf78cc0a1013bc76d72e88d150af5d375ddeab90d5c5818d182c2fa",
+            "bytes": 998,
+            "mode": "0600",
+            "manifest_match": null
+          },
+          "stderr.bin": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "stdout.bin": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "mode": "0600",
+            "manifest_match": true
+          }
+        }
+      },
+      "metadata-log-slice": {
+        "directory_mode": "0700",
+        "files": {
+          "LAUNCH_CONSUMED.json": {
+            "sha256": "2264df79ae89a6f592817a82d81ee6e24b6117fde5d92ef9838928647389b33e",
+            "bytes": 72,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "authorization-and-command.json": {
+            "sha256": "87cfc069d8361357889233c8ab7ca0664c78338786efb0876a496a3cd94c949a",
+            "bytes": 2814,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "receipt.json": {
+            "sha256": "503b3742dad808f8a3095d948a4e52b258b0771716415b2aa4afd1e6b03a072e",
+            "bytes": 424,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "sha256.json": {
+            "sha256": "0f871c71fa443ffd1ec1b5d4f835988f5868eea5627ba1493297f18ebfcdfd84",
+            "bytes": 455,
+            "mode": "0600",
+            "manifest_match": null
+          },
+          "stderr.bin": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "stdout.bin": {
+            "sha256": "9eeca54a2df0da2e7374aeb390d1ad715f3e027ccfd0b946b4a79e2690830e6c",
+            "bytes": 30501,
+            "mode": "0600",
+            "manifest_match": true
+          }
+        }
+      },
+      "metadata-cancellation-slice": {
+        "directory_mode": "0700",
+        "files": {
+          "LAUNCH_CONSUMED.json": {
+            "sha256": "24ef35e3b1a6f378f861e3886fff71942aeba2de9080acec61fbed014e1fc0c2",
+            "bytes": 72,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "authorization-and-command.json": {
+            "sha256": "8438bd99f26244f78de99925b95a01c77ba3661461e4058850962094cb7657b7",
+            "bytes": 2751,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "receipt.json": {
+            "sha256": "b1bc74a1536e2dd907d5a35cd030568b1c41fdad09d3c89b17e30ede95a042e3",
+            "bytes": 427,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "sha256.json": {
+            "sha256": "bb26e77869071802d1a08183cf86c76cb4451ebe7bd590153f89d916207a5e36",
+            "bytes": 455,
+            "mode": "0600",
+            "manifest_match": null
+          },
+          "stderr.bin": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "mode": "0600",
+            "manifest_match": true
+          },
+          "stdout.bin": {
+            "sha256": "d2397bd7cf2c398991974ea7f2a98b2d4e03281c452ccd125106230350edc86b",
+            "bytes": 127055,
+            "mode": "0600",
+            "manifest_match": true
+          }
+        }
+      }
+    },
+    "runtime_files": {
+      "current-cgroup-pressure.txt": {
+        "sha256": "1bcafca43a370c3c41c205af106abe1f268baf6fd99c5cd71d4f844725c05a72",
+        "bytes": 837,
+        "mode": "0644"
+      },
+      "selected-container-state.json": {
+        "sha256": "411573a4908767c6c69a88c58457ed5fafd50e57b4b5c10095f8e5ae9e7ac56a",
+        "bytes": 507,
+        "mode": "0600"
+      }
+    },
+    "limitations": "Manifests do not self-hash; this inventory independently records their hashes. Collector source files and live service state were not executed or rechecked."
+  },
+  "collections": {
+    "metadata-lookup-v2": {
+      "receipt": {
+        "start_utc": "2026-10-18T06:11:44.338865+00:00",
+        "end_utc": "2026-10-18T06:11:44.538214+00:00",
+        "elapsed_seconds": 0.1987637919955887,
+        "exit_code": 0,
+        "termination": "completed",
+        "captured_response_and_pipe_bytes": 1975,
+        "lookup_launches": 1,
+        "send_marker_exists": true,
+        "remaining_lookups": 0,
+        "no_retry_or_scope_expansion": true,
+        "model_calls": 0,
+        "Treatment_A_attempts": 0,
+        "service_or_experimental_configuration_changes": 0
+      },
+      "http_observation": {
+        "start_utc": "2026-10-18T06:11:44.338865+00:00",
+        "end_utc": "2026-10-18T06:11:44.531747+00:00",
+        "http_status": 200,
+        "body_bytes": 1131,
+        "at_or_over_output_cap": false,
+        "elapsed_seconds": 0.14789716596715152,
+        "error": null,
+        "requests_attempted": 1,
+        "redirects_followed": 0,
+        "retries": 0,
+        "credential_values_recorded": false
+      },
+      "caps_observed": {
+        "body_within_declared_cap": true,
+        "headers_within_declared_cap": true,
+        "combined_pipes_within_declared_cap": true,
+        "response_and_pipes_sum_matches_receipt": true,
+        "response_and_pipes_within_declared_cap": true,
+        "observed_elapsed_within_declared_wall_cap": true
+      },
+      "sql_hash_matches_authorization": true,
+      "target_query_id": "780faff9-7b12-4326-82bb-1ab47353d860",
+      "window_utc": [
+        "2026-10-18T04:17:35.000000Z",
+        "2026-10-18T04:18:10.000000Z"
+      ]
+    },
+    "prior-timeout-metadata": {
+      "receipt": {
+        "start_utc": "2026-10-18T06:12:41.446860+00:00",
+        "end_utc": "2026-10-18T06:12:42.709352+00:00",
+        "elapsed_seconds": 1.2565828749793582,
+        "exit_code": 0,
+        "termination": "completed",
+        "captured_response_and_pipe_bytes": 835,
+        "lookup_launches": 1,
+        "send_marker_exists": true,
+        "remaining_lookups": 0,
+        "no_retry_or_scope_expansion": true,
+        "model_calls": 0,
+        "Treatment_A_attempts": 0,
+        "service_or_experimental_configuration_changes": 0
+      },
+      "http_observation": {
+        "start_utc": "2026-10-18T06:12:41.446860+00:00",
+        "end_utc": "2026-10-18T06:12:42.640686+00:00",
+        "http_status": 200,
+        "body_bytes": 0,
+        "at_or_over_output_cap": false,
+        "elapsed_seconds": 0.2944164999644272,
+        "error": null,
+        "requests_attempted": 1,
+        "redirects_followed": 0,
+        "retries": 0,
+        "credential_values_recorded": false
+      },
+      "caps_observed": {
+        "body_within_declared_cap": true,
+        "headers_within_declared_cap": true,
+        "combined_pipes_within_declared_cap": true,
+        "response_and_pipes_sum_matches_receipt": true,
+        "response_and_pipes_within_declared_cap": true,
+        "observed_elapsed_within_declared_wall_cap": true
+      },
+      "sql_hash_matches_authorization": true,
+      "target_query_id": "887e2a23-9b62-4107-b8ae-037a583a3f9c",
+      "window_utc": [
+        "2026-10-18T02:27:41.000000Z",
+        "2026-10-18T02:28:27.000000Z"
+      ]
+    },
+    "metadata-log-slice": {
+      "receipt": {
+        "started_utc": "2026-10-18T06:09:42.777042+00:00",
+        "ended_utc": "2026-10-18T06:09:50.201865+00:00",
+        "elapsed_seconds": 7.425197875010781,
+        "exit_code": 0,
+        "termination": "completed",
+        "combined_output_bytes": 30501,
+        "stdout_bytes": 30501,
+        "stderr_bytes": 0,
+        "collection_launches": 1,
+        "remaining_collections": 0,
+        "partial_or_inconclusive": false,
+        "no_sql_model_experiment_or_service_mutation": true
+      },
+      "caps_observed": {
+        "combined_output_within_declared_cap": true,
+        "elapsed_within_declared_cap": true
+      }
+    },
+    "metadata-cancellation-slice": {
+      "receipt": {
+        "started_utc": "2026-10-18T06:11:03.799260+00:00",
+        "ended_utc": "2026-10-18T06:11:10.030937+00:00",
+        "elapsed_seconds": 6.2317239589756355,
+        "exit_code": 0,
+        "termination": "completed",
+        "combined_output_bytes": 127055,
+        "stdout_bytes": 127055,
+        "stderr_bytes": 0,
+        "collection_launches": 1,
+        "remaining_collections": 0,
+        "partial_or_inconclusive": false,
+        "no_sql_model_experiment_or_service_mutation": true
+      },
+      "caps_observed": {
+        "combined_output_within_declared_cap": true,
+        "elapsed_within_declared_cap": true
+      }
+    }
+  },
+  "privacy": {
+    "all_private_permissions_restricted": true,
+    "raw_logs_contain_authentication_identity_network_and_non_target_identifiers": true,
+    "raw_response_headers_contain_server_display_identifier": true,
+    "public_derivative_requirement": "Keep raw logs, headers, commands, and runtime identifiers private; publish only redacted summaries and necessary target-query evidence. Do not expose usernames, addresses, unrelated UUIDs, container IDs, credential material, or local configuration paths.",
+    "sensitive_projection_columns_excluded_from_metadata_sql": true,
+    "no_request_authorization_header_in_response_capture": true,
+    "scope_of_check": "Reviewed authorized capture contents and field projection; no live credential retrieval and no exhaustive secret scanner run."
+  },
+  "target_metadata": {
+    "exactly_one_json_row": true,
+    "record": {
+      "query_id": "780faff9-7b12-4326-82bb-1ab47353d860",
+      "event_type": "ExceptionWhileProcessing",
+      "query_start_unix_us": 1792297066760710,
+      "event_unix_us": 1792297077344524,
+      "query_duration_ms": 10583,
+      "read_rows": 500,
+      "read_bytes": 1615,
+      "result_rows": 0,
+      "result_bytes": 0,
+      "memory_usage": 1251663,
+      "thread_ids": [
+        323,
+        93
+      ],
+      "peak_threads_usage": 2,
+      "exception_code": 159,
+      "profile_events": {
+        "ReadBufferFromFileDescriptorReadBytes": 5511,
+        "DiskReadElapsedMicroseconds": 27331,
+        "SelectedParts": 1,
+        "SelectedRanges": 1,
+        "SelectedMarks": 1,
+        "SelectedRows": 500,
+        "SelectedBytes": 1615,
+        "ContextLock": 57,
+        "ContextLockWaitMicroseconds": 64,
+        "RealTimeMicroseconds": 11941650,
+        "UserTimeMicroseconds": 2112398,
+        "SystemTimeMicroseconds": 749693,
+        "SoftPageFaults": 30,
+        "HardPageFaults": 6,
+        "OSCPUWaitMicroseconds": 7850621,
+        "OSCPUVirtualTimeMicroseconds": 2862090,
+        "OSReadBytes": 491520,
+        "OSReadChars": 6838,
+        "OSWriteChars": 3743,
+        "QueryProfilerRuns": 15
+      },
+      "recorded_settings": {
+        "compile_expressions": "0",
+        "max_bytes_to_read": "10485760",
+        "max_execution_time": "10",
+        "max_memory_usage": "134217728",
+        "max_result_rows": "1000",
+        "max_rows_to_read": "10000",
+        "max_threads": "2",
+        "readonly": "1",
+        "result_overflow_mode": "break"
+      }
+    },
+    "timestamp_delta_microseconds": 10583814,
+    "event_and_start_inside_authorized_window": true,
+    "exception_terminal_event_and_initial_query_filter": true,
+    "result_zero_means_no_successful_result_not_no_input_rows": true,
+    "read_rows_and_bytes_are_target_query_fields": true,
+    "diagnostic_http_summary_is_separate": true
+  },
+  "causal_assessment": {
+    "most_likely_contributor": "Substantial CPU scheduling delay during the original target query.",
+    "support": [
+      "OSCPUWaitMicroseconds=7850621 records substantial runnable CPU wait attributed to query threads.",
+      "OSCPUVirtualTimeMicroseconds=2862090 and user+system CPU=2862091 microseconds are much lower than summed thread elapsed time RealTimeMicroseconds=11941650.",
+      "The query read 500 rows / 1615 bytes, selected one part/range/mark, returned zero result rows, and terminated with exception159 after10583ms.",
+      "Measured DiskReadElapsedMicroseconds=27331 and ContextLockWaitMicroseconds=64 provide much smaller recorded wait values than CPU wait.",
+      "Recorded compile_expressions=0 corroborates JIT-off delivery for this failed request; fixed execution/resource limits are present in the returned Settings map."
+    ],
+    "confidence": "Strong evidence for CPU scheduling delay as an important contributor; qualified inference that it was the largest observed contributor, not proof of a fully identified root cause.",
+    "prohibited_inferences": [
+      "Do not divide summed thread times by query wall duration and report percentages as a wall-time partition; two query threads contribute and counters can overlap.",
+      "Do not equate the difference between summed thread elapsed, CPU wait, and CPU time with a named residual cause.",
+      "Do not attribute contention to a particular background job, competing workload, VM steal, physical host saturation, or scheduler defect without contemporaneous evidence.",
+      "Do not treat disk-read elapsed as comprehensive end-to-end I/O latency, or tiny recorded lock wait as proof all forms of waiting were absent.",
+      "Do not treat absent ProfileEvents/Settings keys as zero or as a complete effective/default settings snapshot.",
+      "Do not infer that reading500 rows proves every aggregation/output stage completed.",
+      "Do not convert this diagnostic evidence into a successful/scored qualification or a Treatment A result."
+    ]
+  },
+  "prior_query_lookup": {
+    "query_id": "887e2a23-9b62-4107-b8ae-037a583a3f9c",
+    "http_status": 200,
+    "body_bytes": 0,
+    "header_summary_result_rows": 0,
+    "interpretation": "No matching row returned for the exact ID, initial-event type, event date, and both timestamp bounds at lookup time.",
+    "not_proven": [
+      "log retention failure",
+      "record never existed",
+      "all query-log records absent",
+      "equivalent event types or different windows have no records"
+    ]
+  },
+  "previous_metadata_timeout_revision": {
+    "query_id": "phase2-query-metadata-observation-v1-20261018",
+    "server_acceptance_and_execution_now_supported": true,
+    "server_side_readonly_trace_supported": true,
+    "source_references": [
+      {
+        "file": "metadata-log-slice/private/stdout.bin",
+        "line": 6,
+        "fact": "Request URI includes declared read-only metadata limits and v1 query ID."
+      },
+      {
+        "file": "metadata-log-slice/private/stdout.bin",
+        "line": 19,
+        "fact": "Server executeQuery logs the scoped system.query_log SELECT."
+      },
+      {
+        "file": "metadata-log-slice/private/stdout.bin",
+        "line": 139,
+        "fact": "05:26:36.727032 cancellation checker requests timeout at5000000us."
+      },
+      {
+        "file": "metadata-cancellation-slice/private/stdout.bin",
+        "line": 10,
+        "fact": "05:26:37.452020 exception159; elapsed6226.043ms maximum5000ms."
+      },
+      {
+        "file": "metadata-cancellation-slice/private/stdout.bin",
+        "line": 56,
+        "fact": "05:26:37.952586 broken pipe while sending error after preserved client timeout."
+      }
+    ],
+    "interpretation": "The client transport timeout was followed by server-side timeout/error completion. The5s budget was recognized and cancellation requested; it was not a hard5.000s wall-time cutoff. The originally inconclusive client-only assessment is legitimately refined by the later passive logs.",
+    "duplicate_log_warning": "Matching error events appear in both main and error logs; duplicate copies are not distinct query executions.",
+    "original_client_capture_preserved": true
+  },
+  "current_runtime_context": {
+    "architecture": "Current image linux/arm64 and host_machine arm64 indicate native architecture alignment.",
+    "cpu_limits": "Current container quota/nanoCPU/cpuset values are unset; cgroup cpu.max is max100000, nr_periods0, nr_throttled0, throttled_usec0.",
+    "memory_limits": "Current cgroup memory.max is max and recorded OOM counters are0.",
+    "inference_boundary": "These are current observations, not contemporaneous per-query records. They do not establish historical pressure, rule out higher-level VM/host constraints, or prove the source of original CPU wait."
+  },
+  "qualification_boundary": {
+    "original_failed_attempt_remains_terminal_unqualified": true,
+    "frozen_methodology_unchanged_by_this_audit": true,
+    "no_Treatment_A_or_analytical_replay": true,
+    "pending_package_status": "Evidence supports a diagnostic explanation and a reviewable pending qualification package only. No automatic experiment, score update, service change, replay, or qualification execution is authorized by this audit."
+  }
+}

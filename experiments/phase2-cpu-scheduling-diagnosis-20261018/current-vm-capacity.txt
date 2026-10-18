@@ -1,0 +1,6 @@
+visible_logical_cpus=8
+MemTotal:        8025700 kB
+MemAvailable:    3529264 kB
+SwapTotal:       1048572 kB
+SwapFree:         801420 kB
+400237.23 2955675.30

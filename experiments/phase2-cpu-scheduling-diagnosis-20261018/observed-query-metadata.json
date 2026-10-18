@@ -1,0 +1,51 @@
+{
+  "query_id": "780faff9-7b12-4326-82bb-1ab47353d860",
+  "event_type": "ExceptionWhileProcessing",
+  "query_start_unix_us": 1792297066760710,
+  "event_unix_us": 1792297077344524,
+  "query_duration_ms": 10583,
+  "read_rows": 500,
+  "read_bytes": 1615,
+  "result_rows": 0,
+  "result_bytes": 0,
+  "memory_usage": 1251663,
+  "thread_ids": [
+    323,
+    93
+  ],
+  "peak_threads_usage": 2,
+  "exception_code": 159,
+  "profile_events": {
+    "ReadBufferFromFileDescriptorReadBytes": 5511,
+    "DiskReadElapsedMicroseconds": 27331,
+    "SelectedParts": 1,
+    "SelectedRanges": 1,
+    "SelectedMarks": 1,
+    "SelectedRows": 500,
+    "SelectedBytes": 1615,
+    "ContextLock": 57,
+    "ContextLockWaitMicroseconds": 64,
+    "RealTimeMicroseconds": 11941650,
+    "UserTimeMicroseconds": 2112398,
+    "SystemTimeMicroseconds": 749693,
+    "SoftPageFaults": 30,
+    "HardPageFaults": 6,
+    "OSCPUWaitMicroseconds": 7850621,
+    "OSCPUVirtualTimeMicroseconds": 2862090,
+    "OSReadBytes": 491520,
+    "OSReadChars": 6838,
+    "OSWriteChars": 3743,
+    "QueryProfilerRuns": 15
+  },
+  "recorded_settings": {
+    "compile_expressions": "0",
+    "max_bytes_to_read": "10485760",
+    "max_execution_time": "10",
+    "max_memory_usage": "134217728",
+    "max_result_rows": "1000",
+    "max_rows_to_read": "10000",
+    "max_threads": "2",
+    "readonly": "1",
+    "result_overflow_mode": "break"
+  }
+}
