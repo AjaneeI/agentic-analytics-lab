@@ -454,6 +454,82 @@ class TestPassiveCapture(unittest.TestCase):
                 with self.assertRaisesRegex(capture.CaptureRefused, 'fingerprint'):
                     capture.capture_once(request, self.out, lambda session: self.fail('unexpected entry'))
 
+    def test_json_model_content_private_canary_is_removed_only_from_trace_copy(self):
+        content = json.dumps({'disposition': 'answer', 'answer_text': 'public answer',
+                              'analysis': 'INDEPENDENT_PRIVATE_JSON_ANALYSIS_CANARY'})
+        response = {'type': 'final', 'content': content}
+        model = OfflineModel(response)
+        def execute(session):
+            observed = session.wrap_model(model)
+            return session.wrap_executor(lambda: observed.respond([], [self.tool, {'name': 'retrieve_policy'}]))()
+        self.assertIs(self.run_capture(execute), response)
+        self.assertIs(response['content'], content)
+        self.assertIn('INDEPENDENT_PRIVATE_JSON_ANALYSIS_CANARY', response['content'])
+        self.assertNotIn('INDEPENDENT_PRIVATE_JSON_ANALYSIS_CANARY', (self.out / 'events.jsonl').read_text())
+        for event in self.events():
+            if event['event'] in ('model_return', 'worker_return', 'runner_return'):
+                self.assertEqual(json.loads(event['result']['content']),
+                                 {'disposition': 'answer', 'answer_text': 'public answer'})
+                self.assertTrue(event['content_redacted'])
+                self.assertEqual(event['content_sha256'], hashlib.sha256(content.encode()).hexdigest())
+        self.assertEqual(json.loads((self.out / 'manifest.json').read_text())['collector_status'], 'complete')
+
+    def test_nested_private_json_keys_are_omitted_without_touching_public_answer_text(self):
+        public_text = 'A public answer may discuss analysis or reasoning.'
+        content = json.dumps({'answer_text': public_text, 'nested': [
+            {'Thinking': 'NESTED_THINKING_CANARY', 'public': 1},
+            {'child': {'reasoning_content': 'NESTED_REASONING_CANARY', 'public': 2}}]})
+        response = {'type': 'final', 'content': content}
+        def execute(session):
+            observed = session.wrap_model(OfflineModel(response))
+            return session.wrap_executor(lambda: observed.respond([], [self.tool, {'name': 'retrieve_policy'}]))()
+        self.assertIs(self.run_capture(execute), response)
+        event = next(item for item in self.events() if item['event'] == 'model_return')
+        self.assertEqual(json.loads(event['result']['content']),
+                         {'answer_text': public_text, 'nested': [{'public': 1}, {'child': {'public': 2}}]})
+        self.assertTrue(event['content_redacted'])
+        self.assertNotIn('NESTED_THINKING_CANARY', (self.out / 'events.jsonl').read_text())
+        self.assertNotIn('NESTED_REASONING_CANARY', (self.out / 'events.jsonl').read_text())
+
+    def test_public_json_string_without_private_keys_keeps_exact_spacing(self):
+        content = '  { "answer_text" : "public analysis", "value" : 1.00 }\n'
+        response = {'type': 'final', 'content': content}
+        def execute(session):
+            observed = session.wrap_model(OfflineModel(response))
+            return session.wrap_executor(lambda: observed.respond([], [self.tool, {'name': 'retrieve_policy'}]))()
+        self.assertIs(self.run_capture(execute), response)
+        event = next(item for item in self.events() if item['event'] == 'model_return')
+        self.assertEqual(event['result']['content'], content)
+        self.assertFalse(event['content_redacted'])
+        self.assertEqual(event['content_sha256'], hashlib.sha256(content.encode()).hexdigest())
+
+    def test_json_output_filter_does_not_parse_inputs_sql_policy_or_opaque_text(self):
+        content = 'ordinary non-JSON public answer: analysis is useful'
+        response = {'type': 'final', 'content': content}
+        model = OfflineModel(response)
+        messages = [{'role': 'user', 'content': '{"analysis":"INPUT_TRACE_CANARY"}'}]
+        sql = 'SELECT \'{"analysis":"SQL_TRACE_CANARY"}\' AS public_text'
+        policy_text = '{"analysis":"POLICY_TRACE_CANARY"}'
+        def execute(session):
+            observed = session.wrap_model(model)
+            query = session.wrap_tool('query_clickhouse', lambda statement: [{'text': statement}])
+            policy = session.wrap_tool('retrieve_policy', lambda: [policy_text])
+            def worker():
+                self.assertIs(observed.respond(messages, [self.tool, {'name': 'retrieve_policy'}]), response)
+                query(sql)
+                policy()
+                return {'fixture': True}
+            return session.wrap_executor(worker)()
+        self.run_capture(execute)
+        events = self.events()
+        self.assertEqual(next(e for e in events if e['event'] == 'model_start')['input']['messages'], messages)
+        self.assertEqual(next(e for e in events if e['event'] == 'query_clickhouse_start')['input']['args'], [sql])
+        self.assertEqual(next(e for e in events if e['event'] == 'retrieve_policy_return')['result'], [policy_text])
+        returned = next(e for e in events if e['event'] == 'model_return')
+        self.assertEqual(returned['result']['content'], content)
+        self.assertFalse(returned['content_redacted'])
+        self.assertIs(model.calls[0][0], messages)
+
 
 if __name__ == '__main__':
     unittest.main()

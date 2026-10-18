@@ -24,6 +24,10 @@ validity gate. Its CLI remains preflight-only; no live activation adapter or
 new Treatment A attempt is included. The current scope-observation gate remains
 blocked on this branch. Existing collectors and failed evidence remain intact.
 Offline verification passed 25 focused tests and all 322 repository tests.
+The subsequent JSON model-envelope trace-copy fix passed 29 focused tests and
+all 326 repository tests. It omits named private JSON keys in trace copies and
+records the original content hash without changing runtime/scorer objects.
+This is not complete privacy redaction; ordinary and opaque text remain intact.
 
 ## Approved schema v1 activation, scope validity still blocked
 

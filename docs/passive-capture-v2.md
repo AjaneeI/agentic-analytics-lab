@@ -67,9 +67,27 @@ returns the identical result object or rethrows the identical exception. SQL is
 recorded before the query delegate executes. Normalization applies only to
 copies written into evidence, never model/tool/scorer inputs or returned
 objects. Model returns retain public response/tool-call fields and usage
-metrics; private thinking/reasoning fields are excluded. Internal reasoning is
-neither requested nor recorded. Worker dataclasses and string enums normalize
-to inspectable public JSON.
+metrics. Named private thinking/reasoning fields are omitted from structured
+trace copies. Worker dataclasses and string enums normalize to inspectable
+public JSON.
+
+For known model-return envelopes (`type` is `final` or `tool_call`), the capture
+copy of a string `content` is checked for JSON. If decoded JSON contains named
+`PRIVATE_FIELDS` keys, those keys are omitted recursively from dictionary/list
+structures and only the trace string is reserialized. `content_sha256` records
+the original string's UTF-8 SHA-256 and `content_redacted` records whether this
+filter removed keys. The same filter applies when such an envelope is directly
+forwarded as a worker/runner return, preventing duplicate raw copies in those
+events. A JSON string with no private keys retains its exact original spacing
+and spelling. The runtime's returned object and content remain identical.
+
+This is a named-field filter, **not complete privacy redaction**. Opaque or
+unparseable text and ordinary text inside `answer_text` are preserved, even if
+they contain sensitive material or descriptions of reasoning. The filter does
+not parse model input-message content, arbitrary SQL or policy text.
+`collector_status: complete` describes collection completeness, not a privacy
+clearance. Internal reasoning is not requested, and this filter must not be
+described as guaranteeing its absence from all possible free text.
 
 The evidence folder must be new and outside the source checkout. Existing
 folders and reservations are never overwritten or cleared. A prepared manifest
@@ -151,3 +169,7 @@ preserves exact commands, exit codes and log digests. `src/`, `evals/` and
 `configurations/` are unchanged from the base commit. All 20 files in the
 historical failed-evidence checksum manifest still agree with their original
 digests. Old collector digests are separately recorded; neither was modified.
+Those logs describe the initial library commit. The subsequent JSON-envelope
+trace-copy fix passed **29 focused tests and all 326 repository tests**. Its
+[separate verification record](../experiments/passive-capture-v2-json-envelope-fix-20261017/verification.json)
+retains the original verification artifacts unchanged.

@@ -79,6 +79,43 @@ def _public(value: Any) -> Any:
     raise TypeError(f'unsupported public capture type: {type(value).__name__}')
 
 
+def _omit_private_json(value: Any) -> tuple[Any, bool]:
+    """Remove named private fields from a decoded JSON copy, not from text."""
+    if isinstance(value, dict):
+        copied, changed = {}, False
+        for key, item in value.items():
+            if key.lower() in PRIVATE_FIELDS:
+                changed = True
+            else:
+                copied[key], nested_changed = _omit_private_json(item)
+                changed |= nested_changed
+        return copied, changed
+    if isinstance(value, list):
+        copied, changed = [], False
+        for item in value:
+            public, nested_changed = _omit_private_json(item)
+            copied.append(public)
+            changed |= nested_changed
+        return copied, changed
+    return value, False
+
+
+def _model_content_copy(envelope: dict) -> tuple[dict, dict]:
+    """Trace-only handling of a known model-return envelope's content string."""
+    content = envelope['content']
+    copied = dict(envelope)
+    changed = False
+    try:
+        decoded = json.loads(content)
+    except (ValueError, TypeError):
+        pass  # Opaque text is preserved; this is not general privacy redaction.
+    else:
+        cleaned, changed = _omit_private_json(decoded)
+        if changed:
+            copied['content'] = json.dumps(cleaned, sort_keys=True, allow_nan=False)
+    return copied, {'content_sha256': _sha(content.encode()), 'content_redacted': changed}
+
+
 def _error(error: BaseException) -> dict:
     try:
         message = str(error)
@@ -197,6 +234,14 @@ class CaptureSession:
         return datetime.now(timezone.utc).isoformat()
 
     def event(self, name: str, **payload):
+        result = payload.get('result')
+        if (name in ('model_return', 'worker_return', 'runner_return')
+                and isinstance(result, dict) and result.get('type') in ('final', 'tool_call')
+                and isinstance(result.get('content'), str)):
+            # A model envelope may also be forwarded as an executor/runner
+            # return in adapters. Sanitize those trace copies consistently.
+            public_result, metadata = _model_content_copy(result)
+            payload = {**payload, 'result': public_result, **metadata}
         record = {'sequence': self.sequence, 'utc': self.utc(), 'monotonic_seconds': time.monotonic(),
                   'event': name, **_public(payload)}
         self.events.write(json.dumps(record, sort_keys=True, allow_nan=False) + '\n')

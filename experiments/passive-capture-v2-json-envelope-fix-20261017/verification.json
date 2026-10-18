@@ -1,0 +1,84 @@
+{
+  "base_commit": "ebd860bb5682c8b2bc542cd93cc4154aa78c75e1",
+  "change": "Known JSON model-return envelope trace copies omit named private keys, preserving original delegate identity and recording original content SHA-256/redacted flag.",
+  "checks": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_passive_capture",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "focused-tests.txt",
+      "log_sha256": "287008d25d448c4ca92817c99233299d574badb148f411b9f50c812c719f5c42",
+      "tests": 29
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "full-tests.txt",
+      "log_sha256": "abaf00700b0a1440f79a2b81c7db1850717f7b06ae30dc9bbe51b3a7b544fd1a",
+      "tests": 326
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "compileall",
+        "-q",
+        "scripts/passive_capture.py",
+        "tests/test_passive_capture.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/check_project_context.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "PASS: Project Context Protocol v1 checks passed\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "ebd860bb5682c8b2bc542cd93cc4154aa78c75e1",
+        "--",
+        "src",
+        "evals",
+        "configurations",
+        "experiments/passive-capture-v2-offline-20261017"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "claim_boundary": "Named-field trace filtering only, not complete privacy redaction. No parsing of input-message content, SQL/policy text, opaque text or ordinary answer_text. No live calls or experiments.",
+  "collector_sha256": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de"
+}
