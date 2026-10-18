@@ -1,4 +1,4 @@
-# Development schema integration — independent review pending
+# Development schema integration — implemented-lane payload parity verified
 
 This isolated branch starts from the inactive adapter/candidate-bank commit
 `1cc6fd9`. It adds only the exact approved `phase2-runtime-schema-v1` query
@@ -16,8 +16,14 @@ and simple heuristic route function. Each is probed with structured, document,
 multi-source and no-source requests. These 16 captures compare the complete
 delivered tool JSON and existing system prompt with the approved source.
 They execute a fixed final response without calling any evidence tool or live
-model. Passing capture tests are implementation checks; independent review is
-still required before declaring treatment parity verified.
+model. The author captures are implementation checks. A separately authored reviewer
+subsequently verified all 16 actual input payloads directly against AST-extracted
+activation source at reviewed code commit `ce56556`; its report and reproducer
+are preserved as `independent-review.json` and
+`scripts/verify_schema_parity_independent.py`. It also blocked network, live
+clients/evidence tools and held-out source reads, tested hidden-metadata canaries,
+and independently verified the H pre-tool boundary. All 320 tests pass. This
+closes only metadata delivery parity for the explicitly captured implementations.
 
 The strong-single tool affordance remains both safe tools for every request.
 Actual execution is separately gated by task permissions, including G denial,
@@ -49,7 +55,17 @@ The audit returns 2 when local checks match but independent review/qualification
 gates remain open. A mismatch returns 1. The historical schema-less configuration
 remains on `sprint/phase5-readiness-20261017` at `1cc6fd9` and is not overwritten.
 The report's explicit preparation-input fingerprint is a local version record,
-not the approved Phase 2 benchmark-contract fingerprint. Comparative evaluation
-remains blocked by independent parity review, Phase 3/4 acceptance and exact
+not the approved Phase 2 benchmark-contract fingerprint. The author snapshot retains its historical pending-review field; the separate
+independent report supplies the subsequent review evidence. All reviewed source
+hashes match this evidence branch. Comparative evaluation
+remains blocked by Phase 3/4 acceptance and exact
 runtime/provenance configuration approval. This work does not enter or exit
 Phase 5 and does not gate standalone Treatment A acceptance.
+
+The original reviewed code commit `ce56556` remains an ancestor of this branch.
+Evidence-only files and a local synchronization of identical reviewed PR99 fixes
+do not replace that pin or change delivered metadata. To reproduce the exact
+review, use a clean detached checkout at the full reviewed commit recorded in
+`independent-review.json`, then run the versioned independent script against that
+checkout with `--expected-head`, an external `--output`, and `--run-tests`.
+Uncaptured architectures, including delegated Hermes Treatment B, remain unverified.
