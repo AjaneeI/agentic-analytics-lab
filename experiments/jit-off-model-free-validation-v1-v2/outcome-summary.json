@@ -1,0 +1,292 @@
+{
+  "classification": "bounded_model_free_synthetic_diagnostic_validation_not_Treatment_A_or_architecture_comparison",
+  "overall_observed_support": "candidate setting is effective and the two declared synthetic fixtures agree with expected values and original transport",
+  "v1_status": "failed_stopped_without_retry",
+  "v1_error": {
+    "type": "AssertionError",
+    "message": "unknown effective compilation mode",
+    "case": "candidate-settings"
+  },
+  "v1_preserved_not_rescored": true,
+  "v2_status": "passed_bounded_synthetic_validation",
+  "v1_script_commit": "3ad3b85abe7c09cd2c190781a83894361cb1778f",
+  "v2_script_commit": "00bef0e9c416bfaadba0094c49e12772775f9f57",
+  "candidate_commit": "2252aed9803d9276934951676b76b889857c411f",
+  "proposal_PR111_commit": "7f010f242c9b8bfe10f83f0bfd19650ea8867305",
+  "baseline_transport_sha256": "3f4667601120d0a660274a66da5608da4de2461ff4a5b86385a731d3daa5f1c1",
+  "candidate_transport_sha256": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c",
+  "protocol_v1_sha256": "d58e98209bcfc43f4dec4c3fed27cc1dbe8e41fe3444bb0a8ec11f1beca9aac6",
+  "protocol_v2_sha256": "0337f0d7ae4d47991b0b4a47a3ebdb0c8cc70900f3de523010f811242edce8ca",
+  "candidate_settings": {
+    "server_version": "26.8.4.11",
+    "compile_expressions": "false",
+    "readonly": "1",
+    "max_execution_time": "10",
+    "max_result_rows": "1000",
+    "result_overflow_mode": "break",
+    "max_rows_to_read": "10000",
+    "max_bytes_to_read": "10485760",
+    "max_memory_usage": "134217728",
+    "max_threads": "2"
+  },
+  "baseline_settings": {
+    "server_version": "26.8.4.11",
+    "compile_expressions": "true",
+    "readonly": "1",
+    "max_execution_time": "10",
+    "max_result_rows": "1000",
+    "result_overflow_mode": "break",
+    "max_rows_to_read": "10000",
+    "max_bytes_to_read": "10485760",
+    "max_memory_usage": "134217728",
+    "max_threads": "2"
+  },
+  "all_effective_resource_limits_match": true,
+  "SQL_requests": 6,
+  "HTTP200_responses": 6,
+  "new_requests_v2": 5,
+  "prior_candidate_settings_observation_reused_without_request": 1,
+  "all_actual_requests_equal_original_predeclared_plan_in_order": true,
+  "retries": 0,
+  "replacement_queries": 0,
+  "frozen_numeric_criteria_changed": false,
+  "synthetic_numeric_tolerance": {
+    "relative": 1e-12,
+    "absolute": 1e-12,
+    "finite_only": true
+  },
+  "scalar_rows_equal": true,
+  "aggregate_rows_equal": true,
+  "max_observed_absolute_numeric_difference": 0,
+  "compared_numeric_cells": 15,
+  "rows": {
+    "candidate-settings": {
+      "server_version": "26.8.4.11",
+      "compile_expressions": "false",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2"
+    },
+    "baseline-settings": {
+      "server_version": "26.8.4.11",
+      "compile_expressions": "true",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2"
+    },
+    "baseline-scalar": [
+      {
+        "x": -2.5,
+        "affine": -4.5,
+        "seventh": 0.07142857142857142
+      },
+      {
+        "x": 0,
+        "affine": 0.5,
+        "seventh": 0.42857142857142855
+      },
+      {
+        "x": 1.25,
+        "affine": 3,
+        "seventh": 0.6071428571428571
+      },
+      {
+        "x": 7.75,
+        "affine": 16,
+        "seventh": 1.5357142857142858
+      }
+    ],
+    "candidate-scalar": [
+      {
+        "x": -2.5,
+        "affine": -4.5,
+        "seventh": 0.07142857142857142
+      },
+      {
+        "x": 0,
+        "affine": 0.5,
+        "seventh": 0.42857142857142855
+      },
+      {
+        "x": 1.25,
+        "affine": 3,
+        "seventh": 0.6071428571428571
+      },
+      {
+        "x": 7.75,
+        "affine": 16,
+        "seventh": 1.5357142857142858
+      }
+    ],
+    "baseline-aggregate": [
+      {
+        "sum_x": 6.5,
+        "min_x": -2.5,
+        "max_x": 7.75
+      }
+    ],
+    "candidate-aggregate": [
+      {
+        "sum_x": 6.5,
+        "min_x": -2.5,
+        "max_x": 7.75
+      }
+    ]
+  },
+  "timing": {
+    "v1_start": "2026-10-18T03:07:42.487215+00:00",
+    "v1_end": "2026-10-18T03:07:42.639172+00:00",
+    "v1_capture_wall_seconds": 0.15164633403765038,
+    "v2_start": "2026-10-18T03:09:09.525005+00:00",
+    "v2_end": "2026-10-18T03:09:10.104236+00:00",
+    "v2_capture_wall_seconds": 0.5788494590087794,
+    "sum_active_capture_wall_seconds": 0.7304957930464298,
+    "not_contiguous_timing": "Engineering amendment interval separates the diagnostic sessions; no performance comparison."
+  },
+  "query_resource_records": [
+    {
+      "case": "candidate-settings",
+      "query_id": "df181b4e-2ac1-464c-b993-61e81437ca34",
+      "HTTP_status": 200,
+      "server_summary": {
+        "read_rows": "1",
+        "read_bytes": "1",
+        "written_rows": "0",
+        "written_bytes": "0",
+        "total_rows_to_read": "1",
+        "result_rows": "0",
+        "result_bytes": "0",
+        "elapsed_ns": "107115375",
+        "memory_usage": "1298367"
+      }
+    },
+    {
+      "case": "baseline-settings",
+      "query_id": "2d7172ed-3cf2-4ac8-82a1-f204692c7509",
+      "HTTP_status": 200,
+      "server_summary": {
+        "read_rows": "1",
+        "read_bytes": "1",
+        "written_rows": "0",
+        "written_bytes": "0",
+        "total_rows_to_read": "1",
+        "result_rows": "0",
+        "result_bytes": "0",
+        "elapsed_ns": "4575667",
+        "memory_usage": "1296143"
+      }
+    },
+    {
+      "case": "baseline-scalar",
+      "query_id": "b18802a9-b70e-4a99-bc75-30fe290a842a",
+      "HTTP_status": 200,
+      "server_summary": {
+        "read_rows": "4",
+        "read_bytes": "4",
+        "written_rows": "0",
+        "written_bytes": "0",
+        "total_rows_to_read": "4",
+        "result_rows": "0",
+        "result_bytes": "0",
+        "elapsed_ns": "509149459",
+        "memory_usage": "1451855"
+      }
+    },
+    {
+      "case": "candidate-scalar",
+      "query_id": "fbe63ae2-96c5-4df0-afc2-dbbba3985d97",
+      "HTTP_status": 200,
+      "server_summary": {
+        "read_rows": "4",
+        "read_bytes": "4",
+        "written_rows": "0",
+        "written_bytes": "0",
+        "total_rows_to_read": "4",
+        "result_rows": "0",
+        "result_bytes": "0",
+        "elapsed_ns": "3160833",
+        "memory_usage": "1425111"
+      }
+    },
+    {
+      "case": "baseline-aggregate",
+      "query_id": "285785ff-d5c5-4e59-bdff-6147abf6852e",
+      "HTTP_status": 200,
+      "server_summary": {
+        "read_rows": "4",
+        "read_bytes": "4",
+        "written_rows": "0",
+        "written_bytes": "0",
+        "total_rows_to_read": "4",
+        "result_rows": "0",
+        "result_bytes": "0",
+        "elapsed_ns": "25445083",
+        "memory_usage": "1372255"
+      }
+    },
+    {
+      "case": "candidate-aggregate",
+      "query_id": "074e6e68-beac-4b81-a4bd-66ee88ff2598",
+      "HTTP_status": 200,
+      "server_summary": {
+        "read_rows": "4",
+        "read_bytes": "4",
+        "written_rows": "0",
+        "written_bytes": "0",
+        "total_rows_to_read": "4",
+        "result_rows": "0",
+        "result_bytes": "0",
+        "elapsed_ns": "1635084",
+        "memory_usage": "1368199"
+      }
+    }
+  ],
+  "resource_limitations": "Returned X-ClickHouse-Summary counters only, not per-request host/GPU measurement or guaranteed peak. Headers reported result_rows0 while bodies contain rows; body parsing is authoritative for returned row counts.",
+  "largest_reported_memory_usage_bytes": 1451855,
+  "original_evidence": {
+    "treatment-a-20261017": {
+      "count": 20,
+      "hashes_unchanged": true,
+      "seal_sha256": "97cc69f4f80b2f729e41f5fb0a2c032e0bb05f3dcc32209719f892e3d90325c5"
+    },
+    "treatment-a-scope-v1-20261017": {
+      "count": 4,
+      "hashes_unchanged": true,
+      "seal_sha256": "2144b8dc8aed85a48825e4c8941ab78b95e6e7f7e99307a38ca3e998e0256707"
+    },
+    "treatment-a-response-format-v1-20261017": {
+      "count": 4,
+      "hashes_unchanged": true,
+      "seal_sha256": "cfc4c32843a5b6f51abc36484c2c978a80c9fb100cf83c683f986b2424fb8d9d"
+    }
+  },
+  "six_earlier_archives_unchanged": true,
+  "postflight_source_pins_clean": true,
+  "no_SQL_replay_or_application_table_reads": true,
+  "model_calls": 0,
+  "Treatment_A_entries": 0,
+  "scorer_calls": 0,
+  "PR111_merged": false,
+  "benchmark_configuration_activated": false,
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase4_frozen": false,
+  "architecture_comparisons_authorized": false,
+  "not_established": [
+    "Original timeout resolved or JIT its exclusive cause",
+    "JIT-on compilation actually engaged for these small fixtures",
+    "All-query numerical equivalence",
+    "Cold/warm independence or speedup",
+    "Benchmark model-response compliance or any research gate acceptance"
+  ]
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "case": "candidate-settings",
+    "SQL_utf8": "SELECT version() AS server_version, toString(getSetting('compile_expressions')) AS compile_expressions, toString(getSetting('readonly')) AS readonly, toString(getSetting('max_execution_time')) AS max_execution_time, toString(getSetting('max_result_rows')) AS max_result_rows, toString(getSetting('result_overflow_mode')) AS result_overflow_mode, toString(getSetting('max_rows_to_read')) AS max_rows_to_read, toString(getSetting('max_bytes_to_read')) AS max_bytes_to_read, toString(getSetting('max_memory_usage')) AS max_memory_usage, toString(getSetting('max_threads')) AS max_threads",
+    "SQL_sha256": "029595498ac10bde1f234d1bf20c4540aaad328335b30f9ad6e65dc3969a1c4d",
+    "timeout_seconds": 15,
+    "parameters": {
+      "default_format": "JSONEachRow",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2",
+      "compile_expressions": "0"
+    },
+    "http_status": 200,
+    "response_headers": {
+      "X-ClickHouse-Query-Id": "df181b4e-2ac1-464c-b993-61e81437ca34",
+      "X-ClickHouse-Summary": "{\"read_rows\":\"1\",\"read_bytes\":\"1\",\"written_rows\":\"0\",\"written_bytes\":\"0\",\"total_rows_to_read\":\"1\",\"result_rows\":\"0\",\"result_bytes\":\"0\",\"elapsed_ns\":\"107115375\",\"memory_usage\":\"1298367\"}",
+      "Content-Type": "application/x-ndjson; charset=UTF-8"
+    },
+    "body_utf8": "{\"server_version\":\"26.8.4.11\",\"compile_expressions\":\"false\",\"readonly\":\"1\",\"max_execution_time\":\"10\",\"max_result_rows\":\"1000\",\"result_overflow_mode\":\"break\",\"max_rows_to_read\":\"10000\",\"max_bytes_to_read\":\"10485760\",\"max_memory_usage\":\"134217728\",\"max_threads\":\"2\"}\n",
+    "body_sha256": "218d765af65af15ef871b9d00655c333858223a8c08b38560414114a71bf34ab"
+  }
+]
