@@ -68,6 +68,19 @@
   ],
   "phase2_qualified": false,
   "preserved_capture_independent_review_sha256": "cca483b20cd5f3bd3489e6e77411c719552d10b1aabe8a775e0709a06cdc8bd4",
+  "real_pending_configuration_denial": {
+    "configuration_sha256": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+    "evidence_folder_created": false,
+    "execution_blockers": [
+      "owner_observation_approval_not_approved",
+      "runtime_offline_validity_gate_not_passed"
+    ],
+    "model_constructor_calls": 0,
+    "refusal": "owner_observation_approval_not_approved, runtime_offline_validity_gate_not_passed",
+    "scope": "Offline denial probe with real pending config and denied delegates; no Treatment A",
+    "service_calls": 0,
+    "verified_implementation_commit": "da3eff30f5a9e7b3f2ce7474fff9f269dc214728"
+  },
   "runner_review": "pending_independent_review",
   "schema_version": "phase2-qualified-runner-offline-v1",
   "source_sha256": {
@@ -87,8 +100,9 @@
         "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Qualification runner verification forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
       ],
       "exit_code": 0,
+      "implementation_commit": "da3eff30f5a9e7b3f2ce7474fff9f269dc214728",
       "log": "python311-focused.txt",
-      "log_sha256": "6a3fb03b6f5e51b28e53a6b429055a988ac0f8a24a949bdc7f091e7456972835",
+      "log_sha256": "9c46ce04d168888212b333211bf35bfcd0758cf26c349d2311dbb31465779c53",
       "network_blocked": true
     },
     {
@@ -102,8 +116,9 @@
         "tests"
       ],
       "exit_code": 0,
+      "implementation_commit": "da3eff30f5a9e7b3f2ce7474fff9f269dc214728",
       "log": "python311-full.txt",
-      "log_sha256": "cf9e1c06be8cc64f5db9853264f7917338f9057e5ebbe98ee1733714d4a7c521",
+      "log_sha256": "0fd7bb530a6a5d3630e75bffccc83b97a3884dccdfd873a90b86b3108eb91329",
       "network_blocked": false
     },
     {
@@ -114,8 +129,9 @@
         "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Qualification runner verification forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
       ],
       "exit_code": 0,
+      "implementation_commit": "da3eff30f5a9e7b3f2ce7474fff9f269dc214728",
       "log": "python312-focused.txt",
-      "log_sha256": "13732d44cbda3c3cb33209f158626a3d2a905b1bb3bbdf8f963e43b3bb05ae97",
+      "log_sha256": "6a3fb03b6f5e51b28e53a6b429055a988ac0f8a24a949bdc7f091e7456972835",
       "network_blocked": true
     },
     {
@@ -129,9 +145,11 @@
         "tests"
       ],
       "exit_code": 0,
+      "implementation_commit": "da3eff30f5a9e7b3f2ce7474fff9f269dc214728",
       "log": "python312-full.txt",
-      "log_sha256": "8815e2746d770ef2e1ca5a23f2a95d66f90e3241b448bfe58ba576bd22d67799",
+      "log_sha256": "b810eda94cdf480f8bef57d40c50c9c5bf509418c24c51c67d933b093f177516",
       "network_blocked": false
     }
-  ]
+  ],
+  "verified_implementation_commit": "da3eff30f5a9e7b3f2ce7474fff9f269dc214728"
 }

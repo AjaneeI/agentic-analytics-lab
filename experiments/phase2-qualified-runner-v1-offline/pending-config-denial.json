@@ -1,0 +1,13 @@
+{
+  "configuration_sha256": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+  "evidence_folder_created": false,
+  "execution_blockers": [
+    "owner_observation_approval_not_approved",
+    "runtime_offline_validity_gate_not_passed"
+  ],
+  "model_constructor_calls": 0,
+  "refusal": "owner_observation_approval_not_approved, runtime_offline_validity_gate_not_passed",
+  "scope": "Offline denial probe with real pending config and denied delegates; no Treatment A",
+  "service_calls": 0,
+  "verified_implementation_commit": "da3eff30f5a9e7b3f2ce7474fff9f269dc214728"
+}
