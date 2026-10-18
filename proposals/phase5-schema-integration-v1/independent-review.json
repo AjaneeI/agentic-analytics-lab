@@ -1,0 +1,907 @@
+{
+  "activation_source": {
+    "commit": "644a68d75cf6743d3daaace51f42a0571747417c",
+    "extraction": "AST from git show, independent of proposal reference JSON",
+    "path": "src/evals/system_benchmark/local_worker.py",
+    "sha256": "b0e9c39dbcc868fd6a346778a2a9c6b3418aa828d7b57e8852026623a3b8f289"
+  },
+  "approved_policy_tool_json_sha256": "00aec34628990c75cfc2e6b522832d17e195b65513aab944ceeae769928cbfec",
+  "approved_query_tool_json_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+  "canary_assertion": "All canary values absent from complete actual messages and tool JSON",
+  "canary_inputs": {
+    "case_id": "SECRET-CASE",
+    "expected_value": "SECRET-TRUTH",
+    "reference_solution_id": "SECRET-REFERENCE"
+  },
+  "capture_count": 16,
+  "captures": [
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Which team has the highest blocker rate in the structured delivery dataset?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "matches_activation_source": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "According to the current KPI dictionary, how is blocker rate defined?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "matches_activation_source": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "matches_activation_source": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Use private Slack messages to explain a delivery delay.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "strong_single",
+      "matches_activation_source": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Which team has the highest blocker rate in the structured delivery dataset?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        }
+      ],
+      "delivered_tools_sha256": "6cdae1913a324d1483841f7cf0e48cdeace21236f1a2b5c880339ce7ff55434a",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "matches_activation_source": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "According to the current KPI dictionary, how is blocker rate defined?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "aba93b3e0aaebff9365e851310fe33bfd5c822f9efd002e6eaceb607f5a2f0a0",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "matches_activation_source": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "matches_activation_source": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Use private Slack messages to explain a delivery delay.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [],
+      "delivered_tools_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "oracle_routed",
+      "matches_activation_source": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Which team has the highest blocker rate in the structured delivery dataset?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        }
+      ],
+      "delivered_tools_sha256": "6cdae1913a324d1483841f7cf0e48cdeace21236f1a2b5c880339ce7ff55434a",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "matches_activation_source": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "According to the current KPI dictionary, how is blocker rate defined?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "aba93b3e0aaebff9365e851310fe33bfd5c822f9efd002e6eaceb607f5a2f0a0",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "matches_activation_source": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "matches_activation_source": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Use private Slack messages to explain a delivery delay.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [],
+      "delivered_tools_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "natural_language_routed",
+      "matches_activation_source": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Which team has the highest blocker rate in the structured delivery dataset?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        }
+      ],
+      "delivered_tools_sha256": "6cdae1913a324d1483841f7cf0e48cdeace21236f1a2b5c880339ce7ff55434a",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "matches_activation_source": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "According to the current KPI dictionary, how is blocker rate defined?",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "aba93b3e0aaebff9365e851310fe33bfd5c822f9efd002e6eaceb607f5a2f0a0",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "matches_activation_source": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "delivered_tools_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "matches_activation_source": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scripted_model_steps": 1
+    },
+    {
+      "delivered_messages": [
+        {
+          "content": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+          "role": "system"
+        },
+        {
+          "content": "Use private Slack messages to explain a delivery delay.",
+          "role": "user"
+        }
+      ],
+      "delivered_tools": [],
+      "delivered_tools_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "hidden_metadata_canaries_absent": true,
+      "lane": "simple_heuristic_routed",
+      "matches_activation_source": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scripted_model_steps": 1
+    }
+  ],
+  "commands": {
+    "author_capture_consistency": "python3 -B scripts/audit_baseline_schema_parity.py --check",
+    "author_capture_expected_exit": 2,
+    "inspect_activation_source": "git show 644a68d75cf6743d3daaace51f42a0571747417c:src/evals/system_benchmark/local_worker.py",
+    "reproduce_review": "/opt/homebrew/opt/python@3.14/bin/python3.14 -B /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/verify_schema_parity_independent.py --repository /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase5-schema-integration --expected-head ce5655642781061376da54739d2d15e40b92526b --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/independent-schema-parity-review.json --run-tests"
+  },
+  "comparative_evaluation_approved": false,
+  "comparison_anchor": "qwen2.5:7b remains a separate frozen contract",
+  "external_database_calls": 0,
+  "guards": {
+    "evidence_callbacks_and_HTTP_transport_blocked_during_captures": true,
+    "heldout_source_open_blocked": true,
+    "live_model_constructor_and_method_blocked_during_captures": true,
+    "network_connection_and_DNS_blocked": true,
+    "rejected_attempts": []
+  },
+  "handoff_pretool_regressions": [
+    {
+      "answer_explicitly_allowed": false,
+      "declined_before_tools": true,
+      "family": "H",
+      "query_calls": 0
+    },
+    {
+      "answer_explicitly_allowed": true,
+      "declined_before_tools": true,
+      "family": "H",
+      "query_calls": 0
+    }
+  ],
+  "heldout_access": false,
+  "independent_metadata_parity_verified": true,
+  "independent_reproducer_sha256": "ac0e8414b990d60e145a7b7999b0ef5a71c2eac504fedd2cc852c99dc789ccb5",
+  "limitations": [
+    "Scripted metadata capture only; no model-quality or live execution evidence.",
+    "Routed lanes receive capability-specific subsets; strong single receives both safe affordances with separate execution permissions.",
+    "Hermes delegated Treatment B and uncaptured architectures remain unverified.",
+    "Scope/metric validity, evaluator acceptance, exact runtime configuration and scientific phase gates remain separate.",
+    "This report is local evidence until its exact bytes and reproducer are versioned by the coordinator."
+  ],
+  "live_model_calls": 0,
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase4_accepted": false,
+  "phase5_entry_accepted": false,
+  "review_source_sha256": {
+    "docs/phase5-baseline-adapters.md": "c918265a8464baeefdd7456c49706cec2c7d897c38e8b3d9eb7dcddae9d82647",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "proposals/phase5-development-bank-v1/README.md": "beeef5463b1b6c184c20d180aa6d47933abb7e35287fe665a0268157d6495146",
+    "proposals/phase5-development-bank-v1/validation.json": "f65b8732f0a5836ac936c7a1aae6808d858e285bc675d24bdaf79e0a8ee6697f",
+    "proposals/phase5-schema-integration-v1/approved-tool-contract.json": "4683a7ae734d93ff234e2cdb26101157f10a1b0452c8ecff378984488fdc8d0c",
+    "proposals/phase5-schema-integration-v1/local-metadata-captures.json": "3b1e06b39522e3f0e5eb2b7393e563728d78cc5b9e701413261eb20dde1d8cde",
+    "scripts/audit_baseline_schema_parity.py": "0c18ea574a817d3134a5fdcc79b8a503e8d7c785a7e0c478945869676553d7b8",
+    "scripts/prepare_phase5_candidate_bank.py": "657e7afcfe940be6ba0bd2b7232924508c24c1028b4e7fe8b5e711803dc4106d",
+    "src/agents/ollama_client.py": "4a716169b5ff78123ffb3956cdca9494a55bd72289d4df2a718c0769e6619812",
+    "src/evals/system_benchmark/baselines.py": "6030cba1e15a844f5be76e6376eb7d88dc728ed5aace2b40525735a3bfa04a15",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/local_worker.py": "34899a61688a5117ec4dfa409cf1314a784856a2c8fe83bdb05c475c6d2d4419",
+    "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+    "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+    "src/evals/system_benchmark/runner.py": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25",
+    "src/routing/deterministic_handlers.py": "fa060784fb5c476c28b0a6c96121cd036927caca4ca0fcff90a18a9c1783cca8",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+    "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27",
+    "tests/system_benchmark/test_schema_metadata_parity.py": "79c0e88c563395f9d4379cad52ba1dbeddd1019a27fb22d4495e14426bf6f11d"
+  },
+  "reviewed_commit": "ce5655642781061376da54739d2d15e40b92526b",
+  "runtime_default_unchanged": "hermes-local:qwen3.5-9b",
+  "schema_version": "independent-schema-parity-review-v1",
+  "test_suite": {
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "network_blocked": true,
+    "skipped": 0,
+    "tests": 320
+  }
+}

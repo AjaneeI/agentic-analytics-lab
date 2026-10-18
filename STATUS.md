@@ -17,9 +17,10 @@ readiness review identifies B03 rounding ambiguity, A03's ungraded requested
 sentence, seven numeric mapping gaps and G/H template overlap. Six B/F semantic
 false positives remain. See `proposals/phase5-development-bank-v1/`.
 
-This branch preserves historical schema-less tool metadata. Separate draft
-PR104 independently verifies schema-v1 delivery for implemented lanes only;
-its development client retains 128/2048 limits versus standalone A's approved
+Historical schema-less tool metadata remains preserved on PR99. This isolated
+PR104 development branch applies exact schema-v1. Independent input review and
+mocked HTTP wire captures verify metadata delivery for implemented lanes only.
+Its development client retains 128/2048 limits versus standalone A's approved
 512/65536. Full runtime equivalence and comparative execution remain blocked.
 Phase 2 is unqualified, scope amendment PR103 awaits approval, and Phase 3/4
 acceptance and future configuration decisions remain open. No new A, held-out
