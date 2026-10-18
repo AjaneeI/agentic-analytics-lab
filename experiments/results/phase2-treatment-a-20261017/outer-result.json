@@ -1,0 +1,12 @@
+{
+  "exit_code": 1,
+  "outer_wall_seconds": 52.6128901669872,
+  "benchmark_invocations": 1,
+  "retries": 0,
+  "reprompts": 0,
+  "human_hands_on_minutes": null,
+  "human_measurement_note": "Not measured; autonomous execution.",
+  "incremental_benchmark_paid_spend_usd": 0,
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "setup_recovery": "Fetched pinned branch; separate clean worktree. Existing services healthy; sandbox network access restored by scoped escalation. No service restart or config change."
+}

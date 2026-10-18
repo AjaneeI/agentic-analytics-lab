@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "<PINNED_WORKTREE>/src/tools/clickhouse_readonly.py", line 236, in query_clickhouse
+    with urllib.request.urlopen(request, timeout=15) as response:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_RUNTIME>/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_RUNTIME>/urllib/request.py", line 493, in open
+    response = meth(req, response)
+  File "<PYTHON_RUNTIME>/urllib/request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "<PYTHON_RUNTIME>/urllib/request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "<PYTHON_RUNTIME>/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "<PYTHON_RUNTIME>/urllib/request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 404: Not Found
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 67, in <module>
+    result = run_trial(task, references[task.reference_solution_id], trial_number=1, executor=capture_execution)
+  File "<PINNED_WORKTREE>/src/evals/system_benchmark/runner.py", line 49, in run_trial
+    execution = executor(task, trial_number, Path(tmp))
+  File "<string>", line 62, in capture_execution
+    execution = worker(*args)
+  File "<PINNED_WORKTREE>/src/evals/system_benchmark/local_worker.py", line 210, in __call__
+    result_payload = self._run_query_tool(
+        task,
+    ...<2 lines>...
+        evidence_refs,
+    )
+  File "<PINNED_WORKTREE>/src/evals/system_benchmark/local_worker.py", line 259, in _run_query_tool
+    rows = self.query_fn(sql)
+  File "<PINNED_WORKTREE>/src/tools/clickhouse_readonly.py", line 239, in query_clickhouse
+    raise RuntimeError(f"ClickHouse query failed: {exc}") from exc
+RuntimeError: ClickHouse query failed: HTTP Error 404: Not Found
