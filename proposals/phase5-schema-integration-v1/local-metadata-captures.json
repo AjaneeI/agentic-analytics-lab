@@ -1,0 +1,753 @@
+{
+  "approved_metadata_source_commit": "644a68d75cf6743d3daaace51f42a0571747417c",
+  "approved_policy_tool_json_sha256": "00aec34628990c75cfc2e6b522832d17e195b65513aab944ceeae769928cbfec",
+  "approved_query_tool_json_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+  "capture_count": 16,
+  "captures": [
+    {
+      "delivered_tool_payload_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "lane": "strong_single",
+      "model_input_contains_request_only": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "multi_source",
+      "selected_route": "local",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "lane": "strong_single",
+      "model_input_contains_request_only": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "multi_source",
+      "selected_route": "local",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "lane": "strong_single",
+      "model_input_contains_request_only": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "multi_source",
+      "selected_route": "local",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "lane": "strong_single",
+      "model_input_contains_request_only": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "multi_source",
+      "selected_route": "local",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "6cdae1913a324d1483841f7cf0e48cdeace21236f1a2b5c880339ce7ff55434a",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "lane": "oracle_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "structured",
+      "selected_route": "deterministic",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "aba93b3e0aaebff9365e851310fe33bfd5c822f9efd002e6eaceb607f5a2f0a0",
+      "delivered_tools": [
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "lane": "oracle_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "documents",
+      "selected_route": "deterministic",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "lane": "oracle_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "multi_source",
+      "selected_route": "deterministic",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "delivered_tools": [],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "lane": "oracle_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "none",
+      "selected_route": "escalate",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "6cdae1913a324d1483841f7cf0e48cdeace21236f1a2b5c880339ce7ff55434a",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "lane": "natural_language_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "structured",
+      "selected_route": "deterministic",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "aba93b3e0aaebff9365e851310fe33bfd5c822f9efd002e6eaceb607f5a2f0a0",
+      "delivered_tools": [
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "lane": "natural_language_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "documents",
+      "selected_route": "local",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "lane": "natural_language_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "multi_source",
+      "selected_route": "deterministic",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "delivered_tools": [],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "lane": "natural_language_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "none",
+      "selected_route": "escalate",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "6cdae1913a324d1483841f7cf0e48cdeace21236f1a2b5c880339ce7ff55434a",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse"
+      ],
+      "lane": "simple_heuristic_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "structured",
+      "request": "Which team has the highest blocker rate in the structured delivery dataset?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "structured",
+      "selected_route": "deterministic",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "aba93b3e0aaebff9365e851310fe33bfd5c822f9efd002e6eaceb607f5a2f0a0",
+      "delivered_tools": [
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "retrieve_policy"
+      ],
+      "lane": "simple_heuristic_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "documents",
+      "request": "According to the current KPI dictionary, how is blocker rate defined?",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "documents",
+      "selected_route": "local",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "d561c564c2e2055b5cee01f6b36b56bfbaeeee93bc0b0b1e884c16cd7b21fe4d",
+      "delivered_tools": [
+        {
+          "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "type": "object"
+          },
+          "name": "query_clickhouse"
+        },
+        {
+          "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+          "input_schema": {
+            "properties": {
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "query": {
+                "type": "string"
+              },
+              "top_k": {
+                "maximum": 5,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "retrieve_policy"
+        }
+      ],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "lane": "simple_heuristic_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "multi_source",
+      "request": "Compare team blocker rates in the dataset and interpret them using the policy dictionary.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "multi_source",
+      "selected_route": "deterministic",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    },
+    {
+      "delivered_tool_payload_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "delivered_tools": [],
+      "evidence_tool_calls": 0,
+      "expected_tool_names": [],
+      "lane": "simple_heuristic_routed",
+      "model_input_contains_request_only": true,
+      "probe_capability": "none",
+      "request": "Use private Slack messages to explain a delivery delay.",
+      "scope": "scripted metadata capture, not a model response/quality trial",
+      "selected_capability": "none",
+      "selected_route": "escalate",
+      "system_prompt_matches_approved": true,
+      "tool_metadata_matches_approved": true
+    }
+  ],
+  "comparative_evaluation_approved": false,
+  "comparison_blockers": [
+    "independent_metadata_parity_review_pending",
+    "phase3_evaluator_acceptance_pending",
+    "phase4_acceptance_pending",
+    "exact_runtime_and_provenance_configuration_acceptance_pending"
+  ],
+  "deterministic_simple": {
+    "data_table": "agentic_analytics.delivery_work_items",
+    "fixed_sql": "SELECT\n    team,\n    count() AS total_items,\n    sum(blocked) AS blocked_items,\n    round(100.0 * sum(blocked) / count(), 1) AS blocker_rate,\n    sum(actual_hours) / sum(planned_hours) AS avg_effort_ratio\nFROM agentic_analytics.delivery_work_items\nGROUP BY team\nORDER BY team",
+    "live_data_equivalence_qualified": false,
+    "model_facing_metadata": "not_applicable_no_model",
+    "query_tool": "src.tools.clickhouse_readonly.query_clickhouse",
+    "tool_contract": "existing dataset-scoped read-only tool; task permission and budget enforced"
+  },
+  "development_input_fingerprint": {
+    "benchmark_contract_sha256": "de41df0a75824a2ac4c8ad71726241753d171b4b6f5d13ecc0069cf13ce7a5b8",
+    "contract_files": {
+      "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+      "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+      "proposals/phase5-schema-integration-v1/approved-tool-contract.json": "4683a7ae734d93ff234e2cdb26101157f10a1b0452c8ecff378984488fdc8d0c",
+      "scripts/audit_baseline_schema_parity.py": "0c18ea574a817d3134a5fdcc79b8a503e8d7c785a7e0c478945869676553d7b8",
+      "src/agents/ollama_client.py": "4a716169b5ff78123ffb3956cdca9494a55bd72289d4df2a718c0769e6619812",
+      "src/evals/system_benchmark/baselines.py": "6030cba1e15a844f5be76e6376eb7d88dc728ed5aace2b40525735a3bfa04a15",
+      "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+      "src/evals/system_benchmark/local_worker.py": "34899a61688a5117ec4dfa409cf1314a784856a2c8fe83bdb05c475c6d2d4419",
+      "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+      "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+      "src/evals/system_benchmark/runner.py": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62",
+      "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+      "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25",
+      "src/routing/deterministic_handlers.py": "fa060784fb5c476c28b0a6c96121cd036927caca4ca0fcff90a18a9c1783cca8",
+      "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+      "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27",
+      "tests/system_benchmark/test_schema_metadata_parity.py": "79c0e88c563395f9d4379cad52ba1dbeddd1019a27fb22d4495e14426bf6f11d"
+    }
+  },
+  "external_database_calls": 0,
+  "fingerprint_scope": "explicit local preparation inputs, not accepted benchmark-contract fingerprint",
+  "historical_schema_less_branch": "sprint/phase5-readiness-20261017 at 1cc6fd9",
+  "independent_parity_review": "pending",
+  "live_model_calls": 0,
+  "local_capture_checks_pass": true,
+  "schema_context_version": "phase2-runtime-schema-v1",
+  "schema_version": "phase5-schema-integration-local-capture-v1",
+  "unverified_lanes": [
+    "Hermes delegated Treatment B",
+    "any architecture not explicitly captured here"
+  ]
+}

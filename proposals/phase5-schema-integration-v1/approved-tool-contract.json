@@ -1,0 +1,50 @@
+{
+  "schema_context_version": "phase2-runtime-schema-v1",
+  "source_commit": "644a68d75cf6743d3daaace51f42a0571747417c",
+  "source_file_sha256": "b0e9c39dbcc868fd6a346778a2a9c6b3418aa828d7b57e8852026623a3b8f289",
+  "source_path": "src/evals/system_benchmark/local_worker.py",
+  "system_prompt": "You are a bounded local worker for System Benchmark v1.\n\nYou have only the explicitly provided evidence tools. Do not claim to have\nused a tool unless the runtime actually invoked it. You have no filesystem,\nshell, glob, generic execute, benchmark-fixture, web, or external-service\ncapability.\n\nFor factual claims about the structured delivery dataset, call\nquery_clickhouse. For policy definitions or policy interpretation, call\nretrieve_policy. If the request requires both structured and policy evidence,\ncall both tools before answering. Do not infer causality from observational\ndata.\n\nWhen querying blocker percentage, compute it in SQL as\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\nblocked_pct.\n\nAfter evidence gathering, return one JSON object only with these keys:\ndisposition, answer_text, uncertainty, clarification, handoff.\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\nconstructs those from actual tool execution.",
+  "tools": [
+    {
+      "description": "Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct. Schema: work_item_id String; team LowCardinality(String); priority LowCardinality(String); status LowCardinality(String); created_at DateTime; due_at DateTime; completed_at Nullable(DateTime); planned_hours UInt16; actual_hours Float32; blocked UInt8; blocker_type LowCardinality(String); rework_count UInt8; customer_impact UInt8. Only these columns exist. The seed-42 snapshot is dataset provenance, not a column or a row filter.",
+      "input_schema": {
+        "properties": {
+          "sql": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sql"
+        ],
+        "type": "object"
+      },
+      "name": "query_clickhouse"
+    },
+    {
+      "description": "Retrieve read-only repository-local policy sections. Use this for definitions, current policy, and historical as-of policy evidence.",
+      "input_schema": {
+        "properties": {
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "query": {
+            "type": "string"
+          },
+          "top_k": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "name": "retrieve_policy"
+    }
+  ]
+}
