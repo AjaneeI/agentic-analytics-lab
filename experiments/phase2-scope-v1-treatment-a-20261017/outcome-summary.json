@@ -1,0 +1,133 @@
+{
+  "experiment_id": "phase2-treatment-a-runtime-schema-v1-scope-observation-v1-20261017",
+  "classification": "single_bounded_standalone_Phase2_runtime_qualification_not_architecture_comparison",
+  "configuration_id": "phase2-runtime-schema-v1-scope-observation-v1",
+  "schema_version": "delivery-work-items-schema-v1",
+  "scope_observation_version": "runtime-sql-scope-v1",
+  "execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+  "configuration_sha256": "832b76234e25d081736893c0eac50258447fb9e2ae17f8d54d6f029da2373c86",
+  "benchmark_contract_sha256": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+  "query_tool_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+  "model": {
+    "base_url": "http://127.0.0.1:11434",
+    "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+    "name": "hermes-local:qwen3.5-9b",
+    "num_ctx": 65536,
+    "num_predict": 512,
+    "temperature": 0,
+    "timeout_seconds": 120
+  },
+  "model_keep_alive": "30m",
+  "limits": {
+    "evidence_calls": 2,
+    "model_steps": 6,
+    "reprompts": 0,
+    "retries": 0
+  },
+  "allowed_tools": [
+    "query_clickhouse",
+    "retrieve_policy"
+  ],
+  "attempt_status": "execution_error",
+  "error": {
+    "message": "clarification must be an object or null",
+    "type": "LocalWorkerError"
+  },
+  "failure_stage": "final_response_contract_validation",
+  "cli_exit_code": 1,
+  "authorized_new_attempt_consumed": true,
+  "remaining_authorized_live_attempts": 0,
+  "retries": 0,
+  "reprompts": 0,
+  "final_normalized_response": null,
+  "deterministic_score": null,
+  "score_absence_reason": "Worker raised before TrialExecution and deterministic scoring; absence is not a score of zero.",
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase4_accepted": false,
+  "phase5_entry_accepted": false,
+  "architecture_comparisons_authorized": false,
+  "heldout_evaluations": 0,
+  "timing": {
+    "outer_start_utc": "2026-10-18T01:40:06.080885+00:00",
+    "outer_end_utc": "2026-10-18T01:42:39.898332+00:00",
+    "outer_wall_seconds": 153.82365116698202,
+    "capture_start_utc": "2026-10-18T01:40:06.322113+00:00",
+    "capture_end_utc": "2026-10-18T01:42:39.477015+00:00",
+    "capture_wall_seconds": 153.1499719590065,
+    "worker_wall_seconds": 149.88423495797906,
+    "tool_event_interval_seconds": {
+      "query_clickhouse": 7.591392582980916,
+      "retrieve_policy": 0.10810766596114263
+    },
+    "timing_boundary": "Instrumented wall intervals include local capture overhead; not a matched comparison."
+  },
+  "observed_counts": {
+    "worker_enter": 1,
+    "model_start": 3,
+    "model_return": 3,
+    "query_clickhouse_start": 1,
+    "query_clickhouse_return": 1,
+    "retrieve_policy_start": 1,
+    "retrieve_policy_return": 1,
+    "worker_error": 1
+  },
+  "returned_usage": {
+    "input_tokens": 3031,
+    "model_attempts": 3,
+    "model_duration_seconds_known": 136.60023775,
+    "model_returns": 3,
+    "model_returns_with_duration": 3,
+    "model_returns_with_metrics": 3,
+    "output_tokens": 793,
+    "tool_attempts": 2,
+    "tool_returns": 2
+  },
+  "resource_observations": {
+    "worker_host_cpu_user_delta_seconds": 0.021468999999999988,
+    "worker_host_cpu_system_delta_seconds": 0.120644,
+    "attribution_limit": "Before/after shared service snapshots, process-lifetime host RSS including collector. No per-request GPU/VRAM or peak model-memory claim.",
+    "worker_host_lifetime_peak_rss_bytes_after": 32669696,
+    "shared_loaded_model_api_ps_after": [
+      {
+        "name": "hermes-local:qwen3.5-9b",
+        "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+        "size": 7693192396,
+        "size_vram": 7693192396,
+        "context_length": 65536
+      }
+    ]
+  },
+  "human_hands_on_minutes": null,
+  "human_measurement_note": "Not measured; no value is inferred.",
+  "incremental_benchmark_paid_spend_usd": 0,
+  "collector_status": "complete",
+  "collector_errors": [],
+  "postflight": {
+    "benchmark_contract_sha256": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+    "config_sha256": "832b76234e25d081736893c0eac50258447fb9e2ae17f8d54d6f029da2373c86",
+    "execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+    "valid": true
+  },
+  "raw_file_sha256": {
+    "INVOCATION_STARTED.json": "6e9daba881cb96aa79f71aeb590e5b7b260bbf5197b5b4b97b03ec7bcbb7d0b8",
+    "error.json": "42a61a64faf348269bc5326417938f8a8a11cc08cb4b6adcc9bb93d3cb6e66ab",
+    "events.jsonl": "e0ad77a2525c6607b4d1ced4d2dd7787cf5c939af8dcca5a380ac2e0e674dcaf",
+    "manifest.json": "1d8cffae8f236f7126fa91d6c4e8d2b610b8013a486775c5af07315fe96a2ad3"
+  },
+  "public_projection_boundary": {
+    "final_model_content_redacted": false,
+    "final_model_content_hashes": [
+      "47941b092661674ba37aad7298a8cdd2f205dec57cdf6d059b5d1f4ec85a083c"
+    ],
+    "note": "The final worker-returned content string is retained unchanged and matches its stored SHA256; recorded content_redacted is false. Capture uses public allowlists and does not claim a complete raw provider HTTP payload or hidden reasoning. No response was repaired, normalized or rescored.",
+    "final_model_content_bytes_verified_against_stored_hash": true
+  },
+  "setup_boundary": "Runner fresh preflight performs two schema/count SQL reads before reservation; separate earlier credential-loading setup failure and successful preflight are not benchmark invocations.",
+  "final_return_contract_observations": {
+    "clarification_type": "str",
+    "handoff_type": "str",
+    "observed_error_field": "clarification",
+    "manual_normalization_or_rescoring": false
+  }
+}

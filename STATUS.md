@@ -2,6 +2,30 @@
 
 _Last reviewed for approved schema-v1 activation on 2026-10-17._
 
+## Current result — approved standalone scope-v1 attempt failed; no retry
+
+The owner-approved single new Treatment A ran once at
+`57c3007a25af4ff21bec42138aa1df7268ee7d95` on October 17 EDT. The worker
+received three model returns and two evidence tool returns, then raised
+`LocalWorkerError: clarification must be an object or null`. No normalized
+response or deterministic score was produced; score absence is not zero.
+Phase 2 remains unqualified and the one-run authorization is consumed.
+
+The collector is complete without errors and postflight pins remain valid:
+config SHA `832b76234e25d081736893c0eac50258447fb9e2ae17f8d54d6f029da2373c86`,
+contract `d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2`.
+Capture wall time was 153.149972 seconds; returned usage was 3,031 input and
+793 output tokens over 136.60023775 model-duration seconds. No retry,
+correction, rescoring, comparison, held-out execution or PR merge occurred.
+Original failed-run evidence and schema-only/proposal fingerprints are intact.
+The scope approval is resolved, not a pending blocker. Any further live attempt
+requires new authorization. Phase 3 known evaluator defects and all Phase 4
+freeze decisions remain open; no Phase 5 entry is claimed.
+See `experiments/phase2-scope-v1-treatment-a-20261017/README.md` and its summary.
+
+Earlier checkpoints below are historical preparation states, superseded by
+this terminal result for attempt status only.
+
 ## Current checkpoint — scope amendment approved, standalone attempt not yet run
 
 The owner approved `runtime-sql-scope-v1` in this chat on October 17 EDT as a

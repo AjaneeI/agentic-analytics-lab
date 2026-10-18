@@ -108,3 +108,8 @@ This demonstrates three separate agent requirements:
 1. tool-call capability
 2. execution safety
 3. semantic grounding for correct analytical reasoning
+
+
+## October 17, 2026 EDT — approved standalone scope-v1 Treatment A
+
+Owner-approved runtime-sql-scope-v1 activated at57c3007 with config832b7623 and contractd136b653. One attempt failed final-response contract validation: clarification must be an object or null. No normalized response or score;3model/2tool returns,153.149972s capture,3031input/793output tokens. Collector complete/postflight valid; raw sealed locally, original20hashes unchanged. No retry/correction/rescore/comparison/heldout/merge. Phase2 unqualified;Phase3/4 separate/open. See experiments/phase2-scope-v1-treatment-a-20261017/.
