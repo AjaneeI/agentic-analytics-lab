@@ -15,6 +15,7 @@ import csv
 from dataclasses import asdict
 import hashlib
 import json
+import math
 from pathlib import Path
 import sqlite3
 import subprocess
@@ -79,7 +80,8 @@ def prepare_numeric_truth() -> dict:
         "active_rates": {f"{team.lower()}_blocked_pct": round(100 * active_blocked[team] / active_counts[team], 1)
                          for team in TEAMS},
         "completed_ratios": {
-            f"{team.lower()}_effort_ratio": sum(float(row["actual_hours"]) for row in completed[team])
+            # Explicit compensation preserves serialized values on 3.11 and 3.12+.
+            f"{team.lower()}_effort_ratio": math.fsum(float(row["actual_hours"]) for row in completed[team])
             / sum(int(row["planned_hours"]) for row in completed[team]) for team in TEAMS
         },
         "completed_lateness": {
