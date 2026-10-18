@@ -1,0 +1,33 @@
+{
+  "configuration_id": "phase2-runtime-schema-v1",
+  "schema_version": "delivery-work-items-schema-v1",
+  "schema_source": "proposals/phase2-runtime-schema-v1/schema-diagnostic.json",
+  "query_tool_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+  "benchmark_contract_sha256": "5e74c5d40fe119aed7cdfc1b4a54200b0f32a7351faf386d926eb4b70e7bbe20",
+  "standalone_qualification": true,
+  "architecture_comparison_allowed": false,
+  "future_comparison_gate": "strong-single adapter implemented and schema parity independently verified",
+  "scope_observation_version": "original-unresolved",
+  "runtime_offline_validity_gate": "blocked_missing_scope_observation",
+  "model": {
+    "name": "hermes-local:qwen3.5-9b",
+    "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+    "base_url": "http://127.0.0.1:11434",
+    "temperature": 0,
+    "num_predict": 512,
+    "num_ctx": 65536,
+    "timeout_seconds": 120
+  },
+  "limits": {
+    "model_steps": 6,
+    "evidence_calls": 2,
+    "retries": 0,
+    "reprompts": 0
+  },
+  "task_id": "SB-D01",
+  "allowed_tools": [
+    "query_clickhouse",
+    "retrieve_policy"
+  ],
+  "activation_authorization": "User approved schema-v1 activation; run conditional on preflight/offline validity and separate scope amendment approval."
+}
