@@ -2,6 +2,27 @@
 
 _Last reviewed for approved schema-v1 activation on 2026-10-17._
 
+## Current checkpoint — scope amendment approved, standalone attempt not yet run
+
+The owner approved `runtime-sql-scope-v1` in this chat on October 17 EDT as a
+separately versioned runtime observation amendment. The new approved configuration
+is `configurations/phase2-runtime-schema-v1-scope-observation-v1.approved.json`;
+the schema-only configuration, pending proposal and original failed evidence are
+preserved. Final fresh offline suites pass 350 tests on Python 3.11 and 3.12.
+Runtime/collector/scorer/task/security sources are unchanged from reviewed
+`aa5a511`; the combined contract fingerprint remains
+`d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2`.
+
+One standalone Treatment A remains authorized after clean immutable pin,
+configuration hash, passive-capture and fresh model/schema/count preflight.
+No new live attempt has run at this checkpoint. No architecture comparison,
+held-out evaluation, retry or PR merge is authorized. Known valid-SQL-alternative
+and fabricated-value limitations remain Phase 3 defects; Phase 2 success would
+not complete Phase 3. See `docs/phase2-scope-v1-owner-approval-2026-10-17.md`.
+
+The following preparation checkpoints retain their historical pending/inactive
+states. The current approval above supersedes their approval status only.
+
 ## Inactive qualification runner and passive capture verified
 
 The separate runner/capture integration passes 350 offline repository tests on
