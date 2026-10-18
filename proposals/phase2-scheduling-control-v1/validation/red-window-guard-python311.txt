@@ -1,0 +1,14 @@
+test_missing_window_refuses_before_output_creation (test_observer.ObserverTests.test_missing_window_refuses_before_output_creation) ... FAIL
+
+======================================================================
+FAIL: test_missing_window_refuses_before_output_creation (test_observer.ObserverTests.test_missing_window_refuses_before_output_creation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/test_observer.py", line 27, in test_missing_window_refuses_before_output_creation
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

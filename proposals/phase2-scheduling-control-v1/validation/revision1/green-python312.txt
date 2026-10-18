@@ -1,0 +1,24 @@
+test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) ... ok
+test_changed_source_or_protocol_pin_refuses_without_consumption_or_child (test_observer.ObserverTests.test_changed_source_or_protocol_pin_refuses_without_consumption_or_child) ... ok
+test_consumed_directory_cannot_be_reused_even_after_failure (test_observer.ObserverTests.test_consumed_directory_cannot_be_reused_even_after_failure) ... ok
+test_cumulative_header_limit_stops_before_an_extra_read (test_observer.ObserverTests.test_cumulative_header_limit_stops_before_an_extra_read) ... ok
+test_default_cli_only_prints_protocol_without_creating_capture (test_observer.ObserverTests.test_default_cli_only_prints_protocol_without_creating_capture) ... ok
+test_exact_two_request_sequence_retains_effective_settings (test_observer.ObserverTests.test_exact_two_request_sequence_retains_effective_settings) ... ok
+test_metadata_missing_is_inconclusive_and_duplicate_or_wrong_rows_rejected (test_observer.ObserverTests.test_metadata_missing_is_inconclusive_and_duplicate_or_wrong_rows_rejected) ... ok
+test_metadata_sql_rejects_injected_id_and_overwide_window (test_observer.ObserverTests.test_metadata_sql_rejects_injected_id_and_overwide_window) ... ok
+test_metadata_sql_targets_only_new_probe_and_bounded_window (test_observer.ObserverTests.test_metadata_sql_targets_only_new_probe_and_bounded_window) ... ok
+test_missing_profile_counter_stays_unknown (test_observer.ObserverTests.test_missing_profile_counter_stays_unknown) ... ok
+test_missing_window_refuses_before_output_creation (test_observer.ObserverTests.test_missing_window_refuses_before_output_creation) ... ok
+test_output_limit_never_writes_a_partial_or_oversized_artifact (test_observer.ObserverTests.test_output_limit_never_writes_a_partial_or_oversized_artifact) ... ok
+test_parent_timeout_preserves_terminal_receipt_without_replacement (test_observer.ObserverTests.test_parent_timeout_preserves_terminal_receipt_without_replacement) ... ok
+test_partial_status_is_retained_when_transport_times_out (test_observer.ObserverTests.test_partial_status_is_retained_when_transport_times_out) ... ok
+test_preserved_false_setting_reaches_exactly_one_metadata_step (test_observer.ObserverTests.test_preserved_false_setting_reaches_exactly_one_metadata_step) ... ok
+test_scripted_http_captures_exact_wire_parameters_and_two_raw_responses (test_observer.ObserverTests.test_scripted_http_captures_exact_wire_parameters_and_two_raw_responses) ... ok
+test_synthetic_result_mismatch_stops_before_metadata (test_observer.ObserverTests.test_synthetic_result_mismatch_stops_before_metadata) ... ok
+test_transport_failure_is_propagated_without_retry (test_observer.ObserverTests.test_transport_failure_is_propagated_without_retry) ... ok
+test_true_missing_or_malformed_effective_setting_stops_after_one_request (test_observer.ObserverTests.test_true_missing_or_malformed_effective_setting_stops_after_one_request) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.079s
+
+OK

@@ -1,0 +1,41 @@
+{
+  "version": "phase2-scheduling-control-v1-offline-review-corrections-r1",
+  "reviewed_baseline_commit": "532703e03a0708caa8f9530eee1cf2acc4252b8a",
+  "review_comment": "https://github.com/AjaneeI/agentic-analytics-lab/issues/95#issuecomment-6246781809",
+  "resolved_findings": [
+    "R119-01: exact preserved effective false separate from unchanged request0; strict negatives stop after one scripted request.",
+    "R119-02: source/protocol/helper/config/contract/context/invocation/UTC launch binding sealed on success, launch failure, timeout; mismatched pins refuse before consumption."
+  ],
+  "source_sha256": {
+    "README.md": "19ea496588e442e892d146fe93f2c7f3793e47a761ea4807720f0f55747967c1",
+    "observer.py": "0e2928f85aed261967b82cf341e1cdf61cf377fd204852b462537e51ea64c8e1",
+    "protocol.json": "60d7b187a0c04a6f2ede43763d93859e396f130bc03b9e0a8c6379aa9d022c78",
+    "test_observer.py": "6bd74972f9f7c8fb88a42e595c581e85cb99f5e95b3747375b56e8ea430e19e1"
+  },
+  "log_sha256": {
+    "green-R119-01-python311.txt": "7e42fe5b9836bf69de8b466ebb22be6f86ad65531fb66dd4ac1d2c7b1f762850",
+    "green-R119-02-python311.txt": "7443b2a7235e4995459389a7c431222cb740d0ef2b02df1201d837a7123611e6",
+    "green-python311.txt": "81665b9909e0fe5472eaa4098d0ae6f2250ab21c5e4fd839e70afd02c96b5579",
+    "green-python312.txt": "30a781200800c9ca0a8c70414502a15f606e26c9d0bf72b0bc28a61f3e004945",
+    "red-R119-01-python311.txt": "f0952c4fc4c3fe83d90e8d31ff50d94d648bfa176b1a58d1a48f19aed43ab2f3",
+    "red-R119-02-python311.txt": "d120b9e0f304df5244b1a223790a88ffc642373e1a09fea003cff2ed73a41fd3"
+  },
+  "validation": {
+    "python311": "19 focused tests passed",
+    "python312": "19 focused tests passed",
+    "red_R119_01": "One meaningful assertion failure using preserved false setting before correction.",
+    "red_R119_02": "Three parent-outcome assertion failures before provenance binding.",
+    "existing_regressions": "Reuse parent validation:22 SQL-security and7 header tests per interpreter. Dependencies/active benchmark source unchanged.",
+    "full_suite": "Not rerun; no benchmark-SQL characterizations or statistical campaign."
+  },
+  "resource_limits_unchanged": true,
+  "request_parameters_unchanged": true,
+  "frozen_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+  "pending_configuration_sha256": "2605daac78834215b1e5cb26ff934216f8b9ca90c629129512862632f0271c94",
+  "SQL_executions": 0,
+  "service_calls": 0,
+  "model_calls": 0,
+  "Treatment_A_attempts": 0,
+  "diagnostic_launches": 0,
+  "review_disposition": "Engineering fixes verified offline; independent re-review pending. Capacity remains unestablished."
+}
