@@ -1,0 +1,155 @@
+{
+  "comparative_evaluation_approved": false,
+  "external_database_calls": 0,
+  "findings": [
+    {
+      "fixed_at_commit": "1a232f414ab81ecbb27ad37484932eea5527ae85",
+      "found_at_commit": "ebd860bb5682c8b2bc542cd93cc4154aa78c75e1",
+      "id": "PC-JSON-PRIVATE-01",
+      "limit": "Named-field filtering is not general privacy redaction; opaque text, ordinary answer_text, model inputs, SQL and policy content remain unparsed as documented.",
+      "original_behavior": "Known private analysis field inside serialized JSON model content persisted in events.jsonl with collector_status complete.",
+      "remedy_verified": "Known JSON model-return trace copies remove named private fields recursively; model/worker/runner return traces agree; original object/content identity is unchanged.",
+      "status": "resolved"
+    }
+  ],
+  "focused_test_runs": [
+    {
+      "command": [
+        "/Users/ajaneeigharo/.local/bin/python3.11",
+        "-B",
+        "-c",
+        "import json,socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Independent passive capture review forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=0).run(unittest.defaultTestLoader.loadTestsFromName('tests.test_passive_capture'))\n assert result.wasSuccessful()\n print(json.dumps({'tests':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'network_blocked':True}))\n"
+      ],
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-capture",
+      "exit_code": 0,
+      "python_version": "Python 3.11.16",
+      "result": {
+        "errors": 0,
+        "failures": 0,
+        "network_blocked": true,
+        "tests": 29
+      },
+      "stderr": "----------------------------------------------------------------------\nRan 29 tests in 4.057s\n\nOK\n",
+      "stdout": "{\"tests\": 29, \"failures\": 0, \"errors\": 0, \"network_blocked\": true}\n"
+    },
+    {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "-B",
+        "-c",
+        "import json,socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Independent passive capture review forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=0).run(unittest.defaultTestLoader.loadTestsFromName('tests.test_passive_capture'))\n assert result.wasSuccessful()\n print(json.dumps({'tests':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'network_blocked':True}))\n"
+      ],
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-capture",
+      "exit_code": 0,
+      "python_version": "Python 3.12.6",
+      "result": {
+        "errors": 0,
+        "failures": 0,
+        "network_blocked": true,
+        "tests": 29
+      },
+      "stderr": "----------------------------------------------------------------------\nRan 29 tests in 4.112s\n\nOK\n",
+      "stdout": "{\"tests\": 29, \"failures\": 0, \"errors\": 0, \"network_blocked\": true}\n"
+    }
+  ],
+  "independent_privacy_regressions": {
+    "cases": [
+      {
+        "benign_spacing_preserved": "not_applicable",
+        "case": "serialized-private-field",
+        "collector_status": "complete",
+        "model_input_identity_and_trace_unchanged": true,
+        "original_content_hash_correct": true,
+        "original_response_and_content_identity_preserved": true,
+        "private_canary_absent": true,
+        "redaction_flag_correct": true,
+        "three_output_events_checked": true
+      },
+      {
+        "benign_spacing_preserved": "not_applicable",
+        "case": "nested-private-fields",
+        "collector_status": "complete",
+        "model_input_identity_and_trace_unchanged": true,
+        "original_content_hash_correct": true,
+        "original_response_and_content_identity_preserved": true,
+        "private_canary_absent": true,
+        "redaction_flag_correct": true,
+        "three_output_events_checked": true
+      },
+      {
+        "benign_spacing_preserved": true,
+        "case": "benign-json-exact-spacing",
+        "collector_status": "complete",
+        "model_input_identity_and_trace_unchanged": true,
+        "original_content_hash_correct": true,
+        "original_response_and_content_identity_preserved": true,
+        "private_canary_absent": "not_applicable",
+        "redaction_flag_correct": true,
+        "three_output_events_checked": true
+      },
+      {
+        "benign_spacing_preserved": true,
+        "case": "opaque-public-text",
+        "collector_status": "complete",
+        "model_input_identity_and_trace_unchanged": true,
+        "original_content_hash_correct": true,
+        "original_response_and_content_identity_preserved": true,
+        "private_canary_absent": "not_applicable",
+        "redaction_flag_correct": true,
+        "three_output_events_checked": true
+      }
+    ],
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-c",
+      "import hashlib,json,socket\nfrom unittest.mock import patch\nfrom tests.test_passive_capture import TestPassiveCapture,OfflineModel\ndef denied(*a,**k):raise AssertionError('Independent review forbids network')\nsecret='INDEPENDENT_PRIVATE_JSON_ANALYSIS_CANARY'\nvariants=[('serialized-private-field',json.dumps({'answer_text':'public','analysis':secret}),True),('nested-private-fields',json.dumps({'answer_text':'public analysis','items':[{'Thinking':secret},{'child':{'reasoning_content':secret,'public':2}}]}),True),('benign-json-exact-spacing','  { \"answer_text\" : \"public analysis\", \"value\" : 1.00 }\\n',False),('opaque-public-text','ordinary public analysis text',False)]\nrecords=[]\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n for name,content,redacted in variants:\n  case=TestPassiveCapture('test_success_preserves_identity_arguments_and_records_before_delegate')\n  case.setUp()\n  try:\n   response={'type':'final','content':content}\n   model=OfflineModel(response)\n   messages=[{'role':'user','content':'{\"analysis\":\"PUBLIC_INPUT_CANARY\"}'}]\n   def execute(session):\n    observed=session.wrap_model(model)\n    return session.wrap_executor(lambda:observed.respond(messages,[case.tool,{'name':'retrieve_policy'}]))()\n   result=case.run_capture(execute)\n   assert result is response and result['content'] is content\n   raw=(case.out/'events.jsonl').read_text()\n   if redacted:assert secret not in raw\n   events=case.events()\n   outputs=[e for e in events if e['event'] in ('model_return','worker_return','runner_return')]\n   assert len(outputs)==3\n   for event in outputs:\n    assert event['content_redacted'] is redacted\n    assert event['content_sha256']==hashlib.sha256(content.encode()).hexdigest()\n    if not redacted:assert event['result']['content']==content\n   assert model.calls[0][0] is messages\n   assert next(e for e in events if e['event']=='model_start')['input']['messages']==messages\n   assert json.loads((case.out/'manifest.json').read_text())['collector_status']=='complete'\n   records.append({'case':name,'original_response_and_content_identity_preserved':True,'three_output_events_checked':True,'private_canary_absent':True if redacted else 'not_applicable','redaction_flag_correct':True,'original_content_hash_correct':True,'benign_spacing_preserved':True if not redacted else 'not_applicable','model_input_identity_and_trace_unchanged':True,'collector_status':'complete'})\n  finally:case.doCleanups()\nprint(json.dumps(records,sort_keys=True))\n"
+    ],
+    "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-capture",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "[{\"benign_spacing_preserved\": \"not_applicable\", \"case\": \"serialized-private-field\", \"collector_status\": \"complete\", \"model_input_identity_and_trace_unchanged\": true, \"original_content_hash_correct\": true, \"original_response_and_content_identity_preserved\": true, \"private_canary_absent\": true, \"redaction_flag_correct\": true, \"three_output_events_checked\": true}, {\"benign_spacing_preserved\": \"not_applicable\", \"case\": \"nested-private-fields\", \"collector_status\": \"complete\", \"model_input_identity_and_trace_unchanged\": true, \"original_content_hash_correct\": true, \"original_response_and_content_identity_preserved\": true, \"private_canary_absent\": true, \"redaction_flag_correct\": true, \"three_output_events_checked\": true}, {\"benign_spacing_preserved\": true, \"case\": \"benign-json-exact-spacing\", \"collector_status\": \"complete\", \"model_input_identity_and_trace_unchanged\": true, \"original_content_hash_correct\": true, \"original_response_and_content_identity_preserved\": true, \"private_canary_absent\": \"not_applicable\", \"redaction_flag_correct\": true, \"three_output_events_checked\": true}, {\"benign_spacing_preserved\": true, \"case\": \"opaque-public-text\", \"collector_status\": \"complete\", \"model_input_identity_and_trace_unchanged\": true, \"original_content_hash_correct\": true, \"original_response_and_content_identity_preserved\": true, \"private_canary_absent\": \"not_applicable\", \"redaction_flag_correct\": true, \"three_output_events_checked\": true}]\n"
+  },
+  "live_model_calls": 0,
+  "original_reviewed_commit": "ebd860bb5682c8b2bc542cd93cc4154aa78c75e1",
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase4_accepted": false,
+  "phase5_entry_accepted": false,
+  "remaining_must_fix_findings": [],
+  "repo_files_modified_by_reviewer": false,
+  "review_method": "Independent read-only source inspection, network-blocked offline tests and separate serialized-content canary reproduction; no automatic review API",
+  "reviewed_commit": "1a232f414ab81ecbb27ad37484932eea5527ae85",
+  "reviewed_root": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-capture",
+  "schema_version": "passive-capture-independent-review-v1",
+  "scope_limits": [
+    "Pure library verification does not qualify a live adapter, real model/database run, benchmark result or architecture comparison.",
+    "Approval-reference text records supplied authorization evidence; it is not independent verification of owner consent.",
+    "Source/config pinning does not prove the identity and runtime state of future injected delegates or services."
+  ],
+  "scope_proposal_activated": false,
+  "source_review_conclusions": {
+    "fingerprint": "Declared contract/corpus/query metadata and optional versioned scope module are hashed; scope-module change/removal tested.",
+    "model_pin": "Configuration pins fixed local model/options/digest; source fingerprint binds client; wrapper checks client name/base_url/timeout. Actual service digest and injected delegate identity/options remain future reviewed-adapter/service-preflight work.",
+    "one_shot": "Durable exclusive marker and worker-entry record establish at most one recorded entry per evidence folder; crash-level exactly-once is explicitly not claimed.",
+    "partial_error_truth": "Partial completed-call metrics remain observed-only; original delegate return/exception identity preserved; failed-worker swallowing cannot become completion.",
+    "private_field_exclusion": "Structured keys plus parseable known JSON return copies are filtered; documented opaque-text limits remain.",
+    "resource_isolation": "Sampler/finalization errors remain separate from delegate outcomes; OS host/shared Ollama measurements are descriptive before/after snapshots, not per-request CPU/GPU/VRAM or uninstrumented timings.",
+    "side_effect_grants": "Module imports no model/database runtime; CLI is preflight-only and refuses --run; no live adapter or automatic retry/phase advancement exists."
+  },
+  "source_sha256": {
+    "STATUS.md": "d3d927337d427f3bb3cd30230cfb4040cc4a6499fec1b7718dc87253c4919bf7",
+    "docs/passive-capture-v2.md": "8bd8ce13a457ecf017506120efa884c15cb855d9261d27486ce79e29cc2247f8",
+    "experiments/passive-capture-v2-json-envelope-fix-20261017/verification.json": "7880518bf4a6687776955e010627ed52ae326bf4b020a5272f8fb52b393ef595",
+    "scripts/passive_capture.py": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de",
+    "tests/test_passive_capture.py": "33f232cf91599130ea28d294f4000c92d005e11bede3e07aba588fd81b4b58f8"
+  },
+  "whitespace_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0
+  }
+}

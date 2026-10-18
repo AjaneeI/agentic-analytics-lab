@@ -1,0 +1,137 @@
+{
+  "base_scope_commit": "f65b3af5f84aee7fb8b86ea0977669a8f65729f8",
+  "benchmark_contract": {
+    "benchmark_contract_sha256": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+    "contract_files": {
+      "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+      "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+      "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+      "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+      "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+      "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+      "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+      "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+      "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+      "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+      "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+      "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+      "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+      "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+      "src/evals/system_benchmark/local_worker.py": "bf871d3bf7b33abbf2d006f39508a0ebb745c19107138fa11e9ceb2182b27cba",
+      "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+      "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+      "src/evals/system_benchmark/runner.py": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62",
+      "src/evals/system_benchmark/scope_observation_v1.py": "cbd4c010d80d5c3be443412ff0558bf3231c9999073354bb7c1491598552e49f",
+      "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+      "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25",
+      "src/tools/clickhouse_readonly.py": "3f4667601120d0a660274a66da5608da4de2461ff4a5b86385a731d3daa5f1c1",
+      "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27"
+    }
+  },
+  "capture_source_reconciliation": {
+    "STATUS.md": {
+      "integrated_sha256": "262a003ee7680f037c81e760177fc70f14dd519e769119c16ffc1735914a1c13",
+      "matches": false,
+      "reviewed_sha256": "d3d927337d427f3bb3cd30230cfb4040cc4a6499fec1b7718dc87253c4919bf7"
+    },
+    "docs/passive-capture-v2.md": {
+      "integrated_sha256": "8bd8ce13a457ecf017506120efa884c15cb855d9261d27486ce79e29cc2247f8",
+      "matches": true,
+      "reviewed_sha256": "8bd8ce13a457ecf017506120efa884c15cb855d9261d27486ce79e29cc2247f8"
+    },
+    "experiments/passive-capture-v2-json-envelope-fix-20261017/verification.json": {
+      "integrated_sha256": "7880518bf4a6687776955e010627ed52ae326bf4b020a5272f8fb52b393ef595",
+      "matches": true,
+      "reviewed_sha256": "7880518bf4a6687776955e010627ed52ae326bf4b020a5272f8fb52b393ef595"
+    },
+    "scripts/passive_capture.py": {
+      "integrated_sha256": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de",
+      "matches": true,
+      "reviewed_sha256": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de"
+    },
+    "tests/test_passive_capture.py": {
+      "integrated_sha256": "33f232cf91599130ea28d294f4000c92d005e11bede3e07aba588fd81b4b58f8",
+      "matches": true,
+      "reviewed_sha256": "33f232cf91599130ea28d294f4000c92d005e11bede3e07aba588fd81b4b58f8"
+    }
+  },
+  "configuration_activated": false,
+  "external_database_calls": 0,
+  "integrated_capture_commits": [
+    "43cc383",
+    "6563320"
+  ],
+  "live_model_calls": 0,
+  "original_capture_commits": [
+    "ebd860bb5682c8b2bc542cd93cc4154aa78c75e1",
+    "1a232f414ab81ecbb27ad37484932eea5527ae85"
+  ],
+  "phase2_qualified": false,
+  "preserved_capture_independent_review_sha256": "cca483b20cd5f3bd3489e6e77411c719552d10b1aabe8a775e0709a06cdc8bd4",
+  "runner_review": "pending_independent_review",
+  "schema_version": "phase2-qualified-runner-offline-v1",
+  "source_sha256": {
+    "STATUS.md": "262a003ee7680f037c81e760177fc70f14dd519e769119c16ffc1735914a1c13",
+    "configurations/phase2-runtime-schema-v1-scope-observation-v1.proposal.json": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+    "docs/phase2-qualification-runner-v1.md": "8753d3ddf03ed5ae85b9164b3b85ea8c9d5723a50b23952a616915f06da8227a",
+    "scripts/qualify_phase2_once.py": "4a7a157fbb0d5f71a995927d1fc7ed3ab757b3480bd3fd9dc4ef37bf7cc35098",
+    "tests/test_qualify_phase2_once.py": "5ed40f0d86a6302bd53175b57ff96579c104db8f65e40099e169c5ec0458a932"
+  },
+  "status_difference_reason": "Integrated STATUS additionally preserves scope-observation and inactive-runner context; the original review is unchanged and does not independently review the new runner.",
+  "test_runs": [
+    {
+      "command": [
+        "/Users/ajaneeigharo/.local/bin/python3.11",
+        "-B",
+        "-c",
+        "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Qualification runner verification forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+      ],
+      "exit_code": 0,
+      "log": "python311-focused.txt",
+      "log_sha256": "6a3fb03b6f5e51b28e53a6b429055a988ac0f8a24a949bdc7f091e7456972835",
+      "network_blocked": true
+    },
+    {
+      "command": [
+        "/Users/ajaneeigharo/.local/bin/python3.11",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "python311-full.txt",
+      "log_sha256": "cf9e1c06be8cc64f5db9853264f7917338f9057e5ebbe98ee1733714d4a7c521",
+      "network_blocked": false
+    },
+    {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "-B",
+        "-c",
+        "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Qualification runner verification forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+      ],
+      "exit_code": 0,
+      "log": "python312-focused.txt",
+      "log_sha256": "13732d44cbda3c3cb33209f158626a3d2a905b1bb3bbdf8f963e43b3bb05ae97",
+      "network_blocked": true
+    },
+    {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "python312-full.txt",
+      "log_sha256": "8815e2746d770ef2e1ca5a23f2a95d66f90e3241b448bfe58ba576bd22d67799",
+      "network_blocked": false
+    }
+  ]
+}

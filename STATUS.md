@@ -14,6 +14,17 @@ No overall evaluator acceptance or new Treatment A is claimed. Owner approval
 of the versioned amendment is pending; frozen methods/fixtures stay unchanged.
 See `experiments/runtime-scope-v1/` and the separate proposed configuration.
 
+## Inactive qualification runner v1 — no live execution
+
+The separate `scripts/qualify_phase2_once.py` adapter connects the existing
+D01 runner/worker to passive capture v2 behind pinned-source, owner approval,
+scope-version and passed runtime-validity guards. Its default CLI checks source
+only. The real combined proposal remains pending and cannot reach service or
+model entry. Only injected offline tests have run; independent runner review
+and a final owner-approved execution/configuration pin remain required.
+No frozen method, scorer, task/reference, model setting or permission changed.
+See `docs/phase2-qualification-runner-v1.md` for the exact boundaries.
+
 ## Passive capture v2 — offline only
 
 The [versioned capture library](docs/passive-capture-v2.md) records public

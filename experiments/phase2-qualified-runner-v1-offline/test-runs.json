@@ -1,0 +1,56 @@
+[
+  {
+    "command": [
+      "/Users/ajaneeigharo/.local/bin/python3.11",
+      "-B",
+      "-c",
+      "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Qualification runner verification forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+    ],
+    "exit_code": 0,
+    "log": "python311-focused.txt",
+    "log_sha256": "6a3fb03b6f5e51b28e53a6b429055a988ac0f8a24a949bdc7f091e7456972835",
+    "network_blocked": true
+  },
+  {
+    "command": [
+      "/Users/ajaneeigharo/.local/bin/python3.11",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests"
+    ],
+    "exit_code": 0,
+    "log": "python311-full.txt",
+    "log_sha256": "cf9e1c06be8cc64f5db9853264f7917338f9057e5ebbe98ee1733714d4a7c521",
+    "network_blocked": false
+  },
+  {
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+      "-B",
+      "-c",
+      "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Qualification runner verification forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+    ],
+    "exit_code": 0,
+    "log": "python312-focused.txt",
+    "log_sha256": "13732d44cbda3c3cb33209f158626a3d2a905b1bb3bbdf8f963e43b3bb05ae97",
+    "network_blocked": true
+  },
+  {
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests"
+    ],
+    "exit_code": 0,
+    "log": "python312-full.txt",
+    "log_sha256": "8815e2746d770ef2e1ca5a23f2a95d66f90e3241b448bfe58ba576bd22d67799",
+    "network_blocked": false
+  }
+]
