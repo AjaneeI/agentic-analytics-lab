@@ -74,3 +74,22 @@ or publication-ready benchmark results.
 This file is not authoritative when it conflicts with repository evidence.
 GitHub issues, PRs, commits, workflow runs, tests, and benchmark artifacts take
 precedence.
+
+## Phase 3 preparation — 2026-10-17 sprint, not accepted
+
+Owner authorization in issues #94/#95 permits this independent model-free
+preparation while Phase 2 remains a separate prerequisite. The additive
+evaluator audit preserves seven authored reference responses (7/7 pass),
+17 intended-reason negative controls (17/17 reject), five additional semantic
+negative controls (all wrongly pass), and nine valid alternatives (four
+wrongly reject). Nine unresolved control mismatches block evaluator acceptance.
+The audit records A01 scope ambiguity, explicit policy/version authority,
+task-template overlap, and unchanged hashes for 18 frozen inputs. No scorer,
+task, reference expectation, corpus, Q1–Q6, or data generator was changed.
+
+See `experiments/evaluator-validation-20261017/README.md` and its preserved
+`audit.json`. The audit command intentionally exits 2; four audit-tool tests
+and all 293 repository tests pass locally on Python 3.14.7. This is evaluator
+defect evidence and preparation only, not Phase 3 acceptance, Phase 2
+qualification, model performance, or held-out evidence. Versioned evaluation
+corrections require owner approval; no corrections were applied here.

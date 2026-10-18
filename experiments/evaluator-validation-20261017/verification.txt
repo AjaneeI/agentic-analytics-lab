@@ -1,0 +1,37 @@
+Phase 3 model-free preparation verification; author self-review only.
+Audit exit 2 is expected unresolved-defect evidence; unit test success is not evaluator acceptance.
+
+$ /opt/homebrew/opt/python@3.14/bin/python3.14 --version
+exit=0; expected=0
+Python 3.14.7
+
+$ /opt/homebrew/opt/python@3.14/bin/python3.14 scripts/audit_system_benchmark_evaluator.py
+exit=2; expected=2
+stdout is byte-identical to preserved audit.json; 9 unresolved controls.
+
+$ /opt/homebrew/opt/python@3.14/bin/python3.14 -m unittest tests.system_benchmark.test_evaluator_audit -v
+exit=0; expected=0
+test_actual_audit_imports_no_model_or_tool_runtime (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_actual_audit_imports_no_model_or_tool_runtime) ... ok
+test_known_bad_reason_targets_and_valid_tool_order_are_distinct (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_known_bad_reason_targets_and_valid_tool_order_are_distinct) ... ok
+test_saved_report_is_byte_reproducible_and_hashes_actual_inputs (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_saved_report_is_byte_reproducible_and_hashes_actual_inputs) ... ok
+test_semantic_defects_are_reported_as_a_failing_gate (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_semantic_defects_are_reported_as_a_failing_gate) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.312s
+
+OK
+
+$ /opt/homebrew/opt/python@3.14/bin/python3.14 -m unittest discover -s tests -v
+exit=0; expected=0
+
+----------------------------------------------------------------------
+Ran 293 tests in 0.670s
+
+OK
+
+$ /opt/homebrew/opt/python@3.14/bin/python3.14 scripts/check_project_context.py
+exit=0; expected=0
+PASS: Project Context Protocol v1 checks passed
+
+$ git diff --check
+exit=0; expected=0
