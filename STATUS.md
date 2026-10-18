@@ -1,3 +1,9 @@
+# Latest owner-approved checkpoint — response-format v1
+
+The owner approved activating the exact reviewed response-format v1 prompt and ONE bounded standalone Treatment A after final validation. The two failed runs remain sealed. Full offline suites pass 363 tests on Python 3.11/3.12. Live outcome is pending; Phase 2 remains unqualified. No retry, scorer change or comparisons are authorized. See docs/phase2-response-format-v1-activation-approval-2026-10-17.md.
+
+The following checkpoints are historical records.
+
 # Verified Project Status
 
 _Last reviewed for approved schema-v1 activation on 2026-10-17._

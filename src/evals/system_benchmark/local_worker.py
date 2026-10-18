@@ -117,6 +117,15 @@ After evidence gathering, return one JSON object only with these keys:
 disposition, answer_text, uncertainty, clarification, handoff.
 Do not include evidence_refs, observed_tools, or observed_values; the runtime
 constructs those from actual tool execution.
+
+Response field types:
+- disposition: one of "answer", "clarify", "unsupported", "handoff".
+- answer_text: a non-empty JSON string.
+- uncertainty: a JSON string or JSON null.
+- clarification: a JSON object or JSON null.
+- handoff: a JSON object or JSON null.
+Use JSON null (without quotation marks) for clarification or handoff when inapplicable.
+Do not substitute strings, booleans, arrays, or numbers for those object-or-null fields.
 """.strip()
 
 
