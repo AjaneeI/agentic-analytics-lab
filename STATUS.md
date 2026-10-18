@@ -2,6 +2,25 @@
 
 _Last reviewed for approved schema-v1 activation on 2026-10-17._
 
+## Inactive qualification runner and passive capture verified
+
+The separate runner/capture integration passes 350 offline repository tests on
+Python 3.11, 3.12 and 3.14. Independent source-backed review at `ab9449a` verifies
+40 focused tests on both supported Python versions, exact fixed client options,
+frozen-input/security-guard preservation and pending-config refusal before any
+service/model invocation or output folder. Review artifacts and reproducer are
+stored in `experiments/phase2-qualified-runner-v1-offline/` and `scripts/`.
+
+The checked-in observation configuration remains pending, with fingerprint
+`d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2`.
+No live attempt or phase acceptance is claimed. Once separately approved, the
+runner still requires a clean immutable pin, exact configuration hash and fresh
+model/schema/500-row checks before one recorded worker entry. Exceptions retain
+partial public evidence without a score or retry; incomplete capture/postflight
+blocks CLI qualification while preserving the raw scorer result. Named private
+fields are omitted only from public evidence copies, with original hashes and
+explicit redaction flags; runtime/scorer objects remain unchanged.
+
 ## Scope observation v1 candidate — review required before execution
 
 This branch proposes a separate `runtime-sql-scope-v1` observation amendment.
