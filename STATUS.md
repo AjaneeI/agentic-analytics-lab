@@ -2,6 +2,25 @@
 
 _Last reviewed for approved schema-v1 activation on 2026-10-17._
 
+## Inactive qualification runner and passive capture verified
+
+The separate runner/capture integration passes 350 offline repository tests on
+Python 3.11, 3.12 and 3.14. Independent source-backed review at `ab9449a` verifies
+40 focused tests on both supported Python versions, exact fixed client options,
+frozen-input/security-guard preservation and pending-config refusal before any
+service/model invocation or output folder. Review artifacts and reproducer are
+stored in `experiments/phase2-qualified-runner-v1-offline/` and `scripts/`.
+
+The checked-in observation configuration remains pending, with fingerprint
+`d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2`.
+No live attempt or phase acceptance is claimed. Once separately approved, the
+runner still requires a clean immutable pin, exact configuration hash and fresh
+model/schema/500-row checks before one recorded worker entry. Exceptions retain
+partial public evidence without a score or retry; incomplete capture/postflight
+blocks CLI qualification while preserving the raw scorer result. Named private
+fields are omitted only from public evidence copies, with original hashes and
+explicit redaction flags; runtime/scorer objects remain unchanged.
+
 ## Scope observation v1 candidate — review required before execution
 
 This branch proposes a separate `runtime-sql-scope-v1` observation amendment.
@@ -13,6 +32,32 @@ remains unknown and a literal-metric false positive remains a grader defect.
 No overall evaluator acceptance or new Treatment A is claimed. Owner approval
 of the versioned amendment is pending; frozen methods/fixtures stay unchanged.
 See `experiments/runtime-scope-v1/` and the separate proposed configuration.
+
+## Inactive qualification runner v1 — no live execution
+
+The separate `scripts/qualify_phase2_once.py` adapter connects the existing
+D01 runner/worker to passive capture v2 behind pinned-source, owner approval,
+scope-version and passed runtime-validity guards. Its default CLI checks source
+only. The real combined proposal remains pending and cannot reach service or
+model entry. Only injected offline tests have run; independent runner review
+and a final owner-approved execution/configuration pin remain required.
+No frozen method, scorer, task/reference, model setting or permission changed.
+See `docs/phase2-qualification-runner-v1.md` for the exact boundaries.
+
+## Passive capture v2 — offline only
+
+The [versioned capture library](docs/passive-capture-v2.md) records public
+model/tool boundary events, pre-query SQL, partial metrics and a durable worker
+entry, preserving delegate results and errors without retries. It requires
+explicit run authorization, configuration/source pins and a passed runtime
+validity gate. Its CLI remains preflight-only; no live activation adapter or
+new Treatment A attempt is included. The current scope-observation gate remains
+blocked on this branch. Existing collectors and failed evidence remain intact.
+Offline verification passed 25 focused tests and all 322 repository tests.
+The subsequent JSON model-envelope trace-copy fix passed 29 focused tests and
+all 326 repository tests. It omits named private JSON keys in trace copies and
+records the original content hash without changing runtime/scorer objects.
+This is not complete privacy redaction; ordinary and opaque text remain intact.
 
 ## Approved schema v1 activation, scope validity still blocked
 

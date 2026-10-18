@@ -1,0 +1,89 @@
+{
+  "base_commit": "644a68d75cf6743d3daaace51f42a0571747417c",
+  "capture_version": "passive-capture-v2",
+  "checks": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_passive_capture",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "focused-tests.txt",
+      "log_sha256": "e03654d439d85e1f4504ff5150d9c6176ffa525e4ffc52669dffb5d680715720",
+      "tests": 25
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "full-tests.txt",
+      "log_sha256": "6411fd9f2741dfec1b7a5cddeedca9c7a509a8510459c33b4ab54c669b1411e0",
+      "tests": 322
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "compileall",
+        "-q",
+        "scripts/passive_capture.py",
+        "tests/test_passive_capture.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/check_project_context.py"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "PASS: Project Context Protocol v1 checks passed\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "644a68d75cf6743d3daaace51f42a0571747417c",
+        "--",
+        "src",
+        "evals",
+        "configurations"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "claim_boundary": "Offline deterministic checks only. No live model/database/provider calls or benchmark attempt. CLI preflight-only; scope gate remains blocked. Hosted CI/CodeQL not run.",
+  "collector_sha256": "be064c07968c091118da14bbbd707b788da1c9a49cc89308b733282cd1b0f9e0",
+  "historical_failed_evidence_files_verified": 20,
+  "historical_failed_evidence_manifest_sha256": "97cc69f4f80b2f729e41f5fb0a2c032e0bb05f3dcc32209719f892e3d90325c5",
+  "original_collectors_sha256": {
+    "work/execute_once.py": "ec5166a7630704d346e8d244cd50f17202cc4f8b00e83f56900d91278b20c3ab",
+    "work/pinned_capture.py": "b5032e8e5e833d6f5e7dbff9facccbe453b14e6c5169b7473942d8a832379bbb"
+  }
+}

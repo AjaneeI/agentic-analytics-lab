@@ -1,0 +1,75 @@
+{
+  "benchmark_contract_sha256": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+  "configuration_activated": false,
+  "external_database_calls": 0,
+  "finding_fixed": "named_private_fields_in_execution_snapshot",
+  "independent_runner_review": "pending",
+  "live_model_calls": 0,
+  "raw_runner_result_bytes_changed": false,
+  "red_green_regression": "handoff.analysis canary persisted before fix; absent from all emitted artifacts after fix; original scored response and observation identity preserved",
+  "schema_version": "phase2-qualified-runner-execution-projection-fix-v1",
+  "scope_limit": "Existing named-field projection only; opaque answer text, inputs and SQL remain unparsed.",
+  "source_sha256": {
+    "configurations/phase2-runtime-schema-v1-scope-observation-v1.proposal.json": "6a4f637cf1e1baac67aee603b69c019f4de91625b0f2a460d88c112fdcadaae1",
+    "docs/phase2-qualification-runner-v1.md": "4cdcebb41610366252b75b250d47b6b70600c8e4e8d7d8a61c4396f8a8d7a53e",
+    "scripts/qualify_phase2_once.py": "bf2bf6f4b5ecc9bfd77e5bd244eef5e994a9e6c79842dbdd4f0ccd5e9ea55ab8",
+    "tests/test_qualify_phase2_once.py": "4ddd8d32a6dbbb2fb004aa9da8482d5137bcd3ec0bad206e3c09fd3bbe514545"
+  },
+  "test_runs": [
+    {
+      "command": [
+        "/Users/ajaneeigharo/.local/bin/python3.11",
+        "-B",
+        "-c",
+        "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Execution projection retake forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+      ],
+      "exit_code": 0,
+      "log": "python311-focused.txt",
+      "log_sha256": "d62faa4579c93475649010f67ff3338be5531bc3e97287aa124b021649c01306",
+      "network_blocked": true
+    },
+    {
+      "command": [
+        "/Users/ajaneeigharo/.local/bin/python3.11",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "python311-full.txt",
+      "log_sha256": "6a0ddef0c337f3f7d178ecc6631ca58f8b7c949a1949e3e8d3f3740abfb8975c",
+      "network_blocked": false
+    },
+    {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "-B",
+        "-c",
+        "import socket,unittest\nfrom unittest.mock import patch\ndef denied(*a,**k):raise AssertionError('Execution projection retake forbids network')\nwith patch.object(socket.socket,'connect',denied),patch.object(socket.socket,'connect_ex',denied),patch('socket.create_connection',denied):\n result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromNames(['tests.test_qualify_phase2_once','tests.test_passive_capture']))\n assert result.wasSuccessful()\n"
+      ],
+      "exit_code": 0,
+      "log": "python312-focused.txt",
+      "log_sha256": "939313a43e270afd6fba21ee7d5c811c3671edc39f9d013d6eee7257689c0ae2",
+      "network_blocked": true
+    },
+    {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "python312-full.txt",
+      "log_sha256": "1875d399bc7adce09b1f7b639443f9728af5e43341d5e4ad71b33a98cbaafc49",
+      "network_blocked": false
+    }
+  ],
+  "verified_implementation_commit": "18bb901502156dd346ec2759e5b8c52659d78d65"
+}
