@@ -1,0 +1,9 @@
+{
+  "authorization_record_id": "runtime-clickhouse-expression-jit-off-v1-one-attempt-20261018",
+  "consumed": true,
+  "exact_worker_entries": 1,
+  "outcome": "TIMEOUT_EXCEEDED",
+  "remaining_attempts": 0,
+  "never_remove_or_reuse_launch_marker": true,
+  "new_experiment_requires_separate_authorization": true
+}

@@ -1,0 +1,8 @@
+I approve exactly one new, bounded, standalone Treatment A attempt using runtime-clickhouse-expression-jit-off-v1, following successful final preflight.
+Create and pin a new immutable authorization configuration and record, including the exact commit, configuration hash, execution parameters, and final invocation.
+Before execution, verify the local model and digest, schema and data, source and configuration integrity, experimental contract, resource limits, and passive evidence capture.
+Preserve all historical evidence without modification. Keep the existing prompt, model, dataset, SQL guards, scoring methodology, timeouts, and resource budgets unchanged. The only permitted runtime intervention is compile_expressions=0.
+Execute exactly one attempt, with no retries, automatic corrections, replacement runs, or additional experiments.
+Preserve all resulting evidence, including failures. Do not rescore historical attempts, merge pull requests, modify frozen methodology, or initiate paid provider calls.
+After execution, evaluate the result against the established Phase 2 acceptance criteria. Report whether the timeout was resolved, whether the attempt qualifies, and what remains unresolved.
+Reconcile GitHub, Notion, and Asana with the results. Stop after reporting. Do not proceed to another experiment without separate authorization.

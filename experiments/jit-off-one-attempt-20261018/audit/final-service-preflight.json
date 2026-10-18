@@ -1,0 +1,124 @@
+{
+  "additional_setup_SQL_calls": 2,
+  "approved_model": {
+    "details": {
+      "context_length": 262144,
+      "embedding_length": 4096,
+      "families": [
+        "qwen35"
+      ],
+      "family": "qwen35",
+      "format": "gguf",
+      "parameter_size": "9.0B",
+      "parent_model": "Qwen3.5-9B-Q4_K_M.gguf",
+      "quantization_level": "Q4_K_M"
+    },
+    "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+    "name": "hermes-local:qwen3.5-9b",
+    "size": 5680522617
+  },
+  "benchmark_worker_entries": 0,
+  "boundary": "Read-only setup observations; excluded from benchmark evidence-call counts.",
+  "classification": "approved_read_only_final_preflight_not_experiment",
+  "client_HTTP_timeout_seconds": 15,
+  "data_attestation": {
+    "actual_typed_sha256": "c447c789b1b8528e1eb8cfae4456078a58d0ea65173a09dadb2783712392fc12",
+    "all_rows_equal": true,
+    "columns_verified": 13,
+    "expected_typed_sha256": "c447c789b1b8528e1eb8cfae4456078a58d0ea65173a09dadb2783712392fc12",
+    "normalization": "Declared schema: integer fields parsed as int; actual_hours rounded to IEEE754 Float32 on both sides; empty CSV completed_at equals SQL NULL; other strings exact; sorted by work_item_id. No benchmark response/scorer normalization.",
+    "rows_verified": 500
+  },
+  "data_attestation_SQL": "SELECT work_item_id, team, priority, status, created_at, due_at, completed_at, planned_hours, actual_hours, blocked, blocker_type, rework_count, customer_impact FROM agentic_analytics.delivery_work_items ORDER BY work_item_id",
+  "dataset_csv_sha256": "cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef",
+  "effective_settings": {
+    "compile_expressions": "false",
+    "max_bytes_to_read": "10485760",
+    "max_execution_time": "10",
+    "max_memory_usage": "134217728",
+    "max_result_rows": "1000",
+    "max_rows_to_read": "10000",
+    "max_threads": "2",
+    "readonly": "1",
+    "result_overflow_mode": "break",
+    "server_version": "26.8.4.11"
+  },
+  "effective_settings_SQL": "SELECT version() AS server_version, toString(getSetting('compile_expressions')) AS compile_expressions, toString(getSetting('readonly')) AS readonly, toString(getSetting('max_execution_time')) AS max_execution_time, toString(getSetting('max_result_rows')) AS max_result_rows, toString(getSetting('result_overflow_mode')) AS result_overflow_mode, toString(getSetting('max_rows_to_read')) AS max_rows_to_read, toString(getSetting('max_bytes_to_read')) AS max_bytes_to_read, toString(getSetting('max_memory_usage')) AS max_memory_usage, toString(getSetting('max_threads')) AS max_threads",
+  "end_utc": "2026-10-18T04:16:00.447663+00:00",
+  "environment": {
+    "credential_values_logged": false,
+    "local_endpoint_verified": true,
+    "permissions_or_account_configuration_changed": false,
+    "source": "existing repository .env; only CLICKHOUSE_URL/USER/PASSWORD keys loaded"
+  },
+  "final_preflight_passed": true,
+  "live_model_calls": 0,
+  "ollama_version": {
+    "version": "0.35.0"
+  },
+  "preflight_SQL_calls_total": 4,
+  "request_settings_sha256": "af7555fb9f6c0c2b0c3df489fdd7ce2d49df9b9bd22eb6bd1d0c9a78a4123ab1",
+  "row_count": 500,
+  "schema": [
+    {
+      "name": "work_item_id",
+      "type": "String"
+    },
+    {
+      "name": "team",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "priority",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "status",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "created_at",
+      "type": "DateTime"
+    },
+    {
+      "name": "due_at",
+      "type": "DateTime"
+    },
+    {
+      "name": "completed_at",
+      "type": "Nullable(DateTime)"
+    },
+    {
+      "name": "planned_hours",
+      "type": "UInt16"
+    },
+    {
+      "name": "actual_hours",
+      "type": "Float32"
+    },
+    {
+      "name": "blocked",
+      "type": "UInt8"
+    },
+    {
+      "name": "blocker_type",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "rework_count",
+      "type": "UInt8"
+    },
+    {
+      "name": "customer_impact",
+      "type": "UInt8"
+    }
+  ],
+  "setup_model_catalog_requests": 1,
+  "setup_sql": [
+    "DESCRIBE TABLE agentic_analytics.delivery_work_items",
+    "SELECT count() AS row_count FROM agentic_analytics.delivery_work_items"
+  ],
+  "setup_sql_calls": 2,
+  "source_preflight_rechecked": true,
+  "start_utc": "2026-10-18T04:16:00.266436+00:00"
+}

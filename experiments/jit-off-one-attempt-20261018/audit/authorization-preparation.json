@@ -1,0 +1,7 @@
+{
+  "configuration": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-jit-off-authorized/configurations/phase2-runtime-schema-v1-scope-observation-v1-response-format-v1-expression-jit-off-v1.one-attempt-20261018.json",
+  "configuration_sha256": "f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b",
+  "parent_commit": "4d98b8f09b89e9d44aad39d41409cfcec67740ee",
+  "authorized_attempts": 1,
+  "live_attempt_started": false
+}

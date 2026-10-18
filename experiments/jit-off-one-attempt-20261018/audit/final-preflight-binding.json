@@ -1,0 +1,12 @@
+{
+  "execution_commit": "688f62dcedb3116e8ae46579cea0fd135eba94ce",
+  "configuration_sha256": "f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b",
+  "existing_seed42_CSV_sha256": "cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef",
+  "final_source_and_CSV_recheck_sha256": "3011c9346b5b29cc8904de2a0ab00de619d75e881c591f7048722d2237b9c9a0",
+  "preflight_verifier_sha256": "ccaf775e31105e171cca703107f3f701a85050841a3a4ca873be16515cb363bc",
+  "one_shot_launcher_sha256": "881bb4fe6b63cbaa6066a8aad68d714849adfdcfc105778a676c3954498e690a",
+  "authorization_execution_record_sha256": "a50096bee9f085513fab17628fe5dc6cb901659f644bb90a3c88a51203ed5e3b",
+  "new_runtime_changes": false,
+  "exactly_one_attempt": true,
+  "CSV_pin_guard": "Reject CSV drift before service preflight and immediately before exclusive launch."
+}

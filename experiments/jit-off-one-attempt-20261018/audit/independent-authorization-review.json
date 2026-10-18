@@ -1,0 +1,126 @@
+{
+  "reviewed_commit": "688f62dcedb3116e8ae46579cea0fd135eba94ce",
+  "parent_activation_commit": "4d98b8f09b89e9d44aad39d41409cfcec67740ee",
+  "configuration_sha256": "f1afa4f6d3b6238b87155729d63453dd43d7d001f6aeb45c99cd64dd9e8ca27b",
+  "must_fix": [],
+  "classification": "bounded_independent_offline_authorization_delta_review",
+  "verified": {
+    "changed_files": [
+      "STATUS.md",
+      "configurations/phase2-runtime-schema-v1-scope-observation-v1-response-format-v1-expression-jit-off-v1.one-attempt-20261018.json",
+      "docs/jit-off-v1-one-attempt-authorization-2026-10-18.md"
+    ],
+    "configuration_delta_fields": [
+      "authorization_configuration_parent_commit",
+      "authorization_configuration_parent_sha256",
+      "authorization_consumption",
+      "authorization_record_id",
+      "authorized_evidence_directory",
+      "authorized_live_attempts",
+      "live_authorization_record",
+      "live_authorization_source",
+      "live_treatment_a_authorization"
+    ],
+    "live_treatment_a_authorization": "approved",
+    "authorized_live_attempts": 1,
+    "authorized_live_attempts_is_integer": true,
+    "all_existing_tracked_files_except_STATUS_unchanged": 334,
+    "runtime_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+    "all_runtime_prompt_model_data_scorer_security_runner_capture_bytes_unchanged": true,
+    "activation_only_configuration_preserved": true,
+    "current_source_preflight": {
+      "activation_ready": true,
+      "execution_ready": true,
+      "execution_blockers": [],
+      "source_preflight_only": true,
+      "services_contacted": false
+    },
+    "parent_config_source_preflight": {
+      "activation_ready": true,
+      "execution_ready": false,
+      "execution_blockers": [
+        "live_treatment_a_not_authorized"
+      ]
+    },
+    "negative_gates": [
+      "wrong config SHA refused",
+      "wrong pinned source commit refused"
+    ],
+    "task_service_model_factory_HTTP_delegates_called": 0,
+    "designated_evidence_directory_absent": true,
+    "preservation_recomputed": {
+      "prior_raw_files": 28,
+      "archives": 8,
+      "activation_inventory_files": 98,
+      "existing_source_configuration_files": 92
+    },
+    "worktree_clean_before_and_after": true,
+    "command_packet": {
+      "command_vector_matches_both_shell_records": true,
+      "exact_pinned_interpreter_script_root_commit_config_sha_and_evidence_directory": true,
+      "run_flag_count": 1,
+      "approval_reference_bound": true,
+      "execution_parameters_equal_config": true,
+      "authorization_execution_record_sha256": "a50096bee9f085513fab17628fe5dc6cb901659f644bb90a3c88a51203ed5e3b"
+    },
+    "administrative_helper_review": {
+      "preflight_verifier_sha256": "ccaf775e31105e171cca703107f3f701a85050841a3a4ca873be16515cb363bc",
+      "one_shot_launcher_sha256": "881bb4fe6b63cbaa6066a8aad68d714849adfdcfc105778a676c3954498e690a",
+      "final_preflight_binding_sha256": "0505353bbdf8f932ad1dbf9350ab3c06002a62f28e09c23ecdb4262a33584850",
+      "source_only_helper_gate_independently_rerun": true,
+      "CSV_pin_positive_and_negative_independently_pass": true,
+      "typed500_row_positive_and_negative_independently_pass": true,
+      "CSV_type_projection_scope": "Setup-only declared integer, Float32 and nullable date conversion; benchmark responses/scoring are not changed.",
+      "service_mode_executed_by_reviewer": false,
+      "launcher_executed_by_reviewer": false,
+      "launcher_subprocess_run_calls": 1,
+      "launcher_retry_loops": 0,
+      "exclusive_launch_marker_fsynced_before_child": true,
+      "setup_service_queries_reviewed": "Existing model/schema/count preflight; effective fixed settings and full500-row13-column dataset comparison. No analytical aggregate or model inference.",
+      "launch_and_worker_output_absent_at_review": true
+    }
+  },
+  "full_suite_evidence": {
+    "311": {
+      "sha256": "f561cef7c5bac8473bdb60ebb3e75c5f539f0de9f084bae7421815bfe116ad60",
+      "result": "375 tests OK; existing fresh log inspected, not rerun by reviewer"
+    },
+    "312": {
+      "sha256": "a5ddff7baebbea4cea136af687a342823e052a1ad308a82e9f18e2306f076da8",
+      "result": "375 tests OK; existing fresh log inspected, not rerun by reviewer"
+    }
+  },
+  "one_attempt_boundary": "Unchanged exclusive output mkdir and x-mode invocation marker plus one worker entry guard remain. Immutable approved/count1 JSON is an authorization record, not a global consumed-attempt ledger; the final outer exclusive launch record and fixed output directory must bind the sole actual invocation.",
+  "new_activity": {
+    "SQL_calls": 0,
+    "model_calls": 0,
+    "service_calls": 0,
+    "Treatment_A_entries": 0,
+    "historical_rescores": 0,
+    "source_changes": 0,
+    "automated_review_requests": 0
+  },
+  "limitations": [
+    "Source preflight readiness is conditional local integrity/authorization readiness, not successful fresh model/data/schema/settings preflight or permission for the reviewer to execute.",
+    "The sole live attempt and mandatory final preflight remain for the authorized parent executor. This review neither performs nor accepts an experiment.",
+    "Existing fresh full-suite logs were inspected; the reviewer did not duplicate the full suite.",
+    "Future interpretation must separate a returned evidence query from universal timeout resolution, JIT causation and scientific phase acceptance.",
+    "Reviewer independently reviewed this authorization delta; reviewer previously contributed to the inherited runner.",
+    "Outer helper/launcher are administrative files outside the commit; this review is bound to the listed helper hashes and final-preflight-binding.json. Any subsequent change requires renewed comparison."
+  ],
+  "reproducer_path": "work/independent_jit_authorization_review.py",
+  "review_status": "complete_offline_review",
+  "reviewed_at_utc": "2026-10-18T04:15:46.611432+00:00",
+  "resolved_findings": [
+    {
+      "id": "AUTH-PREFLIGHT-DATA-PIN-01",
+      "original_finding": "Setup/launch previously checked agreement with the current CSV without binding the original seed42 CSV hash.",
+      "resolution": "Expected seed42 CSV SHA is now checked before the source gate/services, and again as setup CSV == current CSV == expected SHA before launch.",
+      "independent_retake": "Original CSV passes; changed disposable CSV refuses before source_preflight. Offline typed500-row equality passes; one-field dataset mutation refuses.",
+      "recorded_regression": "2-test red log has1 expected failure;2-test green log passes.",
+      "preflight_verifier_sha256": "ccaf775e31105e171cca703107f3f701a85050841a3a4ca873be16515cb363bc",
+      "one_shot_launcher_sha256": "881bb4fe6b63cbaa6066a8aad68d714849adfdcfc105778a676c3954498e690a"
+    }
+  ],
+  "offline_retake_reproducer_path": "work/complete_independent_jit_auth_review.py"
+}
