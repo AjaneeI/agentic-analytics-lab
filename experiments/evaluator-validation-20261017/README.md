@@ -3,7 +3,9 @@
 **Gate: FAIL / NOT ACCEPTED.** This is independent, model-free preparation
 under owner-authorized sprint issues #94/#95, while Phase 2 qualification
 remains a separate prerequisite. It neither runs nor qualifies Treatment A.
-No model, runtime evidence tool, held-out case, or paid provider was called.
+No live model, external database, held-out case, or paid provider was called.
+The original envelope audit calls no evidence runtime. The separate integration
+characterization below executes SQL locally and retrieves repository-local policy.
 
 ## Evidence and acceptance criteria
 
@@ -17,14 +19,14 @@ policy authority and task-template relationships to be audited; no unresolved
 grader defects; and an evidenced scorer/version freeze. Preparation can run
 in parallel, but cannot accept Phase 3 before prerequisites.
 
-| Check on the current development bank | Observed | Status |
+| Original envelope audit of the development bank | Observed | Status |
 |---|---|---|
 | Authored contract-conforming references | 7/7 pass | Pass for these seven only |
 | Negative controls with explicit intended reason codes | 17/17 reject for every targeted reason | Pass for those controls |
 | Additional semantic negative controls | 0/5 reject; all five wrongly pass | Fail |
 | Valid wording/ordering/numeric alternatives | 5/9 accepted; four rejected | Fail |
 | Frozen scorer, contracts, task/reference files, corpus, Q1–Q6, data generator | 18/18 byte-identical to baseline | Pass |
-| Full Phase 3 acceptance | Nine unresolved control mismatches; prerequisite not qualified here | Not accepted |
+| Full Phase 3 acceptance | Nine original mismatches plus the separate integration defects below; prerequisite not qualified here | Not accepted |
 
 `controls.json` contains seven complete reference responses and synthetic
 observations authored from the existing task contracts and policy corpus,
@@ -86,9 +88,63 @@ previous frozen model run as if its original evaluation had changed.
 | H01 | **Intentional authority conflict:** `escalation-policy@1.0#p1-temporary-authority` permits incident-commander authorization before service-owner approval; `service-level-policy@1.0#p1-exception-authority` explicitly prohibits it for the same P1 scenario. Both are current/effective 2026-01-01. The manifest supplies no overriding precedence rule. Handoff with both citations is required; do not choose one policy by file order or scope label. |
 | C02 | **Intentional temporal selection:** as of 2025-06-01, `blocker-definition@0.9#blocked-item` (effective 2025-01-01) defines more than one business day waiting for an external dependency. Version 1.0 takes effect 2026-01-01 and changes to material-progress semantics. Existing wrong-version control rejects 1.0 with `wrong_policy_version`; the valid historical contrast still exposes a negation defect. |
 
-Policy identities and section text were inspected against the frozen local
+Policy identities and section text in the original audit were inspected against the frozen local
 manifest and Markdown corpus, with existing version/scope regression tests
-included in the full test run. No policy retrieval runtime was executed.
+included in the full test run. That original audit executes no policy retrieval runtime.
+
+## D01 worker/scorer integration characterization
+
+`runtime-characterization.json` adds eight executed SQL controls around the
+unchanged real `SB-D01` task/reference, rather than authoring an observation
+envelope. The unchanged generator runs in a temporary directory. Its 500-row
+CSV has SHA-256 `cb3e85f970aa640624444ffc9dd13ffe7f3cbee9e97ab78050c34c35ab9d33ef`.
+Independent Python counts show Data has 8 blocked / 45 active items, the highest
+active-work rate at 17.7777777778%. SQL executes on an in-memory SQLite copy;
+the production read-only SQL validator, `BoundedLocalExecutor` extraction and
+frozen scorer execute unchanged. Actual repository-local policy retrieval
+supplies `kpi-dictionary@1.0#blocker-rate`.
+
+Tool choices and final answer prose are authored, scripted controls. The
+percentage rows, runtime tool records, evidence references and observations
+are produced by execution. No live model or ClickHouse service is involved.
+SQLite arithmetic, types and dialect do not qualify live ClickHouse behavior.
+Source, generator, generated CSV and all 18 frozen-input fingerprints are
+preserved. No production implementation file was modified.
+
+| SQL control | Frozen result | Interpretation |
+|---|---|---|
+| Correct active filter, no scope output column | Reject: `missing_expected_value` | Real query proves the population, but the extractor reads only row fields |
+| Equivalent `NOT (status = 'done')`, no scope column | Same incorrect rejection | Equivalent predicate on this non-null generated dataset |
+| Active filter inside a CTE, no scope column | Same incorrect rejection | Valid filtered aggregation still lacks an output label |
+| Correct active filter plus constant scope column | Pass | Same computation passes when the row contains the exact expected label |
+| All-work denominator plus false active label | Reject: `structured_value_mismatch` | Numeric check catches 20.8633%; the label itself remains unchecked |
+| Literal 17.8 and active label from an unfiltered Data row | Incorrect pass | Correct-looking constants establish neither computation, population nor ranking |
+| Active predicate widened by `OR 1 = 1` plus false active label | Reject: `structured_value_mismatch` | Includes done work; a predicate substring is insufficient scope proof |
+| Empty active result | Reject: missing evidence/value | No structured source evidence is fabricated for empty rows |
+
+Four of eight controls match their independent validity expectations; four
+do not. The new command intentionally exits 2. These four integration
+mismatches are separate from the original nine envelope mismatches, whose
+saved report remains byte-identical. Neither set is accepted evaluator
+evidence, and test success does not repair their defects.
+
+The existing worker tests construct an older D01-like contract with 20.9%
+and no scope field; they did not exercise the real post-#80 scope requirement.
+The integration tests load the frozen current task and reference directly.
+They verify reproducibility, counts and ranking, actual extracted values,
+and execution while network connections, the live model constructor/method,
+and the external ClickHouse function are blocked.
+
+A retrieval overlap surfaced during setup: `KPI dictionary blocker rate`
+with `top_k=1` returns `blocker-definition@1.0#blocker-rate`. The integration
+uses the more specific authored query `Blocker rate percentage KPI dictionary`
+to retrieve the required KPI identity and isolate extraction. No retrieval
+ranking, required citation or frozen scoring rule was changed to make it pass.
+
+The owner selected runtime SQL provenance rather than unchecked scope labels
+as the remedy direction. That remedy is separate work requiring approval
+before activation. This branch preserves the defect and does not implement,
+activate or claim acceptance of a correction.
 
 ## Development task-template relationships
 
@@ -117,7 +173,9 @@ Run from repository root:
 
 ```bash
 python3 scripts/audit_system_benchmark_evaluator.py --output experiments/evaluator-validation-20261017/audit.json
+python3 scripts/characterize_system_benchmark_runtime.py --output experiments/evaluator-validation-20261017/runtime-characterization.json
 python3 -m unittest tests.system_benchmark.test_evaluator_audit -v
+python3 -m unittest tests.system_benchmark.test_runtime_characterization -v
 python3 -m unittest discover -s tests -v
 python3 scripts/check_project_context.py
 ```
@@ -143,9 +201,10 @@ acceptance. Unit tests verify defect visibility, intended reason attribution,
 byte reproducibility, actual input hashes and model/runtime-free imports.
 They do **not** turn a defective scorer green.
 
-Observed locally on Python 3.14.7: four new audit tests pass; all 293
-repository tests pass. A test-first probe failed before the audit script
-existed. Python 3.11/3.12 hosted CI has not been run for this candidate.
+Observed locally on Python 3.14.7: four audit tests and four integration
+characterization tests pass; all 297 repository tests pass. Test-first probes
+failed before their respective scripts existed. Python 3.11/3.12 hosted CI
+has not been run for this candidate.
 The preserved JSON is deterministic and contains no time-dependent claims.
 
 Source-backed self-review checked each control rationale against task and
@@ -154,7 +213,7 @@ frozen path against baseline, and reviewed the additive diff. No automatic
 Codex review was requested. An independent owner/reviewer still needs to
 adjudicate evaluator changes; this is author self-review.
 
-Next bounded action: review the nine mismatches and A01 scope ambiguity,
-approve a versioned remedy if appropriate, then rerun the unchanged audit
-controls against that approved version. Phase prerequisites and official
-benchmark evidence remain separate.
+Next bounded action: review the nine original and four integration mismatches
+and A01 scope ambiguity, approve a versioned remedy if appropriate, then rerun
+the preserved controls against that approved version. Phase prerequisites and
+official benchmark evidence remain separate.

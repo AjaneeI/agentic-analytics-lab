@@ -1,0 +1,51 @@
+Phase 3 runtime characterization verification; author self-review only.
+The original audit and new integration command deliberately exit 2.
+Passing tests preserve known defects; they do not establish evaluator acceptance.
+All commands below were run on this candidate; local SQL/retrieval only.
+
+$ python3 -m unittest tests.system_benchmark.test_evaluator_audit tests.system_benchmark.test_runtime_characterization -v
+exit=0
+test_actual_audit_imports_no_model_or_tool_runtime (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_actual_audit_imports_no_model_or_tool_runtime) ... ok
+test_known_bad_reason_targets_and_valid_tool_order_are_distinct (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_known_bad_reason_targets_and_valid_tool_order_are_distinct) ... ok
+test_saved_report_is_byte_reproducible_and_hashes_actual_inputs (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_saved_report_is_byte_reproducible_and_hashes_actual_inputs) ... ok
+test_semantic_defects_are_reported_as_a_failing_gate (tests.system_benchmark.test_evaluator_audit.TestEvaluatorAudit.test_semantic_defects_are_reported_as_a_failing_gate) ... ok
+test_execution_cannot_reach_network_or_instantiate_live_model (tests.system_benchmark.test_runtime_characterization.TestRuntimeCharacterization.test_execution_cannot_reach_network_or_instantiate_live_model) ... ok
+test_real_d01_contract_exposes_missing_scope_without_row_overrides (tests.system_benchmark.test_runtime_characterization.TestRuntimeCharacterization.test_real_d01_contract_exposes_missing_scope_without_row_overrides) ... ok
+test_report_is_reproducible_and_hashes_integration_sources (tests.system_benchmark.test_runtime_characterization.TestRuntimeCharacterization.test_report_is_reproducible_and_hashes_integration_sources) ... ok
+test_sql_alternatives_and_invalid_labels_retain_actual_frozen_outcomes (tests.system_benchmark.test_runtime_characterization.TestRuntimeCharacterization.test_sql_alternatives_and_invalid_labels_retain_actual_frozen_outcomes) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.784s
+
+OK
+
+$ python3 -m unittest discover -s tests -q
+exit=0
+----------------------------------------------------------------------
+Ran 297 tests in 2.109s
+
+OK
+
+$ python3 scripts/check_project_context.py
+exit=0
+PASS: Project Context Protocol v1 checks passed
+
+$ python3 - <<'PY'
+import json
+from pathlib import Path
+import subprocess
+for script,name in [('audit_system_benchmark_evaluator.py','audit.json'),('characterize_system_benchmark_runtime.py','runtime-characterization.json')]:
+ result=subprocess.run(['python3','scripts/'+script],capture_output=True,text=True)
+ assert result.returncode==2,(script,result.returncode,result.stderr)
+ assert result.stdout==Path('experiments/evaluator-validation-20261017',name).read_text(),name
+ report=json.loads(result.stdout)
+ assert report['freeze_unchanged'] and not report['phase3_accepted']
+ print(script+': expected exit2; preserved report byte-identical; '+str(len(report['unresolved_control_ids']))+' unresolved controls; frozen18unchanged; phase3_accepted=false')
+PY
+exit=0
+audit_system_benchmark_evaluator.py: expected exit2; preserved report byte-identical; 9 unresolved controls; frozen18unchanged; phase3_accepted=false
+characterize_system_benchmark_runtime.py: expected exit2; preserved report byte-identical; 4 unresolved controls; frozen18unchanged; phase3_accepted=false
+
+$ python3 --version
+exit=0
+Python 3.14.7

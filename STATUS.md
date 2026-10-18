@@ -89,7 +89,24 @@ task, reference expectation, corpus, Q1–Q6, or data generator was changed.
 
 See `experiments/evaluator-validation-20261017/README.md` and its preserved
 `audit.json`. The audit command intentionally exits 2; four audit-tool tests
-and all 293 repository tests pass locally on Python 3.14.7. This is evaluator
+and all 293 repository tests passed on the original candidate. This is evaluator
 defect evidence and preparation only, not Phase 3 acceptance, Phase 2
 qualification, model performance, or held-out evidence. Versioned evaluation
 corrections require owner approval; no corrections were applied here.
+
+The later model-free integration characterization loads the real frozen D01
+task/reference and runs eight SQL controls on an in-memory SQLite copy of
+unchanged seed-42 generator output, with real local policy retrieval and the
+unchanged worker/extractor/scorer. Independent counts confirm Data at 8/45
+active items (17.7778%). Three valid unlabelled query forms wrongly reject;
+one unfiltered query with a literal rate and active label wrongly passes.
+Four other controls match expectations. Its command also exits 2, and the
+original audit report remains byte-identical with nine unresolved controls.
+All 18 frozen inputs remain unchanged; no production source was edited.
+
+See `runtime-characterization.json` in the same evidence directory. Four new
+tests verify actual rows, independent counts/ranking, frozen outcomes,
+reproducibility and blocked network/live-model/database transports. All 297
+repository tests pass on Python 3.14.7. SQLite behavior and scripted decisions
+do not qualify live ClickHouse, model behavior or Phase 2/3. A runtime SQL
+provenance remedy is separate work and requires approval before activation.
