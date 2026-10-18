@@ -20,7 +20,7 @@
   "experimental_retries": 0,
   "network_guard": "All full-suite invocations deny socket connect/connect_ex/create_connection and DNS; candidate tests additionally deny native urlopen except explicit fakeHTTP.",
   "fixture_correction": "Initial fake PolicyEvidence fixture used positional fields incorrectly; replaced with named fields. Failure log retained. No production or experimental outcome changed.",
-  "independent_review": "pending_final_branch_review",
+  "independent_review": "completed_no_must_fix_in_bounded_inactive_offline_scope",
   "live_model_compliance_established": false,
   "activation_authorized": false,
   "source_change_on_proposal_branch": false,
@@ -38,5 +38,7 @@
     "candidate-python311-focused.txt": "edb4e2159c923ea45a32656078835cdf531c3d7b414c670dd786978875cb0678",
     "candidate-python312-focused.txt": "199ba496f288116d36c62f29346d4fbf0bd75745a1c893abfcbdaa4c6d5b1033",
     "preservation-and-inactive-guard.json": "8c9abc2a1c81c8d908ef3e23ce2acf6da2746794b314c9268814faca9a2b45a6"
-  }
+  },
+  "reviewed_implementation_commit": "1eca40abc6656a37588f812f853cd4001c14c8ac",
+  "independent_review_sha256": "418fb564ca2b1d39a7cb984f58418f15a0169f80f3906f8f94619a55984ff3dd"
 }

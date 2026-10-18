@@ -20,6 +20,11 @@ pass 359 tests on Python 3.11/3.12; three prompt/delivery regressions fail on
 the baseline and pass on the candidate. Scripted checks do not prove live-model
 compliance. No activation, new attempt, comparison, held-out work or merge.
 
+The independent final offline review at implementation `1eca40a` and candidate
+`d4922de` found no must-fix defect. Its report/reproducer are preserved in the
+proposal validation directory. No recommendation in the decision brief is
+enacted; no research phase is accepted by these engineering checks.
+
 The decision brief is `docs/phase3-phase4-decision-brief-2026-10-17.md`.
 All research decisions remain pending. Earlier checkpoints below retain their
 historical preparation states and do not override the consumed attempt.

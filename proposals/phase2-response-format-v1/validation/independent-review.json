@@ -1,0 +1,250 @@
+{
+  "review_version": "independent-whole-proposal-review-v1",
+  "reviewed_at_utc": "2026-10-18 02:02:33 UTC",
+  "disposition": "No must-fix defect identified in the bounded inactive offline proposal. Prompt/type delivery and preservation checks pass; live-model compliance is unestablished and activation remains unauthorized.",
+  "proposal_commit": "1eca40abc6656a37588f812f853cd4001c14c8ac",
+  "candidate_validation_commit": "d4922de83113fa5477aaadfca8f110e600770eb5",
+  "parent_execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+  "findings": [],
+  "checks": {
+    "artifact_sha256": {
+      "proposals/phase2-response-format-v1/README.md": "91e95c6d16ee0ad875d90051ad1556e46ec1d2e43b3de19e14542458e81e00a2",
+      "proposals/phase2-response-format-v1/candidate-system-prompt.txt": "56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce",
+      "proposals/phase2-response-format-v1/candidate.patch": "cb494c47cdcb38fe41b0f30b0718ee8d56c9bec25d2a8535d382cd7cba9e62a9",
+      "proposals/phase2-response-format-v1/configuration.proposal.json": "7d9640bb187222efd9b866f71a51aa39ea2d7da051a373153e6ac8b6add0ca21",
+      "proposals/phase2-response-format-v1/manifest.json": "269289db05ce3c3829f563735be59615ff31d8b538f282a3e5c68500731ef6dd",
+      "proposals/phase2-response-format-v1/test_candidate_prompt.py": "c139784dc077607e7930a11ab59276ebc60ee2f8351dfeed6b6da97fc50134fd",
+      "proposals/phase2-response-format-v1/validation/baseline-red-final.txt": "41d157830face3715314f9a30657cfbac436132c4b51a6990a32fed2e3aea376",
+      "proposals/phase2-response-format-v1/validation/baseline-red.txt": "343b2cdb25456f7f5d4ad848d2ac58a51f365dd6689c982732937a87aed4a7f8",
+      "proposals/phase2-response-format-v1/validation/candidate-fixture-failure.txt": "4f7f79e8f8384cf99ffb84258424cb511db2bb4a7f10d7ddfe0aad0bf3771769",
+      "proposals/phase2-response-format-v1/validation/candidate-green.txt": "a84c4529d28d906099ea6c9818c3b679fee720392e84f6ab59ba239c1666af9c",
+      "proposals/phase2-response-format-v1/validation/candidate-python311-focused.txt": "edb4e2159c923ea45a32656078835cdf531c3d7b414c670dd786978875cb0678",
+      "proposals/phase2-response-format-v1/validation/candidate-python312-focused.txt": "199ba496f288116d36c62f29346d4fbf0bd75745a1c893abfcbdaa4c6d5b1033",
+      "proposals/phase2-response-format-v1/validation/parser-focused.txt": "db07a049c5c24d52cf90b73b0ccbb002fe6457b7ae9cb48f9f1e2bbd45c9b739",
+      "proposals/phase2-response-format-v1/validation/preservation-and-inactive-guard.json": "8c9abc2a1c81c8d908ef3e23ce2acf6da2746794b314c9268814faca9a2b45a6",
+      "proposals/phase2-response-format-v1/validation/proposal-python311-full.txt": "49b3ecbbb7ece49e567f227c71c522aea338e930142f84fe0eedb71fbdd8c64d",
+      "proposals/phase2-response-format-v1/validation/proposal-python312-full.txt": "ab6a54a2e6142094ae6b6f31dfe239fbe6d6aa7138d5398b7febbdae06178b45",
+      "proposals/phase2-response-format-v1/validation/validation-python311-full.txt": "c4b8ba8eef2d64b27082c1d922bbc2a9d2afc74208986b8caba737a833f0e991",
+      "proposals/phase2-response-format-v1/validation/validation-python312-full.txt": "ab6a54a2e6142094ae6b6f31dfe239fbe6d6aa7138d5398b7febbdae06178b45",
+      "proposals/phase2-response-format-v1/validation/verification.json": "7eec301fcf10bbf35d10e7cea192ad69f10a286cc61023be500b1d73f338cc62"
+    },
+    "candidate_validation_commit": "d4922de83113fa5477aaadfca8f110e600770eb5",
+    "decision_brief": {
+      "DECISIONS_md_unchanged": true,
+      "all_six_columns_nonempty": true,
+      "phase3_exact_ids": [
+        "C01-equivalent-definition",
+        "C02-equivalent-working-day",
+        "C02-negated-later-definition",
+        "A01-negated-causality",
+        "C01-reversed-definition",
+        "D01-causal-paraphrase",
+        "G01-fabricated-prose",
+        "H01-contradictory-authority",
+        "A01-contradictory-prose"
+      ],
+      "phase4_ids": [
+        "P4-01",
+        "P4-02",
+        "P4-03",
+        "P4-04",
+        "P4-05",
+        "P4-06",
+        "P4-07",
+        "P4-08",
+        "P4-09",
+        "P4-10",
+        "P4-11",
+        "P4-12"
+      ],
+      "rows": 30,
+      "runtime_ids": [
+        "R-01",
+        "R-02",
+        "R-03",
+        "R-04",
+        "R-05",
+        "R-06",
+        "R-07",
+        "R-08",
+        "R-09"
+      ],
+      "sha256": "da641a3d755b49d7e41c01784f499671a5fa824f1250ef2691e34915c7a2b1a6",
+      "stored_phase4_numbers_crosschecked_no_simulation": true
+    },
+    "diff_whitespace_check_excludes_unified_patch_context_only": true,
+    "experiment_integrity": {
+      "treatment-a-20261017": {
+        "all_match": true,
+        "count": 20,
+        "manifest_sha256": "97cc69f4f80b2f729e41f5fb0a2c032e0bb05f3dcc32209719f892e3d90325c5",
+        "sha256": {
+          "INVOCATION_STARTED.json": "eb3fbece5a72858b58cba4c882110c5f62c791e2c20d7135b72fd2b39628ebb1",
+          "api-ps-after.json": "35e9786be4a46067f40d8059dc46d4edac7370815b1cefb5020075e1eac33c5a",
+          "api-ps-before.json": "a6fe9ec6e26a38d99fca418b69826e0238b7a2bb319ff05eb153a6fcfd1fa28d",
+          "api-tags-after.json": "b9b4be4cf0fd44333da716bf083ca921c1c4c7bb43b75d9753763f604d5c6af0",
+          "api-tags-before.json": "b9b4be4cf0fd44333da716bf083ca921c1c4c7bb43b75d9753763f604d5c6af0",
+          "error.txt": "af174b8de0b695774e453b2936c9be3299a3cee3b1011a43afd6d43761baa30e",
+          "manifest.json": "04bf57492d9e793e90ba8aa4863e2ec4d283b57c4f7d2762a1973c50a3e69139",
+          "memory-after.txt": "e7e09b820eda4f4c84b2cce3fb83c161404ffb749412e9260a0f920bf6544f26",
+          "memory-before.txt": "a5b4cf525b7aa18254850c3b6c7df02ebc3cc7a574edf0d4271278930649711f",
+          "ollama-after.txt": "b2eceab084675660c03a6ebcd4af1cbbdb47ce4c3b98e343c6ad1aa92ae6b10a",
+          "ollama-before.txt": "e3bd0fe8f9ac39f92c095af0d4c5e8d3277a83f56cba6a9bafe00cef52061584",
+          "outer-result.json": "80ef864d67827cb0d0d699d8f44c6215335fcba68da56537f5486807b478d2e4",
+          "preflight.json": "a13a5cfb834757f6e31072c8dbc6d2ba30c95fbd8b132f6716e605ec2dd4fb63",
+          "resource-observations.jsonl": "2c21bc37e2f8d0e2aef550f4cb58543cc0eef63771108db1c12a6dc95290d7d3",
+          "stderr.txt": "af174b8de0b695774e453b2936c9be3299a3cee3b1011a43afd6d43761baa30e",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "version-after.txt": "da6b49c2e530db90166fa3786d92bf93ce24e63524c175b7f0d2c5031db3cbda",
+          "version-before.txt": "da6b49c2e530db90166fa3786d92bf93ce24e63524c175b7f0d2c5031db3cbda",
+          "vm-stat-after.txt": "96ed707ffae8c4a69a613a4742b6de940d49a1d477f76b42b877d1a607db6b62",
+          "vm-stat-before.txt": "eca7ac134d4f0f62a3d18122477d7f62362f38e215c6179b89d7541458b1ac42"
+        }
+      },
+      "treatment-a-scope-v1-20261017": {
+        "all_match": true,
+        "count": 4,
+        "manifest_sha256": "2144b8dc8aed85a48825e4c8941ab78b95e6e7f7e99307a38ca3e998e0256707",
+        "sha256": {
+          "INVOCATION_STARTED.json": "6e9daba881cb96aa79f71aeb590e5b7b260bbf5197b5b4b97b03ec7bcbb7d0b8",
+          "error.json": "42a61a64faf348269bc5326417938f8a8a11cc08cb4b6adcc9bb93d3cb6e66ab",
+          "events.jsonl": "e0ad77a2525c6607b4d1ced4d2dd7787cf5c939af8dcca5a380ac2e0e674dcaf",
+          "manifest.json": "1d8cffae8f236f7126fa91d6c4e8d2b610b8013a486775c5af07315fe96a2ad3"
+        }
+      }
+    },
+    "inactive_actual_guard": {
+      "blockers": [
+        "configuration_scope_version_or_standalone_boundary_differs",
+        "runtime_offline_validity_gate_not_passed"
+      ],
+      "refusal": "configuration_scope_version_or_standalone_boundary_differs, runtime_offline_validity_gate_not_passed",
+      "runtime_imports": false,
+      "services_constructors_workers_output_folders": 0
+    },
+    "manifest": {
+      "activation_authorized": false,
+      "active_configuration_changed": false,
+      "baseline_contract_fingerprint": "d136b653e8b4bc2ebabfab403b4aef3c85155174719e7e1c40b290ddf29968f2",
+      "baseline_prompt_sha256": "e9e29e0ed6ce4e98698ddf328e611ad6ba207c98451e2bd63869b6373914b623",
+      "baseline_worker_sha256": "bf871d3bf7b33abbf2d006f39508a0ebb745c19107138fa11e9ceb2182b27cba",
+      "candidate_configuration_sha256": "7d9640bb187222efd9b866f71a51aa39ea2d7da051a373153e6ac8b6add0ca21",
+      "candidate_contract_fingerprint": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+      "candidate_patch_sha256": "cb494c47cdcb38fe41b0f30b0718ee8d56c9bec25d2a8535d382cd7cba9e62a9",
+      "candidate_prompt_sha256": "56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce",
+      "candidate_worker_sha256": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa",
+      "changed_contract_files": [
+        "src/evals/system_benchmark/local_worker.py"
+      ],
+      "comparisons_authorized": false,
+      "exact_change": "Append response-field types to existing system prompt; no other candidate source difference.",
+      "live_attempts_authorized": 0,
+      "parent_execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+      "phase2_qualified": false,
+      "phase3_accepted": false,
+      "phase4_frozen": false,
+      "prompt_hash_encoding": "UTF-8 exact stripped runtime prompt, no trailing newline",
+      "proposal_id": "phase2-response-format-v1",
+      "status": "inactive_proposal"
+    },
+    "only_candidate_AST_difference": "_SYSTEM_PROMPT assignment value",
+    "only_candidate_production_difference": "src/evals/system_benchmark/local_worker.py",
+    "parent_execution_commit": "57c3007a25af4ff21bec42138aa1df7268ee7d95",
+    "patch_check_and_temporary_apply_identical_to_candidate": true,
+    "production_files_unchanged_on_proposal": 87,
+    "proposal_commit": "1eca40abc6656a37588f812f853cd4001c14c8ac",
+    "recorded_full_suite_logs_verified": {
+      "candidate_python311": 359,
+      "candidate_python312": 359,
+      "proposal_python311": 359,
+      "proposal_python312": 359
+    },
+    "recorded_log_sha256_all_match": true,
+    "verification_script_sha256": "38f270d820479477f9162ad815cf715f6ff5a80faf347f2c79252c0f8e8d5b37"
+  },
+  "independent_focused_runs": [
+    {
+      "interpreter": "/Users/ajaneeigharo/.local/bin/python3.11",
+      "repository": "phase2-response-format-proposal",
+      "command": "'/Users/ajaneeigharo/.local/bin/python3.11' -B -c 'import importlib.util,json,socket,unittest\nfrom pathlib import Path\nfrom unittest.mock import patch\ndef denied(*args,**kwargs):raise AssertionError('\\''independent review forbids network/DNS/scoring'\\'')\nwith patch.object(socket.socket,'\\''connect'\\'',denied),patch.object(socket.socket,'\\''connect_ex'\\'',denied),patch('\\''socket.create_connection'\\'',denied),patch('\\''socket.getaddrinfo'\\'',denied),patch('\\''socket.gethostbyname'\\'',denied),patch('\\''urllib.request.urlopen'\\'',denied),patch('\\''src.evals.system_benchmark.scoring.score_response'\\'',denied),patch('\\''src.evals.system_benchmark.runner.score_response'\\'',denied):\n suite=unittest.defaultTestLoader.loadTestsFromName('\\''tests.test_response_format_contract'\\'')\n if Path('\\''src/evals/system_benchmark/local_worker.py'\\'').read_text().find('\\''Response field types:'\\'')!=-1:\n  spec=importlib.util.spec_from_file_location('\\''independent_candidate'\\'','\\''proposals/phase2-response-format-v1/test_candidate_prompt.py'\\'')\n  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n  suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(mod))\n result=unittest.TextTestRunner(verbosity=0).run(suite)\n assert result.wasSuccessful()\n print(json.dumps({'\\''tests'\\'':result.testsRun,'\\''failures'\\'':len(result.failures),'\\''errors'\\'':len(result.errors),'\\''live_network_DNS_scorer_denied'\\'':True}))\n'",
+      "chunk_id": "7e8c27",
+      "wall_time_seconds": 0.906201708,
+      "exit_code": 0,
+      "original_token_count": 45,
+      "output": "----------------------------------------------------------------------\nRan 9 tests in 0.001s\n\nOK\n{\"tests\": 9, \"failures\": 0, \"errors\": 0, \"live_network_DNS_scorer_denied\": true}\n"
+    },
+    {
+      "interpreter": "/Users/ajaneeigharo/.local/bin/python3.11",
+      "repository": "phase2-response-format-validation",
+      "command": "'/Users/ajaneeigharo/.local/bin/python3.11' -B -c 'import importlib.util,json,socket,unittest\nfrom pathlib import Path\nfrom unittest.mock import patch\ndef denied(*args,**kwargs):raise AssertionError('\\''independent review forbids network/DNS/scoring'\\'')\nwith patch.object(socket.socket,'\\''connect'\\'',denied),patch.object(socket.socket,'\\''connect_ex'\\'',denied),patch('\\''socket.create_connection'\\'',denied),patch('\\''socket.getaddrinfo'\\'',denied),patch('\\''socket.gethostbyname'\\'',denied),patch('\\''urllib.request.urlopen'\\'',denied),patch('\\''src.evals.system_benchmark.scoring.score_response'\\'',denied),patch('\\''src.evals.system_benchmark.runner.score_response'\\'',denied):\n suite=unittest.defaultTestLoader.loadTestsFromName('\\''tests.test_response_format_contract'\\'')\n if Path('\\''src/evals/system_benchmark/local_worker.py'\\'').read_text().find('\\''Response field types:'\\'')!=-1:\n  spec=importlib.util.spec_from_file_location('\\''independent_candidate'\\'','\\''proposals/phase2-response-format-v1/test_candidate_prompt.py'\\'')\n  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n  suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(mod))\n result=unittest.TextTestRunner(verbosity=0).run(suite)\n assert result.wasSuccessful()\n print(json.dumps({'\\''tests'\\'':result.testsRun,'\\''failures'\\'':len(result.failures),'\\''errors'\\'':len(result.errors),'\\''live_network_DNS_scorer_denied'\\'':True}))\n'",
+      "chunk_id": "8f6816",
+      "wall_time_seconds": 0.836446916,
+      "exit_code": 0,
+      "original_token_count": 45,
+      "output": "{\"tests\": 12, \"failures\": 0, \"errors\": 0, \"live_network_DNS_scorer_denied\": true}\n----------------------------------------------------------------------\nRan 12 tests in 0.012s\n\nOK\n"
+    },
+    {
+      "interpreter": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+      "repository": "phase2-response-format-proposal",
+      "command": "'/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12' -B -c 'import importlib.util,json,socket,unittest\nfrom pathlib import Path\nfrom unittest.mock import patch\ndef denied(*args,**kwargs):raise AssertionError('\\''independent review forbids network/DNS/scoring'\\'')\nwith patch.object(socket.socket,'\\''connect'\\'',denied),patch.object(socket.socket,'\\''connect_ex'\\'',denied),patch('\\''socket.create_connection'\\'',denied),patch('\\''socket.getaddrinfo'\\'',denied),patch('\\''socket.gethostbyname'\\'',denied),patch('\\''urllib.request.urlopen'\\'',denied),patch('\\''src.evals.system_benchmark.scoring.score_response'\\'',denied),patch('\\''src.evals.system_benchmark.runner.score_response'\\'',denied):\n suite=unittest.defaultTestLoader.loadTestsFromName('\\''tests.test_response_format_contract'\\'')\n if Path('\\''src/evals/system_benchmark/local_worker.py'\\'').read_text().find('\\''Response field types:'\\'')!=-1:\n  spec=importlib.util.spec_from_file_location('\\''independent_candidate'\\'','\\''proposals/phase2-response-format-v1/test_candidate_prompt.py'\\'')\n  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n  suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(mod))\n result=unittest.TextTestRunner(verbosity=0).run(suite)\n assert result.wasSuccessful()\n print(json.dumps({'\\''tests'\\'':result.testsRun,'\\''failures'\\'':len(result.failures),'\\''errors'\\'':len(result.errors),'\\''live_network_DNS_scorer_denied'\\'':True}))\n'",
+      "chunk_id": "f7e03c",
+      "wall_time_seconds": 1.323178708,
+      "exit_code": 0,
+      "original_token_count": 45,
+      "output": "----------------------------------------------------------------------\nRan 9 tests in 0.003s\n\nOK\n{\"tests\": 9, \"failures\": 0, \"errors\": 0, \"live_network_DNS_scorer_denied\": true}\n"
+    },
+    {
+      "interpreter": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+      "repository": "phase2-response-format-validation",
+      "command": "'/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12' -B -c 'import importlib.util,json,socket,unittest\nfrom pathlib import Path\nfrom unittest.mock import patch\ndef denied(*args,**kwargs):raise AssertionError('\\''independent review forbids network/DNS/scoring'\\'')\nwith patch.object(socket.socket,'\\''connect'\\'',denied),patch.object(socket.socket,'\\''connect_ex'\\'',denied),patch('\\''socket.create_connection'\\'',denied),patch('\\''socket.getaddrinfo'\\'',denied),patch('\\''socket.gethostbyname'\\'',denied),patch('\\''urllib.request.urlopen'\\'',denied),patch('\\''src.evals.system_benchmark.scoring.score_response'\\'',denied),patch('\\''src.evals.system_benchmark.runner.score_response'\\'',denied):\n suite=unittest.defaultTestLoader.loadTestsFromName('\\''tests.test_response_format_contract'\\'')\n if Path('\\''src/evals/system_benchmark/local_worker.py'\\'').read_text().find('\\''Response field types:'\\'')!=-1:\n  spec=importlib.util.spec_from_file_location('\\''independent_candidate'\\'','\\''proposals/phase2-response-format-v1/test_candidate_prompt.py'\\'')\n  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n  suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(mod))\n result=unittest.TextTestRunner(verbosity=0).run(suite)\n assert result.wasSuccessful()\n print(json.dumps({'\\''tests'\\'':result.testsRun,'\\''failures'\\'':len(result.failures),'\\''errors'\\'':len(result.errors),'\\''live_network_DNS_scorer_denied'\\'':True}))\n'",
+      "chunk_id": "4ea247",
+      "wall_time_seconds": 1.169759666,
+      "exit_code": 0,
+      "original_token_count": 45,
+      "output": "----------------------------------------------------------------------\nRan 12 tests in 0.005s\n\nOK\n{\"tests\": 12, \"failures\": 0, \"errors\": 0, \"live_network_DNS_scorer_denied\": true}\n"
+    }
+  ],
+  "independent_expected_RED_control": {
+    "command": "'/Users/ajaneeigharo/.local/bin/python3.11' -B -c 'import importlib.util,json,socket,unittest\nfrom unittest.mock import patch\ndef denied(*args,**kwargs):raise AssertionError('\\''independent review forbids network/DNS/scoring'\\'')\nwith patch.object(socket.socket,'\\''connect'\\'',denied),patch.object(socket.socket,'\\''connect_ex'\\'',denied),patch('\\''socket.create_connection'\\'',denied),patch('\\''socket.getaddrinfo'\\'',denied),patch('\\''urllib.request.urlopen'\\'',denied),patch('\\''src.evals.system_benchmark.scoring.score_response'\\'',denied),patch('\\''src.evals.system_benchmark.runner.score_response'\\'',denied):\n spec=importlib.util.spec_from_file_location('\\''baseline_red'\\'','\\''proposals/phase2-response-format-v1/test_candidate_prompt.py'\\'')\n mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n result=unittest.TextTestRunner(verbosity=0).run(unittest.defaultTestLoader.loadTestsFromModule(mod))\n assert result.testsRun==3 and len(result.failures)==3 and not result.errors\n print(json.dumps({'\\''tests'\\'':3,'\\''expected_failures'\\'':3,'\\''unexpected_errors'\\'':0,'\\''control_pass'\\'':True,'\\''live_network_DNS_scorer_denied'\\'':True}))\n'",
+    "chunk_id": "78ce53",
+    "wall_time_seconds": 0.044022167,
+    "exit_code": 0,
+    "original_token_count": 1707,
+    "output": "======================================================================\nFAIL: test_explicit_field_type_guidance_is_delivered (baseline_red.TestCandidatePrompt.test_explicit_field_type_guidance_is_delivered)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py\", line 37, in test_explicit_field_type_guidance_is_delivered\n    self.assertIn(GUIDANCE, _SYSTEM_PROMPT)\nAssertionError: 'Response field types:\\n- disposition: one of \"answer\", \"clarify\", \"unsupported\", \"handoff\".\\n- answer_text: a non-empty JSON string.\\n- uncertainty: a JSON string or JSON null.\\n- clarification: a JSON object or JSON null.\\n- handoff: a JSON object or JSON null.\\nUse JSON null (without quotation marks) for clarification or handoff when inapplicable.\\nDo not substitute strings, booleans, arrays, or numbers for those object-or-null fields.' not found in 'You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.'\n\n======================================================================\nFAIL: test_original_prompt_prefix_and_no_answers_are_preserved (baseline_red.TestCandidatePrompt.test_original_prompt_prefix_and_no_answers_are_preserved)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py\", line 40, in test_original_prompt_prefix_and_no_answers_are_preserved\n    self.assertTrue(_SYSTEM_PROMPT.endswith(GUIDANCE))\nAssertionError: False is not true\n\n======================================================================\nFAIL: test_real_client_fake_http_preserves_tools_options_and_runtime_evidence (baseline_red.TestCandidatePrompt.test_real_client_fake_http_preserves_tools_options_and_runtime_evidence)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py\", line 89, in test_real_client_fake_http_preserves_tools_options_and_runtime_evidence\n    execution = BoundedLocalExecutor(model=OllamaModelClient(model='hermes-local:qwen3.5-9b'),\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/src/evals/system_benchmark/local_worker.py\", line 169, in __call__\n    raw = self.model.respond(messages, tools)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/src/agents/ollama_client.py\", line 125, in respond\n    with urllib.request.urlopen(\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/unittest/mock.py\", line 1124, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/unittest/mock.py\", line 1128, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/unittest/mock.py\", line 1189, in _execute_mock_call\n    result = effect(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-proposal/proposals/phase2-response-format-v1/test_candidate_prompt.py\", line 61, in http\n    self.assertIn(GUIDANCE, body['messages'][0]['content'])\nAssertionError: 'Response field types:\\n- disposition: one of \"answer\", \"clarify\", \"unsupported\", \"handoff\".\\n- answer_text: a non-empty JSON string.\\n- uncertainty: a JSON string or JSON null.\\n- clarification: a JSON object or JSON null.\\n- handoff: a JSON object or JSON null.\\nUse JSON null (without quotation marks) for clarification or handoff when inapplicable.\\nDo not substitute strings, booleans, arrays, or numbers for those object-or-null fields.' not found in 'You are a bounded local worker for System Benchmark v1.\\n\\nYou have only the explicitly provided evidence tools. Do not claim to have\\nused a tool unless the runtime actually invoked it. You have no filesystem,\\nshell, glob, generic execute, benchmark-fixture, web, or external-service\\ncapability.\\n\\nFor factual claims about the structured delivery dataset, call\\nquery_clickhouse. For policy definitions or policy interpretation, call\\nretrieve_policy. If the request requires both structured and policy evidence,\\ncall both tools before answering. Do not infer causality from observational\\ndata.\\n\\nWhen querying blocker percentage, compute it in SQL as\\n100 * SUM(blocked) / COUNT(*) (or equivalent) and alias the percentage as\\nblocked_pct.\\n\\nAfter evidence gathering, return one JSON object only with these keys:\\ndisposition, answer_text, uncertainty, clarification, handoff.\\nDo not include evidence_refs, observed_tools, or observed_values; the runtime\\nconstructs those from actual tool execution.'\n\n----------------------------------------------------------------------\nRan 3 tests in 0.003s\n\nFAILED (failures=3)\n{\"tests\": 3, \"expected_failures\": 3, \"unexpected_errors\": 0, \"control_pass\": true, \"live_network_DNS_scorer_denied\": true}\n"
+  },
+  "verification_command": {
+    "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+    "command": "python3 -B work/verify_response_format_proposal_independent.py > work/response-format-independent-checks.json",
+    "exit_code": 0
+  },
+  "review_assessment": {
+    "patch": "The proposal preserves all 87 tracked production files across src/scripts/evals/configurations. The detached candidate changes only local_worker.py; normalizing the _SYSTEM_PROMPT assignment makes complete worker ASTs identical. Unified patch check and actual application in a temporary scratch tree exactly reproduce candidate bytes. Nine added source lines append existing response-field types to the complete existing prompt prefix.",
+    "parser_and_contract": "Nine strict parser tests pass unchanged in both proposal and candidate. Omitted optional fields remain accepted; object/null fields reject strings including quoted null, booleans, arrays and numbers. No coercion, repair, provider format mode or schema restriction is added.",
+    "client_delivery": "Three candidate-focused tests pass in the detached candidate on both supported interpreters. Fabricated HTTP responses exercise real client serialization and injected callback evidence only, confirming explicit prompt, fixed tools/options/budgets and runtime-owned references/values. These fixtures neither execute SQL nor invoke the scorer, and do not prove live-model compliance.",
+    "activation_boundary": "Actual inactive candidate source_preflight/qualify_once refuses before task/runtime imports, services, constructors, capture entry and evidence-folder creation. The versioned ID plus inactive gate fail existing guards. Historical scope approval is retained as history; separate response-format activation approval is explicitly not granted.",
+    "evidence": "All 20 original and four scope-v1 terminal experiment hashes match. No terminal response was replayed, normalized, repaired or rescored; no experimental retry occurred.",
+    "decision_brief": "Exactly nine original mismatch IDs match the preserved Phase 3 audit in order. All R-01 through R-09 and P4-01 through P4-12 rows contain evidence, consequence, options, recommendation and an explicit outstanding owner decision. Selected numerical diagnostics agree with stored Phase 4 summaries; no simulation or new threshold/method selection occurred. DECISIONS.md remains byte-identical by Git object identity.",
+    "tests": "Independent focused reruns are 9 parser tests on proposal and 12 parser+candidate tests on candidate, each Python 3.11/3.12. Three baseline candidate tests independently fail as expected. The recorded four 359-test full-suite logs and all their declared hashes were verified; this review did not rerun full suites that invoke frozen scoring.",
+    "whitespace_ruling": "git diff --check excluded candidate.patch only, whose unified-diff blank context intentionally contains a context marker; git apply --check and temporary actual application verified patch integrity."
+  },
+  "boundaries": {
+    "live_HTTP_or_model_inference_calls": 0,
+    "live_database_calls": 0,
+    "scorer_calls": 0,
+    "simulations": 0,
+    "experimental_retries": 0,
+    "source_edits": 0,
+    "heldout_content_read": false,
+    "automatic_review_tool_used": false,
+    "activation_authorized": false,
+    "phase2_qualified": false,
+    "phase3_accepted": false,
+    "phase4_frozen": false,
+    "scientific_comparison_authorized": false,
+    "limitations": [
+      "Passing fabricated controls establishes offline engineering behavior, not a future model's response-format compliance or answer quality.",
+      "A future prompt activation/live attempt and any matched-configuration architecture comparison require their separately scoped approvals and validation.",
+      "Known Phase 3 validity problems remain unresolved owner decisions. Preparation does not amend frozen criteria or historical results."
+    ]
+  }
+}

@@ -33,6 +33,17 @@ Nine parser regressions preserve object/null, optional omissions, all existing d
 
 Both proposal and offline-candidate checkouts pass 359 full tests on Python 3.11 and 3.12 with sockets/DNS denied. Three candidate-focused tests pass on both versions. Counts overlap and are not additive. An initial fake policy fixture used positional fields incorrectly; it was changed to named fields, with the failed test log retained. No runtime or experimental result was changed to address it.
 
+One independent whole-proposal offline review at implementation commit
+`1eca40abc6656a37588f812f853cd4001c14c8ac` and candidate commit
+`d4922de83113fa5477aaadfca8f110e600770eb5` found no must-fix defect in this
+bounded scope. Its report and reproducer are in `validation/independent-review.json`
+and `validation/verify_independent.py`. It independently reran nine proposal
+parser checks and twelve candidate/parser checks on both Python versions,
+verified full-suite log hashes, patch bytes, fail-closed guards, decision coverage
+and both sealed experiment hash sets, with no scorer or live service calls.
+Subsequent additions record review evidence/status only; candidate source,
+prompt, patch, configuration, tests and decision brief are unchanged.
+
 Standard full suite from either checkout:
 
 ```sh
