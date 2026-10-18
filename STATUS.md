@@ -1,3 +1,9 @@
+# Owner-authorized single JIT-off attempt — final preflight pending
+
+October18 owner approval permits exactly one new bounded standalone TreatmentA after final preflight, using unchanged runtime-clickhouse-expression-jit-off-v1. New separate authorization configuration binds one attempt; prior activation-only configuration and all failed evidence are preserved. No live attempt has started. Stop on its observed outcome; no retry, correction, other experiment or merge. See docs/jit-off-v1-one-attempt-authorization-2026-10-18.md.
+
+Historical checkpoints follow unchanged.
+
 # Current gate — expression JIT-off activated; live TreatmentA unauthorized
 
 Owner approved runtime-clickhouse-expression-jit-off-v1 activation only. Exact transport adds compile_expressions0; existing SQL/model/scoring/time/resource contract and historical evidence preserved. New immutable configuration has activationapproved and zero authorized live attempts; source preflight activationreadytrue but executionblocked.375tests pass Python3.11/3.12 offline; effective settings bound to sealedPR112 identical transport, no freshSQL. Phase3 knownmismatches persist; Phase4 all12decisions open/freeze deferred. No TreatmentA, diagnosticexperiment, model/SQL call or PR111/112merge. See docs/runtime-clickhouse-expression-jit-off-v1-activation.md and review packet for exact pins/invocation/remainingauthorization.
