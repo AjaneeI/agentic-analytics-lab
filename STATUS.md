@@ -1,8 +1,31 @@
 # Verified Project Status
 
-_Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
+_Last reviewed for branch preparation on 2026-10-17. Historical checkpoints below are retained._
 
-## Current verified state
+## Latest Phase 5 preparation — no phase acceptance
+
+Opt-in strong-single and deterministic/simple adapters are implemented offline.
+A separate inactive bank contains 24 candidate task/reference pairs; all seven
+active contracts stay unchanged. The deterministic adapter supports A01 only;
+full-bank model solvability and numeric observation mapping remain unqualified.
+The active bank remains 7/24. No Phase 5 entry or exit has occurred.
+
+Local Python 3.11/3.12 suites pass 317 tests, and code head `ce7b9c8` passes hosted
+Python 3.11/3.12 and CodeQL. Independent review fixed H/disposition checks before
+tools; a float-sum portability fix preserves all candidate truth bytes. A static
+readiness review identifies B03 rounding ambiguity, A03's ungraded requested
+sentence, seven numeric mapping gaps and G/H template overlap. Six B/F semantic
+false positives remain. See `proposals/phase5-development-bank-v1/`.
+
+This branch preserves historical schema-less tool metadata. Separate draft
+PR104 independently verifies schema-v1 delivery for implemented lanes only;
+its development client retains 128/2048 limits versus standalone A's approved
+512/65536. Full runtime equivalence and comparative execution remain blocked.
+Phase 2 is unqualified, scope amendment PR103 awaits approval, and Phase 3/4
+acceptance and future configuration decisions remain open. No new A, held-out
+access, task activation, automatic review or PR merge is claimed here.
+
+## Historical verified implementation state
 
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
 - The project keeps the single-agent, oracle-metadata routed, and
