@@ -1,0 +1,28 @@
+test_explicit_field_type_guidance_is_delivered (test_candidate_prompt.TestCandidatePrompt.test_explicit_field_type_guidance_is_delivered) ... ok
+test_original_prompt_prefix_and_no_answers_are_preserved (test_candidate_prompt.TestCandidatePrompt.test_original_prompt_prefix_and_no_answers_are_preserved) ... ok
+test_real_client_fake_http_preserves_tools_options_and_runtime_evidence (test_candidate_prompt.TestCandidatePrompt.test_real_client_fake_http_preserves_tools_options_and_runtime_evidence) ... FAIL
+
+======================================================================
+FAIL: test_real_client_fake_http_preserves_tools_options_and_runtime_evidence (test_candidate_prompt.TestCandidatePrompt.test_real_client_fake_http_preserves_tools_options_and_runtime_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-response-format-validation/proposals/phase2-response-format-v1/test_candidate_prompt.py", line 96, in test_real_client_fake_http_preserves_tools_options_and_runtime_evidence
+    self.assertEqual(execution.response.evidence_refs,('structured:delivery_work_items','policy:fixture-policy@1.0#definition'))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('structured:delivery_work_items', 'policy:fixture-policy@1.0#2026-01-01') != ('structured:delivery_work_items', 'policy:fixture-policy@1.0#definition')
+
+First differing element 1:
+'policy:fixture-policy@1.0#2026-01-01'
+'policy:fixture-policy@1.0#definition'
+
+- ('structured:delivery_work_items', 'policy:fixture-policy@1.0#2026-01-01')
+?                                                               ^^^^^^^^^^
+
++ ('structured:delivery_work_items', 'policy:fixture-policy@1.0#definition')
+?                                                               ^^^^^^^^^^
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+FAILED (failures=1)

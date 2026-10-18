@@ -2,6 +2,33 @@
 
 _Last reviewed for approved schema-v1 activation on 2026-10-17._
 
+## Current checkpoint — response-format v1 is an inactive offline proposal
+
+The separately approved scope-v1 Treatment A already ran once at `57c3007`
+and failed final-response contract validation: clarification must be an object
+or null. No normalized response or score was produced; no correction or retry.
+Its terminal evidence is preserved in draft PR 107. Scope approval is resolved;
+that one-run authorization is consumed. Phase 2 remains unqualified.
+
+The owner approved offline preparation of a separate response-format proposal
+and Phase 3–4 decision brief. `proposals/phase2-response-format-v1/` contains
+an inactive prompt-only patch and disabled candidate configuration. Production
+source, parser, scorer, fixtures, model/settings, tools, budgets and historical
+configurations remain unchanged on this branch. The patch is applied only in
+a separate offline-validation checkout. Proposal and candidate suites each
+pass 359 tests on Python 3.11/3.12; three prompt/delivery regressions fail on
+the baseline and pass on the candidate. Scripted checks do not prove live-model
+compliance. No activation, new attempt, comparison, held-out work or merge.
+
+The independent final offline review at implementation `1eca40a` and candidate
+`d4922de` found no must-fix defect. Its report/reproducer are preserved in the
+proposal validation directory. No recommendation in the decision brief is
+enacted; no research phase is accepted by these engineering checks.
+
+The decision brief is `docs/phase3-phase4-decision-brief-2026-10-17.md`.
+All research decisions remain pending. Earlier checkpoints below retain their
+historical preparation states and do not override the consumed attempt.
+
 ## Current checkpoint — scope amendment approved, standalone attempt not yet run
 
 The owner approved `runtime-sql-scope-v1` in this chat on October 17 EDT as a

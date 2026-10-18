@@ -1,0 +1,8 @@
+test_explicit_field_type_guidance_is_delivered (test_candidate_prompt.TestCandidatePrompt.test_explicit_field_type_guidance_is_delivered) ... ok
+test_original_prompt_prefix_and_no_answers_are_preserved (test_candidate_prompt.TestCandidatePrompt.test_original_prompt_prefix_and_no_answers_are_preserved) ... ok
+test_real_client_fake_http_preserves_tools_options_and_runtime_evidence (test_candidate_prompt.TestCandidatePrompt.test_real_client_fake_http_preserves_tools_options_and_runtime_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
