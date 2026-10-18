@@ -52,3 +52,11 @@ source diversity and H01/H02 overlap), audit every reference and negative trial,
 resolve B/F semantic controls, qualify observation mapping, confirm approved
 baseline solvability and treatment parity, and record the accepted task-set
 version and exact candidate artifacts. No held-out data was read or created.
+
+The first hosted Python 3.11 reproduction check failed because built-in float
+`sum` serialized the Product completed-effort ratio as `1.1033955857385394`,
+while Python 3.12+ and the committed reference use `1.10339558573854`. The
+preparer now uses explicit `math.fsum` for that independent float numerator.
+This preserves every candidate task, reference, control and numeric-truth byte;
+only the preparer-source hash in `validation.json` changes. The original CI
+failure remains a portability failure, not a change to candidate criteria.
