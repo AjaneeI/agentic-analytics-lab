@@ -1,0 +1,39 @@
+{
+  "version": "phase2-scheduling-control-v1-offline-validation",
+  "base_commit": "1f679c3aeefc16e5b7d26b6db25f1dc19b11d5ae",
+  "all_preexisting_tracked_files_unchanged": 408,
+  "source_sha256": {
+    "README.md": "6375459d69ba32b0b946594ac1fa47ff2f1e75c12b0927fb5cef8b45666ce573",
+    "observer.py": "b7365293f89f14ab6d6b4088fc15dca5077575de1dbb3a71f3a3b7e685bb0996",
+    "protocol.json": "3f866bf6645bbf03938f603cf31a255625fc78e91ca269f9bffb03cf98b7f2ff",
+    "test_observer.py": "4af6a9ab3cc421033361a398e2cbb93fe9f2e58daa5d69835818b70f7b77646e"
+  },
+  "validation": {
+    "python311": "15 focused +22 SQL-security +7 existing header tests passed",
+    "python312": "15 focused +22 SQL-security +7 existing header tests passed",
+    "red": "Missing resource-window enforcement failed as expected before implementation; initial stub errors also retained separately.",
+    "full_suite": "Not rerun: includes benchmark-SQL SQLite characterizations/statistical simulations; unchanged completed evidence is reused."
+  },
+  "service_calls": 0,
+  "SQL_executions": 0,
+  "model_calls": 0,
+  "diagnostic_launches": 0,
+  "Treatment_A_attempts": 0,
+  "runtime_configuration_changes": 0,
+  "limitations": [
+    "Scripted HTTP is not live server or model compliance.",
+    "Hard deadline behavior tested with scripted child; OS kill timing unverified.",
+    "Safe resource window not established; protocol not executed."
+  ],
+  "frozen_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+  "pending_treatment_a_configuration_sha256": "2605daac78834215b1e5cb26ff934216f8b9ca90c629129512862632f0271c94",
+  "validation_log_sha256": {
+    "green-python312.txt": "8ed9e59a29a1886d95b3b252da84c979df1575df8c3ebbcf09c59bcfcb111de6",
+    "green-python311.txt": "0fce1d38ba86bb0731fdaa275f5fca3c91b9b1145a5638638f6a850c9d35fd8f",
+    "header-python311.txt": "4446f44b6225df0f4a06eed176b6ef9e7eb6b678031000640e465c78680b438a",
+    "header-python312.txt": "4446f44b6225df0f4a06eed176b6ef9e7eb6b678031000640e465c78680b438a",
+    "security-python312.txt": "4e226fa4d14dbc52fbf25370cef8e9aa13fe2885c571fb912feb81df8090a851",
+    "security-python311.txt": "4e226fa4d14dbc52fbf25370cef8e9aa13fe2885c571fb912feb81df8090a851",
+    "red-window-guard-python311.txt": "f0a04c311acaecf1ffde48d53cc5dfed05cda44a00f3d76a5999a7e0ff09f7ad"
+  }
+}

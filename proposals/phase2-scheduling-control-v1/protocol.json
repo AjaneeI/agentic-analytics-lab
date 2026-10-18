@@ -1,0 +1,119 @@
+{
+  "version": "phase2-scheduling-control-v1",
+  "status": "inactive_proposal_offline_only_until_verified_resource_window",
+  "purpose": "Observe whether unrelated small analytical work also incurs runnable CPU wait in a prospectively recorded resource context; no attribution to a particular process or counterfactual speedup.",
+  "evidence_basis": {
+    "prior_pr": 116,
+    "prior_commit": "1f679c3aeefc16e5b7d26b6db25f1dc19b11d5ae",
+    "historical_query_id": "780faff9-7b12-4326-82bb-1ab47353d860",
+    "observation": "OSCPUWaitMicroseconds=7850621 with 10583ms duration; query-thread aggregates, not a wall-time partition."
+  },
+  "authorization": {
+    "source": "Existing autonomous diagnostic ownership: model-free synthetic/nonbenchmark checks; latest continuation queue item3. Does not reuse consumed bounded PR111 validation or Treatment A authorizations.",
+    "treatment_a_attempts": 0,
+    "model_calls": 0,
+    "failed_sql_replay": false,
+    "database_mutations": false,
+    "held_out_access": false
+  },
+  "prerequisites": [
+    "Exact clean commit and protocol SHA256 pinned before launch.",
+    "Review the proposed protocol and collector. Independently inspect a prospective resource-window receipt identifying owner sessions, planned work and no-overlap interval; a reference string alone proves no capacity.",
+    "Obtain bounded contemporaneous read-only host/VM observations under existing authority if a window becomes available, record source/timestamp/limitations privately. No free-memory/load threshold is adopted.",
+    "Use existing local readonly credentials only; no source discovery, permissions change, service action, warmup, model call or benchmark import.",
+    "If ownership, capacity or resource observations remain ambiguous, do not launch; no polling or collection expansion."
+  ],
+  "resource_actions": {
+    "service_stops": 0,
+    "restarts": 0,
+    "configuration_changes": 0,
+    "priority_or_affinity_changes": 0,
+    "model_loads": 0,
+    "allocation": "Prospective voluntary scheduling agreement only. Existing scheduling is retained; background work is recorded, not forcibly quiesced."
+  },
+  "plan": [
+    {
+      "step": 1,
+      "kind": "synthetic_nonbenchmark",
+      "input": "numbers(500), integer n from0 through499; sum(n*n)=41541750; no application table or benchmark data.",
+      "effective_settings": "Return toString(getSetting(...)) for all nine existing fixed SQL limits and JIT-off setting in this same request.",
+      "sql_source": "observer.SYNTHETIC_SQL",
+      "query_id": "aal-scheduling-control-v1-<fresh UUID> reserved once."
+    },
+    {
+      "step": 2,
+      "kind": "existing_metadata",
+      "source": "local system.query_log only",
+      "scope": "Exact new synthetic query ID, is_initial_query1, terminal types, client start/end timestamps bounded40s, LIMIT1, selected counters/resources/settings only. No original failed request lookup.",
+      "availability": "Exactly one immediate lookup; asynchronous log persistence/clock skew can yield no row. Preserve unavailable, no flush, wait/retry, wider window or extra query."
+    }
+  ],
+  "limits": {
+    "requests_maximum": 2,
+    "server_seconds_per_request": 10,
+    "http_socket_seconds": 15,
+    "worker_wall_seconds": 40,
+    "kill_confirmation_seconds_maximum": 1,
+    "collected_bytes_maximum": 32768,
+    "data_bytes_maximum": 28672,
+    "reserved_receipt_and_seal_bytes": 4096,
+    "body_bytes_per_response_maximum": 4096,
+    "headers_bytes_per_response_maximum": 4096,
+    "context_bytes_maximum": 4096,
+    "retries": 0,
+    "replacement_runs": 0,
+    "warmup_queries": 0,
+    "request_parameters": {
+      "default_format": "JSONEachRow",
+      "readonly": "1",
+      "max_execution_time": "10",
+      "max_result_rows": "1000",
+      "result_overflow_mode": "break",
+      "max_rows_to_read": "10000",
+      "max_bytes_to_read": "10485760",
+      "max_memory_usage": "134217728",
+      "max_threads": "2",
+      "compile_expressions": "0"
+    }
+  },
+  "stop_rule": "Exclusive output-directory and launch marker first. Stop on first request/parse/numeric/effective-setting error, time or output limit. Never issue metadata after a failed synthetic request. Empty metadata is terminal inconclusive. No automatic correction, retry, fallback, expanded scope or replacement.",
+  "capture": [
+    "Private0700 directory,0600 files, exact new SQL/queryIDs/parameters, returned raw status/headers/body, per-exchange elapsed time, context receipt, terminal result/error, parent receipt and SHA256 seal.",
+    "Do not persist Authorization or credential values. Keep raw captured server content private; publish a separate reviewed redaction only.",
+    "Client timestamps bound metadata selection; they are not server stage timestamps. ProfileEvents may be omitted; missing keys remain unknown. Settings map is recorded changes, not a full effective/default snapshot. Synthetic same-request getSetting is the effective-settings observation.",
+    "Hard termination may leave incomplete files and lose bytes retained only in memory; do not claim a complete wire capture. Preserve written partial files and terminal receipt; unavailable remains unavailable."
+  ],
+  "interpretation": {
+    "possible_value": "CPU wait for unrelated work would support a shared scheduling-delay explanation for that new window. Low or missing wait would leave transient historical contention and query-specific delay unresolved.",
+    "forbidden_claims": [
+      "Original timeout fixed",
+      "Historical cause isolated to a named workload",
+      "Phase2 qualified",
+      "Architecture comparison",
+      "Phase3 semantic acceptance",
+      "Phase4 method freeze",
+      "Wall-time percentage from thread aggregate counters",
+      "Safe window from idle state or one capacity snapshot"
+    ]
+  },
+  "frozen_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+  "live_treatment_a_authorized": false,
+  "existing_pending_configuration_modified": false,
+  "hypotheses": [
+    {
+      "id": "H-shared-current",
+      "statement": "Scheduling delay affects unrelated small work during a recorded current resource window.",
+      "distinguishing_observation": "A terminal exact-query profile with observed CPU wait on the synthetic control supports this contributor in the new window, without identifying a competing service."
+    },
+    {
+      "id": "H-query-specific",
+      "statement": "Execution features of the failed benchmark query caused most of its delay.",
+      "distinguishing_observation": "A fast synthetic control does not establish this cause because it lacks the failed query features; slow unrelated work weakens an exclusively query-specific explanation for that new window."
+    },
+    {
+      "id": "H-transient-historical",
+      "statement": "Historical shared contention has ceased or changed.",
+      "distinguishing_observation": "Current normal/low-wait control is compatible with this and query-specific delay; a single new control cannot distinguish them."
+    }
+  ]
+}

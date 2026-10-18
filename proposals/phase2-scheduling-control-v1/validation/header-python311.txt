@@ -1,0 +1,12 @@
+test_complete_line_exact (test_phase2_diagnostic_observation.HeaderCaptureTests.test_complete_line_exact) ... ok
+test_cumulative_cap_never_reads_beyond_budget (test_phase2_diagnostic_observation.HeaderCaptureTests.test_cumulative_cap_never_reads_beyond_budget) ... ok
+test_empty_eof_is_preserved (test_phase2_diagnostic_observation.HeaderCaptureTests.test_empty_eof_is_preserved) ... ok
+test_exhausted_cap_does_not_read (test_phase2_diagnostic_observation.HeaderCaptureTests.test_exhausted_cap_does_not_read) ... ok
+test_partial_eof_is_retained_and_rejected (test_phase2_diagnostic_observation.HeaderCaptureTests.test_partial_eof_is_retained_and_rejected) ... ok
+test_socket_error_preserves_partial_header (test_phase2_diagnostic_observation.HeaderCaptureTests.test_socket_error_preserves_partial_header) ... ok
+test_timeout_preserves_partial_status (test_phase2_diagnostic_observation.HeaderCaptureTests.test_timeout_preserves_partial_status) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.000s
+
+OK

@@ -1,3 +1,9 @@
+# Prospective scheduling control — inactive, offline validated
+
+Queue item3 now has a versioned two-request synthetic/metadata protocol and one-shot collector in proposals/phase2-scheduling-control-v1. Focused scripted tests pass15, SQL-security22 and existing header7 on Python3.11/3.12; all preexisting tracked files were verified unchanged before this status addition. No new SQL, model, service action or diagnostic launch. Capacity window and independent coordinator acceptance review remain prerequisites; no fixed readiness threshold is adopted. Phase2 remains unqualified and authorized TreatmentA count0. Phase3 semantic decisions and all12 Phase4 choices remain open; completed Phase5 readiness audit is reused. See the proposal README and validation receipt.
+
+Historical checkpoints follow unchanged.
+
 # CPU scheduling diagnosis — qualification still blocked
 
 Original JIT-off query metadata records7.850621s CPU scheduling wait versus2.862090s CPU, with500rows read and JIT-off/fixed settings recorded. Scheduling delay is the strongest supported contributor; exact interferer and prior-run recurrence remain unproven. All failed evidence remains unchanged. New diagnostics-only partial-header capture candidate is inactive; pending qualification config denies live authorization/count0 and preserves the complete frozen runtime contract. No TreatmentA/replay/service change/merge. See docs/phase2-cpu-scheduling-readiness-v1.md and experiments/phase2-cpu-scheduling-diagnosis-20261018. Independent Phase3/4 proposals do not accept either gate.

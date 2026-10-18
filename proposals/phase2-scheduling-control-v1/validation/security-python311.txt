@@ -1,0 +1,27 @@
+test_https_allowed (test_clickhouse_readonly.TestClickHouseUrlValidation.test_https_allowed) ... ok
+test_local_http_allowed (test_clickhouse_readonly.TestClickHouseUrlValidation.test_local_http_allowed) ... ok
+test_remote_http_rejected (test_clickhouse_readonly.TestClickHouseUrlValidation.test_remote_http_rejected) ... ok
+test_blocker_rate_avg_allowed (test_clickhouse_readonly.TestReadOnlyValidation.test_blocker_rate_avg_allowed) ... ok
+test_blocker_rate_avg_complement_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_blocker_rate_avg_complement_rejected) ... ok
+test_blocker_rate_complement_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_blocker_rate_complement_rejected) ... ok
+test_blocker_rate_scaled_safe_expression_allowed (test_clickhouse_readonly.TestReadOnlyValidation.test_blocker_rate_scaled_safe_expression_allowed) ... ok
+test_blocker_rate_sum_over_count_allowed (test_clickhouse_readonly.TestReadOnlyValidation.test_blocker_rate_sum_over_count_allowed) ... ok
+test_cte_over_allowed_table_allowed (test_clickhouse_readonly.TestReadOnlyValidation.test_cte_over_allowed_table_allowed) ... ok
+test_describe_allowed_table_allowed (test_clickhouse_readonly.TestReadOnlyValidation.test_describe_allowed_table_allowed) ... ok
+test_describe_other_table_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_describe_other_table_rejected) ... ok
+test_insert_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_insert_rejected) ... ok
+test_join_to_other_table_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_join_to_other_table_rejected) ... ok
+test_multiple_read_statements_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_multiple_read_statements_rejected) ... ok
+test_mutation_hidden_after_select_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_mutation_hidden_after_select_rejected) ... ok
+test_mutation_keyword_in_comment_does_not_trigger (test_clickhouse_readonly.TestReadOnlyValidation.test_mutation_keyword_in_comment_does_not_trigger) ... ok
+test_other_table_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_other_table_rejected) ... ok
+test_select_allowed (test_clickhouse_readonly.TestReadOnlyValidation.test_select_allowed) ... ok
+test_show_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_show_rejected) ... ok
+test_table_function_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_table_function_rejected) ... ok
+test_truncate_rejected (test_clickhouse_readonly.TestReadOnlyValidation.test_truncate_rejected) ... ok
+test_with_allowed (test_clickhouse_readonly.TestReadOnlyValidation.test_with_allowed) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.001s
+
+OK
