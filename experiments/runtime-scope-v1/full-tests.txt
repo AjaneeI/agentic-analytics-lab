@@ -120,6 +120,7 @@ test_unverified_returned_label_is_never_scope_proof (system_benchmark.test_scope
 test_canonical_and_equivalent_sql_pass_real_worker_and_frozen_scorer (system_benchmark.test_scope_proposal_independent.TestScopeProposalIndependent.test_canonical_and_equivalent_sql_pass_real_worker_and_frozen_scorer) ... ok
 test_forged_labels_and_false_predicates_never_supply_scope (system_benchmark.test_scope_proposal_independent.TestScopeProposalIndependent.test_forged_labels_and_false_predicates_never_supply_scope) ... ok
 test_independent_truth_and_frozen_sources_are_preserved (system_benchmark.test_scope_proposal_independent.TestScopeProposalIndependent.test_independent_truth_and_frozen_sources_are_preserved) ... ok
+test_report_baseline_is_fixed_across_evidence_only_commits (system_benchmark.test_scope_proposal_independent.TestScopeProposalIndependent.test_report_baseline_is_fixed_across_evidence_only_commits) ... ok
 test_valid_cte_unknown_and_literal_metric_false_positive_stay_visible (system_benchmark.test_scope_proposal_independent.TestScopeProposalIndependent.test_valid_cte_unknown_and_literal_metric_false_positive_stay_visible) ... ok
 test_clarification_concept_is_scored (system_benchmark.test_scoring.TestSystemBenchmarkScoring.test_clarification_concept_is_scored) ... ok
 test_declared_trajectory_failures_have_stable_reason_codes (system_benchmark.test_scoring.TestSystemBenchmarkScoring.test_declared_trajectory_failures_have_stable_reason_codes) ... ok
@@ -309,6 +310,6 @@ test_forbidden_and_unexpected_tools_are_distinct (test_trajectory_quality.TestTr
 test_repeated_call_and_budget_overage_are_visible (test_trajectory_quality.TestTrajectoryQuality.test_repeated_call_and_budget_overage_are_visible) ... ok
 
 ----------------------------------------------------------------------
-Ran 309 tests in 0.719s
+Ran 310 tests in 0.730s
 
 OK

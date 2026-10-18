@@ -58,3 +58,8 @@ single bounded standalone Treatment A only after fresh pin/model/schema/data,
 offline and passive-capture preflight checks pass. No retry follows any outcome.
 Strong-single adapter implementation and independent schema parity remain future
 comparison prerequisites, not a prerequisite for this standalone experiment.
+
+The independent report pins its comparison baseline to schema activation `d8fcee6`,
+not the moving evidence-branch HEAD. Source hashes identify the candidate runtime
+and reproducer; evidence-only commits do not alter the observation fingerprint.
+Full suites pass 310 tests on Python 3.11, 3.12 and 3.14.

@@ -31,6 +31,7 @@ from src.evals.system_benchmark.scoring import score_response
 from src.tools.clickhouse_readonly import validate_read_only
 from src.tools.policy_retrieval import retrieve_policy
 
+REVIEW_BASELINE = "d8fcee6593d50d6d5afb19858c73ec4f2fd88c55"
 TABLE = "agentic_analytics.delivery_work_items"
 RATE = "100.0 * SUM(blocked) / COUNT(*) AS blocked_pct"
 TAIL = " GROUP BY team ORDER BY blocked_pct DESC LIMIT 1"
@@ -145,14 +146,13 @@ def build_review():
               "src/evals/system_benchmark/routing.py"]
     hashes = {path: hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for path in sorted(set(frozen + source))}
     changed = [path for path in frozen if hashlib.sha256(subprocess.run(
-        ["git", "show", f"HEAD:{path}"], cwd=ROOT, capture_output=True, check=True,
+        ["git", "show", f"{REVIEW_BASELINE}:{path}"], cwd=ROOT, capture_output=True, check=True,
     ).stdout).hexdigest() != hashes[path]]
     return {
         "schema_version": "independent-runtime-scope-v1-review",
         "phase3_accepted": False, "proposal_approved": False,
         "review_scope": "Inactive scope-observation correction; independent offline integration controls",
-        "baseline_commit": subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True,
-                                           text=True, check=True).stdout.strip(),
+        "baseline_commit": REVIEW_BASELINE,
         "frozen_input_count": len(frozen), "frozen_unchanged": not changed, "changed_frozen_paths": changed,
         "sha256": hashes, "python_version": sys.version.split()[0], "sqlite_version": sqlite3.sqlite_version,
         "dataset": {"seed": 42, "rows": len(records), "csv_sha256": csv_sha,
@@ -209,6 +209,9 @@ class TestScopeProposalIndependent(unittest.TestCase):
                          {"valid-cte-unknown", "active-literal-metric-gap"})
         self.assertFalse(self.report["grader_checks_pass"])
         self.assertFalse(self.report["phase3_accepted"])
+
+    def test_report_baseline_is_fixed_across_evidence_only_commits(self):
+        self.assertEqual(self.report['baseline_commit'], 'd8fcee6593d50d6d5afb19858c73ec4f2fd88c55')
 
     def test_independent_truth_and_frozen_sources_are_preserved(self):
         self.assertTrue(self.report["frozen_unchanged"])

@@ -1,0 +1,17 @@
+F
+======================================================================
+FAIL: test_report_baseline_is_fixed_across_evidence_only_commits (tests.system_benchmark.test_scope_proposal_independent.TestScopeProposalIndependent.test_report_baseline_is_fixed_across_evidence_only_commits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-scope-proposal/tests/system_benchmark/test_scope_proposal_independent.py", line 214, in test_report_baseline_is_fixed_across_evidence_only_commits
+    self.assertEqual(self.report['baseline_commit'], 'd8fcee6593d50d6d5afb19858c73ec4f2fd88c55')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '619ad93e136413ab5fbf41d0365062dee53f5e5a' != 'd8fcee6593d50d6d5afb19858c73ec4f2fd88c55'
+- 619ad93e136413ab5fbf41d0365062dee53f5e5a
++ d8fcee6593d50d6d5afb19858c73ec4f2fd88c55
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.536s
+
+FAILED (failures=1)
