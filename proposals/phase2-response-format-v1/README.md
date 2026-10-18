@@ -43,6 +43,9 @@ verified full-suite log hashes, patch bytes, fail-closed guards, decision covera
 and both sealed experiment hash sets, with no scorer or live service calls.
 Subsequent additions record review evidence/status only; candidate source,
 prompt, patch, configuration, tests and decision brief are unchanged.
+The reproducer is the archived exact review invocation: it requires the recorded
+local workspace paths and reviewed commits, and intentionally refuses a later
+evidence-only HEAD. It is not a portable installer or activation command.
 
 Standard full suite from either checkout:
 
