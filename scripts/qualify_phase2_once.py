@@ -190,7 +190,20 @@ def qualify_once(request, out, *, model_factory=None, query_fn=None, policy_fn=N
 
         def preserve_execution(*args, **kwargs):
             execution = worker(*args, **kwargs)
-            _save(session, 'execution.json', asdict(execution))
+            try:
+                original = capture._canonical(asdict(execution))
+                public = capture._public(execution)
+                projected = capture._canonical(public)
+                redacted = original != projected
+                _save(session, 'execution.json', public)
+                _save(session, 'execution-capture-metadata.json', {
+                    'artifact': 'execution.json', 'redacted': redacted,
+                    'artifact_kind': 'public_projection' if redacted else 'public_execution_copy',
+                    'original_canonical_execution_sha256': hashlib.sha256(original).hexdigest(),
+                    'projection_canonical_sha256': hashlib.sha256(projected).hexdigest(),
+                })
+            except BaseException as error:
+                session.collector_errors.append({'stage': 'execution_public_projection', **capture._error(error)})
             return execution
 
         try:

@@ -55,9 +55,13 @@ Loaded-source checks compare every declared contract file, including corpus,
 tasks and references, with the pinned checkout; equal Python code alone cannot
 qualify another checkout whose retriever corpus differs.
 
-`execution.json` and `raw-result.json` preserve unedited public JSON copies of
-the actual existing executor/runner return objects. They do not change returned
-objects or scoring. On an exception, no score is manufactured and the identical
+`execution.json` is the existing collector's public projection of the actual
+executor return. Named private fields are omitted recursively from that copy.
+`execution-capture-metadata.json` records the original canonical execution SHA,
+the projection SHA and a redaction flag; a filtered artifact is explicitly
+labelled `public_projection`. The private original is not written. The exact
+original `TrialExecution` still reaches the scorer, and `raw-result.json`
+preserves the runner result unchanged. On an exception, no score is manufactured and the identical
 original exception is rethrown. `error.json` retains error class/message and
 structured HTTP/server identifiers through the existing public error projection;
 full tracebacks and HTTP response bodies are not retained. Public boundary events

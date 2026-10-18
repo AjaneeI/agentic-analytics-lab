@@ -1,6 +1,6 @@
 """Qualification wiring tests use temporary pins and injected offline delegates."""
 
-from dataclasses import replace
+from dataclasses import asdict, replace
 from contextlib import redirect_stderr, redirect_stdout
 import hashlib
 import json
@@ -196,6 +196,38 @@ class TestQualificationRunner(unittest.TestCase):
         event = next(event for event in self.events() if event['event'] == 'query_clickhouse_start')
         self.assertEqual(event['input']['args'][0], self.model_steps()[0]['arguments']['sql'])
         self.assertEqual(json.loads((self.out / 'error.json').read_text())['type'], 'RuntimeError')
+
+    def test_execution_artifact_omits_private_fields_without_changing_runtime_or_raw_result(self):
+        from src.evals.system_benchmark.local_worker import BoundedLocalExecutor
+        from src.evals.system_benchmark.scoring import score_response
+        private = 'INDEPENDENT_EXECUTION_JSON_PRIVATE_FIELD_CANARY'
+        steps = self.model_steps()
+        payload = json.loads(steps[-1]['content'])
+        payload['handoff'] = {'analysis': private, 'note': 'ordinary opaque analysis text'}
+        steps[-1]['content'] = json.dumps(payload)
+        observed = []
+        original_call = BoundedLocalExecutor.__call__
+        def observe(worker, *args, **kwargs):
+            execution = original_call(worker, *args, **kwargs)
+            observed.append(execution)
+            return execution
+        with patch.object(BoundedLocalExecutor, '__call__', observe), \
+             patch('src.evals.system_benchmark.runner.score_response', wraps=score_response) as score:
+            result = self.run_offline(model=ScriptedModel(steps))
+        self.assertTrue(result['task_success'])
+        self.assertIs(score.call_args.args[2], observed[0].response)
+        self.assertIs(score.call_args.args[3], observed[0].observation)
+        self.assertEqual(observed[0].response.handoff['analysis'], private)
+        execution_text = (self.out / 'execution.json').read_text()
+        self.assertNotIn(private, execution_text)
+        self.assertEqual(json.loads(execution_text)['response']['handoff'], {'note': 'ordinary opaque analysis text'})
+        metadata = json.loads((self.out / 'execution-capture-metadata.json').read_text())
+        self.assertTrue(metadata['redacted'])
+        self.assertEqual(metadata['artifact_kind'], 'public_projection')
+        self.assertEqual(metadata['original_canonical_execution_sha256'], hashlib.sha256(capture._canonical(asdict(observed[0]))).hexdigest())
+        self.assertEqual((self.out / 'raw-result.json').read_text(), json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + '\n')
+        for artifact in self.out.iterdir():
+            self.assertNotIn(private, artifact.read_text(), artifact.name)
 
     def test_existing_evidence_folder_refuses_before_service_calls(self):
         self.out.mkdir()
