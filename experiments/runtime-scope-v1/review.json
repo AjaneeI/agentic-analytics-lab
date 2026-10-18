@@ -1,5 +1,5 @@
 {
-  "baseline_commit": "d8fcee6593d50d6d5afb19858c73ec4f2fd88c55",
+  "baseline_commit": "18175c22f60cde02406e21488d044bd4c81aed42",
   "cases": [
     {
       "contract_valid": true,
@@ -978,7 +978,7 @@
     "src/evals/trajectory_quality.py": "e2bfd4310edb2f007fe1e4cc2d3571e0dc34959823b849a84a109b72336cab20",
     "src/tools/clickhouse_readonly.py": "3f4667601120d0a660274a66da5608da4de2461ff4a5b86385a731d3daa5f1c1",
     "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27",
-    "tests/system_benchmark/test_scope_proposal_independent.py": "78b0ac1eb0e8b11ff54f15f07d93e56b6ba8c05ed7604bc869c93cfa38dc368c"
+    "tests/system_benchmark/test_scope_proposal_independent.py": "e00ad475927659e2612ab1fe3ef5161605cc54ebf9246860664ba58833dda8d9"
   },
   "sqlite_version": "3.53.4",
   "unresolved_grader_controls": [

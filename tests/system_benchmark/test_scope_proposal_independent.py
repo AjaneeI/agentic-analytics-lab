@@ -1,7 +1,8 @@
 """Independent executed-SQL review of the inactive runtime scope proposal.
 
 Run normally with unittest; use --output PATH to preserve the same review.
-Known grader gaps must remain visible even when scope-specific checks pass.
+The evidence command exits 2 while grader gaps remain, even when the narrower
+scope-specific checks pass. Unit-test success does not accept the evaluator.
 """
 
 import argparse
@@ -228,6 +229,8 @@ if __name__ == "__main__":
         parser.add_argument("--output", type=Path, required=True)
         args = parser.parse_args()
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(build_review(), indent=2, sort_keys=True, allow_nan=False) + "\n")
+        report = build_review()
+        args.output.write_text(json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n")
+        raise SystemExit(0 if report["grader_checks_pass"] else 2)
     else:
         unittest.main()
