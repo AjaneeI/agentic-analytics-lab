@@ -14,6 +14,17 @@ No overall evaluator acceptance or new Treatment A is claimed. Owner approval
 of the versioned amendment is pending; frozen methods/fixtures stay unchanged.
 See `experiments/runtime-scope-v1/` and the separate proposed configuration.
 
+## Passive capture v2 — offline only
+
+The [versioned capture library](docs/passive-capture-v2.md) records public
+model/tool boundary events, pre-query SQL, partial metrics and a durable worker
+entry, preserving delegate results and errors without retries. It requires
+explicit run authorization, configuration/source pins and a passed runtime
+validity gate. Its CLI remains preflight-only; no live activation adapter or
+new Treatment A attempt is included. The current scope-observation gate remains
+blocked on this branch. Existing collectors and failed evidence remain intact.
+Offline verification passed 25 focused tests and all 322 repository tests.
+
 ## Approved schema v1 activation, scope validity still blocked
 
 The user approved `phase2-runtime-schema-v1` activation and one new bounded
