@@ -1,0 +1,10 @@
+--- a/src/tools/clickhouse_readonly.py
++++ b/src/tools/clickhouse_readonly.py
+@@ -241,6 +241,7 @@
+             "max_bytes_to_read": str(10 * 1024 * 1024),
+             "max_memory_usage": str(128 * 1024 * 1024),
+             "max_threads": "2",
++            "compile_expressions": "0",
+         }
+     )
+ 

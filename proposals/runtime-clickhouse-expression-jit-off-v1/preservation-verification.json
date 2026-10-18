@@ -1,0 +1,25 @@
+{
+  "treatment-a-20261017": {
+    "files": 20,
+    "all_hashes_unchanged": true,
+    "seal_sha256": "97cc69f4f80b2f729e41f5fb0a2c032e0bb05f3dcc32209719f892e3d90325c5"
+  },
+  "treatment-a-scope-v1-20261017": {
+    "files": 4,
+    "all_hashes_unchanged": true,
+    "seal_sha256": "2144b8dc8aed85a48825e4c8941ab78b95e6e7f7e99307a38ca3e998e0256707"
+  },
+  "treatment-a-response-format-v1-20261017": {
+    "files": 4,
+    "all_hashes_unchanged": true,
+    "seal_sha256": "cfc4c32843a5b6f51abc36484c2c978a80c9fb100cf83c683f986b2424fb8d9d"
+  },
+  "archives_sha256": {
+    "sprint-evidence.zip": "2928fec379037ad1befd32d5008b0ed8cd07db47fda1cd76dbcb43d2433bc989",
+    "gate-future-comparisons-20261017/gate-future-comparisons-evidence.zip": "add32ddd4cfd75d45aab9840c9061e3d893c005b21216ec39556a1e17c32fa56",
+    "phase2-scope-v1-approved-20261017/approved-scope-v1-attempt-evidence.zip": "9f1c6ad296b3cd1d3fba6e69ac8039390ef08faeb04cee92a8a8463d978e9a05",
+    "response-format-v1-offline-20261017/response-format-v1-offline-evidence.zip": "2c0e049ebcc3d062500241fd46b3ad5b4224d515466ea4e59f6b797a6521690f",
+    "response-format-v1-approved-20261017/response-format-v1-attempt-evidence.zip": "6ba83215e7825ce912dfd15c10f7d43ad1a0feeb79cdb28680b9fc650cb18b36"
+  },
+  "execution_worktrees_clean_at_original_pins": true
+}

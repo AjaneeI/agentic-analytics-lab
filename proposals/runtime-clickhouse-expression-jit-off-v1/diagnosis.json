@@ -1,0 +1,60 @@
+{
+  "diagnosis_version": "clickhouse-timeout-diagnosis-v1",
+  "retrieved_utc": "2026-10-18T02:38:25.043544+00:00",
+  "classification": "read_only_post_run_log_addendum_not_experiment",
+  "execution_commit": "bd717bb844aba39fd2edba69aa6094d8fe926340",
+  "query_id": "887e2a23-9b62-4107-b8ae-037a583a3f9c",
+  "normalized_server_SQL_equals_captured_SQL": true,
+  "exact_captured_sql_utf8_sha256": "9329ce538cfd6c9070a173b2b84d080918312e165d8ab8362940361277073363",
+  "exact_captured_sql_file_sha256": "7e7e54676e712ea73c062f2cba0fcb0c28e74e7c02092af12b0b8c11ca9f7efc",
+  "server_version": "26.8.4.11",
+  "server_code": 159,
+  "server_error_name": "TIMEOUT_EXCEEDED",
+  "client_error": {
+    "message": "ClickHouse query failed: timed out",
+    "type": "RuntimeError"
+  },
+  "client_query_interval_seconds": 15.441581291961484,
+  "server_trace_times": {
+    "query_received": "2026.10.18 02:27:42.677967",
+    "executeQuery": "2026.10.18 02:27:42.952340",
+    "expression_JIT": "2026.10.18 02:27:45.431840",
+    "cancellation_marked": "2026.10.18 02:27:53.622006",
+    "executeQuery_error": "2026.10.18 02:28:25.025158"
+  },
+  "observed_intervals_seconds": {
+    "query_log_to_cancellation": 10.669666,
+    "JIT_trace_to_server_error": 39.593318,
+    "cancellation_to_server_error": 31.403152
+  },
+  "confirmed": "server marked and ultimately reported max_execution_time=10 exceeded; client15s wait expired before server response",
+  "leading_explanation": "query-thread stall while building/compiling scalar expression, supported by last JIT trace before long gap and upstream synchronous compilation path",
+  "uncertainty": "No profiler stack or compilation-end timing; exclusive JIT causation, coldness, CPU/memory contention and exact per-stage duration are not established. Shared background merges/log writes coexist.",
+  "server_error_record_count": 2,
+  "distinct_matching_query_ids": 1,
+  "server_query_peak_memory_log": "1.97 MiB",
+  "planned_read_rows_log": "approximately500,onepart,onemark; not measured completed read or returned result",
+  "snapshot_files": {
+    "clickhouse-server.err.log": {
+      "bytes": 197104,
+      "sha256": "03098343038c1e108158e107309066da1a7035f205976737ea8e3f3bd990956c",
+      "retained_local_path": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/clickhouse-timeout-log-snapshots/clickhouse-server.err.log"
+    },
+    "clickhouse-server.tail-20000.log": {
+      "bytes": 3733932,
+      "sha256": "4a96f639999b04a14056bb3ed5e8dc27110695edad4abc2588e681a29cfb7326",
+      "retained_local_path": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/clickhouse-timeout-log-snapshots/clickhouse-server.tail-20000.log"
+    },
+    "container-state-and-mounts.txt": {
+      "bytes": 1815,
+      "sha256": "ea0d86111f7d97d3c3e394a30a607744788b4a3b4a0acaf0783cb121faf42c6e",
+      "retained_local_path": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/clickhouse-timeout-log-snapshots/container-state-and-mounts.txt"
+    }
+  },
+  "client_events_sha256": "07638c2ea48be4c2edd09bc7921b7f3403301fbba486302ec0080e721515835d",
+  "new_SQL_submissions": 0,
+  "captured_SQL_replays": 0,
+  "model_calls": 0,
+  "source_or_service_changes": 0,
+  "attempts_authorized": 0
+}

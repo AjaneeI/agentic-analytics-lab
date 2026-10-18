@@ -1,0 +1,41 @@
+2026.10.18 02:28:25.025158 [ 94 ] {887e2a23-9b62-4107-b8ae-037a583a3f9c} <Error> executeQuery: Code: 159. DB::Exception: Timeout exceeded: maximum: 10000.000 ms. (TIMEOUT_EXCEEDED) (version 26.8.4.11 (official build)) (from 172.18.0.1:57164) (in query: SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct, COUNT(*) AS total_items, SUM(blocked) AS blocked_count FROM agentic_analytics.delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1), Stack trace (when copying this message, always include the lines below):
+
+0. DB::Exception::Exception(DB::Exception::MessageMasked&&, int, bool) @ 0x0000000014345954
+1. DB::Exception::Exception(String&&, int, String, bool) @ 0x000000000ef1d898
+2. DB::Exception::Exception(PreformattedMessage&&, int) @ 0x000000000ef1d10c
+3. DB::Exception::Exception<String&, double>(int, FormatStringHelperImpl<std::type_identity<String&>::type, std::type_identity<double>::type>, String&, double&&) @ 0x00000000190d5590
+4. DB::QueryStatus::throwProperExceptionIfNeeded(unsigned long const&, unsigned long const&) @ 0x00000000190d52e0
+5. DB::QueryStatus::throwIfKilled() @ 0x00000000190d5e30
+6. DB::executeQueryImpl(char const*, char const*, std::shared_ptr<DB::Context>, DB::QueryFlags, DB::QueryProcessingStage::Enum, std::unique_ptr<DB::ReadBuffer, std::default_delete<DB::ReadBuffer>>&, boost::intrusive_ptr<DB::IAST>&, std::shared_ptr<DB::ImplicitTransactionControlExecutor>, std::function<void ()>, DB::QueryResultDetails&) @ 0x000000001950ba34
+7. DB::executeQuery(std::unique_ptr<DB::ReadBuffer, std::default_delete<DB::ReadBuffer>>, DB::WriteBuffer&, std::shared_ptr<DB::Context>, std::function<void (DB::QueryResultDetails const&)>, DB::QueryFlags, std::optional<DB::FormatSettings> const&, std::function<void (DB::IOutputFormat&, String const&, std::shared_ptr<DB::Context const> const&, std::optional<DB::FormatSettings> const&)>, std::function<void ()>, std::function<void ()>) @ 0x000000001950f310
+8. DB::HTTPHandler::processQuery(DB::HTTPServerRequest&, DB::HTMLForm&, DB::HTTPServerResponse&, DB::HTTPHandler::Output&, DB::QueryScope&, StrongTypedef<unsigned long, ProfileEvents::EventTag> const&) @ 0x000000001aa0a754
+9. DB::HTTPHandler::handleRequest(DB::HTTPServerRequest&, DB::HTTPServerResponse&, StrongTypedef<unsigned long, ProfileEvents::EventTag> const&) @ 0x000000001aa109f4
+10. DB::HTTPServerConnection::run() @ 0x000000001ab0de30
+11. Poco::Net::TCPServerConnection::start() @ 0x000000001fe80318
+12. Poco::Net::TCPServerDispatcher::run() @ 0x000000001fe80920
+13. Poco::PooledThread::run() @ 0x000000001fe42178
+14. Poco::ThreadImpl::runnableEntry(void*) @ 0x000000001fe403f0
+15. ? @ 0x00000000000803c8
+16. ? @ 0x00000000000e9edc
+
+
+2026.10.18 02:28:26.121185 [ 94 ] {887e2a23-9b62-4107-b8ae-037a583a3f9c} <Error> DynamicQueryHandler: Code: 159. DB::Exception: Timeout exceeded: maximum: 10000.000 ms. (TIMEOUT_EXCEEDED), Stack trace (when copying this message, always include the lines below):
+
+0. DB::Exception::Exception(DB::Exception::MessageMasked&&, int, bool) @ 0x0000000014345954
+1. DB::Exception::Exception(String&&, int, String, bool) @ 0x000000000ef1d898
+2. DB::Exception::Exception(PreformattedMessage&&, int) @ 0x000000000ef1d10c
+3. DB::Exception::Exception<String&, double>(int, FormatStringHelperImpl<std::type_identity<String&>::type, std::type_identity<double>::type>, String&, double&&) @ 0x00000000190d5590
+4. DB::QueryStatus::throwProperExceptionIfNeeded(unsigned long const&, unsigned long const&) @ 0x00000000190d52e0
+5. DB::QueryStatus::throwIfKilled() @ 0x00000000190d5e30
+6. DB::executeQueryImpl(char const*, char const*, std::shared_ptr<DB::Context>, DB::QueryFlags, DB::QueryProcessingStage::Enum, std::unique_ptr<DB::ReadBuffer, std::default_delete<DB::ReadBuffer>>&, boost::intrusive_ptr<DB::IAST>&, std::shared_ptr<DB::ImplicitTransactionControlExecutor>, std::function<void ()>, DB::QueryResultDetails&) @ 0x000000001950ba34
+7. DB::executeQuery(std::unique_ptr<DB::ReadBuffer, std::default_delete<DB::ReadBuffer>>, DB::WriteBuffer&, std::shared_ptr<DB::Context>, std::function<void (DB::QueryResultDetails const&)>, DB::QueryFlags, std::optional<DB::FormatSettings> const&, std::function<void (DB::IOutputFormat&, String const&, std::shared_ptr<DB::Context const> const&, std::optional<DB::FormatSettings> const&)>, std::function<void ()>, std::function<void ()>) @ 0x000000001950f310
+8. DB::HTTPHandler::processQuery(DB::HTTPServerRequest&, DB::HTMLForm&, DB::HTTPServerResponse&, DB::HTTPHandler::Output&, DB::QueryScope&, StrongTypedef<unsigned long, ProfileEvents::EventTag> const&) @ 0x000000001aa0a754
+9. DB::HTTPHandler::handleRequest(DB::HTTPServerRequest&, DB::HTTPServerResponse&, StrongTypedef<unsigned long, ProfileEvents::EventTag> const&) @ 0x000000001aa109f4
+10. DB::HTTPServerConnection::run() @ 0x000000001ab0de30
+11. Poco::Net::TCPServerConnection::start() @ 0x000000001fe80318
+12. Poco::Net::TCPServerDispatcher::run() @ 0x000000001fe80920
+13. Poco::PooledThread::run() @ 0x000000001fe42178
+14. Poco::ThreadImpl::runnableEntry(void*) @ 0x000000001fe403f0
+15. ? @ 0x00000000000803c8
+16. ? @ 0x00000000000e9edc
+ (version 26.8.4.11 (official build))

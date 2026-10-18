@@ -1,0 +1,92 @@
+{
+  "runner_version": "phase2-qualification-runner-v1-response-format-v1",
+  "checks": {
+    "version": "passive-capture-v2",
+    "execution_commit": "2252aed9803d9276934951676b76b889857c411f",
+    "config_sha256": "75b2519ce5c24779f414a5afb9dfa6ca4277973d7cda3fbba58668964e2e93c2",
+    "config": {
+      "configuration_id": "phase2-runtime-schema-v1-scope-observation-v1-response-format-v1-expression-jit-off-v1",
+      "schema_version": "delivery-work-items-schema-v1",
+      "schema_source": "proposals/phase2-runtime-schema-v1/schema-diagnostic.json",
+      "query_tool_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+      "benchmark_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+      "standalone_qualification": true,
+      "architecture_comparison_allowed": false,
+      "future_comparison_gate": "strong-single adapter implemented and schema parity independently verified",
+      "scope_observation_version": "runtime-sql-scope-v1",
+      "runtime_offline_validity_gate": "proposal_only_not_activated",
+      "model": {
+        "name": "hermes-local:qwen3.5-9b",
+        "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+        "base_url": "http://127.0.0.1:11434",
+        "temperature": 0,
+        "num_predict": 512,
+        "num_ctx": 65536,
+        "timeout_seconds": 120
+      },
+      "limits": {
+        "model_steps": 6,
+        "evidence_calls": 2,
+        "retries": 0,
+        "reprompts": 0
+      },
+      "task_id": "SB-D01",
+      "allowed_tools": [
+        "query_clickhouse",
+        "retrieve_policy"
+      ],
+      "activation_authorization": "NOT AUTHORIZED: offline inactive proposal only; no live attempt permitted.",
+      "owner_observation_approval": "approved",
+      "runtime_offline_validity_scope": "Exact approved response-format prompt, strict parser and bounded runtime/capture checks; final verification must pass before entry. Does not accept Phase3 evaluator or scientific comparisons.",
+      "approval_record": "proposals/runtime-clickhouse-expression-jit-off-v1/README.md",
+      "response_format_version": "phase2-response-format-v1",
+      "response_format_activation_approval": "historical_approval_consumed",
+      "response_format_prompt_sha256": "56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce",
+      "clickhouse_transport_version": "runtime-clickhouse-expression-jit-off-v1",
+      "clickhouse_request_settings_amendment": {
+        "compile_expressions": "0"
+      },
+      "active": false,
+      "live_attempts_authorized": 0
+    },
+    "benchmark_contract": {
+      "benchmark_contract_sha256": "6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4",
+      "contract_files": {
+        "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+        "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+        "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+        "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+        "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+        "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+        "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+        "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+        "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+        "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+        "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+        "src/agents/ollama_client.py": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4",
+        "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+        "src/evals/system_benchmark/loader.py": "5f8369d994a58d0ef1face5d5c67be2372dd606f1fd5d8bd375ed627cf0fd8c4",
+        "src/evals/system_benchmark/local_worker.py": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa",
+        "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+        "src/evals/system_benchmark/routing.py": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35",
+        "src/evals/system_benchmark/runner.py": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62",
+        "src/evals/system_benchmark/scope_observation_v1.py": "cbd4c010d80d5c3be443412ff0558bf3231c9999073354bb7c1491598552e49f",
+        "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+        "src/evals/system_benchmark/workers.py": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25",
+        "src/tools/clickhouse_readonly.py": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c",
+        "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27"
+      }
+    },
+    "collector_sha256": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de",
+    "runtime_validity_gate": "proposal_only_not_activated"
+  },
+  "execution_blockers": [
+    "configuration_scope_version_or_standalone_boundary_differs",
+    "runtime_offline_validity_gate_not_passed"
+  ],
+  "adapter_sha256": "980d6478375fa5a81d7d97b35dd7ea6feac48ba32a6bbbe5d33f7a36396b38b0",
+  "capture_sha256": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de",
+  "source_preflight_only": true,
+  "services_contacted": false,
+  "qualification_or_phase_accepted": false
+}
