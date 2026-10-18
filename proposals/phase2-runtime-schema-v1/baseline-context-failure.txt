@@ -1,0 +1,17 @@
+test_context_check_script_passes (tests.test_project_context.ProjectContextProtocolTests.test_context_check_script_passes) ... FAIL
+test_required_context_files_exist (tests.test_project_context.ProjectContextProtocolTests.test_required_context_files_exist) ... ok
+
+======================================================================
+FAIL: test_context_check_script_passes (tests.test_project_context.ProjectContextProtocolTests.test_context_check_script_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<FROZEN_PIN>/tests/test_project_context.py", line 21, in test_context_check_script_passes
+    self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : FAIL: STATUS.md must include a last-reviewed marker
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.051s
+
+FAILED (failures=1)

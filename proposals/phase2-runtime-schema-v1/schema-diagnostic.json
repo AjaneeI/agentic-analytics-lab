@@ -1,0 +1,60 @@
+{
+  "classification": "post_run_readonly_schema_diagnostic_not_Treatment_A",
+  "utc": "2026-10-18T00:22:11.496795+00:00",
+  "model_calls": 0,
+  "sql": "DESCRIBE TABLE agentic_analytics.delivery_work_items",
+  "columns": [
+    {
+      "name": "work_item_id",
+      "type": "String"
+    },
+    {
+      "name": "team",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "priority",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "status",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "created_at",
+      "type": "DateTime"
+    },
+    {
+      "name": "due_at",
+      "type": "DateTime"
+    },
+    {
+      "name": "completed_at",
+      "type": "Nullable(DateTime)"
+    },
+    {
+      "name": "planned_hours",
+      "type": "UInt16"
+    },
+    {
+      "name": "actual_hours",
+      "type": "Float32"
+    },
+    {
+      "name": "blocked",
+      "type": "UInt8"
+    },
+    {
+      "name": "blocker_type",
+      "type": "LowCardinality(String)"
+    },
+    {
+      "name": "rework_count",
+      "type": "UInt8"
+    },
+    {
+      "name": "customer_impact",
+      "type": "UInt8"
+    }
+  ]
+}
