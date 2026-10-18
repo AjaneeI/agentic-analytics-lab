@@ -8,6 +8,7 @@ authorization. No retry, fallback, SQL rewrite or score on an exception exists.
 from __future__ import annotations
 
 import argparse
+import ast
 from dataclasses import asdict
 from datetime import datetime, timezone
 import hashlib
@@ -22,8 +23,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts import passive_capture as capture
 
-VERSION = 'phase2-qualification-runner-v1'
+VERSION = 'phase2-qualification-runner-v1-response-format-v1'
 CONFIGURATION_ID = 'phase2-runtime-schema-v1-scope-observation-v1'
+RESPONSE_FORMAT_CONFIGURATION_ID = CONFIGURATION_ID + '-response-format-v1'
+RESPONSE_FORMAT_VERSION = 'phase2-response-format-v1'
+RESPONSE_FORMAT_PROMPT_SHA256 = '56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce'
 SCOPE_VERSION = 'runtime-sql-scope-v1'
 TABLE = 'agentic_analytics.delivery_work_items'
 SCHEMA_SQL = f'DESCRIBE TABLE {TABLE}'
@@ -59,12 +63,24 @@ def source_preflight(request: capture.CaptureRequest) -> dict:
             raise capture.CaptureRefused('loaded adapter/runtime source differs from pinned source')
     config = checks['config']
     blockers = []
-    if (config.get('configuration_id') != CONFIGURATION_ID
+    format_configuration = config.get('configuration_id') == RESPONSE_FORMAT_CONFIGURATION_ID
+    if (config.get('configuration_id') not in {CONFIGURATION_ID, RESPONSE_FORMAT_CONFIGURATION_ID}
             or config.get('schema_version') != 'delivery-work-items-schema-v1'
             or config.get('scope_observation_version') != SCOPE_VERSION
             or config.get('standalone_qualification') is not True
             or config.get('architecture_comparison_allowed') is not False):
         blockers.append('configuration_scope_version_or_standalone_boundary_differs')
+    if format_configuration:
+        if (config.get('response_format_version') != RESPONSE_FORMAT_VERSION
+                or config.get('response_format_activation_approval') != 'approved'):
+            blockers.append('response_format_version_or_approval_differs')
+        source = ast.parse((request.root / 'src/evals/system_benchmark/local_worker.py').read_text())
+        node = next(n for n in source.body if isinstance(n, ast.Assign)
+                    and any(isinstance(t, ast.Name) and t.id == '_SYSTEM_PROMPT' for t in n.targets))
+        prompt = ast.literal_eval(node.value.func.value).strip()
+        if (config.get('response_format_prompt_sha256') != RESPONSE_FORMAT_PROMPT_SHA256
+                or hashlib.sha256(prompt.encode()).hexdigest() != RESPONSE_FORMAT_PROMPT_SHA256):
+            blockers.append('response_format_prompt_sha256_differs')
     if config.get('owner_observation_approval') != 'approved':
         blockers.append('owner_observation_approval_not_approved')
     if config.get('runtime_offline_validity_gate') != 'passed':
