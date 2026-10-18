@@ -1,0 +1,14 @@
+test_outer_timeout_terminates_active_command_and_grandchild (test_containment.ContainmentTests.test_outer_timeout_terminates_active_command_and_grandchild) ... FAIL
+
+======================================================================
+FAIL: test_outer_timeout_terminates_active_command_and_grandchild (test_containment.ContainmentTests.test_outer_timeout_terminates_active_command_and_grandchild)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-resource-containment-v1/test_containment.py", line 61, in test_outer_timeout_terminates_active_command_and_grandchild
+    self.assertFalse(held(command_lock) or held(child_lock),'owned command/grandchild survived outer timeout')
+AssertionError: True is not false : owned command/grandchild survived outer timeout
+
+----------------------------------------------------------------------
+Ran 1 test in 0.820s
+
+FAILED (failures=1)

@@ -1,0 +1,14 @@
+test_normal_worker_exit_also_cleans_abandoned_owned_child (test_containment.ContainmentTests.test_normal_worker_exit_also_cleans_abandoned_owned_child) ... FAIL
+
+======================================================================
+FAIL: test_normal_worker_exit_also_cleans_abandoned_owned_child (test_containment.ContainmentTests.test_normal_worker_exit_also_cleans_abandoned_owned_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-resource-containment-v1/test_containment.py", line 81, in test_normal_worker_exit_also_cleans_abandoned_owned_child
+    self.assertFalse(held(child_lock),'abandoned owned child survived normal worker exit')
+AssertionError: True is not false : abandoned owned child survived normal worker exit
+
+----------------------------------------------------------------------
+Ran 1 test in 0.045s
+
+FAILED (failures=1)

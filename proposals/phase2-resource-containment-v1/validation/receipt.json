@@ -1,0 +1,40 @@
+{
+  "version": "phase2-resource-containment-v1-inactive-offline",
+  "base_commit": "2b0a77c7522920bd8680506b585daba74e2c1baa",
+  "finding": "RW-01",
+  "finding_receipt": "https://github.com/AjaneeI/agentic-analytics-lab/issues/95#issuecomment-6246913316",
+  "source_sha256": {
+    "README.md": "a0611bfda1835af32b1ec56034d6a491d722ed1d74519be3ba25e56ce79ee0e2",
+    "test_containment.py": "50c87d2cd9642d41975f30fba3df023209f84455a3d152816e287d3521804274",
+    "containment.py": "045f9df7f32d674d9b1032d23b31f256a502c4abb0285bad0b5e07753bdc60d0"
+  },
+  "log_sha256": {
+    "green-python312.txt": "2f479c2c9c996544c1e49c57e13a9f6eac6053cb26d992d969e4687f019cf207",
+    "green-python311.txt": "a9e7f408574035f1194c46a3e87b6412b22fd9c8622efce582b7f4017f217edf",
+    "red-normal-exit-python311.txt": "40e16c0ab52d675e46def03e1479cd0d1510728b37ab4a1457d72ea2faf03dc7",
+    "red-outer-timeout-python311.txt": "015a8194af65c8345d69c7ff989959050ad57dbf992294cad561c3e534a768d5"
+  },
+  "python311": "8 focused tests passed",
+  "python312": "8 focused tests passed",
+  "red": "2 meaningful assertion failures before correction: surviving owned descendants on outer timeout and normal worker exit.",
+  "preserved_executed_sources_and_archive_sha256": {
+    "collect_resources_once.py": "93c5a4cbbcf4631e181d99e9ecf2b632ac8eea2df669c63e8addbe36c1bb58f8",
+    "launch_resources_once.py": "6eb73aed9108665dc1360bec51e68bf0ad30fdc4fbc8bc714199ab4682e06314",
+    "resource-observation-private.zip": "40bd4055468f3ef3463e6713449c716a16bbb16eeb3591a6408e04ad051a61fc"
+  },
+  "native_validation": "Synthetic processes and test-owned file locks only; no resource source or process-table read.",
+  "live_resource_collections": 0,
+  "snapshot_passes_reopened": 0,
+  "SQL_calls": 0,
+  "model_calls": 0,
+  "Treatment_A_attempts": 0,
+  "service_changes": 0,
+  "permissions_requested": 0,
+  "activation": false,
+  "independent_review": "pending",
+  "limitations": [
+    "No active collector integration or new runnable resource configuration.",
+    "No arbitrary self-detaching/remote daemon process sandbox guarantee.",
+    "Unconfirmed group termination is terminal non-success."
+  ]
+}
