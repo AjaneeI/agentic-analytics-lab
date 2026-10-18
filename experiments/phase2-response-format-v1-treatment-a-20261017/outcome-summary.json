@@ -1,0 +1,128 @@
+{
+  "classification": "standalone_Phase2_runtime_qualification_not_architecture_comparison",
+  "execution_commit": "bd717bb844aba39fd2edba69aa6094d8fe926340",
+  "configuration_sha256": "b215429b8e93a260b13d3f109758b908721d8d2f14b0491388672b135650be92",
+  "benchmark_contract_sha256": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+  "configuration": {
+    "activation_authorization": "Owner explicitly approved activating phase2-response-format-v1 and ONE new bounded standalone Treatment A after final validation in current chat, October17 EDT. Preserve both failed runs; frozen scoring unchanged; zero retries.",
+    "allowed_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "approval_record": "docs/phase2-response-format-v1-activation-approval-2026-10-17.md",
+    "architecture_comparison_allowed": false,
+    "benchmark_contract_sha256": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+    "configuration_id": "phase2-runtime-schema-v1-scope-observation-v1-response-format-v1",
+    "future_comparison_gate": "strong-single adapter implemented and schema parity independently verified",
+    "limits": {
+      "evidence_calls": 2,
+      "model_steps": 6,
+      "reprompts": 0,
+      "retries": 0
+    },
+    "model": {
+      "base_url": "http://127.0.0.1:11434",
+      "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+      "name": "hermes-local:qwen3.5-9b",
+      "num_ctx": 65536,
+      "num_predict": 512,
+      "temperature": 0,
+      "timeout_seconds": 120
+    },
+    "owner_observation_approval": "approved",
+    "query_tool_sha256": "0a9350a1cf0f467c4f934e1f77f63051085e5efe86b1a64147192eca8ab365c9",
+    "response_format_activation_approval": "approved",
+    "response_format_prompt_sha256": "56fb5a95cd7e471ded2fdbc13f0e0e58ee9939e427f8bc733c0ea6ce60f579ce",
+    "response_format_version": "phase2-response-format-v1",
+    "runtime_offline_validity_gate": "passed",
+    "runtime_offline_validity_scope": "Exact approved response-format prompt, strict parser and bounded runtime/capture checks; final verification must pass before entry. Does not accept Phase3 evaluator or scientific comparisons.",
+    "schema_source": "proposals/phase2-runtime-schema-v1/schema-diagnostic.json",
+    "schema_version": "delivery-work-items-schema-v1",
+    "scope_observation_version": "runtime-sql-scope-v1",
+    "standalone_qualification": true,
+    "task_id": "SB-D01"
+  },
+  "model_keep_alive": "30m",
+  "runner_sha256": "980d6478375fa5a81d7d97b35dd7ea6feac48ba32a6bbbe5d33f7a36396b38b0",
+  "capture_sha256": "28859a2bdbe12d46bfd8e094e033ce96842b5000116f22a7360b5829853224de",
+  "attempt_status": "execution_error",
+  "error": {
+    "message": "ClickHouse query failed: timed out",
+    "type": "RuntimeError"
+  },
+  "deterministic_score": null,
+  "task_success": null,
+  "score_absence_reason": "No normalized TrialExecution; absence is not zero. No rescoring or repair.",
+  "original_raw_result": null,
+  "worker_invocations": 1,
+  "returned_usage": {
+    "input_tokens": 839,
+    "model_attempts": 1,
+    "model_duration_seconds_known": 58.491868042,
+    "model_returns": 1,
+    "model_returns_with_duration": 1,
+    "model_returns_with_metrics": 1,
+    "output_tokens": 352,
+    "tool_attempts": 1,
+    "tool_returns": 0
+  },
+  "timing": {
+    "start_utc": "2026-10-18T02:26:42.456707+00:00",
+    "end_utc": "2026-10-18T02:27:59.120214+00:00",
+    "capture_wall_seconds": 76.66251929203281,
+    "outer_wall_seconds": 77.22535816702293,
+    "worker_events": [
+      {
+        "event": "worker_error",
+        "wall_seconds": 74.78295641602017
+      }
+    ]
+  },
+  "resources": {
+    "before": {
+      "host_process_lifetime_peak_rss_bytes": 32391168,
+      "host_cpu_user_seconds": 0.061495999999999995,
+      "host_cpu_system_seconds": 0.021529,
+      "approved_model_api_ps": []
+    },
+    "after": {
+      "host_process_lifetime_peak_rss_bytes": 32718848,
+      "host_cpu_user_seconds": 0.072655,
+      "host_cpu_system_seconds": 0.07455099999999999,
+      "approved_model_api_ps": [
+        {
+          "context_length": 65536,
+          "digest": "0df9cd2e3545377d86ebce465f455b69424224f59fb7ffd948d47efbeabe851c",
+          "name": "hermes-local:qwen3.5-9b",
+          "size": 7693192396,
+          "size_vram": 7693192396
+        }
+      ]
+    }
+  },
+  "resource_attribution_limit": "Before/after shared Ollama service and host process snapshots; not per-request GPU/VRAM or peak model memory.",
+  "final_content_capture": [],
+  "collector_status": "complete",
+  "collector_errors": [],
+  "postflight": {
+    "benchmark_contract_sha256": "c58b9f0acb2217fca19f0ea199f167e07bf455ad1865fc727e07239249c8d2bc",
+    "config_sha256": "b215429b8e93a260b13d3f109758b908721d8d2f14b0491388672b135650be92",
+    "execution_commit": "bd717bb844aba39fd2edba69aa6094d8fe926340",
+    "valid": true
+  },
+  "remaining_authorized_attempts": 0,
+  "retries": 0,
+  "reprompts": 0,
+  "incremental_local_provider_paid_spend_usd": 0,
+  "human_hands_on_minutes": null,
+  "raw_sha256": {
+    "INVOCATION_STARTED.json": "7eb3c7aafc10f16491a3706ba66cece5c63ce9d5cc958deb1ac85eade6d3bd10",
+    "error.json": "32aefe41eb16b2b01b6627aa40b24d229a5416b10b2a59de19749da856183ad0",
+    "events.jsonl": "07638c2ea48be4c2edd09bc7921b7f3403301fbba486302ec0080e721515835d",
+    "manifest.json": "649fd17bde7cfc63a3fe5d9635df825db6d4999f7009d071a735f4b8282ecbdf"
+  },
+  "phase3_accepted": false,
+  "phase4_frozen": false,
+  "architecture_comparisons_authorized": false,
+  "heldout_evaluations": 0
+}

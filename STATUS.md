@@ -1,3 +1,9 @@
+# Current result — response-format v1 attempt failed; Phase 2 unqualified
+
+The owner-approved single attempt at bd717bb844aba39fd2edba69aa6094d8fe926340 ended with ClickHouse query failed: timed out. One model return, one failed evidence call, no final response or deterministic score. Collector complete/no errors; postflight unchanged. Zero retries; no authorization remains. Both previous failures and all evidence are preserved. See docs/phase2-response-format-v1-terminal-result-2026-10-17.md. Phase 3/4 remain unaccepted and comparisons blocked.
+
+Historical checkpoints follow.
+
 # Latest owner-approved checkpoint — response-format v1
 
 The owner approved activating the exact reviewed response-format v1 prompt and ONE bounded standalone Treatment A after final validation. The two failed runs remain sealed. Full offline suites pass 363 tests on Python 3.11/3.12. Live outcome is pending; Phase 2 remains unqualified. No retry, scorer change or comparisons are authorized. See docs/phase2-response-format-v1-activation-approval-2026-10-17.md.
