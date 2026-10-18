@@ -1,6 +1,6 @@
 # Verified Project Status
 
-_Last reviewed for the inactive ClickHouse 404 fix proposal on 2026-10-17._
+_Last reviewed for approved schema-v1 activation on 2026-10-17._
 
 ## Approved schema v1 activation, scope validity still blocked
 
@@ -23,7 +23,11 @@ before activation; frozen scorer and task/reference criteria remain unchanged.
 The obsolete inactive-proposal-only test is preserved on PR101; this activation
 branch replaces it with actual model-payload parity and the six candidate tests.
 
-## Post-run diagnosis and inactive fix proposal v1
+## Historical checkpoint: post-run diagnosis and inactive fix proposal v1
+
+The following paragraph records the earlier inactive proposal branch. The
+approved activation above supersedes its inactivity statement on this branch;
+PR101 and the original execution worktree remain preserved.
 
 The October 17 pinned Treatment A remains failed and unscored. Existing server
 file logs correlate the error to query ID `d6e97785-4a0d-4e9c-ae5a-2590c536f194`:
