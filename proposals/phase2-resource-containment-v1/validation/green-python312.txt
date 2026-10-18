@@ -1,0 +1,13 @@
+test_command_launch_failure_is_terminal_without_second_source (test_containment.ContainmentTests.test_command_launch_failure_is_terminal_without_second_source) ... ok
+test_first_error_stops_before_next_synthetic_source (test_containment.ContainmentTests.test_first_error_stops_before_next_synthetic_source) ... ok
+test_normal_worker_exit_also_cleans_abandoned_owned_child (test_containment.ContainmentTests.test_normal_worker_exit_also_cleans_abandoned_owned_child) ... ok
+test_outer_timeout_terminates_active_command_and_grandchild (test_containment.ContainmentTests.test_outer_timeout_terminates_active_command_and_grandchild) ... ok
+test_output_cap_retains_exact_prefix (test_containment.ContainmentTests.test_output_cap_retains_exact_prefix) ... ok
+test_per_command_timeout_preserves_returned_prefix (test_containment.ContainmentTests.test_per_command_timeout_preserves_returned_prefix) ... ok
+test_unconfirmed_group_cleanup_never_reports_success (test_containment.ContainmentTests.test_unconfirmed_group_cleanup_never_reports_success) ... ok
+test_worker_launch_failure_has_no_owned_group (test_containment.ContainmentTests.test_worker_launch_failure_has_no_owned_group) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.715s
+
+OK

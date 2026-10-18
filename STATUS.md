@@ -1,3 +1,9 @@
+# Resource snapshot failed; RW-01 inactive successor prepared
+
+The snapshot stopped at denied vm.swapusage; no SQL control or TreatmentA ran. The executor missed a newer coordinator containment hold before that collection. Its original sources/evidence remain unchanged. Separate proposals/phase2-resource-containment-v1 corrects local owned-group cleanup; two real synthetic descendant regressions fail before correction and eight focused checks pass on each Python3.11/3.12. No resource collection retry, permission expansion or activation; narrow independent review pending. PR119 control code remains at its accepted2b0a77c pin. All research gates remain blocked as recorded.
+
+Historical checkpoints follow unchanged.
+
 # Scheduling-control review corrections — offline only
 
 Coordinator review of draft119 found a known request0/effectivefalse mismatch and missing capture source binding. Both are corrected without changing SQL/request limits or benchmark paths;19 focused tests pass each Python3.11/3.12, including preserved-evidence RED/GREEN and parent-outcome provenance checks. Original reviewed commit/logs remain preserved. No SQL/model/diagnostic/TreatmentA launched. Independent re-review and a verified resource window remain pending; all prior experimental gates unchanged.
