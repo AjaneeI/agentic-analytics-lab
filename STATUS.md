@@ -2,6 +2,11 @@
 
 ## October 17 sprint — Phase 4 preparation
 
+- A separate [inactive metadata-consistency proposal](docs/phase4-attempt-metadata-proposal.md)
+  adds a manually invoked offline check for contradictory, duplicate or unscoped
+  attempt-evidence assertions. It is not connected to execution or statistical
+  analysis and selects no estimand, denominator, pairing or missingness policy.
+  All twelve Phase 4 decisions remain unresolved; no phase is accepted here.
 - Sprint issues #94/#95 authorize independent model-free statistical preparation;
   their bounded authorization supersedes the older no-Codex rule only for the
   October 17–23 sprint. No automatic reviews are requested.
