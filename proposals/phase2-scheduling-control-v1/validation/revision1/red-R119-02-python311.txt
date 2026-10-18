@@ -1,0 +1,33 @@
+test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) ... 
+  test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) (outcome='success') ... FAIL
+  test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) (outcome='launch_failure') ... FAIL
+  test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) (outcome='timeout') ... FAIL
+
+======================================================================
+FAIL: test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) (outcome='success')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/test_observer.py", line 233, in test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes
+    self.assertTrue((out / 'launch-provenance.json').exists(), 'verified source/protocol binding was not captured')
+AssertionError: False is not true : verified source/protocol binding was not captured
+
+======================================================================
+FAIL: test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) (outcome='launch_failure')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/test_observer.py", line 233, in test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes
+    self.assertTrue((out / 'launch-provenance.json').exists(), 'verified source/protocol binding was not captured')
+AssertionError: False is not true : verified source/protocol binding was not captured
+
+======================================================================
+FAIL: test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) (outcome='timeout')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/test_observer.py", line 233, in test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes
+    self.assertTrue((out / 'launch-provenance.json').exists(), 'verified source/protocol binding was not captured')
+AssertionError: False is not true : verified source/protocol binding was not captured
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=3)

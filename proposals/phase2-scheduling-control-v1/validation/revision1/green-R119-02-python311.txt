@@ -1,0 +1,6 @@
+test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes (test_observer.ObserverTests.test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.021s
+
+OK

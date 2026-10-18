@@ -27,6 +27,11 @@ SETTINGS = {'readonly': '1', 'max_execution_time': '10', 'max_result_rows': '100
     'result_overflow_mode': 'break', 'max_rows_to_read': '10000',
     'max_bytes_to_read': '10485760', 'max_memory_usage': '134217728',
     'max_threads': '2', 'compile_expressions': '0'}
+# Independent preserved server response, not the request encoding (PR112).
+EFFECTIVE_SETTINGS = {'readonly': '1', 'max_execution_time': '10', 'max_result_rows': '1000',
+    'result_overflow_mode': 'break', 'max_rows_to_read': '10000',
+    'max_bytes_to_read': '10485760', 'max_memory_usage': '134217728',
+    'max_threads': '2', 'compile_expressions': 'false'}
 PROFILE = ('OSCPUWaitMicroseconds', 'OSCPUVirtualTimeMicroseconds', 'RealTimeMicroseconds',
     'UserTimeMicroseconds', 'SystemTimeMicroseconds', 'DiskReadElapsedMicroseconds',
     'OSIOWaitMicroseconds', 'ContextLockWaitMicroseconds', 'HardPageFaults', 'SoftPageFaults')
@@ -107,7 +112,7 @@ def sequence(exchange, query_id, unix_us):
     end = unix_us()
     if (len(probe) != 1 or type(probe[0].get('scheduling_probe')) is not int or
             probe[0]['scheduling_probe'] != 41541750 or
-            any(probe[0].get(key) != value for key, value in SETTINGS.items())):
+            any(probe[0].get(key) != value for key, value in EFFECTIVE_SETTINGS.items())):
         raise ValueError('synthetic result or effective settings mismatch; stop without metadata')
     metadata = exchange(metadata_sql(query_id, start, end), query_id + '-metadata')
     return {'probe': probe[0], 'metadata': interpret(metadata, query_id),
@@ -198,7 +203,34 @@ def main():
         raise ValueError('pinned checkout must be clean')
     if args.context.stat().st_size > 4096:
         raise ValueError('context exceeds 4 KiB')
-    reserve(args.out, json.loads(args.context.read_text()))
+    context_bytes = args.context.read_bytes()
+    if len(context_bytes) > 4096:
+        raise ValueError('context exceeds 4 KiB')
+    pending_path = ROOT / 'configurations/phase2-cpu-scheduling-readiness-v1.pending.json'
+    pending_bytes = pending_path.read_bytes()
+    pending = json.loads(pending_bytes)
+    binding = {
+        'prospective_utc': datetime.now(timezone.utc).isoformat(),
+        'expected_commit': args.expected_commit,
+        'protocol_sha256': args.protocol_sha256,
+        'observer_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'imported_helper_sha256': hashlib.sha256(Path(header_module.__file__).read_bytes()).hexdigest(),
+        'frozen_contract_sha256': pending['benchmark_contract_sha256'],
+        'pending_configuration_id': pending['configuration_id'],
+        'pending_authorization_record_id': pending['authorization_record_id'],
+        'pending_authorized_treatment_a_attempts': pending['authorized_live_attempts'],
+        'pending_configuration_sha256': hashlib.sha256(pending_bytes).hexdigest(),
+        'resource_context_source': str(args.context.resolve()),
+        'resource_context_source_sha256': hashlib.sha256(context_bytes).hexdigest(),
+        # This CLI has no credential options. Record only its parsed fixed arguments.
+        'executable': sys.executable,
+        'invocation': [str(Path(__file__).resolve()), '--run', '--context', str(args.context),
+            '--out', str(args.out), '--expected-commit', args.expected_commit,
+            '--protocol-sha256', args.protocol_sha256],
+    }
+    reserve(args.out, json.loads(context_bytes))
+    binding['captured_resource_context_sha256'] = hashlib.sha256((args.out / 'resource-context.json').read_bytes()).hexdigest()
+    save(args.out, 'launch-provenance.json', json.dumps(binding, indent=2).encode())
     started = time.monotonic()
     termination = 'completed'
     code = 2

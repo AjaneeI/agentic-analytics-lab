@@ -1,3 +1,9 @@
+# Scheduling-control review corrections — offline only
+
+Coordinator review of draft119 found a known request0/effectivefalse mismatch and missing capture source binding. Both are corrected without changing SQL/request limits or benchmark paths;19 focused tests pass each Python3.11/3.12, including preserved-evidence RED/GREEN and parent-outcome provenance checks. Original reviewed commit/logs remain preserved. No SQL/model/diagnostic/TreatmentA launched. Independent re-review and a verified resource window remain pending; all prior experimental gates unchanged.
+
+Historical checkpoint follows unchanged.
+
 # Prospective scheduling control — inactive, offline validated
 
 Queue item3 now has a versioned two-request synthetic/metadata protocol and one-shot collector in proposals/phase2-scheduling-control-v1. Focused scripted tests pass15, SQL-security22 and existing header7 on Python3.11/3.12; all preexisting tracked files were verified unchanged before this status addition. No new SQL, model, service action or diagnostic launch. Capacity window and independent coordinator acceptance review remain prerequisites; no fixed readiness threshold is adopted. Phase2 remains unqualified and authorized TreatmentA count0. Phase3 semantic decisions and all12 Phase4 choices remain open; completed Phase5 readiness audit is reused. See the proposal README and validation receipt.

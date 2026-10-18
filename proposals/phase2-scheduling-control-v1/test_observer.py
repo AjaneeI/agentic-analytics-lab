@@ -11,6 +11,9 @@ HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('scheduling_observer', HERE / 'observer.py')
 observer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(observer)
+PRESERVED_EFFECTIVE = next(case['rows'][0] for case in json.loads((HERE.parents[1] /
+    'experiments/jit-off-model-free-validation-v1-v2/live-evidence-v2/results.json').read_text())
+    if case['case'] == 'candidate-settings')
 
 
 class ObserverTests(unittest.TestCase):
@@ -111,7 +114,7 @@ class ObserverTests(unittest.TestCase):
         def exchange(sql, query_id):
             calls.append((sql, query_id))
             if len(calls) == 1:
-                return [{'scheduling_probe': 41541750, **observer.SETTINGS}]
+                return [{'scheduling_probe': 41541750, **PRESERVED_EFFECTIVE}]
             return []
         result = observer.sequence(exchange, 'aal-scheduling-control-v1-abc', iter([1000000, 2000000]).__next__)
         self.assertEqual(len(calls), 2)
@@ -121,7 +124,7 @@ class ObserverTests(unittest.TestCase):
 
     def test_scripted_http_captures_exact_wire_parameters_and_two_raw_responses(self):
         requests = []
-        responses = [json.dumps({'scheduling_probe': 41541750, **observer.SETTINGS}).encode(), b'']
+        responses = [json.dumps({'scheduling_probe': 41541750, **PRESERVED_EFFECTIVE}).encode(), b'']
         class Socket:
             def makefile(self, mode):
                 body = responses.pop(0)
@@ -196,6 +199,91 @@ class ObserverTests(unittest.TestCase):
             self.assertEqual(receipt['treatment_a_attempts'], 0)
             seal = json.loads((out / 'sha256.json').read_text())
             self.assertEqual(seal['receipt.json'], observer.hashlib.sha256((out / 'receipt.json').read_bytes()).hexdigest())
+
+    def test_preserved_false_setting_reaches_exactly_one_metadata_step(self):
+        preserved = json.loads((HERE.parents[1] /
+            'experiments/jit-off-model-free-validation-v1-v2/live-evidence-v2/results.json').read_text())
+        settings = next(case['rows'][0] for case in preserved if case['case'] == 'candidate-settings')
+        calls = []
+        def exchange(sql, query_id):
+            calls.append(sql)
+            return [{'scheduling_probe': 41541750, **settings}] if len(calls) == 1 else []
+        try:
+            result = observer.sequence(exchange, 'aal-scheduling-control-v1-abc', iter([1000000, 2000000]).__next__)
+        except ValueError as error:
+            self.fail('preserved false setting was rejected: ' + str(error))
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(result['probe']['compile_expressions'], 'false')
+
+    def test_true_missing_or_malformed_effective_setting_stops_after_one_request(self):
+        for value in ('true', '0', False, None, [], 0, 'missing'):
+            with self.subTest(value=value):
+                settings = dict(PRESERVED_EFFECTIVE)
+                if value == 'missing':
+                    del settings['compile_expressions']
+                else:
+                    settings['compile_expressions'] = value
+                calls = []
+                def exchange(sql, query_id):
+                    calls.append(sql)
+                    return [{'scheduling_probe': 41541750, **settings}]
+                with self.assertRaises(ValueError):
+                    observer.sequence(exchange, 'aal-scheduling-control-v1-abc', iter([1000000, 2000000]).__next__)
+                self.assertEqual(len(calls), 1)
+
+    def test_changed_source_or_protocol_pin_refuses_without_consumption_or_child(self):
+        for wrong_pin in ('source', 'protocol'):
+            with self.subTest(pin=wrong_pin), tempfile.TemporaryDirectory() as folder:
+                out = Path(folder) / 'capture'
+                context = Path(folder) / 'context.json'
+                context.write_text('{"resource_window":"scripted-window-reference"}')
+                digest = observer.hashlib.sha256((HERE / 'protocol.json').read_bytes()).hexdigest()
+                args = ['observer.py', '--run', '--context', str(context), '--out', str(out),
+                    '--expected-commit', 'scripted-commit', '--protocol-sha256', digest if wrong_pin == 'source' else '0' * 64]
+                with patch.object(observer.sys, 'argv', args), patch.object(observer.subprocess,
+                        'check_output', return_value='different-source'), patch.object(observer.subprocess,
+                        'Popen', side_effect=AssertionError('child must not launch')):
+                    with self.assertRaises(ValueError):
+                        observer.main()
+                self.assertFalse(out.exists())
+
+    def test_capture_binds_verified_source_protocol_context_and_invocation_on_all_parent_outcomes(self):
+        class Child:
+            killed = False
+            def wait(self, timeout):
+                if outcome == 'timeout' and not self.killed:
+                    raise observer.subprocess.TimeoutExpired('scripted observer', timeout)
+                return -9 if self.killed else 0
+            def kill(self):
+                self.killed = True
+        for outcome in ('success', 'launch_failure', 'timeout'):
+            with self.subTest(outcome=outcome), tempfile.TemporaryDirectory() as folder:
+                out = Path(folder) / 'capture'
+                context = Path(folder) / 'context.json'
+                context.write_text('{"resource_window":"scripted-window-reference"}')
+                digest = observer.hashlib.sha256((HERE / 'protocol.json').read_bytes()).hexdigest()
+                args = ['observer.py', '--run', '--context', str(context), '--out', str(out),
+                    '--expected-commit', 'scripted-commit', '--protocol-sha256', digest]
+                factory = {'side_effect': OSError('scripted launch failure')} if outcome == 'launch_failure' else {'return_value': Child()}
+                with patch.object(observer.sys, 'argv', args), patch.object(observer.subprocess,
+                        'check_output', side_effect=['scripted-commit', '']), patch.object(observer.subprocess, 'Popen', **factory):
+                    observer.main()
+                self.assertTrue((out / 'launch-provenance.json').exists(), 'verified source/protocol binding was not captured')
+                binding = json.loads((out / 'launch-provenance.json').read_text())
+                self.assertEqual(binding['expected_commit'], 'scripted-commit')
+                self.assertEqual(binding['protocol_sha256'], digest)
+                self.assertEqual(binding['observer_sha256'], observer.hashlib.sha256((HERE / 'observer.py').read_bytes()).hexdigest())
+                self.assertEqual(binding['imported_helper_sha256'], observer.hashlib.sha256(
+                    (HERE.parent / 'phase2-diagnostic-observation-v1/header_capture.py').read_bytes()).hexdigest())
+                self.assertEqual(binding['frozen_contract_sha256'], '6d6403103d690cb48827f233fdf059925c15fc6c81e50316fdf845b7bd049df4')
+                self.assertEqual(binding['pending_configuration_sha256'], '2605daac78834215b1e5cb26ff934216f8b9ca90c629129512862632f0271c94')
+                self.assertEqual(binding['resource_context_source_sha256'], observer.hashlib.sha256(context.read_bytes()).hexdigest())
+                self.assertEqual(binding['captured_resource_context_sha256'], observer.hashlib.sha256((out / 'resource-context.json').read_bytes()).hexdigest())
+                self.assertEqual(binding['invocation'][1:], args[1:])
+                self.assertTrue(binding['prospective_utc'].endswith('+00:00'))
+                seal = json.loads((out / 'sha256.json').read_text())
+                self.assertEqual(seal['launch-provenance.json'], observer.hashlib.sha256((out / 'launch-provenance.json').read_bytes()).hexdigest())
+                self.assertLessEqual(sum(p.stat().st_size for p in out.iterdir()), 32768)
 
 
 if __name__ == '__main__':

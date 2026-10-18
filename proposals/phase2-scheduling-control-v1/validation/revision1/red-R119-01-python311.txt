@@ -1,0 +1,24 @@
+test_preserved_false_setting_reaches_exactly_one_metadata_step (test_observer.ObserverTests.test_preserved_false_setting_reaches_exactly_one_metadata_step) ... FAIL
+
+======================================================================
+FAIL: test_preserved_false_setting_reaches_exactly_one_metadata_step (test_observer.ObserverTests.test_preserved_false_setting_reaches_exactly_one_metadata_step)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/test_observer.py", line 209, in test_preserved_false_setting_reaches_exactly_one_metadata_step
+    result = observer.sequence(exchange, 'aal-scheduling-control-v1-abc', iter([1000000, 2000000]).__next__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/observer.py", line 111, in sequence
+    raise ValueError('synthetic result or effective settings mismatch; stop without metadata')
+ValueError: synthetic result or effective settings mismatch; stop without metadata
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/test_observer.py", line 211, in test_preserved_false_setting_reaches_exactly_one_metadata_step
+    self.fail('preserved false setting was rejected: ' + str(error))
+AssertionError: preserved false setting was rejected: synthetic result or effective settings mismatch; stop without metadata
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

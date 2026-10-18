@@ -78,6 +78,7 @@
   },
   "stop_rule": "Exclusive output-directory and launch marker first. Stop on first request/parse/numeric/effective-setting error, time or output limit. Never issue metadata after a failed synthetic request. Empty metadata is terminal inconclusive. No automatic correction, retry, fallback, expanded scope or replacement.",
   "capture": [
+    "Before any worker launch, seal a private credential-free provenance record binding verified commit, protocol/observer/imported-helper hashes, frozen contract and pending-config identifiers, exact fixed CLI invocation, context source/captured hashes and prospective UTC. Preserve through launch failure and timeout.",
     "Private0700 directory,0600 files, exact new SQL/queryIDs/parameters, returned raw status/headers/body, per-exchange elapsed time, context receipt, terminal result/error, parent receipt and SHA256 seal.",
     "Do not persist Authorization or credential values. Keep raw captured server content private; publish a separate reviewed redaction only.",
     "Client timestamps bound metadata selection; they are not server stage timestamps. ProfileEvents may be omitted; missing keys remain unknown. Settings map is recorded changes, not a full effective/default snapshot. Synthetic same-request getSetting is the effective-settings observation.",
@@ -115,5 +116,24 @@
       "statement": "Historical shared contention has ceased or changed.",
       "distinguishing_observation": "Current normal/low-wait control is compatible with this and query-specific delay; a single new control cannot distinguish them."
     }
-  ]
+  ],
+  "revision": "offline-review-corrections-r1",
+  "preserved_review_baseline_commit": "532703e03a0708caa8f9530eee1cf2acc4252b8a",
+  "effective_setting_response_expectations": {
+    "readonly": "1",
+    "max_execution_time": "10",
+    "max_result_rows": "1000",
+    "result_overflow_mode": "break",
+    "max_rows_to_read": "10000",
+    "max_bytes_to_read": "10485760",
+    "max_memory_usage": "134217728",
+    "max_threads": "2",
+    "compile_expressions": "false"
+  },
+  "effective_setting_expectation_source": {
+    "path": "experiments/jit-off-model-free-validation-v1-v2/live-evidence-v2/results.json",
+    "case": "candidate-settings",
+    "sha256": "bdead81415a3661e4a190fe2b3e2c0af6fb650dc2a541565ae5dd8c2a1fef6f0",
+    "boundary": "Request compile_expressions=0 is unchanged. Exact preserved toString response false is validated separately, with no coercion or fresh settings probe."
+  }
 }

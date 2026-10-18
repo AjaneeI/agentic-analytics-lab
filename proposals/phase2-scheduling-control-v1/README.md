@@ -77,7 +77,7 @@ counter handling, zero-retry stopping, a two-response scripted HTTP exchange,
 unchanged wire limits, credential omission, default CLI and parent timeout/seal.
 Tests use scripted transports; they cannot establish actual server acceptance,
 query-log availability, OS deadline enforcement, safe capacity or timeout repair.
-See `validation/receipt.json` and the preserved logs for exact source hashes and
+See `validation/revision1/receipt.json` and the preserved logs for exact source hashes and
 Python versions. The full repository suite is not rerun: it includes existing
 benchmark-SQL SQLite characterizations and statistical simulation paths, which
 would duplicate completed evidence or cross this continuation's execution limits.
@@ -106,3 +106,7 @@ consume no observation launch. After reservation, all failures consume the one
 launch, including unavailable credentials or a failed child launch. Do not run
 `--worker` directly; it is the parent's internal process entry and uses an
 exclusive worker marker. No automatic retry or replacement is provided.
+
+## Independent review corrections, revision1
+
+The initial reviewed commit532703e remains preserved with its original validation logs. R119-01 independently specifies the preserved effective setting string `false`, while request encoding remains `0`; no parser coercion or general response normalization is added. Happy-path fixtures now use PR112 evidence rather than copying the request dictionary. True, missing and malformed settings stop before metadata. R119-02 seals a credential-free launch record before the worker, binding source/protocol/helper/contract/config/context/invocation and UTC. Offline success, launch failure, timeout and pin-refusal cases verify this under the existing32KiB cap. No live settings probe or experiment was needed.
