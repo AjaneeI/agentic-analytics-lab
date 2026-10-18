@@ -110,3 +110,18 @@ reproducibility and blocked network/live-model/database transports. All 297
 repository tests pass on Python 3.14.7. SQLite behavior and scripted decisions
 do not qualify live ClickHouse, model behavior or Phase 2/3. A runtime SQL
 provenance remedy is separate work and requires approval before activation.
+
+## Inactive development lineage proposal
+
+An opt-in source-integrity validator now checks explicitly supplied, externally
+pinned development lineage manifests. It rejects inconsistent task/reference/
+KPI source bytes, broken JSON-pointer joins and document/population scope
+confusion. No runner, fixture, scorer, data, method, workflow or runtime default
+is changed. See `docs/development-lineage-validation.md`.
+
+This is deterministic integrity tooling only. Success does not approve a case
+selection, resolve A01 population or D01 version authority, establish runtime
+metric provenance, or accept Phase 3. Local bounded validation covers the new
+utility plus existing contracts/loader/context checks; full discovery is not
+run under the current no-SQL boundary because it includes SQLite runtime
+characterization. No experiment or historical rescore accompanies this proposal.
