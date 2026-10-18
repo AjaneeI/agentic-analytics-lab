@@ -43,7 +43,7 @@ The traceback localizes the observed failure to ClickHouse query HTTP transport.
 
 Passive snapshots recorded model context 65,536 and reported model/VRAM allocation 7,693,192,396 bytes after execution. System-wide memory free percentage changed from 37% to 14%. Process RSS observations were sampled, not a guaranteed peak or whole-machine utilization measurement.
 
-Independent CPU-only calibration preparation briefly overlapped the run before being paused. Therefore latency and memory are descriptive observations under concurrent preparation, not controlled architecture-comparison evidence. This does not convert the execution error into acceptance.
+Independent CPU-only calibration preparation overlapped the runtime window. Exact overlap duration and pause timing were not measured. Therefore latency and memory are descriptive observations under concurrent preparation, not controlled architecture-comparison evidence. This does not convert the execution error into acceptance.
 
 The local evidence bundle retains the exact manifest, traceback, stdout/stderr, invocation marker, preflight, runtime/model identities, memory/VM snapshots, sampled process observations and SHA-256 inventory. The public companion directory contains reviewed manifests and a traceback with local path prefixes replaced by placeholders; those copies are explicitly path-normalized, not falsely labeled byte-identical raw logs. Local raw files were not edited. Known local credential literals were checked without printing them; no matches occurred in the bundle.
 
