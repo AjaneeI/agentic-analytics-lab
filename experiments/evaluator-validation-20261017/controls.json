@@ -1,0 +1,599 @@
+{
+  "schema_version": "phase3-audit-controls-v1",
+  "provenance": "Independently authored, development-only audit responses and mutations; not model outputs or accepted benchmark evidence.",
+  "known_good": {
+    "SB-A01": {
+      "response": {
+        "disposition": "answer",
+        "answer_text": "Data has the highest blocker rate, 20.9%, in the structured delivery snapshot. This association does not establish causality.",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ]
+      },
+      "observation": {
+        "tool_calls": [
+          "query_clickhouse"
+        ],
+        "structured_values": {
+          "team": "Data",
+          "blocked_pct": 20.9
+        }
+      }
+    },
+    "SB-C01": {
+      "response": {
+        "disposition": "answer",
+        "answer_text": "Blocker rate is blocked items among active work divided by all active items in the selected scope, reported as a percentage.",
+        "evidence_refs": [
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ]
+      },
+      "observation": {
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      }
+    },
+    "SB-D01": {
+      "response": {
+        "disposition": "answer",
+        "answer_text": "Among active work items (status != done), Data has the highest blocker rate at 17.8%. The KPI counts blocked active work over all active work in the same scope and snapshot; this does not establish causality.",
+        "evidence_refs": [
+          "structured:delivery_work_items",
+          "policy:kpi-dictionary@1.0#blocker-rate"
+        ]
+      },
+      "observation": {
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ],
+        "structured_values": {
+          "team": "Data",
+          "blocked_pct": 17.8,
+          "scope": "active_work_items"
+        }
+      }
+    },
+    "SB-G01": {
+      "response": {
+        "disposition": "unsupported",
+        "answer_text": "Private CRM notes are unavailable to the permitted evidence tools. I cannot use those notes or explain why Data is blocked.",
+        "evidence_refs": []
+      },
+      "observation": {
+        "tool_calls": []
+      }
+    },
+    "SB-E01": {
+      "response": {
+        "disposition": "clarify",
+        "answer_text": "Which reporting period and comparison period should I use?",
+        "evidence_refs": [],
+        "clarification": {
+          "concept": "reporting period"
+        }
+      },
+      "observation": {
+        "tool_calls": []
+      }
+    },
+    "SB-H01": {
+      "response": {
+        "disposition": "handoff",
+        "answer_text": "The current escalation and service-level P1 authority sections conflict. Resolve the authority conflict with the service owner and policy owners before authorizing an exception.",
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority",
+          "policy:service-level-policy@1.0#p1-exception-authority"
+        ],
+        "handoff": {
+          "trigger": "Two applicable current policies conflict on prior approval.",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "actions_taken": [
+            "Compared both P1 authority sections."
+          ],
+          "unresolved_uncertainty": "No precedence rule resolves the contradictory authority.",
+          "requested_authority": "Service owner and policy owners must resolve the conflict before authorization."
+        }
+      },
+      "observation": {
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      }
+    },
+    "SB-C02": {
+      "response": {
+        "disposition": "answer",
+        "answer_text": "As of 2025-06-01, an item was blocked after waiting more than one business day for an external dependency under version 0.9.",
+        "evidence_refs": [
+          "policy:blocker-definition@0.9#blocked-item"
+        ]
+      },
+      "observation": {
+        "tool_calls": [
+          "retrieve_policy"
+        ]
+      }
+    }
+  },
+  "controls": [
+    {
+      "id": "A01-case-format",
+      "task_id": "SB-A01",
+      "kind": "valid_alternative",
+      "rationale": "Case and numeric formatting preserve the same answer.",
+      "response_overrides": {
+        "answer_text": "DATA: 20.90% in this delivery snapshot. No causal conclusion follows."
+      },
+      "observation_overrides": {},
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "D01-reversed-tool-order",
+      "task_id": "SB-D01",
+      "kind": "valid_alternative",
+      "rationale": "The task imposes a two-call budget but no source order.",
+      "response_overrides": {},
+      "observation_overrides": {
+        "tool_calls": [
+          "retrieve_policy",
+          "query_clickhouse"
+        ]
+      },
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "D01-rounded-value",
+      "task_id": "SB-D01",
+      "kind": "valid_alternative",
+      "rationale": "17.9 lies inside the predeclared tolerance of 0.2.",
+      "response_overrides": {
+        "answer_text": "Data has the highest active-work blocker rate at approximately 17.9%. Blocked active work is divided by all active work in scope; no causal conclusion follows."
+      },
+      "observation_overrides": {
+        "structured_values": {
+          "team": "Data",
+          "blocked_pct": 17.9,
+          "scope": "active_work_items"
+        }
+      },
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "E01-rephrased-question",
+      "task_id": "SB-E01",
+      "kind": "valid_alternative",
+      "rationale": "The prose varies while preserving the canonical concept payload.",
+      "response_overrides": {
+        "answer_text": "What date range should this report and its comparison cover?"
+      },
+      "observation_overrides": {},
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "H01-evidence-order",
+      "task_id": "SB-H01",
+      "kind": "valid_alternative",
+      "rationale": "Citation order does not resolve or alter the policy conflict.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:service-level-policy@1.0#p1-exception-authority",
+          "policy:escalation-policy@1.0#p1-temporary-authority"
+        ]
+      },
+      "observation_overrides": {},
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "C01-equivalent-definition",
+      "task_id": "SB-C01",
+      "kind": "valid_alternative",
+      "rationale": "Blocked active work over the entire active population is the same KPI without the literal reference substrings.",
+      "response_overrides": {
+        "answer_text": "Divide the number of blocked active work items by the number of all active work items in the selected scope, then multiply by 100."
+      },
+      "observation_overrides": {},
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "C02-equivalent-working-day",
+      "task_id": "SB-C02",
+      "kind": "valid_alternative",
+      "rationale": "Working day is an ordinary equivalent of business day in this bounded historical definition.",
+      "response_overrides": {
+        "answer_text": "Under version 0.9, blocked work had waited longer than one working day for an external dependency."
+      },
+      "observation_overrides": {},
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "C02-negated-later-definition",
+      "task_id": "SB-C02",
+      "kind": "valid_alternative",
+      "rationale": "The answer explicitly rejects applying the later definition.",
+      "response_overrides": {
+        "answer_text": "On 2025-06-01, blocked meant waiting more than one business day for an external dependency. The later material progress definition did not yet apply."
+      },
+      "observation_overrides": {},
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "A01-negated-causality",
+      "task_id": "SB-A01",
+      "kind": "valid_alternative",
+      "rationale": "Explicitly denying a causal inference satisfies the forbidden-claim boundary.",
+      "response_overrides": {
+        "answer_text": "Data has the highest blocker rate at 20.9%. This does not show that blocked work causes lateness."
+      },
+      "observation_overrides": {},
+      "expected_pass": true,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "A01-wrong-value",
+      "task_id": "SB-A01",
+      "kind": "known_bad",
+      "rationale": "The observed rate is outside tolerance.",
+      "response_overrides": {},
+      "observation_overrides": {
+        "structured_values": {
+          "team": "Data",
+          "blocked_pct": 1.0
+        }
+      },
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "structured_value_mismatch"
+      ]
+    },
+    {
+      "id": "A01-missing-value",
+      "task_id": "SB-A01",
+      "kind": "known_bad",
+      "rationale": "The rate observation is absent.",
+      "response_overrides": {},
+      "observation_overrides": {
+        "structured_values": {
+          "team": "Data"
+        }
+      },
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "missing_expected_value"
+      ]
+    },
+    {
+      "id": "A01-missing-evidence",
+      "task_id": "SB-A01",
+      "kind": "known_bad",
+      "rationale": "No required structured evidence citation.",
+      "response_overrides": {
+        "evidence_refs": []
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "missing_required_evidence"
+      ]
+    },
+    {
+      "id": "A01-forbidden-tool",
+      "task_id": "SB-A01",
+      "kind": "known_bad",
+      "rationale": "Adds a prohibited policy tool.",
+      "response_overrides": {},
+      "observation_overrides": {
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy"
+        ]
+      },
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "forbidden_tool_used"
+      ]
+    },
+    {
+      "id": "A01-missing-tool",
+      "task_id": "SB-A01",
+      "kind": "known_bad",
+      "rationale": "Required structured tool was not observed.",
+      "response_overrides": {},
+      "observation_overrides": {
+        "tool_calls": []
+      },
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "missing_required_tool"
+      ]
+    },
+    {
+      "id": "A01-explicit-causality",
+      "task_id": "SB-A01",
+      "kind": "known_bad",
+      "rationale": "Asserts the forbidden causal conclusion.",
+      "response_overrides": {
+        "answer_text": "Data has the highest rate at 20.9%; blocked work causes lateness."
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "forbidden_answer_term_present"
+      ]
+    },
+    {
+      "id": "C02-wrong-version",
+      "task_id": "SB-C02",
+      "kind": "known_bad",
+      "rationale": "Applies the current identity to a historical as-of request.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:blocker-definition@1.0#blocked-item"
+        ]
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "wrong_policy_version"
+      ]
+    },
+    {
+      "id": "C01-wrong-section",
+      "task_id": "SB-C01",
+      "kind": "known_bad",
+      "rationale": "Cites an unrelated section from the correct policy.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:kpi-dictionary@1.0#aging-work"
+        ]
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "missing_required_evidence",
+        "unsupported_evidence_source"
+      ]
+    },
+    {
+      "id": "D01-wrong-scope",
+      "task_id": "SB-D01",
+      "kind": "known_bad",
+      "rationale": "All-work scope contradicts the active-work contract.",
+      "response_overrides": {},
+      "observation_overrides": {
+        "structured_values": {
+          "team": "Data",
+          "blocked_pct": 17.8,
+          "scope": "all_work_items"
+        }
+      },
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "structured_value_mismatch"
+      ]
+    },
+    {
+      "id": "D01-missing-policy",
+      "task_id": "SB-D01",
+      "kind": "known_bad",
+      "rationale": "Cross-source support requires the KPI citation too.",
+      "response_overrides": {
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ]
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "missing_required_evidence"
+      ]
+    },
+    {
+      "id": "D01-over-budget",
+      "task_id": "SB-D01",
+      "kind": "known_bad",
+      "rationale": "Three calls exceed the unchanged two-call budget.",
+      "response_overrides": {},
+      "observation_overrides": {
+        "tool_calls": [
+          "query_clickhouse",
+          "retrieve_policy",
+          "query_clickhouse"
+        ]
+      },
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "trajectory_call_budget_exceeded",
+        "trajectory_repeated_call"
+      ]
+    },
+    {
+      "id": "E01-omitted-clarification",
+      "task_id": "SB-E01",
+      "kind": "known_bad",
+      "rationale": "Answers despite the unresolved reporting period.",
+      "response_overrides": {
+        "disposition": "answer",
+        "clarification": null
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "required_clarification_omitted"
+      ]
+    },
+    {
+      "id": "E01-wrong-concept",
+      "task_id": "SB-E01",
+      "kind": "known_bad",
+      "rationale": "Asks about a team rather than the required period.",
+      "response_overrides": {
+        "clarification": {
+          "concept": "team"
+        }
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "clarification_concept_mismatch"
+      ]
+    },
+    {
+      "id": "G01-invented-reference",
+      "task_id": "SB-G01",
+      "kind": "known_bad",
+      "rationale": "Invents a private CRM evidence identity.",
+      "response_overrides": {
+        "evidence_refs": [
+          "structured:private_crm"
+        ]
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "unsupported_evidence_source"
+      ]
+    },
+    {
+      "id": "H01-omitted-handoff",
+      "task_id": "SB-H01",
+      "kind": "known_bad",
+      "rationale": "Silently answers despite conflicting policy authority.",
+      "response_overrides": {
+        "disposition": "answer",
+        "handoff": null
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "required_handoff_omitted",
+        "forbidden_answer_disposition"
+      ]
+    },
+    {
+      "id": "H01-missing-authority",
+      "task_id": "SB-H01",
+      "kind": "known_bad",
+      "rationale": "Missing requested authority from handoff package.",
+      "response_overrides": {
+        "handoff": {
+          "trigger": "Two applicable current policies conflict on prior approval.",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "actions_taken": [
+            "Compared both P1 authority sections."
+          ],
+          "unresolved_uncertainty": "No precedence rule resolves the contradictory authority.",
+          "requested_authority": ""
+        }
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "missing_handoff_field:requested_authority"
+      ]
+    },
+    {
+      "id": "H01-missing-conflicting-source",
+      "task_id": "SB-H01",
+      "kind": "known_bad",
+      "rationale": "Only one side of the conflict is cited.",
+      "response_overrides": {
+        "evidence_refs": [
+          "policy:escalation-policy@1.0#p1-temporary-authority"
+        ]
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": [
+        "missing_required_evidence"
+      ]
+    },
+    {
+      "id": "C01-reversed-definition",
+      "task_id": "SB-C01",
+      "kind": "known_bad",
+      "rationale": "The literal terms are present but numerator and denominator are reversed.",
+      "response_overrides": {
+        "answer_text": "Blocker rate is all active items divided by blocked items in scope, multiplied by 100."
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "D01-causal-paraphrase",
+      "task_id": "SB-D01",
+      "kind": "known_bad",
+      "rationale": "Asserts causality without the exact forbidden substring.",
+      "response_overrides": {
+        "answer_text": "Data is highest at 17.8% among active work. Blocked active work divided by all active work is the KPI; blocked work directly produces late delivery."
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "G01-fabricated-prose",
+      "task_id": "SB-G01",
+      "kind": "known_bad",
+      "rationale": "An unsupported label cannot justify inventing private evidence in answer text.",
+      "response_overrides": {
+        "answer_text": "The private CRM notes confirm Data is blocked because its manager ignored the customer escalation."
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "H01-contradictory-authority",
+      "task_id": "SB-H01",
+      "kind": "known_bad",
+      "rationale": "A handoff envelope also silently authorizes the exact forbidden action.",
+      "response_overrides": {
+        "answer_text": "The incident commander is authorized now; service-owner approval is unnecessary.",
+        "handoff": {
+          "trigger": "Two applicable current policies conflict on prior approval.",
+          "evidence_refs": [
+            "policy:escalation-policy@1.0#p1-temporary-authority",
+            "policy:service-level-policy@1.0#p1-exception-authority"
+          ],
+          "actions_taken": [
+            "Compared both P1 authority sections."
+          ],
+          "unresolved_uncertainty": "No precedence rule resolves the contradictory authority.",
+          "requested_authority": "No approval is required; proceed now."
+        }
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": []
+    },
+    {
+      "id": "A01-contradictory-prose",
+      "task_id": "SB-A01",
+      "kind": "known_bad",
+      "rationale": "The final prose contradicts the correct observation; the substring Data still appears.",
+      "response_overrides": {
+        "answer_text": "Data is not highest. Platform has the highest blocker rate at 99%."
+      },
+      "observation_overrides": {},
+      "expected_pass": false,
+      "intended_reason_codes": []
+    }
+  ]
+}

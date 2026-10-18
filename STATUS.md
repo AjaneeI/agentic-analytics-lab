@@ -74,3 +74,39 @@ or publication-ready benchmark results.
 This file is not authoritative when it conflicts with repository evidence.
 GitHub issues, PRs, commits, workflow runs, tests, and benchmark artifacts take
 precedence.
+
+## Phase 3 preparation — 2026-10-17 sprint, not accepted
+
+Owner authorization in issues #94/#95 permits this independent model-free
+preparation while Phase 2 remains a separate prerequisite. The additive
+evaluator audit preserves seven authored reference responses (7/7 pass),
+17 intended-reason negative controls (17/17 reject), five additional semantic
+negative controls (all wrongly pass), and nine valid alternatives (four
+wrongly reject). Nine unresolved control mismatches block evaluator acceptance.
+The audit records A01 scope ambiguity, explicit policy/version authority,
+task-template overlap, and unchanged hashes for 18 frozen inputs. No scorer,
+task, reference expectation, corpus, Q1–Q6, or data generator was changed.
+
+See `experiments/evaluator-validation-20261017/README.md` and its preserved
+`audit.json`. The audit command intentionally exits 2; four audit-tool tests
+and all 293 repository tests passed on the original candidate. This is evaluator
+defect evidence and preparation only, not Phase 3 acceptance, Phase 2
+qualification, model performance, or held-out evidence. Versioned evaluation
+corrections require owner approval; no corrections were applied here.
+
+The later model-free integration characterization loads the real frozen D01
+task/reference and runs eight SQL controls on an in-memory SQLite copy of
+unchanged seed-42 generator output, with real local policy retrieval and the
+unchanged worker/extractor/scorer. Independent counts confirm Data at 8/45
+active items (17.7778%). Three valid unlabelled query forms wrongly reject;
+one unfiltered query with a literal rate and active label wrongly passes.
+Four other controls match expectations. Its command also exits 2, and the
+original audit report remains byte-identical with nine unresolved controls.
+All 18 frozen inputs remain unchanged; no production source was edited.
+
+See `runtime-characterization.json` in the same evidence directory. Four new
+tests verify actual rows, independent counts/ranking, frozen outcomes,
+reproducibility and blocked network/live-model/database transports. All 297
+repository tests pass on Python 3.14.7. SQLite behavior and scripted decisions
+do not qualify live ClickHouse, model behavior or Phase 2/3. A runtime SQL
+provenance remedy is separate work and requires approval before activation.
