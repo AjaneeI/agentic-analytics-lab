@@ -1,0 +1,54 @@
+test_404_exposes_server_code_without_sql_credentials_or_retry (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_404_exposes_server_code_without_sql_credentials_or_retry) ... FAIL
+test_error_body_read_failure_preserves_original_http_failure (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_error_body_read_failure_preserves_original_http_failure) ... FAIL
+test_error_diagnostic_read_is_bounded (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_error_diagnostic_read_is_bounded) ... FAIL
+test_forbidden_query_remains_rejected_before_transport (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_forbidden_query_remains_rejected_before_transport) ... ok
+test_success_preserves_readonly_request_and_does_not_rewrite_sql (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_success_preserves_readonly_request_and_does_not_rewrite_sql) ... ok
+test_worker_supplies_schema_without_answer_metadata_or_extra_calls (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_worker_supplies_schema_without_answer_metadata_or_extra_calls) ... FAIL
+
+======================================================================
+FAIL: test_404_exposes_server_code_without_sql_credentials_or_retry (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_404_exposes_server_code_without_sql_credentials_or_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OFFLINE_CANDIDATE>/tests/test_phase2_schema_candidate.py", line 41, in test_404_exposes_server_code_without_sql_credentials_or_retry
+    self.assertEqual(getattr(exc, 'http_status', None), 404)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 404
+
+======================================================================
+FAIL: test_error_body_read_failure_preserves_original_http_failure (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_error_body_read_failure_preserves_original_http_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OFFLINE_CANDIDATE>/tests/test_phase2_schema_candidate.py", line 67, in test_error_body_read_failure_preserves_original_http_failure
+    self.assertEqual(getattr(caught.exception, 'http_status', None), 404)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 404
+
+======================================================================
+FAIL: test_error_diagnostic_read_is_bounded (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_error_diagnostic_read_is_bounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OFFLINE_CANDIDATE>/tests/test_phase2_schema_candidate.py", line 81, in test_error_diagnostic_read_is_bounded
+    self.assertEqual(reads, [8192])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [8192]
+
+Second list contains 1 additional elements.
+First extra element 0:
+8192
+
+- []
++ [8192]
+
+======================================================================
+FAIL: test_worker_supplies_schema_without_answer_metadata_or_extra_calls (tests.test_phase2_schema_candidate.TestSchemaContextCandidate.test_worker_supplies_schema_without_answer_metadata_or_extra_calls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OFFLINE_CANDIDATE>/tests/test_phase2_schema_candidate.py", line 23, in test_worker_supplies_schema_without_answer_metadata_or_extra_calls
+    self.assertIn(name, description)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: 'work_item_id' not found in 'Run one read-only SQL query against agentic_analytics.delivery_work_items. For blocker percentage, return the percentage from ClickHouse and alias it as blocked_pct.'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=4)

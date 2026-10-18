@@ -1,5 +1,24 @@
 # Verified Project Status
 
+_Last reviewed for the inactive ClickHouse 404 fix proposal on 2026-10-17._
+
+## Post-run diagnosis and inactive fix proposal v1
+
+The October 17 pinned Treatment A remains failed and unscored. Existing server
+file logs correlate the error to query ID `d6e97785-4a0d-4e9c-ae5a-2590c536f194`:
+code 47 `UNKNOWN_IDENTIFIER`, caused by `snapshot = 'seed-42'` in SQL against a
+table with no `snapshot` column. A later read-only DESCRIBE corroborated the
+schema; no failed SQL or Treatment A was replayed.
+
+`proposals/phase2-runtime-schema-v1/` contains an inactive patch for owner review.
+It supplies column metadata and preserves bounded HTTP/server error identifiers.
+It is not applied to this branch's runtime source, the frozen execution pin, or
+main. Approval of a new tool-context/capture contract and a new execution pin is
+required before activation; any further live Treatment A requires separate
+explicit authorization. No scorer, data, budget, SQL guard or frozen method was
+changed. Existing raw evidence and its original report remain historical records;
+the diagnosis is a separate addendum.
+
 _Phase 2 preparation checkpoint: 2026-10-12. Historical implementation details below retain their original evidence boundaries._
 
 ## Phase 2 readiness checkpoint — 2026-10-12
