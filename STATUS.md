@@ -1,8 +1,31 @@
 # Verified Project Status
 
-_Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
+_Last reviewed for branch preparation on 2026-10-17. Historical checkpoints below are retained._
 
-## Current verified state
+## Latest Phase 5 preparation — no phase acceptance
+
+Opt-in strong-single and deterministic/simple adapters are implemented offline.
+A separate inactive bank contains 24 candidate task/reference pairs; all seven
+active contracts stay unchanged. The deterministic adapter supports A01 only;
+full-bank model solvability and numeric observation mapping remain unqualified.
+The active bank remains 7/24. No Phase 5 entry or exit has occurred.
+
+Local Python 3.11/3.12 suites pass 317 tests, and code head `ce7b9c8` passes hosted
+Python 3.11/3.12 and CodeQL. Independent review fixed H/disposition checks before
+tools; a float-sum portability fix preserves all candidate truth bytes. A static
+readiness review identifies B03 rounding ambiguity, A03's ungraded requested
+sentence, seven numeric mapping gaps and G/H template overlap. Six B/F semantic
+false positives remain. See `proposals/phase5-development-bank-v1/`.
+
+This branch preserves historical schema-less tool metadata. Separate draft
+PR104 independently verifies schema-v1 delivery for implemented lanes only;
+its development client retains 128/2048 limits versus standalone A's approved
+512/65536. Full runtime equivalence and comparative execution remain blocked.
+Phase 2 is unqualified, scope amendment PR103 awaits approval, and Phase 3/4
+acceptance and future configuration decisions remain open. No new A, held-out
+access, task activation, automatic review or PR merge is claimed here.
+
+## Historical verified implementation state
 
 - The frozen Q1–Q6 benchmark remains unchanged historical/bounded evidence.
 - The project keeps the single-agent, oracle-metadata routed, and
@@ -64,6 +87,19 @@ this slice.
 Resume issue #73 by rerunning **Treatment A only** with the new bounded local worker on the same SB-D01 task and deterministic scorer. Do not use generic OpenCode for this rerun. If Treatment A is accepted, preserve that evidence and stop. Treatment B remains blocked until Hermes enforces a hard one-worker/no-concurrency invariant at the delegation boundary; do not rerun Hermes by prompt instruction alone. Keep spend at $0 and do not change benchmark semantics, add workers, or start new infrastructure.
 
 ## Evidence boundary
+
+### October 17 sprint: Phase 5 model-free preparation
+
+The development readiness command
+`python3 scripts/audit_system_benchmark_readiness.py` inspects the existing
+seven-case bank without model or database execution and returns blocked status
+(exit 2). The 24-case target is short by 17 tasks, with families B/F absent.
+Seven task/reference expectations validate and four policy evidence identities
+are retrievable; these checks do not validate complete reference responses or
+prove runnable baseline treatments. Phase 2–4 acceptance, baseline execution,
+human audit and interface-freeze approval remain unverified here. The draft
+expansion in `docs/phase5-development-expansion-proposal.md` activates no cases.
+See `docs/phase5-readiness-2026-10-17.md` for reproducible commands and gaps.
 
 Landing PR C establishes the deterministic evaluation core only. It does not
 establish single-agent or routed-agent superiority, unseen-task generalization,

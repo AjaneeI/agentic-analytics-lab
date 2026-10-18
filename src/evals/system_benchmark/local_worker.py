@@ -18,7 +18,7 @@ from src.evals.system_benchmark.contracts import (
 from src.evals.system_benchmark.routing import RoutingDecision, oracle_route
 from src.evals.system_benchmark.runner import TrialExecution
 from src.evals.system_benchmark.scoring import ScoringObservation
-from src.evals.system_benchmark.workers import build_worker_invocation
+from src.evals.system_benchmark.workers import WorkerInvocation, build_worker_invocation
 from src.tools.clickhouse_readonly import query_clickhouse
 from src.tools.policy_retrieval import PolicyEvidence, retrieve_policy
 
@@ -42,6 +42,8 @@ class ModelLike(Protocol):
 QueryFn = Callable[[str], list[dict[str, Any]]]
 PolicyFn = Callable[..., list[PolicyEvidence]]
 RouteFn = Callable[[SystemBenchmarkTask], RoutingDecision]
+InvocationFn = Callable[[SystemBenchmarkTask, RoutingDecision], WorkerInvocation]
+ToolPermissionFn = Callable[[SystemBenchmarkTask, str], bool]
 
 
 _QUERY_TOOL = {
@@ -123,6 +125,8 @@ class BoundedLocalExecutor:
         policy_fn: PolicyFn = retrieve_policy,
         route_fn: RouteFn = oracle_route,
         max_model_steps: int = 6,
+        invocation_fn: InvocationFn = build_worker_invocation,
+        tool_permission_fn: ToolPermissionFn | None = None,
     ):
         if max_model_steps < 1:
             raise ValueError("max_model_steps must be >= 1")
@@ -131,6 +135,8 @@ class BoundedLocalExecutor:
         self.policy_fn = policy_fn
         self.route_fn = route_fn
         self.max_model_steps = max_model_steps
+        self.invocation_fn = invocation_fn
+        self.tool_permission_fn = tool_permission_fn
 
     def __call__(
         self,
@@ -141,7 +147,7 @@ class BoundedLocalExecutor:
         del trial_number, temp_dir
         started = time.monotonic()
         decision = self.route_fn(task)
-        invocation = build_worker_invocation(task, decision)
+        invocation = self.invocation_fn(task, decision)
         tools = [_TOOL_SPECS[name] for name in invocation.allowed_tools]
 
         messages: list[dict[str, Any]] = [
@@ -197,6 +203,8 @@ class BoundedLocalExecutor:
                 raise LocalWorkerError(
                     f"tool {name!r} is not exposed for this task"
                 )
+            if self.tool_permission_fn is not None and not self.tool_permission_fn(task, name):
+                raise LocalWorkerError(f"tool {name!r} is not permitted for this task")
             if not isinstance(arguments, Mapping):
                 raise LocalWorkerError("tool arguments must be an object")
 

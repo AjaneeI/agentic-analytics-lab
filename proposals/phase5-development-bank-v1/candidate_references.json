@@ -1,0 +1,382 @@
+[
+  {
+    "reference_solution_id": "REF-A01",
+    "required_evidence_refs": ["structured:delivery_work_items"],
+    "allowed_evidence_refs": ["structured:delivery_work_items"],
+    "required_tools": ["query_clickhouse"],
+    "forbidden_tools": ["retrieve_policy"],
+    "required_answer_terms": ["Data"],
+    "forbidden_answer_terms": ["causes"]
+  },
+  {
+    "reference_solution_id": "REF-C01",
+    "required_evidence_refs": ["policy:kpi-dictionary@1.0#blocker-rate"],
+    "allowed_evidence_refs": ["policy:kpi-dictionary@1.0#blocker-rate"],
+    "required_tools": ["retrieve_policy"],
+    "forbidden_tools": ["query_clickhouse"],
+    "required_answer_terms": ["blocked items", "active items"],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-D01",
+    "required_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:kpi-dictionary@1.0#blocker-rate"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:kpi-dictionary@1.0#blocker-rate"
+    ],
+    "required_tools": ["query_clickhouse", "retrieve_policy"],
+    "forbidden_tools": [],
+    "required_answer_terms": ["Data"],
+    "forbidden_answer_terms": ["causes"]
+  },
+  {
+    "reference_solution_id": "REF-G01",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": ["query_clickhouse", "retrieve_policy"],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-E01",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": ["query_clickhouse", "retrieve_policy"],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-H01",
+    "required_evidence_refs": [
+      "policy:escalation-policy@1.0#p1-temporary-authority",
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "allowed_evidence_refs": [
+      "policy:escalation-policy@1.0#p1-temporary-authority",
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "required_tools": ["retrieve_policy"],
+    "forbidden_tools": ["query_clickhouse"],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-C02",
+    "required_evidence_refs": ["policy:blocker-definition@0.9#blocked-item"],
+    "allowed_evidence_refs": ["policy:blocker-definition@0.9#blocked-item"],
+    "required_tools": ["retrieve_policy"],
+    "forbidden_tools": ["query_clickhouse"],
+    "required_answer_terms": ["business day"],
+    "forbidden_answer_terms": ["material progress"]
+  },
+  {
+    "reference_solution_id": "REF-A02",
+    "required_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "required_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-A03",
+    "required_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "required_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-B01",
+    "required_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "required_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [
+      "descriptive",
+      "all snapshot items"
+    ],
+    "forbidden_answer_terms": [
+      "causes"
+    ]
+  },
+  {
+    "reference_solution_id": "REF-B02",
+    "required_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "required_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [
+      "completed work",
+      "descriptive"
+    ],
+    "forbidden_answer_terms": [
+      "causes"
+    ]
+  },
+  {
+    "reference_solution_id": "REF-B03",
+    "required_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items"
+    ],
+    "required_tools": [
+      "query_clickhouse"
+    ],
+    "forbidden_tools": [
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [
+      "association",
+      "completed items"
+    ],
+    "forbidden_answer_terms": [
+      "causes"
+    ]
+  },
+  {
+    "reference_solution_id": "REF-C03",
+    "required_evidence_refs": [
+      "policy:service-level-policy@1.0#blocker-response"
+    ],
+    "allowed_evidence_refs": [
+      "policy:service-level-policy@1.0#blocker-response"
+    ],
+    "required_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "required_answer_terms": [
+      "named owner",
+      "one business day"
+    ],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-D02",
+    "required_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:delivery-operating@1.0#blocked-work-review"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:delivery-operating@1.0#blocked-work-review"
+    ],
+    "required_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [],
+    "required_answer_terms": [
+      "each business day",
+      "dependency ownership",
+      "next action",
+      "escalation"
+    ],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-D03",
+    "required_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:kpi-dictionary@1.0#effort-ratio"
+    ],
+    "allowed_evidence_refs": [
+      "structured:delivery_work_items",
+      "policy:kpi-dictionary@1.0#effort-ratio"
+    ],
+    "required_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [],
+    "required_answer_terms": [
+      "actual effort",
+      "planned effort",
+      "same work population"
+    ],
+    "forbidden_answer_terms": [
+      "causes"
+    ]
+  },
+  {
+    "reference_solution_id": "REF-E02",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-E03",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-F01",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [
+      "does not establish",
+      "causal inference"
+    ],
+    "forbidden_answer_terms": [
+      "proves causality"
+    ]
+  },
+  {
+    "reference_solution_id": "REF-F02",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [
+      "synthetic",
+      "real",
+      "external evidence"
+    ],
+    "forbidden_answer_terms": [
+      "representative of all real teams"
+    ]
+  },
+  {
+    "reference_solution_id": "REF-F03",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [
+      "randomized",
+      "confounding"
+    ],
+    "forbidden_answer_terms": [
+      "observational data proves"
+    ]
+  },
+  {
+    "reference_solution_id": "REF-G02",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-G03",
+    "required_evidence_refs": [],
+    "allowed_evidence_refs": [],
+    "required_tools": [],
+    "forbidden_tools": [
+      "query_clickhouse",
+      "retrieve_policy"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-H02",
+    "required_evidence_refs": [
+      "policy:escalation-policy@1.0#p1-temporary-authority",
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "allowed_evidence_refs": [
+      "policy:escalation-policy@1.0#p1-temporary-authority",
+      "policy:service-level-policy@1.0#p1-exception-authority"
+    ],
+    "required_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  },
+  {
+    "reference_solution_id": "REF-H03",
+    "required_evidence_refs": [
+      "policy:escalation-policy@1.0#escalation-trigger",
+      "policy:escalation-policy@1.0#decision-package"
+    ],
+    "allowed_evidence_refs": [
+      "policy:escalation-policy@1.0#escalation-trigger",
+      "policy:escalation-policy@1.0#decision-package"
+    ],
+    "required_tools": [
+      "retrieve_policy"
+    ],
+    "forbidden_tools": [
+      "query_clickhouse"
+    ],
+    "required_answer_terms": [],
+    "forbidden_answer_terms": []
+  }
+]

@@ -1,0 +1,693 @@
+{
+  "bank_accepted": false,
+  "baseline_coverage": {
+    "acceptance": "No architecture comparison or aggregate success denominator approved. Declines must not be reported as successes.",
+    "basis": "Static normalized request equality to _ALL_ITEM_BLOCKER_LEADER_REQUEST; no executor called.",
+    "declined_request_count": 23,
+    "deterministic_simple_supported_by_exact_request_allowlist": [
+      "SB-A01"
+    ],
+    "routed_lanes": "Implemented capability permissions are distinct from inference accuracy and worker correctness; this audit produces no routing-performance result.",
+    "strong_single": "Adapter exists; no full 24-case model capability or accepted solvability evidence. Isolated metadata parity captures do not establish task quality."
+  },
+  "blockers": [
+    "human_task_reference_distinctness_audit_pending",
+    "new_B_F_semantic_validity_unapproved",
+    "lexical_grader_false_positive_controls_preserved",
+    "full_runtime_observation_mapping_not_qualified",
+    "strong_single_fair_solvability_not_demonstrated",
+    "approved_task_set_activation_required",
+    "candidate_precision_contract_requires_owner_adjudication",
+    "A03_textual_requirement_coverage_requires_owner_adjudication"
+  ],
+  "confirmed_new_authoring_issues": [
+    {
+      "basis": "Existing stored count rows and candidate expected values/tolerances only. Request does not prescribe one-decimal rounding; scorer compares absolute difference to tolerance. No new score, control or SQL execution performed.",
+      "cases": [
+        "SB-B03"
+      ],
+      "classification": "confirmed_rounding_under_specification",
+      "decision_needed": "Approve an explicit precision/representation contract through the existing versioning process; no tolerance or task wording was changed here.",
+      "id": "CB-PRECISION-01",
+      "proof": [
+        {
+          "absolute_representation_gap": 0.046931407942238934,
+          "candidate_expected_value": 31.0,
+          "candidate_tolerance": 0.0001,
+          "field": "nonblocked_late_pct",
+          "fraction_implied_percentage": 31.04693140794224,
+          "gap_exceeds_stored_tolerance": true,
+          "stored_completed_items": 277,
+          "stored_late_items": 86
+        },
+        {
+          "absolute_representation_gap": 0.016981132075471805,
+          "candidate_expected_value": 54.7,
+          "candidate_tolerance": 0.0001,
+          "field": "blocked_late_pct",
+          "fraction_implied_percentage": 54.716981132075475,
+          "gap_exceeds_stored_tolerance": true,
+          "stored_completed_items": 53,
+          "stored_late_items": 29
+        }
+      ],
+      "related_same_authoring_precision_rule": [
+        "SB-B01",
+        "SB-D02"
+      ],
+      "request_excerpt": "Among completed work items (status = done), compare lateness percentages for blocked and non-blocked items. Define late as completed_at > due_at and each percentage over completed items in that blocker group. Describe the observed association without inferring cause.",
+      "status": "owner_adjudication_required"
+    },
+    {
+      "cases": [
+        "SB-A03"
+      ],
+      "classification": "confirmed_request_to_reference_coverage_gap",
+      "decision_needed": "Clarify whether the zero-denominator statement is a scored requirement or advisory wording before a versioned activation; no new criterion or probe authored.",
+      "id": "CB-A03-COVERAGE-01",
+      "proof": "Both arrays are empty. Existing expected values are ordinary completed-team ratios; scoring.py answer-bounds checks only reference term lists. The explicit zero-denominator explanation is present in the authored positive answer but has no corresponding declared answer check.",
+      "reference_required_answer_terms": [],
+      "request_excerpt": "State that a zero planned sum would make the ratio undefined.",
+      "status": "owner_adjudication_required",
+      "task_required_claims": []
+    }
+  ],
+  "existing_unresolved_semantic_controls": {
+    "ids": [
+      "SB-B01",
+      "SB-B02",
+      "SB-B03",
+      "SB-F01",
+      "SB-F02",
+      "SB-F03"
+    ],
+    "new_controls_or_rescoring_performed": false,
+    "note": "These six B/F false positives are existing preserved grader findings, not new authoring failures established by this review.",
+    "reported_wrongly_passing": 6,
+    "source": "proposals/phase5-development-bank-v1/validation.json"
+  },
+  "heldout_access": false,
+  "interface_freeze_approved": false,
+  "mechanical_alignment": {
+    "candidate_tasks": 24,
+    "controls": 24,
+    "family_counts": {
+      "A": 3,
+      "B": 3,
+      "C": 3,
+      "D": 3,
+      "E": 3,
+      "F": 3,
+      "G": 3,
+      "H": 3
+    },
+    "note": "Mechanical alignment is not semantic adequacy or model solvability.",
+    "original_seven_byte_prefixes_preserved": true,
+    "original_seven_references_equal": true,
+    "original_seven_tasks_equal": true,
+    "preparation_input_hash_mismatches": [],
+    "references": 24,
+    "task_reference_control_ids_unique": true,
+    "task_reference_relationship_checks": [
+      {
+        "case_id": "SB-A01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-C01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-D01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-G01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-E01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-H01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-C02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-A02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-A03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-B01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-B02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-B03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-C03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-D02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-D03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-E02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-E03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-F01",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-F02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-F03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-G02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-G03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-H02",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      },
+      {
+        "case_id": "SB-H03",
+        "positive_control_cites_required_refs": true,
+        "positive_control_has_expected_field_names": true,
+        "reference_exists": true,
+        "required_tools_allowed": true,
+        "required_tools_not_forbidden": true
+      }
+    ]
+  },
+  "new_controls": 0,
+  "new_database_calls": 0,
+  "new_model_calls": 0,
+  "new_simulations": 0,
+  "new_trials": 0,
+  "owner_approval_status": "No owner decision or activation is inferred; decision_needed entries remain pending.",
+  "owner_decisions_recorded_by_this_review": [],
+  "owner_review_questions": [
+    {
+      "cases": [
+        "SB-F03"
+      ],
+      "decision_needed": "Owner should decide whether the literal randomized term is a mandatory criterion or an illustrative answer before accepting F03. No alternative response or new control was created.",
+      "fact": "The open request asks what additional study evidence is needed; REF-F03 requires the literal terms randomized and confounding. The local analytical guide requires a design/evidence source supporting causal inference but does not prescribe randomized wording.",
+      "id": "CB-F03-QUESTION",
+      "semantic_verdict": "not_adjudicated"
+    },
+    {
+      "cases": [
+        "SB-G01",
+        "SB-G02",
+        "SB-G03"
+      ],
+      "decision_needed": "Decide whether these count as three acceptable source scenarios or one shared abstention template; do not infer independent coverage from family counts.",
+      "fact": "CRM/Jira/Slack source names and requested explanation/blame vary, but all three references are byte-equivalent as parsed dictionaries after removing reference_solution_id. All require unsupported, no tools, no evidence, no values, no answer terms.",
+      "id": "CB-G-DIVERSITY"
+    },
+    {
+      "cases": [
+        "SB-H01",
+        "SB-H02"
+      ],
+      "decision_needed": "Decide whether the paired intent difference warrants a separate case; record their dependency if retained.",
+      "fact": "Both use the exact P1 immediate-mitigation conflict, same two authority sections, same handoff fields and identical references except ID. H01 asks an authority decision; H02 explicitly states the conflict and requests a package.",
+      "id": "CB-H-OVERLAP"
+    },
+    {
+      "cases": [
+        "SB-D01",
+        "SB-D02",
+        "SB-D03"
+      ],
+      "decision_needed": "Confirm intended per-task call budgets and comparison protocol before the interface freeze; no new budget proposed.",
+      "fact": "Only D01 declares max_tool_calls=2; new D02/D03 declare no trajectory budget. This is not automatically invalid.",
+      "id": "CB-CALL-BOUNDS"
+    }
+  ],
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase5_entry_accepted": false,
+  "repo_files_modified": false,
+  "review_method": "Static read-only source/artifact inspection and arithmetic from existing stored counts. No preparer, scorer, tests, controls, trials, simulation, generator, retrieval, model or database executed.",
+  "reviewed_commit": "ce7b9c8bcc47087d661d414b7dfc6da48d2d0c70",
+  "reviewed_root": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase5",
+  "schema_version": "phase5-candidate-readiness-independent-review-v1",
+  "scope": "Inactive development candidate bank only; held-out sources not read.",
+  "source_authority": {
+    "conflict_status": "Both sources are current/effective 2026-01-01; manifest gives no precedence rule. H01/H02 handoff is intentional, not a newly introduced authority defect.",
+    "historical_selection": "C02 uses blocker-definition@0.9 effective 2025-01-01 for 2025-06-01, before 1.0 effective 2026-01-01.",
+    "inherited_ambiguity": "A01 omits active/all population while its frozen expectation is all-item 20.9. E02 explicitly asks population clarification. This inherited scope issue remains separately adjudicated; no frozen changes made.",
+    "intentional_conflict": [
+      "escalation-policy@1.0#p1-temporary-authority",
+      "service-level-policy@1.0#p1-exception-authority"
+    ],
+    "new_document_cases": "C03 matches service-level named-owner/one-business-day rule; D02 matches daily blocked-work actions; D03 request explicitly fixes ratio-of-sums aggregation.",
+    "policy_reference_sections": [
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-C01",
+        "required_ref": "policy:kpi-dictionary@1.0#blocker-rate",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-D01",
+        "required_ref": "policy:kpi-dictionary@1.0#blocker-rate",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-H01",
+        "required_ref": "policy:escalation-policy@1.0#p1-temporary-authority",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-H01",
+        "required_ref": "policy:service-level-policy@1.0#p1-exception-authority",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2025-01-01",
+        "manifest_status": "superseded",
+        "reference_solution_id": "REF-C02",
+        "required_ref": "policy:blocker-definition@0.9#blocked-item",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-C03",
+        "required_ref": "policy:service-level-policy@1.0#blocker-response",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-D02",
+        "required_ref": "policy:delivery-operating@1.0#blocked-work-review",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-D03",
+        "required_ref": "policy:kpi-dictionary@1.0#effort-ratio",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-H02",
+        "required_ref": "policy:escalation-policy@1.0#p1-temporary-authority",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-H02",
+        "required_ref": "policy:service-level-policy@1.0#p1-exception-authority",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-H03",
+        "required_ref": "policy:escalation-policy@1.0#escalation-trigger",
+        "section_exists": true
+      },
+      {
+        "effective_date": "2026-01-01",
+        "manifest_status": "current",
+        "reference_solution_id": "REF-H03",
+        "required_ref": "policy:escalation-policy@1.0#decision-package",
+        "section_exists": true
+      }
+    ]
+  },
+  "source_sha256": {
+    "docs/phase5-baseline-adapters.md": "c918265a8464baeefdd7456c49706cec2c7d897c38e8b3d9eb7dcddae9d82647",
+    "evals/questions.json": "0dc047fbc378f0cf75f1c488e92fcb18dddcbfe976c79b1f16281e4b428654d1",
+    "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+    "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+    "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+    "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+    "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+    "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+    "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+    "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "proposals/phase5-development-bank-v1/README.md": "beeef5463b1b6c184c20d180aa6d47933abb7e35287fe665a0268157d6495146",
+    "proposals/phase5-development-bank-v1/candidate_references.json": "0d5830a7ee74aae11f2effff45e47d2b317404b5becdaeb749c5fe68621be656",
+    "proposals/phase5-development-bank-v1/candidate_tasks.json": "79116f442591e38b065122df2cc2ff620a0c7aeb658feb97a44748bd02e93f27",
+    "proposals/phase5-development-bank-v1/numeric_truth.json": "61b4885d4a22478dd448de8794c50db3de87b2f0ccc5c0cd2e219acb7ce696b6",
+    "proposals/phase5-development-bank-v1/reference_controls.json": "e95166d698bb85739b6c45cd25aa1dc9c4a0c1c4296945b7f954ffdd6bd16496",
+    "proposals/phase5-development-bank-v1/validation.json": "f65b8732f0a5836ac936c7a1aae6808d858e285bc675d24bdaf79e0a8ee6697f",
+    "scripts/prepare_phase5_candidate_bank.py": "657e7afcfe940be6ba0bd2b7232924508c24c1028b4e7fe8b5e711803dc4106d",
+    "src/evals/system_benchmark/baselines.py": "6030cba1e15a844f5be76e6376eb7d88dc728ed5aace2b40525735a3bfa04a15",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/local_worker.py": "66c331d242663fd3902c943ba0cc3ec57299bb72afc751d77c2b78de119178ae",
+    "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a"
+  },
+  "structured_observability_mapping": {
+    "affected_new_numeric_cases": [
+      {
+        "authored_SQL_row_fields": [
+          "active_items",
+          "team"
+        ],
+        "case_id": "SB-A02",
+        "expected_observation_fields": [
+          "ai_active_items",
+          "data_active_items",
+          "platform_active_items",
+          "product_active_items"
+        ],
+        "missing_direct_row_fields": [
+          "ai_active_items",
+          "data_active_items",
+          "platform_active_items",
+          "product_active_items"
+        ],
+        "runtime_adapter_has_team_group_pivot": false
+      },
+      {
+        "authored_SQL_row_fields": [
+          "effort_ratio",
+          "team"
+        ],
+        "case_id": "SB-A03",
+        "expected_observation_fields": [
+          "ai_effort_ratio",
+          "data_effort_ratio",
+          "platform_effort_ratio",
+          "product_effort_ratio"
+        ],
+        "missing_direct_row_fields": [
+          "ai_effort_ratio",
+          "data_effort_ratio",
+          "platform_effort_ratio",
+          "product_effort_ratio"
+        ],
+        "runtime_adapter_has_team_group_pivot": false
+      },
+      {
+        "authored_SQL_row_fields": [
+          "blocked_pct",
+          "team"
+        ],
+        "case_id": "SB-B01",
+        "expected_observation_fields": [
+          "ai_blocked_pct",
+          "data_blocked_pct",
+          "platform_blocked_pct",
+          "product_blocked_pct"
+        ],
+        "missing_direct_row_fields": [
+          "ai_blocked_pct",
+          "data_blocked_pct",
+          "platform_blocked_pct",
+          "product_blocked_pct"
+        ],
+        "runtime_adapter_has_team_group_pivot": false
+      },
+      {
+        "authored_SQL_row_fields": [
+          "effort_ratio",
+          "team"
+        ],
+        "case_id": "SB-B02",
+        "expected_observation_fields": [
+          "ai_effort_ratio",
+          "data_effort_ratio",
+          "platform_effort_ratio",
+          "product_effort_ratio"
+        ],
+        "missing_direct_row_fields": [
+          "ai_effort_ratio",
+          "data_effort_ratio",
+          "platform_effort_ratio",
+          "product_effort_ratio"
+        ],
+        "runtime_adapter_has_team_group_pivot": false
+      },
+      {
+        "authored_SQL_row_fields": [
+          "blocked",
+          "completed_items",
+          "late_items",
+          "late_pct"
+        ],
+        "case_id": "SB-B03",
+        "expected_observation_fields": [
+          "blocked_late_pct",
+          "nonblocked_late_pct"
+        ],
+        "missing_direct_row_fields": [
+          "blocked_late_pct",
+          "nonblocked_late_pct"
+        ],
+        "runtime_adapter_has_team_group_pivot": false
+      },
+      {
+        "authored_SQL_row_fields": [
+          "blocked_pct",
+          "team"
+        ],
+        "case_id": "SB-D02",
+        "expected_observation_fields": [
+          "ai_blocked_pct",
+          "data_blocked_pct",
+          "platform_blocked_pct",
+          "product_blocked_pct"
+        ],
+        "missing_direct_row_fields": [
+          "ai_blocked_pct",
+          "data_blocked_pct",
+          "platform_blocked_pct",
+          "product_blocked_pct"
+        ],
+        "runtime_adapter_has_team_group_pivot": false
+      },
+      {
+        "authored_SQL_row_fields": [
+          "effort_ratio",
+          "team"
+        ],
+        "case_id": "SB-D03",
+        "expected_observation_fields": [
+          "ai_effort_ratio",
+          "data_effort_ratio",
+          "platform_effort_ratio",
+          "product_effort_ratio"
+        ],
+        "missing_direct_row_fields": [
+          "ai_effort_ratio",
+          "data_effort_ratio",
+          "platform_effort_ratio",
+          "product_effort_ratio"
+        ],
+        "runtime_adapter_has_team_group_pivot": false
+      }
+    ],
+    "authoring_runtime_distinction": "Preparer constructs prefixed observation dictionaries from existing row groups; this is not the actual bounded-runtime extraction path. Natural query solvability remains unqualified; pivot-shaped model SQL could be possible but hidden exact aliases are not a demonstrated fair public contract.",
+    "current_rule": "Reads expected field names directly from rows; only blocked_pct/blocker_rate alias is recognized. It does not pivot team/group long rows into prefixed expectation names.",
+    "existing_leader_controls": "A01/D01 authoring controls select max across grouped rows in preparer; current extractor does not select a winner from disagreeing multi-row values. A model could issue a top-one query, but these controls are not executed worker observations.",
+    "source": "local_worker.py:_extract_structured_values"
+  },
+  "template_relationships": [
+    {
+      "cases": [
+        "SB-A01",
+        "SB-B01"
+      ],
+      "group": "all-item blocker aggregation",
+      "relationship": "Same all_rates operation; A01 asks leader, B01 adds full-team descriptive interpretation."
+    },
+    {
+      "cases": [
+        "SB-A03",
+        "SB-B02",
+        "SB-D03"
+      ],
+      "group": "completed aggregate effort ratios",
+      "relationship": "Identical completed_ratios SQL and four numeric truths; B02 adds interpretation, D03 adds KPI source. A03 adds a zero-denominator statement."
+    },
+    {
+      "cases": [
+        "SB-A02",
+        "SB-D01",
+        "SB-D02"
+      ],
+      "group": "active-work blocker population",
+      "relationship": "Same active population; A02 counts, D01 identifies rate leader, D02 reports all rates plus operating actions. A01 differs in all-item scope."
+    },
+    {
+      "cases": [
+        "SB-G01",
+        "SB-G02",
+        "SB-G03"
+      ],
+      "group": "unsupported internal systems",
+      "relationship": "Source brand/request framing varies; same abstention and evidence/tool envelope."
+    },
+    {
+      "cases": [
+        "SB-H01",
+        "SB-H02"
+      ],
+      "group": "P1 authority conflict",
+      "relationship": "Same scenario and authority evidence; diagnosis versus explicitly instructed decision package."
+    },
+    {
+      "cases": [
+        "SB-B03",
+        "SB-F01",
+        "SB-F03"
+      ],
+      "group": "causal interpretation",
+      "relationship": "Related association/causal-inference boundary; B03 uses data, F01 is conceptual, F03 asks study evidence. These are related constructs, not identical contracts."
+    },
+    {
+      "cases": [
+        "SB-E01",
+        "SB-E02",
+        "SB-E03"
+      ],
+      "group": "clarification dimension",
+      "relationship": "Different missing concept: reporting period/population/team; same no-tool clarification envelope."
+    }
+  ]
+}

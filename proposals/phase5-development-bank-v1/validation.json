@@ -1,0 +1,432 @@
+{
+  "active_task_count": 7,
+  "bank_accepted": false,
+  "blockers": [
+    "human_task_reference_distinctness_audit_pending",
+    "new_B_F_semantic_validity_unapproved",
+    "lexical_grader_false_positive_controls_preserved",
+    "full_runtime_observation_mapping_not_qualified",
+    "strong_single_fair_solvability_not_demonstrated",
+    "approved_task_set_activation_required"
+  ],
+  "candidate_task_set_version": "development-expansion-v1-CANDIDATE",
+  "external_database_calls": 0,
+  "family_counts": {
+    "A": 3,
+    "B": 3,
+    "C": 3,
+    "D": 3,
+    "E": 3,
+    "F": 3,
+    "G": 3,
+    "H": 3
+  },
+  "frozen_seven_contracts_unchanged": true,
+  "inactive_candidate_task_count": 24,
+  "interface_freeze_approved": false,
+  "limitations": "Authored passing controls validate existing grader mechanics. They do not establish semantic adequacy, model capability, ClickHouse equivalence or phase acceptance. No scorer/runtimes/frozen fixtures were tuned to these candidates.",
+  "live_model_calls": 0,
+  "local_sql_queries": 5,
+  "negative_controls_failing_as_intended": 24,
+  "new_candidate_count": 17,
+  "phase5_entry_accepted": false,
+  "positive_controls_passing": 24,
+  "preparation_input_sha256": {
+    "evals/questions.json": "0dc047fbc378f0cf75f1c488e92fcb18dddcbfe976c79b1f16281e4b428654d1",
+    "evals/system_benchmark/corpus/analytical_interpretation_guide_v1.md": "d454dff507509065593aaa9b29da8d12143b225384f125d65ef2441b9074684a",
+    "evals/system_benchmark/corpus/blocker_definition_v0_9.md": "8e92a4d9caf2c80a960b6cca5139941c9af9a1f10808f4633c8e4ba35a2f3a2f",
+    "evals/system_benchmark/corpus/blocker_definition_v1.md": "a589f584af2eda591e4ea8976b15c718059987ac5a06e914e75273de9c58c324",
+    "evals/system_benchmark/corpus/delivery_operating_policy_v1.md": "a65bd9328025541eb092a2f83bf36cb4454aa8fafc5d27629b15280117550aea",
+    "evals/system_benchmark/corpus/escalation_policy_v1.md": "103af5f70a386a35a0d9c55fecbe3e0a16e9be453ce55216a355b46ef60bc8dd",
+    "evals/system_benchmark/corpus/kpi_dictionary_v1.md": "64969a7d2790c8e4f355a38db39f29ab26d8814120676763ec4ab09e94b3e8a9",
+    "evals/system_benchmark/corpus/manifest.json": "7733dde9f3ecefe52bb75c4732610e38b9bd9817ba5e9d8a04cfca1ca85ddbce",
+    "evals/system_benchmark/corpus/service_level_policy_v1.md": "0fc084768d959b198d8f8a3cffceeb573e0638530d6cccb056c8829e33032f24",
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "scripts/generate_delivery_data.py": "e6e2f91713099728c1d74aede478e6a69a70cc7b2200dc704661f1d5d3797180",
+    "scripts/prepare_phase5_candidate_bank.py": "657e7afcfe940be6ba0bd2b7232924508c24c1028b4e7fe8b5e711803dc4106d",
+    "src/evals/system_benchmark/contracts.py": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed",
+    "src/evals/system_benchmark/references.py": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427",
+    "src/evals/system_benchmark/scoring.py": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a",
+    "src/evals/trajectory_quality.py": "e2bfd4310edb2f007fe1e4cc2d3571e0dc34959823b849a84a109b72336cab20",
+    "src/tools/clickhouse_readonly.py": "9df96245e7e08d0f46d63e6b80aca9c9485075c39974de50a19ab436b76790b9",
+    "src/tools/policy_retrieval.py": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27"
+  },
+  "schema_version": "phase5-inactive-candidate-bank-v1",
+  "semantic_invalid_probes": [
+    {
+      "case_id": "SB-B01",
+      "expected_valid": false,
+      "known_gap_preserved": true,
+      "rationale": "Causal/generalization assertion is unsupported despite matching lexical terms.",
+      "response": {
+        "answer_text": "For all snapshot items, the descriptive comparison demonstrates that blockers are the reason for late delivery.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    {
+      "case_id": "SB-B02",
+      "expected_valid": false,
+      "known_gap_preserved": true,
+      "rationale": "Causal/generalization assertion is unsupported despite matching lexical terms.",
+      "response": {
+        "answer_text": "The descriptive completed work comparison proves that higher effort ratios are the reason for delay.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    {
+      "case_id": "SB-B03",
+      "expected_valid": false,
+      "known_gap_preserved": true,
+      "rationale": "Causal/generalization assertion is unsupported despite matching lexical terms.",
+      "response": {
+        "answer_text": "The association among completed items establishes that removing blockers will prevent lateness.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [
+          "structured:delivery_work_items"
+        ],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    {
+      "case_id": "SB-F01",
+      "expected_valid": false,
+      "known_gap_preserved": true,
+      "rationale": "Causal/generalization assertion is unsupported despite matching lexical terms.",
+      "response": {
+        "answer_text": "The association does not establish a need for further study; causal inference already confirms that blockers are the reason for lateness.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    {
+      "case_id": "SB-F02",
+      "expected_valid": false,
+      "known_gap_preserved": true,
+      "rationale": "Causal/generalization assertion is unsupported despite matching lexical terms.",
+      "response": {
+        "answer_text": "This synthetic snapshot establishes behavior for every real delivery team; no external evidence is needed.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    },
+    {
+      "case_id": "SB-F03",
+      "expected_valid": false,
+      "known_gap_preserved": true,
+      "rationale": "Causal/generalization assertion is unsupported despite matching lexical terms.",
+      "response": {
+        "answer_text": "Randomized evidence is unnecessary and confounding can be ignored: reducing blockers is already established to improve all outcomes.",
+        "clarification": null,
+        "disposition": "answer",
+        "evidence_refs": [],
+        "handoff": null,
+        "uncertainty": "Synthetic snapshot does not establish causal or real-world effects."
+      },
+      "score": {
+        "dimensions": [
+          {
+            "name": "disposition",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "evidence",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "tools",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "trajectory",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "structured_values",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "clarification",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "handoff",
+            "passed": true,
+            "reason_codes": []
+          },
+          {
+            "name": "answer_bounds",
+            "passed": true,
+            "reason_codes": []
+          }
+        ],
+        "passed": true,
+        "reason_codes": []
+      }
+    }
+  ],
+  "semantic_validity_unapproved_ids": [
+    "SB-B01",
+    "SB-B02",
+    "SB-B03",
+    "SB-F01",
+    "SB-F02",
+    "SB-F03"
+  ]
+}
