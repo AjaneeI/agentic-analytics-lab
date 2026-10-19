@@ -1,0 +1,61 @@
+{
+  "adapter_reason_codes": [
+    "explicit_call_required",
+    "untrusted_call_token"
+  ],
+  "bounds": {
+    "calls_per_session": 2,
+    "fetch_policy": "incremental rows; retain bounded prefix, mark incomplete, never return truncated data as success",
+    "query_characters": 8192,
+    "result_rows": 1000,
+    "serialized_capture_characters": 2097152,
+    "snapshot_and_config_characters": 1048576,
+    "snapshot_rows": 10000,
+    "sqlite_progress_opcodes": 100000,
+    "sqlite_value_bytes": 2097152
+  },
+  "configuration": "Host-supplied source_commit/configuration frozen before any query; offline validation receipt separately pins actual candidate commit and all source hashes.",
+  "failure_evidence": "UTF8-invalid SQL is rejected before token/execute with lossless bounded ASCII-JSON query evidence and no invented UTF8 hash. Execute BaseException/cancellation retains original error type/message and unsuccessful/incomplete capture, then propagates. No signal/process guarantee.",
+  "failure_policy": "One callback invocation causes at most one execute; capture failures and partial results, propagate original execution exceptions; no retries or implicit favorable/latest call selection.",
+  "host_only": [
+    "session construction and immutable snapshot/config",
+    "calls and opaque call-token selection",
+    "resolve(execution_id)",
+    "verification_context(call)",
+    "verify(claim, *, call)"
+  ],
+  "known_upstream_semantic_gaps": [
+    {
+      "disposition": "Preserved upstream limitation; no verifier/scorer correction, normalization or scientific success claimed. Requires a separately reviewed verifier decision/amendment.",
+      "expected_scientific": "A captured exact co-max member with unique_winner=false is valid even without secondary tie ordering.",
+      "id": "D01-TIE-ORDER-01",
+      "observed": "Pinned v1 may return contradicted/captured_result_mismatch for legitimate tied LIMIT1 without secondary sort."
+    }
+  ],
+  "live_qualified": false,
+  "origin": "synthetic_sqlite",
+  "prohibitions": [
+    "no active wiring or provider API changes",
+    "no model/services/external SQL/resources/heldout",
+    "no historical query replay or rescore",
+    "no scoring/task/data/method changes",
+    "no activation, merge or automatic reviews"
+  ],
+  "query_callback": "query(sql: str) -> list[dict]",
+  "sql_backend_scope": "One private memory-only agentic_analytics.delivery_work_items table; qualified/unqualified name compatibility. Readonly authorizer denies attachments/mutation/unrelated objects and unapproved functions; SQLite fixture semantics only.",
+  "state": "inactive_proposal",
+  "trusted_boundary": "Only claim is untrusted; arbitrary malicious Python host/caller or process compromise is outside scope. No serialized claimant envelope can register captures.",
+  "upstream_commit": "42befe12de7d4c8cf5813a99cb32b7f3eb7c25dd",
+  "upstream_contract_sha256": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+  "upstream_source_sha256": {
+    "PLAN.md": "7e5083717a91d1cf56545d3d0a8ef3d6cdebff94a3c7e4afbbea974481f06cd6",
+    "README.md": "91f74b1855434f29dd87f50e487d5947d5e630bac7a1208617087394d042cf40",
+    "contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "run_validation.py": "49605e188275c7f2422c65a7c93d7d19742d70a1e95daf805acb31def2f459aa",
+    "sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "test_verifier.py": "d55a54b49f42195ac8308cd478bdfe6bed59857eee9df860532c0b6407748f7d",
+    "verifier.py": "857b928e02afd9209ccfa0431925c79b64706571eb40c825c41e28f1fbbceb32"
+  },
+  "upstream_verifier_api": "verify(claim, *, resolver, expected)",
+  "version": "phase3-d01-capture-integration-v1"
+}

@@ -1,0 +1,31 @@
+{
+  "results": [
+    {
+      "probe": "lone-surrogate",
+      "raised": "UnicodeEncodeError",
+      "message": "'utf-8' codec can't encode character '\\ud800' in position 7: surrogates not allowed",
+      "event_count": 0,
+      "capture_present": true,
+      "verification_raised": "KeyError"
+    },
+    {
+      "probe": "execute-cancellation",
+      "raised": "KeyboardInterrupt",
+      "event_count": 1,
+      "capture_present": true,
+      "success": false,
+      "complete": false,
+      "error_type": null,
+      "error_message": null,
+      "verification": {
+        "status": "insufficient",
+        "reason": "execution_not_successful",
+        "live_qualified": false
+      }
+    }
+  ],
+  "guard": {
+    "memory_sqlite_connections": 2,
+    "blocked_side_effect_attempts": []
+  }
+}

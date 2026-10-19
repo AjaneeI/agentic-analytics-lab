@@ -1,0 +1,33 @@
+{
+  "results": [
+    {
+      "probe": "stale-config",
+      "exception": "adapter source fingerprint mismatch",
+      "memory_connections": 0
+    },
+    {
+      "probe": "lone-surrogate",
+      "passed": true,
+      "events": 1,
+      "calls": 0,
+      "records": 0,
+      "expected": 0,
+      "lossless_rejected_query": true
+    },
+    {
+      "probe": "execute-cancellation",
+      "passed": true,
+      "error_type": "KeyboardInterrupt",
+      "error_message": "synthetic execute cancellation",
+      "verdict": {
+        "status": "insufficient",
+        "reason": "execution_not_successful",
+        "live_qualified": false
+      }
+    }
+  ],
+  "guard": {
+    "memory_sqlite_connections": 2,
+    "blocked_side_effect_attempts": []
+  }
+}
