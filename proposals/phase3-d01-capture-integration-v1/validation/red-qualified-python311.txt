@@ -1,0 +1,64 @@
+test_borrowed_context_changes_cannot_overwrite_host_commitment (test_capture.CaptureControls.test_borrowed_context_changes_cannot_overwrite_host_commitment) ... ok
+test_callback_returns_only_actual_rows_and_proves_selected_capture (test_capture.CaptureControls.test_callback_returns_only_actual_rows_and_proves_selected_capture) ... ok
+test_closed_session_never_executes_a_query (test_capture.CaptureControls.test_closed_session_never_executes_a_query) ... ok
+test_cross_session_and_copied_tokens_cannot_select_records (test_capture.CaptureControls.test_cross_session_and_copied_tokens_cannot_select_records) ... ok
+test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) ... 
+  test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) (sql="SELECT team, 100.0*SUM(blocked)/COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status!='done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... ERROR
+test_expensive_new_synthetic_query_stops_once_and_session_remains_read_only (test_capture.CaptureControls.test_expensive_new_synthetic_query_stops_once_and_session_remains_read_only) ... ok
+test_forged_claim_fields_cannot_register_or_replace_capture (test_capture.CaptureControls.test_forged_claim_fields_cannot_register_or_replace_capture) ... ok
+test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) ... ok
+test_mutating_returned_rows_snapshot_and_config_does_not_rewrite_capture (test_capture.CaptureControls.test_mutating_returned_rows_snapshot_and_config_does_not_rewrite_capture) ... ok
+test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) ... ok
+test_no_active_population_is_insufficient (test_capture.CaptureControls.test_no_active_population_is_insufficient) ... ok
+test_no_implicit_or_favorable_call_selection (test_capture.CaptureControls.test_no_implicit_or_favorable_call_selection) ... ok
+test_original_sql_error_is_captured_once_without_retry (test_capture.CaptureControls.test_original_sql_error_is_captured_once_without_retry) ... ok
+test_partial_row_capture_cannot_be_promoted_to_complete (test_capture.CaptureControls.test_partial_row_capture_cannot_be_promoted_to_complete) ... ok
+test_tie_uses_captured_team_and_cannot_claim_uniqueness (test_capture.CaptureControls.test_tie_uses_captured_team_and_cannot_claim_uniqueness) ... ok
+test_two_call_bound_stops_before_a_third_execute (test_capture.CaptureControls.test_two_call_bound_stops_before_a_third_execute) ... ok
+test_upstream_unspecified_tie_order_gap_is_preserved_not_corrected (test_capture.CaptureControls.test_upstream_unspecified_tie_order_gap_is_preserved_not_corrected) ... ok
+test_active_mutations_and_competitor_flip_change_claim (test_verifier.ProvenanceControls.test_active_mutations_and_competitor_flip_change_claim) ... ok
+test_cancellation_cannot_hide_wrong_denominator_or_ungrouped_column (test_verifier.ProvenanceControls.test_cancellation_cannot_hide_wrong_denominator_or_ungrouped_column) ... ok
+test_canonical_successful_computation_proves_fixture_only (test_verifier.ProvenanceControls.test_canonical_successful_computation_proves_fixture_only) ... ok
+test_capture_deep_copies_mutable_inputs (test_verifier.ProvenanceControls.test_capture_deep_copies_mutable_inputs) ... ok
+test_empty_and_invalid_snapshots_do_not_turn_into_zero (test_verifier.ProvenanceControls.test_empty_and_invalid_snapshots_do_not_turn_into_zero) ... ok
+test_exact_ties_and_rounded_near_ties (test_verifier.ProvenanceControls.test_exact_ties_and_rounded_near_ties) ... ok
+test_fabricated_result_or_changed_claim_is_contradicted (test_verifier.ProvenanceControls.test_fabricated_result_or_changed_claim_is_contradicted) ... ok
+test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) ... ok
+test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) ... ok
+test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) ... ok
+test_literal_team_and_alias_shadowing_are_not_team_lineage (test_verifier.ProvenanceControls.test_literal_team_and_alias_shadowing_are_not_team_lineage) ... ok
+test_malformed_result_and_stale_host_identity_do_not_crash_or_prove (test_verifier.ProvenanceControls.test_malformed_result_and_stale_host_identity_do_not_crash_or_prove) ... ok
+test_missing_metadata_cannot_be_self_consistently_hash_pinned (test_verifier.ProvenanceControls.test_missing_metadata_cannot_be_self_consistently_hash_pinned) ... ok
+test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) ... ok
+test_review_r1_huge_numbers_produce_verdicts_without_overflow (test_verifier.ProvenanceControls.test_review_r1_huge_numbers_produce_verdicts_without_overflow) ... ok
+test_review_r2_renamed_status_equivalence_remains_unknown (test_verifier.ProvenanceControls.test_review_r2_renamed_status_equivalence_remains_unknown) ... ok
+test_review_r3_malformed_capture_bytes_and_config_do_not_crash (test_verifier.ProvenanceControls.test_review_r3_malformed_capture_bytes_and_config_do_not_crash) ... ok
+test_review_r4_unquoted_alias_case_matches_but_collisions_do_not (test_verifier.ProvenanceControls.test_review_r4_unquoted_alias_case_matches_but_collisions_do_not) ... ok
+test_review_r5_unicode_lookalike_is_not_an_ascii_alias (test_verifier.ProvenanceControls.test_review_r5_unicode_lookalike_is_not_an_ascii_alias) ... ok
+test_review_r6_deep_json_capture_never_crashes (test_verifier.ProvenanceControls.test_review_r6_deep_json_capture_never_crashes) ... ok
+test_row_permutation_renaming_completed_and_duplication_invariants (test_verifier.ProvenanceControls.test_row_permutation_renaming_completed_and_duplication_invariants) ... ok
+test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) ... ok
+test_unsupported_equivalent_predicate_does_not_become_false (test_verifier.ProvenanceControls.test_unsupported_equivalent_predicate_does_not_become_false) ... ok
+test_unsupported_valid_sql_stays_insufficient (test_verifier.ProvenanceControls.test_unsupported_valid_sql_stays_insufficient) ... ok
+test_untrusted_dict_missing_failed_and_incomplete_capture (test_verifier.ProvenanceControls.test_untrusted_dict_missing_failed_and_incomplete_capture) ... ok
+test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) ... ok
+test_wrong_ranking_and_preaggregation_limit_do_not_prove (test_verifier.ProvenanceControls.test_wrong_ranking_and_preaggregation_limit_do_not_prove) ... ok
+test_zero_rate_and_single_team_are_distinct_from_empty (test_verifier.ProvenanceControls.test_zero_rate_and_single_team_are_distinct_from_empty) ... ok
+
+======================================================================
+ERROR: test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) (sql="SELECT team, 100.0*SUM(blocked)/COUNT(*) AS blocked_pct FROM agentic_analytics.delivery_work_items WHERE status!='done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 66, in test_equivalent_cte_and_avg_keep_semantic_proof
+    h.query(sql);self.assertEqual(h.verify(claim(h.calls[0]),call=h.calls[0])['status'],'proven')
+    ^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/capture_adapter.py", line 134, in query
+    cursor=self._connection.execute(sql)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: agentic_analytics.delivery_work_items
+
+----------------------------------------------------------------------
+Ran 45 tests in 0.055s
+
+FAILED (errors=1)
+{"python": "3.11.16", "unit_tests": 45, "failures": 0, "errors": 1, "passed": false}

@@ -1,0 +1,247 @@
+test_borrowed_context_changes_cannot_overwrite_host_commitment (test_capture.CaptureControls.test_borrowed_context_changes_cannot_overwrite_host_commitment) ... ERROR
+test_callback_returns_only_actual_rows_and_proves_selected_capture (test_capture.CaptureControls.test_callback_returns_only_actual_rows_and_proves_selected_capture) ... FAIL
+test_closed_session_never_executes_a_query (test_capture.CaptureControls.test_closed_session_never_executes_a_query) ... FAIL
+test_cross_session_and_copied_tokens_cannot_select_records (test_capture.CaptureControls.test_cross_session_and_copied_tokens_cannot_select_records) ... FAIL
+test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) ... 
+  test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) (sql="SELECT team, 100.0*AVG(blocked) AS blocked_pct FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+  test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) (sql="WITH a AS (SELECT team, blocked FROM delivery_work_items WHERE status!='done') SELECT team,100.0*SUM(blocked)/COUNT(*) AS blocked_pct FROM a GROUP BY team ORDER BY blocked_pct DESC LIMIT 1") ... FAIL
+test_forged_claim_fields_cannot_register_or_replace_capture (test_capture.CaptureControls.test_forged_claim_fields_cannot_register_or_replace_capture) ... FAIL
+test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) ... 
+  test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) (rows=[{'id': 1, 'team': 'Dune', 'status': 'todo', 'blocked': 1}], config={'version': 'synthetic-capture-fixture-v1', 'task_id': 'SB-D01', 'source_commit': '42befe12de7d4c8cf5813a99cb32b7f3eb7c25dd', 'metric': 'phase3-d01-provenance-v1'}) ... FAIL
+  test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) (rows=[{'id': 1, 'team': 'Dune', 'status': 'todo', 'blocked': 1}], config={'version': 'synthetic-capture-fixture-v1', 'task_id': 'SB-D01', 'source_commit': 'bad', 'metric': 'phase3-d01-provenance-v1'}) ... FAIL
+  test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) (rows=[{'id': 1, 'team': 'Dune', 'status': 'todo', 'blocked': True}], config={'version': 'synthetic-capture-fixture-v1', 'task_id': 'SB-D01', 'source_commit': '42befe12de7d4c8cf5813a99cb32b7f3eb7c25dd', 'metric': 'phase3-d01-provenance-v1'}) ... FAIL
+test_mutating_returned_rows_snapshot_and_config_does_not_rewrite_capture (test_capture.CaptureControls.test_mutating_returned_rows_snapshot_and_config_does_not_rewrite_capture) ... ERROR
+test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) ... 
+  test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) (sql='DELETE FROM delivery_work_items') ... FAIL
+  test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) (sql="ATTACH DATABASE ':memory:' AS extra") ... FAIL
+  test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) (sql='SELECT name FROM sqlite_master') ... FAIL
+test_no_active_population_is_insufficient (test_capture.CaptureControls.test_no_active_population_is_insufficient) ... FAIL
+test_no_implicit_or_favorable_call_selection (test_capture.CaptureControls.test_no_implicit_or_favorable_call_selection) ... FAIL
+test_original_sql_error_is_captured_once_without_retry (test_capture.CaptureControls.test_original_sql_error_is_captured_once_without_retry) ... FAIL
+test_partial_row_capture_cannot_be_promoted_to_complete (test_capture.CaptureControls.test_partial_row_capture_cannot_be_promoted_to_complete) ... FAIL
+test_tie_uses_captured_team_and_cannot_claim_uniqueness (test_capture.CaptureControls.test_tie_uses_captured_team_and_cannot_claim_uniqueness) ... ERROR
+test_two_call_bound_stops_before_a_third_execute (test_capture.CaptureControls.test_two_call_bound_stops_before_a_third_execute) ... FAIL
+test_active_mutations_and_competitor_flip_change_claim (test_verifier.ProvenanceControls.test_active_mutations_and_competitor_flip_change_claim) ... ok
+test_cancellation_cannot_hide_wrong_denominator_or_ungrouped_column (test_verifier.ProvenanceControls.test_cancellation_cannot_hide_wrong_denominator_or_ungrouped_column) ... ok
+test_canonical_successful_computation_proves_fixture_only (test_verifier.ProvenanceControls.test_canonical_successful_computation_proves_fixture_only) ... ok
+test_capture_deep_copies_mutable_inputs (test_verifier.ProvenanceControls.test_capture_deep_copies_mutable_inputs) ... ok
+test_empty_and_invalid_snapshots_do_not_turn_into_zero (test_verifier.ProvenanceControls.test_empty_and_invalid_snapshots_do_not_turn_into_zero) ... ok
+test_exact_ties_and_rounded_near_ties (test_verifier.ProvenanceControls.test_exact_ties_and_rounded_near_ties) ... ok
+test_fabricated_result_or_changed_claim_is_contradicted (test_verifier.ProvenanceControls.test_fabricated_result_or_changed_claim_is_contradicted) ... ok
+test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) ... ok
+test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) ... ok
+test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) ... ok
+test_literal_team_and_alias_shadowing_are_not_team_lineage (test_verifier.ProvenanceControls.test_literal_team_and_alias_shadowing_are_not_team_lineage) ... ok
+test_malformed_result_and_stale_host_identity_do_not_crash_or_prove (test_verifier.ProvenanceControls.test_malformed_result_and_stale_host_identity_do_not_crash_or_prove) ... ok
+test_missing_metadata_cannot_be_self_consistently_hash_pinned (test_verifier.ProvenanceControls.test_missing_metadata_cannot_be_self_consistently_hash_pinned) ... ok
+test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) ... ok
+test_review_r1_huge_numbers_produce_verdicts_without_overflow (test_verifier.ProvenanceControls.test_review_r1_huge_numbers_produce_verdicts_without_overflow) ... ok
+test_review_r2_renamed_status_equivalence_remains_unknown (test_verifier.ProvenanceControls.test_review_r2_renamed_status_equivalence_remains_unknown) ... ok
+test_review_r3_malformed_capture_bytes_and_config_do_not_crash (test_verifier.ProvenanceControls.test_review_r3_malformed_capture_bytes_and_config_do_not_crash) ... ok
+test_review_r4_unquoted_alias_case_matches_but_collisions_do_not (test_verifier.ProvenanceControls.test_review_r4_unquoted_alias_case_matches_but_collisions_do_not) ... ok
+test_review_r5_unicode_lookalike_is_not_an_ascii_alias (test_verifier.ProvenanceControls.test_review_r5_unicode_lookalike_is_not_an_ascii_alias) ... ok
+test_review_r6_deep_json_capture_never_crashes (test_verifier.ProvenanceControls.test_review_r6_deep_json_capture_never_crashes) ... ok
+test_row_permutation_renaming_completed_and_duplication_invariants (test_verifier.ProvenanceControls.test_row_permutation_renaming_completed_and_duplication_invariants) ... ok
+test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) ... ok
+test_unsupported_equivalent_predicate_does_not_become_false (test_verifier.ProvenanceControls.test_unsupported_equivalent_predicate_does_not_become_false) ... ok
+test_unsupported_valid_sql_stays_insufficient (test_verifier.ProvenanceControls.test_unsupported_valid_sql_stays_insufficient) ... ok
+test_untrusted_dict_missing_failed_and_incomplete_capture (test_verifier.ProvenanceControls.test_untrusted_dict_missing_failed_and_incomplete_capture) ... ok
+test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) ... ok
+test_wrong_ranking_and_preaggregation_limit_do_not_prove (test_verifier.ProvenanceControls.test_wrong_ranking_and_preaggregation_limit_do_not_prove) ... ok
+test_zero_rate_and_single_team_are_distinct_from_empty (test_verifier.ProvenanceControls.test_zero_rate_and_single_team_are_distinct_from_empty) ... ok
+
+======================================================================
+ERROR: test_borrowed_context_changes_cannot_overwrite_host_commitment (test_capture.CaptureControls.test_borrowed_context_changes_cannot_overwrite_host_commitment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 106, in test_borrowed_context_changes_cannot_overwrite_host_commitment
+    self.assertNotEqual(h.verification_context(call)['expected']['query_sha256'],'0'*64)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'query_sha256'
+
+======================================================================
+ERROR: test_mutating_returned_rows_snapshot_and_config_does_not_rewrite_capture (test_capture.CaptureControls.test_mutating_returned_rows_snapshot_and_config_does_not_rewrite_capture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 97, in test_mutating_returned_rows_snapshot_and_config_does_not_rewrite_capture
+    self.assertEqual(returned[0]['blocked_pct'],60.0)
+                     ~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_tie_uses_captured_team_and_cannot_claim_uniqueness (test_capture.CaptureControls.test_tie_uses_captured_team_and_cannot_claim_uniqueness)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 146, in test_tie_uses_captured_team_and_cannot_claim_uniqueness
+    response=claim(call,team=result[0]['team'],blocked_pct=100,unique_winner=False)
+                             ~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_callback_returns_only_actual_rows_and_proves_selected_capture (test_capture.CaptureControls.test_callback_returns_only_actual_rows_and_proves_selected_capture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 54, in test_callback_returns_only_actual_rows_and_proves_selected_capture
+    self.assertEqual(rows,[{'team':'Dune','blocked_pct':60.0}])
+AssertionError: Lists differ: [] != [{'team': 'Dune', 'blocked_pct': 60.0}]
+
+Second list contains 1 additional elements.
+First extra element 0:
+{'team': 'Dune', 'blocked_pct': 60.0}
+
+- []
++ [{'blocked_pct': 60.0, 'team': 'Dune'}]
+
+======================================================================
+FAIL: test_closed_session_never_executes_a_query (test_capture.CaptureControls.test_closed_session_never_executes_a_query)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 163, in test_closed_session_never_executes_a_query
+    with self.assertRaises(RuntimeError):h.query(SQL)
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_cross_session_and_copied_tokens_cannot_select_records (test_capture.CaptureControls.test_cross_session_and_copied_tokens_cannot_select_records)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 79, in test_cross_session_and_copied_tokens_cannot_select_records
+    self.assertEqual(b.verify(claim(token),call=token)['reason'],'untrusted_call_token')
+AssertionError: 'not_implemented' != 'untrusted_call_token'
+- not_implemented
++ untrusted_call_token
+
+
+======================================================================
+FAIL: test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) (sql="SELECT team, 100.0*AVG(blocked) AS blocked_pct FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 65, in test_equivalent_cte_and_avg_keep_semantic_proof
+    h.query(sql);self.assertEqual(h.verify(claim(h.calls[0]),call=h.calls[0])['status'],'proven')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_equivalent_cte_and_avg_keep_semantic_proof (test_capture.CaptureControls.test_equivalent_cte_and_avg_keep_semantic_proof) (sql="WITH a AS (SELECT team, blocked FROM delivery_work_items WHERE status!='done') SELECT team,100.0*SUM(blocked)/COUNT(*) AS blocked_pct FROM a GROUP BY team ORDER BY blocked_pct DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 65, in test_equivalent_cte_and_avg_keep_semantic_proof
+    h.query(sql);self.assertEqual(h.verify(claim(h.calls[0]),call=h.calls[0])['status'],'proven')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_forged_claim_fields_cannot_register_or_replace_capture (test_capture.CaptureControls.test_forged_claim_fields_cannot_register_or_replace_capture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 90, in test_forged_claim_fields_cannot_register_or_replace_capture
+    self.assertEqual(h.verify(claim(call),call={'execution_id':call.execution_id})['reason'],'untrusted_call_token')
+AssertionError: 'not_implemented' != 'untrusted_call_token'
+- not_implemented
++ untrusted_call_token
+
+
+======================================================================
+FAIL: test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) (rows=[{'id': 1, 'team': 'Dune', 'status': 'todo', 'blocked': 1}], config={'version': 'synthetic-capture-fixture-v1', 'task_id': 'SB-D01', 'source_commit': '42befe12de7d4c8cf5813a99cb32b7f3eb7c25dd', 'metric': 'phase3-d01-provenance-v1'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 153, in test_invalid_snapshot_and_config_reject_before_sqlite_creation
+    with self.subTest(rows=rows[:1],config=config), self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) (rows=[{'id': 1, 'team': 'Dune', 'status': 'todo', 'blocked': 1}], config={'version': 'synthetic-capture-fixture-v1', 'task_id': 'SB-D01', 'source_commit': 'bad', 'metric': 'phase3-d01-provenance-v1'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 153, in test_invalid_snapshot_and_config_reject_before_sqlite_creation
+    with self.subTest(rows=rows[:1],config=config), self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_snapshot_and_config_reject_before_sqlite_creation (test_capture.CaptureControls.test_invalid_snapshot_and_config_reject_before_sqlite_creation) (rows=[{'id': 1, 'team': 'Dune', 'status': 'todo', 'blocked': True}], config={'version': 'synthetic-capture-fixture-v1', 'task_id': 'SB-D01', 'source_commit': '42befe12de7d4c8cf5813a99cb32b7f3eb7c25dd', 'metric': 'phase3-d01-provenance-v1'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 153, in test_invalid_snapshot_and_config_reject_before_sqlite_creation
+    with self.subTest(rows=rows[:1],config=config), self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) (sql='DELETE FROM delivery_work_items')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 123, in test_mutation_attachment_and_unrelated_reads_are_denied
+    with self.assertRaises(sqlite3.DatabaseError):h.query(sql)
+AssertionError: DatabaseError not raised
+
+======================================================================
+FAIL: test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) (sql="ATTACH DATABASE ':memory:' AS extra")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 123, in test_mutation_attachment_and_unrelated_reads_are_denied
+    with self.assertRaises(sqlite3.DatabaseError):h.query(sql)
+AssertionError: DatabaseError not raised
+
+======================================================================
+FAIL: test_mutation_attachment_and_unrelated_reads_are_denied (test_capture.CaptureControls.test_mutation_attachment_and_unrelated_reads_are_denied) (sql='SELECT name FROM sqlite_master')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 123, in test_mutation_attachment_and_unrelated_reads_are_denied
+    with self.assertRaises(sqlite3.DatabaseError):h.query(sql)
+AssertionError: DatabaseError not raised
+
+======================================================================
+FAIL: test_no_active_population_is_insufficient (test_capture.CaptureControls.test_no_active_population_is_insufficient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 159, in test_no_active_population_is_insufficient
+    self.assertEqual(h.verify(claim(c),call=c)['reason'],'no_eligible_population')
+AssertionError: 'not_implemented' != 'no_eligible_population'
+- not_implemented
++ no_eligible_population
+
+
+======================================================================
+FAIL: test_no_implicit_or_favorable_call_selection (test_capture.CaptureControls.test_no_implicit_or_favorable_call_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 71, in test_no_implicit_or_favorable_call_selection
+    self.assertEqual(h.verify(claim(first))['reason'],'explicit_call_required')
+AssertionError: 'not_implemented' != 'explicit_call_required'
+- not_implemented
++ explicit_call_required
+
+
+======================================================================
+FAIL: test_original_sql_error_is_captured_once_without_retry (test_capture.CaptureControls.test_original_sql_error_is_captured_once_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 111, in test_original_sql_error_is_captured_once_without_retry
+    with self.assertRaises(sqlite3.OperationalError):h.query('SELECT missing FROM delivery_work_items')
+AssertionError: OperationalError not raised
+
+======================================================================
+FAIL: test_partial_row_capture_cannot_be_promoted_to_complete (test_capture.CaptureControls.test_partial_row_capture_cannot_be_promoted_to_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 130, in test_partial_row_capture_cannot_be_promoted_to_complete
+    with self.assertRaises(CaptureLimitError):h.query('SELECT id FROM delivery_work_items')
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_two_call_bound_stops_before_a_third_execute (test_capture.CaptureControls.test_two_call_bound_stops_before_a_third_execute)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-capture-integration-v1/proposals/phase3-d01-capture-integration-v1/test_capture.py", line 138, in test_two_call_bound_stops_before_a_third_execute
+    with self.assertRaises(CaptureLimitError):h.query(SQL)
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 43 tests in 0.109s
+
+FAILED (failures=17, errors=3)
+{"python": "3.11.16", "unit_tests": 43, "failures": 17, "errors": 3, "passed": false}

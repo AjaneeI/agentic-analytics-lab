@@ -1,0 +1,18 @@
+{
+  "adapter_contract_sha256": "f82f27b9c2529b8ebe7302b0dc29e8231b10a948f3bafb6445f83f8b6aee8961",
+  "adapter_source_sha256": {
+    "capture_adapter.py": "6605861abcd6d14b82da3dcd205254745d4c9a7574f1a458efee6187b812665f",
+    "run_validation.py": "96c0c83c94ce985d319aaeb440411676029e90ea826efc1f4654fc2b1b089837",
+    "test_capture.py": "2974a928d5b2ee7aff1ddaf88256244542477b6a7dc86a63ca3150268ab36d7c"
+  },
+  "live_qualified": false,
+  "metric": "phase3-d01-provenance-v1",
+  "model_calls": 0,
+  "new_treatment_a_attempts": 0,
+  "source_commit": "1b9771d5b246afd97a8b2230050e34597c928960",
+  "source_commit_scope": "Exact adapter implementation before this configuration-only commit; source hash parity required.",
+  "state": "inactive",
+  "task_id": "SB-D01",
+  "upstream_commit": "42befe12de7d4c8cf5813a99cb32b7f3eb7c25dd",
+  "version": "phase3-d01-capture-integration-v1-synthetic-config-v1"
+}

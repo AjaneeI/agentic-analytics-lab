@@ -1,0 +1,18 @@
+{
+  "all_preexisting_blobs_unchanged": true,
+  "base": "42befe12de7d4c8cf5813a99cb32b7f3eb7c25dd",
+  "base_tracked_paths": 237,
+  "base_tree": "6614373a03d95690be171bb42251fe23dfaa38d1",
+  "changed_preexisting_paths": [],
+  "config_sha256": "ce76cc16c23ac9568be9410f6338471015614cb082babb5c0e210a6454198ffd",
+  "contract_sha256": "f82f27b9c2529b8ebe7302b0dc29e8231b10a948f3bafb6445f83f8b6aee8961",
+  "upstream_source_sha256": {
+    "PLAN.md": "7e5083717a91d1cf56545d3d0a8ef3d6cdebff94a3c7e4afbbea974481f06cd6",
+    "README.md": "91f74b1855434f29dd87f50e487d5947d5e630bac7a1208617087394d042cf40",
+    "contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "run_validation.py": "49605e188275c7f2422c65a7c93d7d19742d70a1e95daf805acb31def2f459aa",
+    "sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "test_verifier.py": "d55a54b49f42195ac8308cd478bdfe6bed59857eee9df860532c0b6407748f7d",
+    "verifier.py": "857b928e02afd9209ccfa0431925c79b64706571eb40c825c41e28f1fbbceb32"
+  }
+}
