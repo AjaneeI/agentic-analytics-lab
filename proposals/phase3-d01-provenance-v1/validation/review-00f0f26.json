@@ -1,0 +1,114 @@
+{
+  "base": "43cf76b0acf64aba4f19eb510af12189b7a4ad04",
+  "base_tracked_files": 177,
+  "base_tree": "39c633e7c59788b7611827bcfa61d7f57d52e419",
+  "branch": "codex/phase3-d01-provenance-v1",
+  "changed_base_files": [
+    "STATUS.md"
+  ],
+  "completed_utc": "2026-10-19T17:55:13.486288+00:00",
+  "disposition": "revise",
+  "findings": [
+    {
+      "actual": "Both malformed captured results return proven on Python3.11 and3.12 because \u212a.lower()==k. SQLite output for AS k is ASCII k; SQLite case-insensitive identifier matching does not equate Kelvin sign and k.",
+      "expected": "contradicted/captured_result_mismatch; restrict captured labels to declared ASCII identifiers before folding or perform ASCII-only case conversion. Preserve raw hashes.",
+      "false_acceptances": 2,
+      "id": "R5",
+      "location": "proposals/phase3-d01-provenance-v1/verifier.py:160",
+      "priority": "P2",
+      "reproduction": "SQL canonical with blocked_pct alias renamed k; captured_rows=[{'team':'Amber','\u212a':75}], where \u212a is U+212A KELVIN SIGN. A second case renames team output k and supplies \u212a:'Amber'.",
+      "title": "Unicode lowercasing widens the advertised ASCII result-label equivalence and accepts mismatched capture fields",
+      "trust_limit": "Host-owned malformed capture control, not claimant authentication bypass."
+    },
+    {
+      "actual": "Python3.11.16 raises uncaught RecursionError during json.loads in all three cases. Python3.12.6 returns explicit outcomes at this depth.",
+      "crashes_python311": 3,
+      "expected": "Explicit invalid_capture/invalid_snapshot/captured_result_mismatch or insufficient result; malformed host data must not crash the verifier. Catch recursion failures or enforce a safe structural depth bound before decode.",
+      "id": "R6",
+      "location": "proposals/phase3-d01-provenance-v1/verifier.py:111-113,136-138",
+      "priority": "P2",
+      "reproduction": "For each config_json/result_json/snapshot_json replace field with '['*1200+'0'+']'*1200 (2401 characters), pin replaced immutable record using binding, and call verify.",
+      "title": "Bounded malformed JSON still escapes with RecursionError on required Python3.11"
+    }
+  ],
+  "head": "00f0f26cb3afebf33ea342e8a31b33a64e26943e",
+  "limits": [
+    "Narrow source diff reviewed and scoped synthetic controls rerun only. No active integration, live service/model/resource/heldout/history replay/statistical work or PR action.",
+    "No live host adapter; all proof remains synthetic conditional on independent host args, every verdict live_qualified=false.",
+    "No general SQL completeness claim."
+  ],
+  "new_files": [
+    "proposals/phase3-d01-provenance-v1/PLAN.md",
+    "proposals/phase3-d01-provenance-v1/README.md",
+    "proposals/phase3-d01-provenance-v1/contract.json",
+    "proposals/phase3-d01-provenance-v1/run_validation.py",
+    "proposals/phase3-d01-provenance-v1/sql_proof.py",
+    "proposals/phase3-d01-provenance-v1/test_verifier.py",
+    "proposals/phase3-d01-provenance-v1/verifier.py"
+  ],
+  "original_R1_R4_status": "All original reproductions resolved in fresh runs; correction boundaries retain R3/R4 class gaps described by R5/R6.",
+  "previous_reviewed_head": "2e1bbf3b11e1356a90e7b053ef722519b300ba72",
+  "review_role": "independent exact-head reviewer /root/d01_exact_head_review",
+  "source_sha256": {
+    "PLAN.md": "7e5083717a91d1cf56545d3d0a8ef3d6cdebff94a3c7e4afbbea974481f06cd6",
+    "README.md": "91f74b1855434f29dd87f50e487d5947d5e630bac7a1208617087394d042cf40",
+    "contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "run_validation.py": "49605e188275c7f2422c65a7c93d7d19742d70a1e95daf805acb31def2f459aa",
+    "sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "test_verifier.py": "977a3eb9d0519c4fdf718098b9ed846b12a3302a20dd322933ecba878918bc71",
+    "verifier.py": "153bc191a1b7eec036006296d143451da9ba5fcfb3c3455fa5486bdfac2cd2ef"
+  },
+  "tree": "dc2080b44e88d9c9d90e25c3449c63ed1340e2a2",
+  "unchanged_base_blobs_and_modes": 176,
+  "validation": {
+    "311": {
+      "boundary_exceptions": [
+        "deep-json-config_json",
+        "deep-json-result_json",
+        "deep-json-snapshot_json"
+      ],
+      "boundary_guard_denials": [],
+      "boundary_memory_connections": 17,
+      "correction_boundary_cases": 17,
+      "false_acceptances": [
+        "unicode-folded-metric-key",
+        "unicode-folded-team-key"
+      ],
+      "guard": {
+        "blocked_side_effect_attempts": [],
+        "memory_sqlite_connections": 141
+      },
+      "matrix": 60,
+      "matrix_mismatches": [],
+      "original_probe_exceptions": [],
+      "original_reviewer_probes": 20,
+      "python": "3.11.16",
+      "unit_errors": 0,
+      "unit_failures": 0,
+      "units": 26
+    },
+    "312": {
+      "boundary_exceptions": [],
+      "boundary_guard_denials": [],
+      "boundary_memory_connections": 17,
+      "correction_boundary_cases": 17,
+      "false_acceptances": [
+        "unicode-folded-metric-key",
+        "unicode-folded-team-key"
+      ],
+      "guard": {
+        "blocked_side_effect_attempts": [],
+        "memory_sqlite_connections": 141
+      },
+      "matrix": 60,
+      "matrix_mismatches": [],
+      "original_probe_exceptions": [],
+      "original_reviewer_probes": 20,
+      "python": "3.12.6",
+      "unit_errors": 0,
+      "unit_failures": 0,
+      "units": 26
+    }
+  },
+  "worktree_clean": false
+}

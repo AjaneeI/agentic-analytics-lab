@@ -1,0 +1,58 @@
+{
+  "cases": [
+    {
+      "id": "unicode-folded-metric-key",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "unicode-folded-team-key",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "deep-json-config_json",
+      "expected": "explicit insufficient or contradicted verdict",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "deep-json-result_json",
+      "expected": "explicit insufficient or contradicted verdict",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_snapshot",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "deep-json-snapshot_json",
+      "expected": "explicit insufficient or contradicted verdict",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_snapshot",
+        "live_qualified": false
+      },
+      "exception": null
+    }
+  ],
+  "side_effect_guard": {
+    "memory_sqlite_connections": 5,
+    "blocked_side_effect_attempts": []
+  }
+}

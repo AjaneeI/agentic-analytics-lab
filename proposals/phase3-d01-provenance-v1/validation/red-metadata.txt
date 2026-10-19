@@ -1,0 +1,61 @@
+test_active_mutations_and_competitor_flip_change_claim (test_verifier.ProvenanceControls.test_active_mutations_and_competitor_flip_change_claim) ... ok
+test_canonical_successful_computation_proves_fixture_only (test_verifier.ProvenanceControls.test_canonical_successful_computation_proves_fixture_only) ... ok
+test_capture_deep_copies_mutable_inputs (test_verifier.ProvenanceControls.test_capture_deep_copies_mutable_inputs) ... ok
+test_empty_and_invalid_snapshots_do_not_turn_into_zero (test_verifier.ProvenanceControls.test_empty_and_invalid_snapshots_do_not_turn_into_zero) ... ok
+test_exact_ties_and_rounded_near_ties (test_verifier.ProvenanceControls.test_exact_ties_and_rounded_near_ties) ... ok
+test_fabricated_result_or_changed_claim_is_contradicted (test_verifier.ProvenanceControls.test_fabricated_result_or_changed_claim_is_contradicted) ... ok
+test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) ... ok
+test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) ... 
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='task_id') ... FAIL
+test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) ... ok
+test_literal_team_and_alias_shadowing_are_not_team_lineage (test_verifier.ProvenanceControls.test_literal_team_and_alias_shadowing_are_not_team_lineage) ... ok
+test_malformed_result_and_stale_host_identity_do_not_crash_or_prove (test_verifier.ProvenanceControls.test_malformed_result_and_stale_host_identity_do_not_crash_or_prove) ... ok
+test_missing_metadata_cannot_be_self_consistently_hash_pinned (test_verifier.ProvenanceControls.test_missing_metadata_cannot_be_self_consistently_hash_pinned) ... ERROR
+test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) ... ok
+test_row_permutation_renaming_completed_and_duplication_invariants (test_verifier.ProvenanceControls.test_row_permutation_renaming_completed_and_duplication_invariants) ... ok
+test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) ... ok
+test_unsupported_equivalent_predicate_does_not_become_false (test_verifier.ProvenanceControls.test_unsupported_equivalent_predicate_does_not_become_false) ... ok
+test_unsupported_valid_sql_stays_insufficient (test_verifier.ProvenanceControls.test_unsupported_valid_sql_stays_insufficient) ... ok
+test_untrusted_dict_missing_failed_and_incomplete_capture (test_verifier.ProvenanceControls.test_untrusted_dict_missing_failed_and_incomplete_capture) ... ok
+test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) ... ok
+test_wrong_ranking_and_preaggregation_limit_do_not_prove (test_verifier.ProvenanceControls.test_wrong_ranking_and_preaggregation_limit_do_not_prove) ... ok
+test_zero_rate_and_single_team_are_distinct_from_empty (test_verifier.ProvenanceControls.test_zero_rate_and_single_team_are_distinct_from_empty) ... ok
+
+======================================================================
+ERROR: test_missing_metadata_cannot_be_self_consistently_hash_pinned (test_verifier.ProvenanceControls.test_missing_metadata_cannot_be_self_consistently_hash_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 169, in test_missing_metadata_cannot_be_self_consistently_hash_pinned
+    self.assertNotEqual(check(host,expected=expected)["status"],"proven")
+                        ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 72, in check
+    return v.verify(claim() if response is None else response, resolver=host,
+           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    expected=host.expected if expected is None else expected)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/verifier.py", line 96, in verify
+    actual=binding(record)
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/verifier.py", line 55, in binding
+    "query_sha256":digest(record.query),"result_sha256":digest(record.result_json),
+                   ~~~~~~^^^^^^^^^^^^^^
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/verifier.py", line 24, in digest
+    return hashlib.sha256(text.encode()).hexdigest()
+                          ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'encode'
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='task_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 154, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'proven' != 'contradicted'
+- proven
++ contradicted
+
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.037s
+
+FAILED (failures=1, errors=1)

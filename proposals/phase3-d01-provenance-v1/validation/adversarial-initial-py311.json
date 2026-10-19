@@ -1,0 +1,164 @@
+{
+  "cases": [
+    {
+      "id": "huge-integer-claim",
+      "expected": "contradicted/invalid_claim",
+      "exception": "OverflowError",
+      "message": "int too large to convert to float"
+    },
+    {
+      "id": "huge-integer-result",
+      "expected": "contradicted/captured_result_mismatch",
+      "exception": "OverflowError",
+      "message": "int too large to convert to float"
+    },
+    {
+      "id": "unsupported-valid-renamed-predicate",
+      "expected": "insufficient/unsupported_sql",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "wrong_population",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-renamed-predicate",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "ed94cb7c3a96fcdab85ec233a32623c3cff0eda438c9745fc4c5014a09d19088",
+        "query_sha256": "3cee66089fb18310416cf49063fc6b91a57bb7bf84d27476242a4266e6df093d"
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-count-blocked",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "ed94cb7c3a96fcdab85ec233a32623c3cff0eda438c9745fc4c5014a09d19088",
+        "query_sha256": "f97cd92f4027d27ebe682bbcd02e660d85463475ec02d5e609fcecf6749d1662"
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-algebraic-scale",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "ed94cb7c3a96fcdab85ec233a32623c3cff0eda438c9745fc4c5014a09d19088",
+        "query_sha256": "640711f134f2b605f993d10778387ee840ea48bc4f67d5e53f9a9748afef9afb"
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-three-ctes",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "ed94cb7c3a96fcdab85ec233a32623c3cff0eda438c9745fc4c5014a09d19088",
+        "query_sha256": "1e94b7fc065d489b36e653999cd4a21c134c59d3357cb2ebe0b5470ae626a4f0"
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-result_json-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "exception": "AttributeError",
+      "message": "'NoneType' object has no attribute 'encode'"
+    },
+    {
+      "id": "invalid-capture-snapshot_json-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "exception": "AttributeError",
+      "message": "'NoneType' object has no attribute 'encode'"
+    },
+    {
+      "id": "invalid-capture-config_json-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "exception": "AttributeError",
+      "message": "'NoneType' object has no attribute 'encode'"
+    },
+    {
+      "id": "invalid-capture-result_json-int",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "exception": "AttributeError",
+      "message": "'int' object has no attribute 'encode'"
+    },
+    {
+      "id": "invalid-capture-snapshot_json-dict",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "exception": "AttributeError",
+      "message": "'dict' object has no attribute 'encode'"
+    },
+    {
+      "id": "invalid-capture-config_json-list",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "exception": "AttributeError",
+      "message": "'list' object has no attribute 'encode'"
+    },
+    {
+      "id": "invalid-capture-metric_version-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "binding_mismatch",
+        "live_qualified": false,
+        "field": "metric_version"
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-task_id-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "binding_mismatch",
+        "live_qualified": false,
+        "field": "task_id"
+      },
+      "exception": null
+    }
+  ],
+  "side_effect_guard": {
+    "memory_sqlite_connections": 15,
+    "blocked_side_effect_attempts": []
+  }
+}

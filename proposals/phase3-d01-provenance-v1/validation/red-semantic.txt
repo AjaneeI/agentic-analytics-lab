@@ -1,0 +1,471 @@
+test_active_mutations_and_competitor_flip_change_claim (test_verifier.ProvenanceControls.test_active_mutations_and_competitor_flip_change_claim) ... FAIL
+test_canonical_successful_computation_proves_fixture_only (test_verifier.ProvenanceControls.test_canonical_successful_computation_proves_fixture_only) ... FAIL
+test_capture_deep_copies_mutable_inputs (test_verifier.ProvenanceControls.test_capture_deep_copies_mutable_inputs) ... FAIL
+test_empty_and_invalid_snapshots_do_not_turn_into_zero (test_verifier.ProvenanceControls.test_empty_and_invalid_snapshots_do_not_turn_into_zero) ... ok
+test_exact_ties_and_rounded_near_ties (test_verifier.ProvenanceControls.test_exact_ties_and_rounded_near_ties) ... FAIL
+test_fabricated_result_or_changed_claim_is_contradicted (test_verifier.ProvenanceControls.test_fabricated_result_or_changed_claim_is_contradicted) ... FAIL
+test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) ... 
+  test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team") ... FAIL
+  test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) (sql="SELECT team, 100.0 * SUM(CASE WHEN blocked = 1 THEN 1 ELSE 0 END) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1") ... FAIL
+test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) ... 
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='query_sha256') ... FAIL
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='result_sha256') ... FAIL
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='snapshot_sha256') ... FAIL
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='config_sha256') ... FAIL
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='source_commit') ... FAIL
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='call_id') ... FAIL
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='execution_id') ... FAIL
+  test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='metric_version') ... FAIL
+test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) ... 
+  test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='75.0') ... FAIL
+  test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='75.0 + 0*SUM(blocked)') ... FAIL
+  test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='SUM(blocked)*0 + 75.0') ... FAIL
+  test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='100.0*COUNT(*)/SUM(blocked)') ... FAIL
+  test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='100.0*SUM(blocked)/SUM(blocked)') ... FAIL
+  test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='CASE WHEN 1=1 THEN 75.0 ELSE SUM(blocked) END') ... FAIL
+test_literal_team_and_alias_shadowing_are_not_team_lineage (test_verifier.ProvenanceControls.test_literal_team_and_alias_shadowing_are_not_team_lineage) ... ok
+test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) ... 
+  test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) (sql="WITH active AS (SELECT team, blocked FROM delivery_work_items WHERE status != 'done') SELECT team, SUM(blocked) * 100.0 / COUNT(*) AS rate FROM active GROUP BY team ORDER BY rate DESC LIMIT 1") ... FAIL
+  test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) (sql="WITH counts AS (SELECT team, SUM(blocked) AS b, COUNT(*) AS n FROM delivery_work_items WHERE status != 'done' GROUP BY team) SELECT team, 100.0*b/n AS rate FROM counts ORDER BY rate DESC LIMIT 1") ... FAIL
+  test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) (sql="WITH projected AS (SELECT team AS squad, blocked AS flag, status AS state FROM delivery_work_items), active AS (SELECT squad, flag FROM projected WHERE state <> 'done') SELECT squad AS team, 100.0*AVG(flag) AS rate FROM active GROUP BY squad ORDER BY rate DESC LIMIT 1") ... FAIL
+test_row_permutation_renaming_completed_and_duplication_invariants (test_verifier.ProvenanceControls.test_row_permutation_renaming_completed_and_duplication_invariants) ... FAIL
+test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) ... 
+  test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="w.status <> 'done'") ... FAIL
+  test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="NOT (w.status = 'done')") ... FAIL
+  test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="'done' != w.status") ... FAIL
+  test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="w.status NOT IN ('done')") ... FAIL
+  test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="((w.status != 'done'))") ... FAIL
+test_unsupported_valid_sql_stays_insufficient (test_verifier.ProvenanceControls.test_unsupported_valid_sql_stays_insufficient) ... ok
+test_untrusted_dict_missing_failed_and_incomplete_capture (test_verifier.ProvenanceControls.test_untrusted_dict_missing_failed_and_incomplete_capture) ... ok
+test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) ... 
+  test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status != 'Done'") ... FAIL
+  test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status != 'done' AND team='Amber'") ... FAIL
+  test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status='done'") ... FAIL
+  test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status!='done' OR 1=1") ... FAIL
+test_wrong_ranking_and_preaggregation_limit_do_not_prove (test_verifier.ProvenanceControls.test_wrong_ranking_and_preaggregation_limit_do_not_prove) ... ok
+test_zero_rate_and_single_team_are_distinct_from_empty (test_verifier.ProvenanceControls.test_zero_rate_and_single_team_are_distinct_from_empty) ... FAIL
+
+======================================================================
+FAIL: test_active_mutations_and_competitor_flip_change_claim (test_verifier.ProvenanceControls.test_active_mutations_and_competitor_flip_change_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 172, in test_active_mutations_and_competitor_flip_change_claim
+    self.assertEqual(check(host,claim(winner,rate))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_canonical_successful_computation_proves_fixture_only (test_verifier.ProvenanceControls.test_canonical_successful_computation_proves_fixture_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 77, in test_canonical_successful_computation_proves_fixture_only
+    self.assertEqual(result["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_capture_deep_copies_mutable_inputs (test_verifier.ProvenanceControls.test_capture_deep_copies_mutable_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 150, in test_capture_deep_copies_mutable_inputs
+    self.assertEqual(check(host)["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_exact_ties_and_rounded_near_ties (test_verifier.ProvenanceControls.test_exact_ties_and_rounded_near_ties)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 178, in test_exact_ties_and_rounded_near_ties
+    self.assertEqual(check(host)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_fabricated_result_or_changed_claim_is_contradicted (test_verifier.ProvenanceControls.test_fabricated_result_or_changed_claim_is_contradicted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 154, in test_fabricated_result_or_changed_claim_is_contradicted
+    self.assertEqual(check(FixtureHost(**kw))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) (sql="SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 101, in test_full_results_and_case_numerator
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) (sql="SELECT team, 100.0 * SUM(CASE WHEN blocked = 1 THEN 1 ELSE 0 END) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 101, in test_full_results_and_case_numerator
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='query_sha256')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='result_sha256')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='snapshot_sha256')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='config_sha256')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='source_commit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='call_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='execution_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) (field='metric_version')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 143, in test_independent_binding_mismatch_and_stale_call
+    self.assertEqual(check(host, expected=expected)["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='75.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 107, in test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='75.0 + 0*SUM(blocked)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 107, in test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='SUM(blocked)*0 + 75.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 107, in test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='100.0*COUNT(*)/SUM(blocked)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 107, in test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='100.0*SUM(blocked)/SUM(blocked)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 107, in test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) (expression='CASE WHEN 1=1 THEN 75.0 ELSE SUM(blocked) END')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 107, in test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) (sql="WITH active AS (SELECT team, blocked FROM delivery_work_items WHERE status != 'done') SELECT team, SUM(blocked) * 100.0 / COUNT(*) AS rate FROM active GROUP BY team ORDER BY rate DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 95, in test_projection_and_aggregate_ctes_and_metric_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) (sql="WITH counts AS (SELECT team, SUM(blocked) AS b, COUNT(*) AS n FROM delivery_work_items WHERE status != 'done' GROUP BY team) SELECT team, 100.0*b/n AS rate FROM counts ORDER BY rate DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 95, in test_projection_and_aggregate_ctes_and_metric_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) (sql="WITH projected AS (SELECT team AS squad, blocked AS flag, status AS state FROM delivery_work_items), active AS (SELECT squad, flag FROM projected WHERE state <> 'done') SELECT squad AS team, 100.0*AVG(flag) AS rate FROM active GROUP BY squad ORDER BY rate DESC LIMIT 1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 95, in test_projection_and_aggregate_ctes_and_metric_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_row_permutation_renaming_completed_and_duplication_invariants (test_verifier.ProvenanceControls.test_row_permutation_renaming_completed_and_duplication_invariants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 164, in test_row_permutation_renaming_completed_and_duplication_invariants
+    self.assertEqual(check(FixtureHost(rows=variant))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="w.status <> 'done'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 85, in test_supported_equivalent_predicates_and_table_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="NOT (w.status = 'done')")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 85, in test_supported_equivalent_predicates_and_table_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="'done' != w.status")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 85, in test_supported_equivalent_predicates_and_table_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="w.status NOT IN ('done')")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 85, in test_supported_equivalent_predicates_and_table_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) (predicate="((w.status != 'done'))")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 85, in test_supported_equivalent_predicates_and_table_aliases
+    self.assertEqual(check(FixtureHost(sql))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+======================================================================
+FAIL: test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status != 'Done'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 118, in test_wrong_population_and_handpicked_team_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status != 'done' AND team='Amber'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 118, in test_wrong_population_and_handpicked_team_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status='done'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 118, in test_wrong_population_and_handpicked_team_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) (predicate="status!='done' OR 1=1")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 118, in test_wrong_population_and_handpicked_team_do_not_prove
+    self.assertEqual(check(FixtureHost(sql))["status"], "contradicted")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'contradicted'
+- insufficient
++ contradicted
+
+
+======================================================================
+FAIL: test_zero_rate_and_single_team_are_distinct_from_empty (test_verifier.ProvenanceControls.test_zero_rate_and_single_team_are_distinct_from_empty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1/proposals/phase3-d01-provenance-v1/test_verifier.py", line 200, in test_zero_rate_and_single_team_are_distinct_from_empty
+    self.assertEqual(check(FixtureHost(rows=rows),claim("Only",0))["status"], "proven")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'insufficient' != 'proven'
+- insufficient
++ proven
+
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.012s
+
+FAILED (failures=35)

@@ -1,0 +1,35 @@
+test_active_mutations_and_competitor_flip_change_claim (test_verifier.ProvenanceControls.test_active_mutations_and_competitor_flip_change_claim) ... ok
+test_cancellation_cannot_hide_wrong_denominator_or_ungrouped_column (test_verifier.ProvenanceControls.test_cancellation_cannot_hide_wrong_denominator_or_ungrouped_column) ... ok
+test_canonical_successful_computation_proves_fixture_only (test_verifier.ProvenanceControls.test_canonical_successful_computation_proves_fixture_only) ... ok
+test_capture_deep_copies_mutable_inputs (test_verifier.ProvenanceControls.test_capture_deep_copies_mutable_inputs) ... ok
+test_empty_and_invalid_snapshots_do_not_turn_into_zero (test_verifier.ProvenanceControls.test_empty_and_invalid_snapshots_do_not_turn_into_zero) ... ok
+test_exact_ties_and_rounded_near_ties (test_verifier.ProvenanceControls.test_exact_ties_and_rounded_near_ties) ... ok
+test_fabricated_result_or_changed_claim_is_contradicted (test_verifier.ProvenanceControls.test_fabricated_result_or_changed_claim_is_contradicted) ... ok
+test_full_results_and_case_numerator (test_verifier.ProvenanceControls.test_full_results_and_case_numerator) ... ok
+test_independent_binding_mismatch_and_stale_call (test_verifier.ProvenanceControls.test_independent_binding_mismatch_and_stale_call) ... ok
+test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove (test_verifier.ProvenanceControls.test_literal_decorative_aggregate_and_wrong_denominator_do_not_prove) ... ok
+test_literal_team_and_alias_shadowing_are_not_team_lineage (test_verifier.ProvenanceControls.test_literal_team_and_alias_shadowing_are_not_team_lineage) ... ok
+test_malformed_result_and_stale_host_identity_do_not_crash_or_prove (test_verifier.ProvenanceControls.test_malformed_result_and_stale_host_identity_do_not_crash_or_prove) ... ok
+test_missing_metadata_cannot_be_self_consistently_hash_pinned (test_verifier.ProvenanceControls.test_missing_metadata_cannot_be_self_consistently_hash_pinned) ... ok
+test_projection_and_aggregate_ctes_and_metric_aliases (test_verifier.ProvenanceControls.test_projection_and_aggregate_ctes_and_metric_aliases) ... ok
+test_review_r1_huge_numbers_produce_verdicts_without_overflow (test_verifier.ProvenanceControls.test_review_r1_huge_numbers_produce_verdicts_without_overflow) ... ok
+test_review_r2_renamed_status_equivalence_remains_unknown (test_verifier.ProvenanceControls.test_review_r2_renamed_status_equivalence_remains_unknown) ... ok
+test_review_r3_malformed_capture_bytes_and_config_do_not_crash (test_verifier.ProvenanceControls.test_review_r3_malformed_capture_bytes_and_config_do_not_crash) ... ok
+test_review_r4_unquoted_alias_case_matches_but_collisions_do_not (test_verifier.ProvenanceControls.test_review_r4_unquoted_alias_case_matches_but_collisions_do_not) ... ok
+test_review_r5_unicode_lookalike_is_not_an_ascii_alias (test_verifier.ProvenanceControls.test_review_r5_unicode_lookalike_is_not_an_ascii_alias) ... ok
+test_review_r6_deep_json_capture_never_crashes (test_verifier.ProvenanceControls.test_review_r6_deep_json_capture_never_crashes) ... ok
+test_row_permutation_renaming_completed_and_duplication_invariants (test_verifier.ProvenanceControls.test_row_permutation_renaming_completed_and_duplication_invariants) ... ok
+test_supported_equivalent_predicates_and_table_aliases (test_verifier.ProvenanceControls.test_supported_equivalent_predicates_and_table_aliases) ... ok
+test_unsupported_equivalent_predicate_does_not_become_false (test_verifier.ProvenanceControls.test_unsupported_equivalent_predicate_does_not_become_false) ... ok
+test_unsupported_valid_sql_stays_insufficient (test_verifier.ProvenanceControls.test_unsupported_valid_sql_stays_insufficient) ... ok
+test_untrusted_dict_missing_failed_and_incomplete_capture (test_verifier.ProvenanceControls.test_untrusted_dict_missing_failed_and_incomplete_capture) ... ok
+test_wrong_population_and_handpicked_team_do_not_prove (test_verifier.ProvenanceControls.test_wrong_population_and_handpicked_team_do_not_prove) ... ok
+test_wrong_ranking_and_preaggregation_limit_do_not_prove (test_verifier.ProvenanceControls.test_wrong_ranking_and_preaggregation_limit_do_not_prove) ... ok
+test_zero_rate_and_single_team_are_distinct_from_empty (test_verifier.ProvenanceControls.test_zero_rate_and_single_team_are_distinct_from_empty) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.039s
+
+OK
+{"python": "3.12.6", "unit_tests": 28, "passed": true}
+{"case_count": 60, "false_acceptances": [], "supported_valid_false_rejections": [], "reason_or_outcome_mismatches": []}

@@ -1,0 +1,14 @@
+Checkout: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py311-initial.json
+/usr/local/bin/python3.12 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py312-initial.json
+Each exit0; 22units/0failures/0errors;44matrix/0mismatches;103memory SQLite/0guard denials.
+
+Workspace: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial.py
+/usr/local/bin/python3.12 outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial.py
+Each exit0;15caught probes;15memory SQLite/0guard denials. Before correction, reviewer script failed at output path construction after probes; no receipt/source mutated; explicitly retained in review markdown.
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls.py
+/usr/local/bin/python3.12 outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls.py
+Each exit0;5probes;5memory SQLite/0guard denials.
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 outputs/phase3-d01-provenance-v1-20261019/reviewer/finalize_initial.py
+Exit0;Git metadata only:177base tracked paths;176exact unchanged blobs/modes;STATUS.md authorized addition;7new proposal files;clean checkout.

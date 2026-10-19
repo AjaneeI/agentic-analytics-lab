@@ -1,0 +1,19 @@
+Exact head00f0f26; candidate checkout /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py311-00f0f26.json
+exit0;26units/0failures/0errors;60matrix/0mismatches;141memorySQLite/0guarddenials
+/usr/local/bin/python3.12 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py312-00f0f26.json
+exit0;26units/0failures/0errors;60matrix/0mismatches;141memorySQLite/0guarddenials
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial_00f0f26.py
+exit0;all caught outcomes recorded to unique JSON;no denied side effects
+/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial_00f0f26.py
+exit0;all caught outcomes recorded to unique JSON;no denied side effects
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls_00f0f26.py
+exit0;all caught outcomes recorded to unique JSON;no denied side effects
+/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls_00f0f26.py
+exit0;all caught outcomes recorded to unique JSON;no denied side effects
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/correction_boundary_00f0f26.py
+exit0;all caught outcomes recorded to unique JSON;no denied side effects
+/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/correction_boundary_00f0f26.py
+exit0;all caught outcomes recorded to unique JSON;no denied side effects
+Original15+5probes match expected on both;new17boundary probes yield2falseacceptances each and3crashes on3.11.
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/finalize_00f0f26.py

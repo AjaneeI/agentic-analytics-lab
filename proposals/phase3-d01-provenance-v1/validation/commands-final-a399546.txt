@@ -1,0 +1,32 @@
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py311-a399546.json
+exit0
+
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial_a399546.py
+exit0
+
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls_a399546.py
+exit0
+
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration
+/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/correction_boundary_a399546.py
+exit0
+
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1
+/usr/local/bin/python3.12 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py312-a399546.json
+exit0
+
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration
+/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial_a399546.py
+exit0
+
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration
+/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls_a399546.py
+exit0
+
+cwd: /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration
+/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/correction_boundary_a399546.py
+exit0
+

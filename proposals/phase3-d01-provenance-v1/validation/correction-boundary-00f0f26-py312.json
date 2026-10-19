@@ -1,0 +1,196 @@
+{
+  "cases": [
+    {
+      "id": "ascii-alias-collision",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "unicode-folded-metric-key",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+        "query_sha256": "a9efca922ec033de3d50738bd9dacdfd77f204f6e52d90e6efc5a119c0f50bd4"
+      },
+      "exception": null
+    },
+    {
+      "id": "unicode-folded-team-key",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+        "query_sha256": "ff2744f157dd5b25ac381482e82b199856f0fd982e0479cfb79b368c9b1fbf8b"
+      },
+      "exception": null
+    },
+    {
+      "id": "claim-type-True",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "invalid_claim",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "result-type-True",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "claim-type-'75'",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "invalid_claim",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "result-type-'75'",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "claim-type-inf",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "invalid_claim",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "result-type-inf",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "claim-type--inf",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "invalid_claim",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "result-type--inf",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "claim-type-nan",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "invalid_claim",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "result-type-nan",
+      "expected": "contradicted",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "deep-json-config_json",
+      "expected": "explicit insufficient or contradicted verdict",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "deep-json-result_json",
+      "expected": "explicit insufficient or contradicted verdict",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "deep-json-snapshot_json",
+      "expected": "explicit insufficient or contradicted verdict",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_snapshot",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "quoted-mixedcase-unsupported",
+      "expected": "insufficient",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "unsupported_sql",
+        "live_qualified": false
+      },
+      "exception": null
+    }
+  ],
+  "side_effect_guard": {
+    "memory_sqlite_connections": 17,
+    "blocked_side_effect_attempts": []
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "base": "43cf76b0acf64aba4f19eb510af12189b7a4ad04",
+  "base_tracked_files": 177,
+  "base_tree": "39c633e7c59788b7611827bcfa61d7f57d52e419",
+  "branch": "codex/phase3-d01-provenance-v1",
+  "changed_base_files": [
+    "STATUS.md"
+  ],
+  "commands": [
+    {
+      "command": "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py311-a399546.json",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1",
+      "exit_code": 0
+    },
+    {
+      "command": "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial_a399546.py",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+      "exit_code": 0
+    },
+    {
+      "command": "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls_a399546.py",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+      "exit_code": 0
+    },
+    {
+      "command": "/Users/ajaneeigharo/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/bin/python3.11 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/correction_boundary_a399546.py",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+      "exit_code": 0
+    },
+    {
+      "command": "/usr/local/bin/python3.12 proposals/phase3-d01-provenance-v1/run_validation.py --output /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/validation-py312-a399546.json",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/work/phase3-d01-provenance-v1",
+      "exit_code": 0
+    },
+    {
+      "command": "/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/adversarial_initial_a399546.py",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+      "exit_code": 0
+    },
+    {
+      "command": "/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/alias_controls_a399546.py",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+      "exit_code": 0
+    },
+    {
+      "command": "/usr/local/bin/python3.12 /Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration/outputs/phase3-d01-provenance-v1-20261019/reviewer/correction_boundary_a399546.py",
+      "cwd": "/Users/ajaneeigharo/Documents/Codex/2026-10-17/execute-the-phase-2-5-acceleration",
+      "exit_code": 0
+    }
+  ],
+  "completed_utc": "2026-10-19T17:56:54.857489+00:00",
+  "disposition": "accept_inactive_candidate_with_explicit_limits",
+  "finding_resolution": {
+    "R1": "Huge claim/result now explicit invalid_claim/captured_result_mismatch; strict numeric type/no coercion retained.",
+    "R2": "Renamed status fallback uses source lineage; unsupported NOT NOT valid query remains insufficient.",
+    "R3": "Malformed byte/config schema produces explicit invalid_capture before hashing; immutable capture refs independent.",
+    "R4": "Unquoted ASCII uppercase team/metric aliases proven; collision rejection preserved in inspected unchanged path.",
+    "R5": "Kelvin-sign field labels rejected by ASCII regex before lowercasing; both previous false acceptances now contradicted.",
+    "R6": "All three nested JSON cases produce explicit nonproven verdicts on both required interpreters; no crashes."
+  },
+  "head": "a399546c12b2a80563cfae6f39c4254efd342a91",
+  "independent_controls_sha256": "87428066f569c711444d7fc45ebc995d4b6340ddf022098b547aa78bc4a9f06c",
+  "limits": [
+    "Accept means this inactive implementation and reviewed bounded synthetic behavior; not Phase3 acceptance/activation/merge permission.",
+    "No live host adapter, authentication attestation or live ClickHouse/dialect qualification. Resolver and expected remain independently host-controlled trust assumptions. Only synthetic_sqlite can prove and all verdicts force live_qualified=false.",
+    "General SQL, quoted mixed-case identifiers, joins/windows/subqueries/HAVING/rounding/etc remain unsupported as documented. No complete SQL or arbitrary malformed Python host safety claim.",
+    "No live/model/container/service/resource/heldout/history replay/statistical/PR/activation action performed. No candidate edits by reviewer.",
+    "Future delivery-only commits need exact source-hash parity attestation; any semantic code or contract change needs fresh appropriate review."
+  ],
+  "new_files": [
+    "proposals/phase3-d01-provenance-v1/PLAN.md",
+    "proposals/phase3-d01-provenance-v1/README.md",
+    "proposals/phase3-d01-provenance-v1/contract.json",
+    "proposals/phase3-d01-provenance-v1/run_validation.py",
+    "proposals/phase3-d01-provenance-v1/sql_proof.py",
+    "proposals/phase3-d01-provenance-v1/test_verifier.py",
+    "proposals/phase3-d01-provenance-v1/verifier.py"
+  ],
+  "open_findings": [],
+  "preserved_previous_evidence": [
+    "review-initial-2e1bbf3.json",
+    "review-initial-2e1bbf3.md",
+    "review-00f0f26.json",
+    "review-00f0f26.md",
+    "Original 2e1bbf3:8crashes,2supported-valid false rejections,1unsupported-valid misclassification per interpreter.",
+    "Intermediate00f0f26:2falseacceptances per interpreter,3Python3.11crashes. These are historical code-review controls and remain preserved; only successor behavior is accepted."
+  ],
+  "previous_reviewed_head": "00f0f26cb3afebf33ea342e8a31b33a64e26943e",
+  "review_role": "independent exact-head reviewer /root/d01_exact_head_review; not candidate author",
+  "source_sha256": {
+    "PLAN.md": "7e5083717a91d1cf56545d3d0a8ef3d6cdebff94a3c7e4afbbea974481f06cd6",
+    "README.md": "91f74b1855434f29dd87f50e487d5947d5e630bac7a1208617087394d042cf40",
+    "contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "run_validation.py": "49605e188275c7f2422c65a7c93d7d19742d70a1e95daf805acb31def2f459aa",
+    "sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "test_verifier.py": "d55a54b49f42195ac8308cd478bdfe6bed59857eee9df860532c0b6407748f7d",
+    "verifier.py": "857b928e02afd9209ccfa0431925c79b64706571eb40c825c41e28f1fbbceb32"
+  },
+  "tracked_worktree_clean": true,
+  "tree": "5b4fcf2edec10b12a8ae922bb8fbfeac0bc6f4dd",
+  "unchanged_base_blobs_and_modes": 176,
+  "untracked_delivery_only": "?? proposals/phase3-d01-provenance-v1/validation/",
+  "validation": {
+    "311": {
+      "false_acceptances": 0,
+      "guard": {
+        "blocked_side_effect_attempts": [],
+        "memory_sqlite_connections": 146
+      },
+      "matrix": 60,
+      "matrix_mismatches": [],
+      "python": "3.11.16",
+      "reviewer_guard_denials": [],
+      "reviewer_memory_connections": 25,
+      "reviewer_probe_exceptions": [],
+      "reviewer_probes": 25,
+      "supported_valid_false_rejections": 0,
+      "unit_errors": 0,
+      "unit_failures": 0,
+      "units": 28,
+      "unsupported_valid_misclassifications": 0
+    },
+    "312": {
+      "false_acceptances": 0,
+      "guard": {
+        "blocked_side_effect_attempts": [],
+        "memory_sqlite_connections": 146
+      },
+      "matrix": 60,
+      "matrix_mismatches": [],
+      "python": "3.12.6",
+      "reviewer_guard_denials": [],
+      "reviewer_memory_connections": 25,
+      "reviewer_probe_exceptions": [],
+      "reviewer_probes": 25,
+      "supported_valid_false_rejections": 0,
+      "unit_errors": 0,
+      "unit_failures": 0,
+      "units": 28,
+      "unsupported_valid_misclassifications": 0
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "added_files": [
+    "proposals/phase3-d01-provenance-v1/PLAN.md",
+    "proposals/phase3-d01-provenance-v1/README.md",
+    "proposals/phase3-d01-provenance-v1/contract.json",
+    "proposals/phase3-d01-provenance-v1/run_validation.py",
+    "proposals/phase3-d01-provenance-v1/sql_proof.py",
+    "proposals/phase3-d01-provenance-v1/test_verifier.py",
+    "proposals/phase3-d01-provenance-v1/verifier.py"
+  ],
+  "base": "43cf76b0acf64aba4f19eb510af12189b7a4ad04",
+  "base_tracked_files": 177,
+  "base_tree": "39c633e7c59788b7611827bcfa61d7f57d52e419",
+  "boundary_assessment": [
+    "All original tracked paths preserve exact Git blob and mode except authorized STATUS.md. Seven additive files are isolated under inactive proposal.",
+    "Verifier/parser import only standard library and local sql_proof; no active scorer/runtime/default entrypoint changed. Inspected tests execute only new in-memory SQLite fixtures.",
+    "Claim alone cannot supply resolver or expected through API. Identity comparison independently pins HostCapture; serialized dictionary cannot pass exact HostCapture type/identity checks. Host controls both trust arguments, so this is conditional offline authority, not host authentication.",
+    "Only synthetic_sqlite origin may prove; live_host remains insufficient and every return forces live_qualified=false. README accurately discloses no live adapter and malicious Python host is out of scope.",
+    "No false acceptance found in these bounded controls; absence is not general SQL completeness proof."
+  ],
+  "branch": "codex/phase3-d01-provenance-v1",
+  "candidate_source_sha256": {
+    "PLAN.md": "7e5083717a91d1cf56545d3d0a8ef3d6cdebff94a3c7e4afbbea974481f06cd6",
+    "README.md": "2576d9c4c4e43108387f45b1424c67cd7543c7c7d9c2588963267f6af97fbec1",
+    "contract.json": "ed94cb7c3a96fcdab85ec233a32623c3cff0eda438c9745fc4c5014a09d19088",
+    "run_validation.py": "dc6cc31087f2c0e058f60ae355cf88c739f0198fb56936982d9ec20e30455023",
+    "sql_proof.py": "cf7bcfba1301c2ea286dbbc10cd2f973a9207eba1d6f0491a222dd21cec087e0",
+    "test_verifier.py": "3192a2fb42bff455a543c97925283b595d1240461f2c08ee205efc3dcad643dd",
+    "verifier.py": "544194ca49fa80f8cff08ce267da9b9393d31cd6ecd706198c638bbe30b17c11"
+  },
+  "changed_base_files": [
+    "STATUS.md"
+  ],
+  "commands_receipt": "commands-initial.txt",
+  "completed_utc": "2026-10-19T17:51:55.377868+00:00",
+  "disposition": "revise",
+  "findings": [
+    {
+      "actual": "OverflowError: int too large to convert to float",
+      "cases": 2,
+      "expected": "Explicit invalid_claim/captured_result_mismatch outcome; no exception",
+      "id": "R1",
+      "location": "proposals/phase3-d01-provenance-v1/verifier.py:82,147",
+      "priority": "P2",
+      "reproduction": "check(FixtureHost(), claim(rate=10**400)); captured_rows=[{\"team\":\"Amber\",\"blocked_pct\":10**400}]",
+      "title": "Large JSON integer claims/results crash instead of producing a verdict",
+      "trust": "claim input is directly claimant-controlled; captured result is malformed host evidence"
+    },
+    {
+      "actual": "contradicted/wrong_population",
+      "cases": 1,
+      "expected": "insufficient/unsupported_sql; SQLite computes Amber75 and unrenamed NOT NOT already has an insufficient control",
+      "id": "R2",
+      "location": "proposals/phase3-d01-provenance-v1/sql_proof.py:318-323",
+      "priority": "P2",
+      "reproduction": "WITH renamed AS (SELECT team, blocked, status AS state FROM delivery_work_items) SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM renamed WHERE NOT NOT(state != 'done') GROUP BY team ORDER BY rate DESC LIMIT 1",
+      "title": "Population fallback loses renamed status lineage and condemns valid unsupported SQL"
+    },
+    {
+      "actual": "AttributeError in digest before JSON/type checks",
+      "cases": 6,
+      "expected": "Explicit invalid_capture or binding_mismatch outcome; no exception",
+      "id": "R3",
+      "location": "proposals/phase3-d01-provenance-v1/verifier.py:94-102",
+      "priority": "P2",
+      "reproduction": "replace(host.record,result_json=None), expected=dict(host.expected,capture_ref=replaced_record); likewise snapshot_json/config_json None and non-string types",
+      "title": "Incomplete HostCapture validation crashes hashing of malformed byte fields",
+      "trust": "Host-owned malformed record; this is robustness, not a claimant self-authentication bypass"
+    },
+    {
+      "actual": "contradicted/captured_result_mismatch because interpreter uses lowercase keys while actual SQLite output retains RATE/SQUAD",
+      "cases": 2,
+      "expected": "proven within advertised unquoted alias grammar; keep quoted mixed-case aliases explicitly unsupported",
+      "id": "R4",
+      "location": "proposals/phase3-d01-provenance-v1/sql_proof.py:74; proposals/phase3-d01-provenance-v1/verifier.py:137-146",
+      "priority": "P2",
+      "reproduction": "Canonical SQL with AS RATE / ORDER BY RATE, or team AS SQUAD and secondary ORDER BY SQUAD",
+      "title": "Valid unquoted uppercase output aliases are rejected as captured-result mismatch"
+    }
+  ],
+  "head": "2e1bbf3b11e1356a90e7b053ef722519b300ba72",
+  "independent_controls_sha256": "87428066f569c711444d7fc45ebc995d4b6340ddf022098b547aa78bc4a9f06c",
+  "limits": [
+    "No live ClickHouse/model/container/resource/heldout/history replay/statistical simulations or broad test discovery performed.",
+    "No authentic live host capture established; source review plus SQLite fixture behavior only.",
+    "Unsupported general SQL remains outside grammar.",
+    "No PR/review bot/merge/activation/tracker mutation performed by reviewer."
+  ],
+  "review_role": "independent exact-head reviewer /root/d01_exact_head_review; not candidate author",
+  "reviewer_controls_per_interpreter": {
+    "blocked_side_effect_attempts": [],
+    "count": 20,
+    "false_acceptances_observed": 0,
+    "malformed_input_crashes": 8,
+    "memory_sqlite_connections": 20,
+    "other_expected_results": 9,
+    "supported_valid_false_rejections": 2,
+    "unsupported_valid_misclassifications": 1
+  },
+  "tree": "8eef038fb23baed803a8816fa0d6774f39755dc6",
+  "unchanged_base_blobs_and_modes": 176,
+  "validation": {
+    "311": {
+      "matrix_cases": 44,
+      "matrix_mismatches": [],
+      "passed": true,
+      "python": "3.11.16",
+      "side_effect_guard": {
+        "blocked_side_effect_attempts": [],
+        "memory_sqlite_connections": 103
+      },
+      "unit_errors": 0,
+      "unit_failures": 0,
+      "unit_tests": 22
+    },
+    "312": {
+      "matrix_cases": 44,
+      "matrix_mismatches": [],
+      "passed": true,
+      "python": "3.12.6",
+      "side_effect_guard": {
+        "blocked_side_effect_attempts": [],
+        "memory_sqlite_connections": 103
+      },
+      "unit_errors": 0,
+      "unit_failures": 0,
+      "unit_tests": 22
+    }
+  },
+  "worktree_clean": true
+}

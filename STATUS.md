@@ -1,5 +1,19 @@
 # Verified Project Status
 
+## Inactive D01 provenance preparation — 2026-10-19
+
+Owner-approved issue95 package6256182861 prepares
+`proposals/phase3-d01-provenance-v1/` in isolation. It is an offline reference
+candidate with a machine-readable contract, bounded SQL lineage interpretation,
+host-only capture resolution interface and new synthetic in-memory SQLite
+controls. No active scorer/task/data/runtime integration or live host adapter is
+provided. Proof remains conditional on independently owned host inputs and is
+restricted to explicit synthetic fixture captures; `live_qualified` is always
+false. Exact-head validation/review evidence is retained with the proposal.
+Original experiments, consumed authorizations and Phase2/3/4/5 gates remain
+unchanged. This preparation cannot qualify a phase, activate an evaluator,
+authorize a model/SQL/resource operation or merge a PR.
+
 _Last reviewed against System Benchmark v1 PR D and evidence-layer work on 2026-10-04._
 
 ## Current verified state

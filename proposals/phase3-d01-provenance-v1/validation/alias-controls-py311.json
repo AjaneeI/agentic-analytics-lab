@@ -1,0 +1,101 @@
+{
+  "cases": [
+    {
+      "id": "uppercase-unquoted-rate-alias",
+      "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS RATE FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY RATE DESC, team ASC LIMIT 1",
+      "captured_result": [
+        {
+          "RATE": 75.0,
+          "team": "Amber"
+        }
+      ],
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      }
+    },
+    {
+      "id": "uppercase-unquoted-team-alias",
+      "query": "SELECT team AS SQUAD, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, SQUAD ASC LIMIT 1",
+      "captured_result": [
+        {
+          "SQUAD": "Amber",
+          "blocked_pct": 75.0
+        }
+      ],
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      }
+    },
+    {
+      "id": "mixed-case-identifiers-no-alias-change",
+      "query": "SELECT TEAM, 100.0 * SUM(BLOCKED) / COUNT(*) AS blocked_pct FROM DELIVERY_WORK_ITEMS WHERE status != 'done' GROUP BY TEAM ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+      "captured_result": [
+        {
+          "blocked_pct": 75.0,
+          "team": "Amber"
+        }
+      ],
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "ed94cb7c3a96fcdab85ec233a32623c3cff0eda438c9745fc4c5014a09d19088",
+        "query_sha256": "314e0de34e5646873a58e7b056a9e5ccf44cd8ea3b4506862491d1b8d7150075"
+      }
+    },
+    {
+      "id": "uppercase-cte-alias",
+      "query": "WITH active AS (SELECT team AS SQUAD, blocked AS FLAG FROM delivery_work_items WHERE status!='done') SELECT SQUAD AS team, 100.0*SUM(FLAG)/COUNT(*) AS rate FROM active GROUP BY SQUAD ORDER BY rate DESC LIMIT 1",
+      "captured_result": [
+        {
+          "rate": 75.0,
+          "team": "Amber"
+        }
+      ],
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "ed94cb7c3a96fcdab85ec233a32623c3cff0eda438c9745fc4c5014a09d19088",
+        "query_sha256": "c868b21682b6ccea145702f60439f9f8e70fd86562a859526f9a0d867e048043"
+      }
+    },
+    {
+      "id": "missing-claim-fields",
+      "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+      "captured_result": [
+        {
+          "blocked_pct": 75.0,
+          "team": "Amber"
+        }
+      ],
+      "outcome": {
+        "status": "contradicted",
+        "reason": "invalid_claim",
+        "live_qualified": false
+      }
+    }
+  ],
+  "side_effect_guard": {
+    "memory_sqlite_connections": 5,
+    "blocked_side_effect_attempts": []
+  }
+}
