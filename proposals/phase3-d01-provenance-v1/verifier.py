@@ -77,9 +77,20 @@ def snapshot_valid(rows):
             return False
     return True
 
+def finite_number(value):
+    if type(value) not in (int,float):
+        return False
+    try:
+        return math.isfinite(value)
+    except (OverflowError,ValueError,TypeError):
+        return False
+
 def same_value(actual,expected):
     if isinstance(expected,F):
-        return type(actual) in (int,float) and math.isfinite(actual) and math.isclose(actual,float(expected),rel_tol=1e-12,abs_tol=1e-12)
+        try:
+            return finite_number(actual) and math.isclose(actual,float(expected),rel_tol=1e-12,abs_tol=1e-12)
+        except (OverflowError,ValueError,TypeError):
+            return False
     return type(actual) is type(expected) and actual==expected
 
 def verify(claim,*,resolver,expected):
@@ -93,7 +104,14 @@ def verify(claim,*,resolver,expected):
         return outcome("insufficient","untrusted_capture")
     if (not isinstance(record.query,str) or not isinstance(record.source_commit,str)
         or not re.fullmatch(r"[0-9a-f]{40}",record.source_commit)
-        or any(not isinstance(x,str) or not x for x in (record.execution_id,record.call_id))):
+        or any(not isinstance(x,str) or not x for x in (record.execution_id,record.call_id,record.result_json,record.snapshot_json,record.config_json))
+        or sum(len(x) for x in (record.query,record.result_json,record.snapshot_json,record.config_json))>2*1024*1024):
+        return outcome("insufficient","invalid_capture")
+    try:
+        config=json.loads(record.config_json)
+    except (ValueError,TypeError,RecursionError):
+        return outcome("insufficient","invalid_capture")
+    if not isinstance(config,dict) or any(config.get(k)!=value for k,value in (("source_commit",record.source_commit),("metric",record.metric_version),("task_id",record.task_id))) or not isinstance(config.get("version"),str) or not config["version"]:
         return outcome("insufficient","invalid_capture")
     if "capture_ref" not in expected:
         return outcome("insufficient","missing_binding")
@@ -116,7 +134,7 @@ def verify(claim,*,resolver,expected):
         return outcome("insufficient","incomplete_result")
     try:
         snapshot=json.loads(record.snapshot_json);result=json.loads(record.result_json)
-    except (ValueError,TypeError):
+    except (ValueError,TypeError,RecursionError):
         return outcome("insufficient","invalid_snapshot")
     if not snapshot_valid(snapshot):
         return outcome("insufficient","invalid_snapshot")
@@ -134,6 +152,17 @@ def verify(claim,*,resolver,expected):
         return outcome("insufficient","unsupported_sql")
     if not isinstance(result,list) or len(result)>1000 or len(result)!=len(relation.rows):
         return outcome("contradicted","captured_result_mismatch")
+    # SQL identifier matching only. Preserve original captured bytes and values;
+    # reject collisions instead of overwriting or coercing result data.
+    normalized=[]
+    for row in result:
+        if not isinstance(row,dict) or any(not isinstance(key,str) or not re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*",key) for key in row):
+            return outcome("contradicted","captured_result_mismatch")
+        keys=[key.lower() for key in row]
+        if len(set(keys))!=len(keys):
+            return outcome("contradicted","captured_result_mismatch")
+        normalized.append(dict(zip(keys,row.values())))
+    result=normalized
     if any(not isinstance(row,dict) or not isinstance(row.get(team_column),str) or not row[team_column] for row in result):
         return outcome("contradicted","captured_result_mismatch")
     if len({row[team_column] for row in result})!=len(result):
@@ -144,7 +173,7 @@ def verify(claim,*,resolver,expected):
         row=observed.get(key)
         if row is None or row.keys()!=expected_row.keys() or any(not same_value(row[name],cell.value) for name,cell in expected_row.items()):
             return outcome("contradicted","captured_result_mismatch")
-    if not isinstance(claim.get("team"),str) or type(claim.get("blocked_pct")) not in (int,float) or not math.isfinite(claim["blocked_pct"]) or type(claim.get("unique_winner")) is not bool:
+    if not isinstance(claim.get("team"),str) or not finite_number(claim.get("blocked_pct")) or type(claim.get("unique_winner")) is not bool:
         return outcome("contradicted","invalid_claim")
     maximum=max(F(b,n) for b,n in counts.values())
     winners=sorted(team for team,(b,n) in counts.items() if F(b,n)==maximum)

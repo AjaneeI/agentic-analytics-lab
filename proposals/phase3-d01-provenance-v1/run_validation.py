@@ -4,6 +4,7 @@ This test-only entry point uses explicitly in-memory SQLite and blocks network,
 process launches, filesystem databases and benchmark/runtime module imports.
 """
 import argparse
+from dataclasses import replace
 import hashlib
 import importlib.abc
 import json
@@ -84,6 +85,30 @@ def matrix():
     tied=population()+[{"id":100+i,"team":"Birch","status":"todo","blocked":1} for i in range(7)]
     case("M07-exact-tie-acknowledged","proven",rows=tied,response=claim(unique_winner=False))
     case("M08-exact-tie-false-unique","contradicted",rows=tied)
+    renamed=[dict(row,team={"Amber":"Zulu","Birch":"Able","Cedar":"Mango"}[row["team"]]) for row in population()]
+    case("M09-consistent-renaming","proven",rows=renamed,response=claim("Zulu",75))
+    near=[]
+    for team,b,n in [("Low",97,129),("High",94,125)]:
+        offset=len(near)
+        near.extend({"id":offset+i+1,"team":team,"status":"todo","blocked":int(i<b)} for i in range(n))
+    case("M10-unrounded-near-tie","proven",rows=near,response=claim("High",75.2))
+    case("M11-rounded-wrong-winner","contradicted",rows=near,response=claim("Low",75.2))
+    case("P09-uppercase-rate-alias","proven",SQL.replace("blocked_pct","RATE"))
+    case("P10-uppercase-team-alias","proven",SQL.replace("SELECT team,","SELECT team AS SQUAD,").replace("team ASC","SQUAD ASC"))
+    case("I07-renamed-unsupported-predicate","insufficient","WITH renamed AS (SELECT team, blocked, status AS state FROM delivery_work_items) SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM renamed WHERE NOT NOT(state!='done') GROUP BY team ORDER BY rate DESC LIMIT 1")
+    case("N13-huge-claim","contradicted",response=claim(rate=10**400))
+    case("N14-huge-result","contradicted",changes={"captured_rows":[{"team":"Amber","blocked_pct":10**400}]})
+    case("I08-limited-cte","insufficient","WITH cut AS (SELECT team, blocked, status FROM delivery_work_items LIMIT 1000) SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM cut WHERE status!='done' GROUP BY team")
+    case("I09-quoted-case-sensitive-alias","insufficient",SQL.replace("blocked_pct",'"Rate"'))
+    invalid=population();invalid[0]["blocked"]=2
+    case("I10-invalid-binary-source","insufficient",rows=invalid)
+    nonzero=[r for r in population() if r["team"]!="Cedar"]
+    case("N15-cancelled-wrong-denominator","contradicted",SQL.replace(" AS blocked_pct"," * SUM(blocked) / SUM(blocked) AS blocked_pct"),rows=nonzero)
+    case("I11-ungrouped-column-cancellation","insufficient",SQL.replace(" AS blocked_pct"," * blocked / blocked AS blocked_pct"),rows=nonzero)
+    for field in ("result_json","snapshot_json","config_json"):
+        host=FixtureHost();host.record=replace(host.record,**{field:None})
+        result=check(host,expected=dict(host.expected,capture_ref=host.record))
+        cases.append({"id":"I-malformed-"+field,"expected":"insufficient","actual":result["status"],"reason":result["reason"],"matches_expectation":result["status"]=="insufficient","origin":"malformed_host_capture_negative_control"})
     host=FixtureHost()
     for field in ("query_sha256","result_sha256","snapshot_sha256","config_sha256","source_commit","execution_id","call_id","metric_version","task_id","contract_sha256"):
         expected=dict(host.expected);expected[field]="wrong"

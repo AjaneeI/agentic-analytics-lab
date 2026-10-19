@@ -71,6 +71,8 @@ def tokens(sql):
         token=match.group();pos=match.end()
         if token.isspace():
             continue
+        if token.startswith(('`','"')) and token.strip('`"')!=token.strip('`"').lower():
+            raise Unsupported("quoted_case_sensitive_identifier")
         out.append(token if token.startswith("'") else token.strip('`"').lower())
     if pos!=len(sql) or len(out)>1024:
         raise Unsupported("unsupported_token_or_size")
@@ -317,7 +319,13 @@ def interpret(query,environment,final=False):
             raise Unsupported("postaggregate_filter")
         if not active_predicate(query["predicate"],prototype,qualifiers):
             selected=[r for r in rows if evaluate(query["predicate"],r,qualifiers).value]
-            active=[r for r in rows if r.get("status",Cell(None,None)).value!="done"]
+            status_columns=[name for name,proof in relation.lineage.items() if proof==("base","status")]
+            if relation.scope=="active":
+                active=rows
+            elif status_columns:
+                active=[r for r in rows if r[status_columns[0]].value!="done"]
+            else:
+                raise Unsupported("population_equivalence_not_proven")
             if selected!=active:
                 raise Contradiction("wrong_population")
             raise Unsupported("population_equivalence_not_proven")

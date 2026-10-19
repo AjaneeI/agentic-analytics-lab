@@ -1,0 +1,77 @@
+{
+  "active_code_unchanged": true,
+  "author_validation": [
+    {
+      "false_acceptances": [],
+      "guard_denials": [],
+      "named_controls": 60,
+      "python": "3.11.16",
+      "supported_valid_false_rejections": [],
+      "unit_tests": 26
+    },
+    {
+      "false_acceptances": [],
+      "guard_denials": [],
+      "named_controls": 60,
+      "python": "3.12.6",
+      "supported_valid_false_rejections": [],
+      "unit_tests": 26
+    }
+  ],
+  "authority": "aalab-phase3-d01-provenance-v1-preparation-20261018",
+  "base": "43cf76b0acf64aba4f19eb510af12189b7a4ad04",
+  "base_blob_count": 177,
+  "changed_preexisting_paths": [
+    "STATUS.md"
+  ],
+  "corrected_code_tree": "dc2080b44e88d9c9d90e25c3449c63ed1340e2a2",
+  "corrected_local_code_head": "00f0f26cb3afebf33ea342e8a31b33a64e26943e",
+  "deadline_utc": "2026-10-19T22:36:19Z",
+  "evidence_sha256": {
+    "adversarial-initial-py311.json": "9067981861c34fba6035c590c74deffa895b9467e0c963bdd0a25ae2558dd00a",
+    "adversarial-initial-py312.json": "9067981861c34fba6035c590c74deffa895b9467e0c963bdd0a25ae2558dd00a",
+    "alias-controls-py311.json": "535bc5ea18c4ecc48aa1837b1489417e1f6a9fe13ebe47ac325f7dd1e3a959fd",
+    "alias-controls-py312.json": "535bc5ea18c4ecc48aa1837b1489417e1f6a9fe13ebe47ac325f7dd1e3a959fd",
+    "author-corrected-python311.json": "9eebd1baa94e84cdb390a0c708062fa533ef4adbad0832937bbcff4b8ac8ea23",
+    "author-corrected-python311.txt": "1449bd75d0ef996e7b9d633ddce1c756f452ab08149b3ee3f5dd69b43ee974f5",
+    "author-corrected-python312.json": "7c90eeb15acade101c79e6308e064e07106f3d74d02837959dfa0d28a7e5bfe4",
+    "author-corrected-python312.txt": "e83b292a48ba73a473adc268cfa072afd440f4aa1fa6471b6adb7e79da353c13",
+    "green-review-r1-r4.txt": "a40ed3c1dc343d0f323dbef5233116b9af7ef8feea894a7366c9ffd19c077157",
+    "independent-controls.md": "87428066f569c711444d7fc45ebc995d4b6340ddf022098b547aa78bc4a9f06c",
+    "red-cancellation.txt": "2feabf1065722bd79ec5c7b470e1cb39aece6399e0c1945e2d041b4af78c9d29",
+    "red-initial.txt": "ea837cec23171ac39bb7d0516a9d0cbac13429d8aea206dc1294501aa473d2b2",
+    "red-metadata.txt": "21ede04341dfe2445fc97334cc1a4d2c4fa772916d46fdaf83758555e704f6ae",
+    "red-review-r1-r4.txt": "7e47515938523674d92bb9608e7f1c5cc7e39a7351d3f857219d0412980178b6",
+    "red-robustness.txt": "498be26f0796a50a193626baa5c88b5d1a0cb20cde4387fd05a090481985dc58",
+    "red-semantic.txt": "f3a44f0a968d3a4915b1af877a6f49c86b1b2731424b98241f557aa3a0b34b2c",
+    "red-valid-limits.txt": "18de97ea0866e23382cdad90e4145e9fc1e96fc7f4eacbcbc0adfadda72d562f",
+    "review-initial-2e1bbf3.json": "d9db94ee1e31f6021802d3b55f08243a03c14d027006ffd9dbfa290b32a60b0f",
+    "review-initial-2e1bbf3.md": "6dca64c8cbc9410a4ea394bc07149e12ed16eb5ff16ca4bfa1c05a2792abb815"
+  },
+  "full_repository_suite_run": false,
+  "implementation_cutoff_utc": "2026-10-19T22:06:19Z",
+  "independent_review": "Initial revision required R1-R4 changes; corrected exact-head re-review pending; no final acceptance claimed.",
+  "initial_local_head": "2e1bbf3b11e1356a90e7b053ef722519b300ba72",
+  "initial_published_head": "d441033ba5f61831962bd8d152dcf7c8d0cf36dc",
+  "live_adapter_implemented": false,
+  "live_qualified": false,
+  "new_live_sql_or_model_calls": 0,
+  "new_treatment_a_attempts": 0,
+  "phase2_qualified": false,
+  "phase3_accepted": false,
+  "phase4_frozen": false,
+  "reason_full_suite_excluded": "Existing historical SQL characterization and statistical simulation entrypoints are outside approved execution scope. New inspected proposal controls only.",
+  "schema": "inactive-d01-validation-receipt-v1",
+  "source_sha256": {
+    "PLAN.md": "7e5083717a91d1cf56545d3d0a8ef3d6cdebff94a3c7e4afbbea974481f06cd6",
+    "README.md": "91f74b1855434f29dd87f50e487d5947d5e630bac7a1208617087394d042cf40",
+    "contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "run_validation.py": "49605e188275c7f2422c65a7c93d7d19742d70a1e95daf805acb31def2f459aa",
+    "sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "test_verifier.py": "977a3eb9d0519c4fdf718098b9ed846b12a3302a20dd322933ecba878918bc71",
+    "verifier.py": "153bc191a1b7eec036006296d143451da9ba5fcfb3c3455fa5486bdfac2cd2ef"
+  },
+  "start_utc": "2026-10-19T17:36:19Z",
+  "supported_origin": "synthetic_sqlite",
+  "whole_session_timer_enforced": false
+}

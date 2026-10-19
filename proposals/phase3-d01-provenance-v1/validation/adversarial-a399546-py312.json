@@ -1,0 +1,194 @@
+{
+  "cases": [
+    {
+      "id": "huge-integer-claim",
+      "expected": "contradicted/invalid_claim",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "invalid_claim",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "huge-integer-result",
+      "expected": "contradicted/captured_result_mismatch",
+      "outcome": {
+        "status": "contradicted",
+        "reason": "captured_result_mismatch",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "unsupported-valid-renamed-predicate",
+      "expected": "insufficient/unsupported_sql",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "unsupported_sql",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-renamed-predicate",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+        "query_sha256": "3cee66089fb18310416cf49063fc6b91a57bb7bf84d27476242a4266e6df093d"
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-count-blocked",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+        "query_sha256": "f97cd92f4027d27ebe682bbcd02e660d85463475ec02d5e609fcecf6749d1662"
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-algebraic-scale",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+        "query_sha256": "640711f134f2b605f993d10778387ee840ea48bc4f67d5e53f9a9748afef9afb"
+      },
+      "exception": null
+    },
+    {
+      "id": "supported-three-ctes",
+      "expected": "proven",
+      "outcome": {
+        "status": "proven",
+        "reason": "fixture_computation_proven",
+        "live_qualified": false,
+        "winners": [
+          "Amber"
+        ],
+        "numerator": 3,
+        "denominator": 4,
+        "percentage_exact": "75",
+        "capture_origin": "synthetic_sqlite",
+        "contract_sha256": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+        "query_sha256": "1e94b7fc065d489b36e653999cd4a21c134c59d3357cb2ebe0b5470ae626a4f0"
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-result_json-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-snapshot_json-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-config_json-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-result_json-int",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-snapshot_json-dict",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-config_json-list",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-metric_version-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    },
+    {
+      "id": "invalid-capture-task_id-NoneType",
+      "expected": "insufficient/invalid_capture or contradicted/binding_mismatch",
+      "outcome": {
+        "status": "insufficient",
+        "reason": "invalid_capture",
+        "live_qualified": false
+      },
+      "exception": null
+    }
+  ],
+  "side_effect_guard": {
+    "memory_sqlite_connections": 15,
+    "blocked_side_effect_attempts": []
+  }
+}

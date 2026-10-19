@@ -1,0 +1,13 @@
+# D01 inactive preparation evidence
+
+The authoritative final code review is `review-final-a399546.md` and its machine-readable JSON. `final-receipt.json` pins the exact reviewed implementation, contract, source hashes and preserved evidence. All prior failed controls and rejected review revisions remain separate, unchanged records. The older `receipt.json` accurately records the intermediate pending-review state and is superseded by the final receipt.
+
+Each final author and independent validation run on Python 3.11.16 and 3.12.6 passes 28 focused unit methods and 60 named controls. Each interpreter also passes all 25 independent reviewer probes. The final matrix has 19 proven, 27 contradicted and 14 insufficient outcomes; no observed false acceptances, supported-valid false rejections or outcome mismatches in these controls. These counts describe bounded new synthetic fixtures, not measured general accuracy or live-model compliance.
+
+Six independent review findings were reproduced, corrected and retested: huge integers; unsupported equivalent predicates after status renaming; malformed capture/config metadata; unquoted ASCII uppercase aliases; Unicode lookalike result keys; deeply nested JSON. Initial and intermediate failures are retained. Unsupported valid SQL remains insufficient; an independently host-controlled resolver and expected capture identity are trust assumptions. No authentic live capture adapter exists. Every verdict has live_qualified=false.
+
+The seven candidate source files are byte-identical to reviewed local commit a399546c12b2a80563cfae6f39c4254efd342a91. Delivery adds evidence only. All 177 preexisting base paths were compared by Git blob and mode: 176 identical, only STATUS.md carries an explicit inactive proposal note. Frozen scorer, corpus, references, generator, runtime, model and scientific methods are unchanged.
+
+Preparation checklist: contract and independent expectations, meaningful red controls, bounded implementation, positive/negative/perturbation controls, independent exact-head review and source-preservation validation are complete. GitHub draft PR and tracker reconciliation are recorded by immutable delivery receipts after publication. PLAN.md remains the original preimplementation plan; its unchecked boxes are preserved rather than rewriting reviewed source.
+
+No broad repository suite, historical query replay, external SQL, live model call, Treatment A, held-out evaluation, service operation, statistical simulation, automatic Codex review, merge or activation occurred. A draft PR is review delivery only. Phase 2 remains unqualified, full Phase 3 acceptance separate, Phase 4 unfrozen, Phase 5 unentered.

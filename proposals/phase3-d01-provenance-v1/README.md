@@ -42,6 +42,8 @@ Complete per-team results or a genuine unrounded descending-rate query over the 
 
 Query result fields and values must reconcile with the pure interpreter. The `1e-12` absolute/relative comparison is floating computation reconciliation, not a winner or scoring tolerance. Claimed percentage uses the preserved **0.2 percentage-point tolerance**, without converting invalid types. A false winner cannot pass because its rounded rate is close. Zero blocked with a positive denominator is distinct from empty/no active population.
 
+Unquoted ASCII output aliases resolve case-insensitively under the fixture SQL dialect; original capture bytes remain untouched and colliding labels are rejected. Quoted case-sensitive identifiers stay unsupported. Oversized/nonfinite numbers and malformed capture/config fields produce explicit verdicts rather than exceptions. Serialized capture inputs are capped at2MiB locally before parsing; this offline bound does not alter any benchmark/model/server budget.
+
 ## Unsupported cases and scientific limits
 
 This is intentionally not general SQL validation. Valid `TOTAL`, COUNT_IF/countIf, arbitrary CASE variants, nested/recursive WITH, limited CTEs, subqueries, joins, unions, windows, HAVING, post-aggregate filters, SELECT*, quoted mixed-case output aliases, ORDER BY expressions rather than selected aliases and rounding functions may remain insufficient. They are not automatically semantically false. Unknown population predicates that happen to select the same synthetic rows remain insufficient without an equivalence proof; an observed different population is contradicted. Unsupported controls are reported separately from supported-valid false rejections.

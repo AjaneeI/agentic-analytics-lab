@@ -1,6 +1,7 @@
 """NEW synthetic controls only. Never imports the benchmark/runtime/scorer."""
 import copy
 from contextlib import closing
+from dataclasses import replace
 import importlib.util
 import json
 from pathlib import Path
@@ -233,6 +234,45 @@ class ProvenanceControls(unittest.TestCase):
         for suffix in [" * SUM(blocked) / SUM(blocked)", " * blocked / blocked"]:
             sql=SQL.replace(" AS blocked_pct", suffix+" AS blocked_pct")
             self.assertNotEqual(check(FixtureHost(sql,rows=rows))["status"],"proven")
+
+    def test_review_r1_huge_numbers_produce_verdicts_without_overflow(self):
+        host=FixtureHost()
+        self.assertEqual(check(host,claim(rate=10**400))["reason"],"invalid_claim")
+        self.assertEqual(check(FixtureHost(captured_rows=[{"team":"Amber","blocked_pct":10**400}]))["reason"],"captured_result_mismatch")
+
+    def test_review_r2_renamed_status_equivalence_remains_unknown(self):
+        sql="WITH renamed AS (SELECT team, blocked, status AS state FROM delivery_work_items) SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM renamed WHERE NOT NOT(state != 'done') GROUP BY team ORDER BY rate DESC LIMIT 1"
+        self.assertEqual(check(FixtureHost(sql))["status"],"insufficient")
+
+    def test_review_r3_malformed_capture_bytes_and_config_do_not_crash(self):
+        for field in ("result_json","snapshot_json","config_json"):
+            for value in (None,42,[],{}):
+                host=FixtureHost();host.record=replace(host.record,**{field:value})
+                expected=dict(host.expected,capture_ref=host.record)
+                self.assertEqual(check(host,expected=expected)["reason"],"invalid_capture")
+        for config_json in ("[]","null","{}"):
+            host=FixtureHost();host.record=replace(host.record,config_json=config_json)
+            self.assertEqual(check(host,expected=v.binding(host.record))["reason"],"invalid_capture")
+
+    def test_review_r4_unquoted_alias_case_matches_but_collisions_do_not(self):
+        for sql in [SQL.replace("blocked_pct","RATE"), SQL.replace("SELECT team,","SELECT team AS SQUAD,").replace("team ASC","SQUAD ASC")]:
+            self.assertEqual(check(FixtureHost(sql))["status"],"proven")
+        host=FixtureHost(captured_rows=[{"team":"Amber","TEAM":"Amber","blocked_pct":75}])
+        self.assertEqual(check(host)["status"],"contradicted")
+        self.assertEqual(check(FixtureHost(SQL.replace("blocked_pct",'"Rate"')))["status"],"insufficient")
+
+    def test_review_r5_unicode_lookalike_is_not_an_ascii_alias(self):
+        host=FixtureHost(SQL.replace("blocked_pct","k"),captured_rows=[{"team":"Amber","\u212a":75}])
+        self.assertEqual(check(host)["status"],"contradicted")
+        sql=SQL.replace("SELECT team,","SELECT team AS k,").replace("team ASC","k ASC")
+        host=FixtureHost(sql,captured_rows=[{"\u212a":"Amber","blocked_pct":75}])
+        self.assertEqual(check(host)["status"],"contradicted")
+
+    def test_review_r6_deep_json_capture_never_crashes(self):
+        deep="["*1200+"0"+"]"*1200
+        for field in ("config_json","snapshot_json","result_json"):
+            host=FixtureHost();host.record=replace(host.record,**{field:deep})
+            self.assertIn(check(host,expected=v.binding(host.record))["status"],("insufficient","contradicted"))
 
 if __name__ == "__main__":
     unittest.main()
