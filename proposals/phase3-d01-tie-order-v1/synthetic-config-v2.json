@@ -1,0 +1,27 @@
+{
+  "activation": false,
+  "authorized_treatment_a_attempts": 0,
+  "base_commit": "35ce571c448055aee8a2cbc6f841d17a69108d31",
+  "dependency_sha256": {
+    "proposals/phase3-d01-capture-integration-v1/capture_adapter.py": "836e4060dc72afc837640e74f6fc4dc138b2178f06ca08f7b703d84c5c129f26",
+    "proposals/phase3-d01-capture-integration-v1/contract.json": "cbf63bd86c809a909aa97c06077dd9293534557f772d5efffec1002dc7c3a2cf",
+    "proposals/phase3-d01-provenance-v1/contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "proposals/phase3-d01-provenance-v1/run_validation.py": "49605e188275c7f2422c65a7c93d7d19742d70a1e95daf805acb31def2f459aa",
+    "proposals/phase3-d01-provenance-v1/sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "proposals/phase3-d01-provenance-v1/test_verifier.py": "d55a54b49f42195ac8308cd478bdfe6bed59857eee9df860532c0b6407748f7d",
+    "proposals/phase3-d01-provenance-v1/verifier.py": "857b928e02afd9209ccfa0431925c79b64706571eb40c825c41e28f1fbbceb32"
+  },
+  "metric": "phase3-d01-tie-order-v1",
+  "source_commit": "6446437949f012905db8e5de810b985a1ac40f36",
+  "source_sha256": {
+    "contract.json": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+    "run_validation.py": "2f054c9f18c7ed644ef573ba2921cf155f6a982bd53f6b71eada419f54856732",
+    "test_preflight.py": "b932c2fca9a6a90257f82ce49a1d4dab02b60c0bc8787f9e920434dc8306a985",
+    "test_tie_order.py": "56cce39c70e36d6404301f2ab6beefbfff34be77f899243d6ac5957dbded464c",
+    "tie_sql_proof.py": "28b34617f915a454152e72fe24f9239aecde4b2e5bf026df461ff3a5ebe55462",
+    "verifier_candidate.py": "9908084bdbb7cb315b6b98840f340b86efa4ebcef24003721dd4c07c4718a3f4"
+  },
+  "state": "inactive_proposal",
+  "task_id": "SB-D01",
+  "version": "phase3-d01-tie-order-v1-offline-config-v2"
+}

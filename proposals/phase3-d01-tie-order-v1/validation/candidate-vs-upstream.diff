@@ -1,0 +1,71 @@
+--- unchanged-phase3-d01-provenance-v1/sql_proof.py
++++ inactive-phase3-d01-tie-order-v1/tie_sql_proof.py
+@@ -57,6 +57,9 @@
+     full_domain: bool = True
+     ordered: bool = False
+     limited: bool = False
++    ranked_rows: list | None = None
++    order_fields: tuple = ()
++    row_limit: int | None = None
+ 
+ TOKEN = re.compile(r"\s+|'(?:''|[^'\\])*'|`[A-Za-z_][A-Za-z_0-9]*`|\"[A-Za-z_][A-Za-z_0-9]*\"|[A-Za-z_][A-Za-z_0-9]*|[0-9]+(?:\.[0-9]+)?|!=|<>|<=|>=|[().,=+*/<>-]")
+ WORDS = set("select from as where group by order asc desc limit with and or not in then else end when".split())
+@@ -366,9 +369,11 @@
+             raise Contradiction("ranking_not_proven")
+     for (node,direction) in reversed(query["order"]):
+         output.sort(key=lambda row:row[node[1][0]].value,reverse=direction=="desc")
++    ranked_rows=output
+     if query["limit"] is not None:
+         output=output[:query["limit"]]
+-    return Relation(output,lineage,scope,grouped,full,bool(query["order"]),query["limit"] is not None)
++    return Relation(output,lineage,scope,grouped,full,bool(query["order"]),query["limit"] is not None,
++                    ranked_rows,tuple(node[1][0] for node,_ in query["order"]),query["limit"])
+ 
+ def prove(sql,snapshot):
+     ctes,query=Parser(sql).parse()
+--- unchanged-phase3-d01-provenance-v1/verifier.py
++++ inactive-phase3-d01-tie-order-v1/verifier_candidate.py
+@@ -13,9 +13,9 @@
+ import re
+ from pathlib import Path
+ 
+-from sql_proof import prove, Unsupported, Contradiction
+-
+-VERSION="phase3-d01-provenance-v1"
++from tie_sql_proof import prove, Unsupported, Contradiction
++
++VERSION="phase3-d01-tie-order-v1"
+ CONTRACT_PATH=Path(__file__).with_name("contract.json")
+ 
+ def canonical(value):
+@@ -168,10 +168,26 @@
+     if len({row[team_column] for row in result})!=len(result):
+         return outcome("contradicted","captured_result_mismatch")
+     observed={row[team_column]:row for row in result}
+-    for expected_row in relation.rows:
+-        key=expected_row[team_column].value
+-        row=observed.get(key)
+-        if row is None or row.keys()!=expected_row.keys() or any(not same_value(row[name],cell.value) for name,cell in expected_row.items()):
++    # LIMIT can cut an exact equivalence class of the COMPLETE ORDER BY tuple.
++    # The interpreter's stable sort picks an arbitrary representative of that
++    # class. Keep every strict prefix row mandatory, but allow any distinct
++    # boundary peers. No claim value or floating tolerance determines a tie.
++    admissible=relation.rows
++    required={row[team_column].value for row in relation.rows}
++    if (relation.row_limit is not None and relation.order_fields
++        and 0<len(relation.rows)<len(relation.ranked_rows)):
++        def order_key(row):
++            return tuple(row[field].value for field in relation.order_fields)
++        boundary=order_key(relation.rows[-1])
++        required={row[team_column].value for row in relation.rows if order_key(row)!=boundary}
++        admissible=[row for row in relation.ranked_rows
++                    if row[team_column].value in required or order_key(row)==boundary]
++    candidates={row[team_column].value:row for row in admissible}
++    if not required.issubset(observed) or not observed.keys()<=candidates.keys():
++        return outcome("contradicted","captured_result_mismatch")
++    for key,row in observed.items():
++        expected_row=candidates[key]
++        if row.keys()!=expected_row.keys() or any(not same_value(row[name],cell.value) for name,cell in expected_row.items()):
+             return outcome("contradicted","captured_result_mismatch")
+     if not isinstance(claim.get("team"),str) or not finite_number(claim.get("blocked_pct")) or type(claim.get("unique_winner")) is not bool:
+         return outcome("contradicted","invalid_claim")

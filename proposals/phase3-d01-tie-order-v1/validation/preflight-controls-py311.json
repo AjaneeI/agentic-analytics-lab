@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "exit_code": 2,
+      "id": "activation-True",
+      "memory_sqlite_connections_created": 0,
+      "output_created": false,
+      "stderr": "usage: run_validation.py [-h] --output OUTPUT [--configuration CONFIGURATION]\nrun_validation.py: error: candidate configuration fingerprint mismatch\n"
+    },
+    {
+      "exit_code": 2,
+      "id": "authorized_treatment_a_attempts-1",
+      "memory_sqlite_connections_created": 0,
+      "output_created": false,
+      "stderr": "usage: run_validation.py [-h] --output OUTPUT [--configuration CONFIGURATION]\nrun_validation.py: error: candidate configuration fingerprint mismatch\n"
+    },
+    {
+      "exit_code": 2,
+      "id": "authorized_treatment_a_attempts-False",
+      "memory_sqlite_connections_created": 0,
+      "output_created": false,
+      "stderr": "usage: run_validation.py [-h] --output OUTPUT [--configuration CONFIGURATION]\nrun_validation.py: error: candidate configuration fingerprint mismatch\n"
+    },
+    {
+      "exit_code": 2,
+      "id": "state-active",
+      "memory_sqlite_connections_created": 0,
+      "output_created": false,
+      "stderr": "usage: run_validation.py [-h] --output OUTPUT [--configuration CONFIGURATION]\nrun_validation.py: error: candidate configuration fingerprint mismatch\n"
+    },
+    {
+      "exit_code": 2,
+      "id": "source_commit-not-a-commit",
+      "memory_sqlite_connections_created": 0,
+      "output_created": false,
+      "stderr": "usage: run_validation.py [-h] --output OUTPUT [--configuration CONFIGURATION]\nrun_validation.py: error: candidate configuration fingerprint mismatch\n"
+    },
+    {
+      "exit_code": 2,
+      "id": "metric-phase3-d01-provenance-v1",
+      "memory_sqlite_connections_created": 0,
+      "output_created": false,
+      "stderr": "usage: run_validation.py [-h] --output OUTPUT [--configuration CONFIGURATION]\nrun_validation.py: error: candidate configuration fingerprint mismatch\n"
+    },
+    {
+      "exit_code": 2,
+      "id": "stale-source",
+      "memory_sqlite_connections_created": 0,
+      "output_created": false,
+      "stderr": "usage: run_validation.py [-h] --output OUTPUT [--configuration CONFIGURATION]\nrun_validation.py: error: candidate configuration fingerprint mismatch\n"
+    },
+    {
+      "exit_code": 2,
+      "id": "overwrite-refused",
+      "memory_sqlite_connections_created": 0,
+      "original_evidence_unchanged": true
+    }
+  ],
+  "passed": true,
+  "side_effect_guard": {
+    "blocked_side_effect_attempts": [],
+    "memory_sqlite_connections": 0
+  }
+}

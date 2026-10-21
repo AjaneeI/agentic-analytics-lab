@@ -1,0 +1,17 @@
+{
+  "activation": false,
+  "authorized_treatment_a_attempts": 0,
+  "base_commit": "35ce571c448055aee8a2cbc6f841d17a69108d31",
+  "metric": "phase3-d01-tie-order-v1",
+  "source_commit": "ddbf12b9bef118f0ae74abca436242c859519ad3",
+  "source_sha256": {
+    "contract.json": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+    "run_validation.py": "0eb6b2ca36aa693c20403ad89b022bd8db4e43b22ad479f0f277bb2ce878ce1a",
+    "test_tie_order.py": "56cce39c70e36d6404301f2ab6beefbfff34be77f899243d6ac5957dbded464c",
+    "tie_sql_proof.py": "28b34617f915a454152e72fe24f9239aecde4b2e5bf026df461ff3a5ebe55462",
+    "verifier_candidate.py": "9908084bdbb7cb315b6b98840f340b86efa4ebcef24003721dd4c07c4718a3f4"
+  },
+  "state": "inactive_proposal",
+  "task_id": "SB-D01",
+  "version": "phase3-d01-tie-order-v1-offline-config-v1"
+}

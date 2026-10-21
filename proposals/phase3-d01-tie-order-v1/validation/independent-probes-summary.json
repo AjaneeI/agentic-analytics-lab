@@ -1,0 +1,70 @@
+{
+  "311": {
+    "actual_test_guard_denials_before_policy_self_checks": 0,
+    "candidate_active": false,
+    "case_count": 688,
+    "commit": "069407889c46e0a554f25950e77c667589f3138a",
+    "direct_policy_self_checks": [
+      "socket.__new__",
+      "subprocess.Popen",
+      "os.system",
+      "os.posix_spawn",
+      "os.fork",
+      "sqlite3.connect"
+    ],
+    "live_qualified": false,
+    "mismatches": [],
+    "new_treatment_a_attempts": 0,
+    "passed": true,
+    "phase3_accepted": false,
+    "python": "3.11.16",
+    "runtime_import_policy_denied": true,
+    "scope": "NEW synthetic data only; memory SQLite captures",
+    "script_sha256": "350bc88aa3d4c0cc44b145a27e34fc2ca750f81ce1f08e96a1e618a47faff583",
+    "side_effect_guard": {
+      "blocked_side_effect_attempts": [
+        "socket.__new__",
+        "subprocess.Popen",
+        "os.system",
+        "os.posix_spawn",
+        "os.fork",
+        "sqlite3.connect"
+      ],
+      "memory_sqlite_connections": 685
+    }
+  },
+  "312": {
+    "actual_test_guard_denials_before_policy_self_checks": 0,
+    "candidate_active": false,
+    "case_count": 688,
+    "commit": "069407889c46e0a554f25950e77c667589f3138a",
+    "direct_policy_self_checks": [
+      "socket.__new__",
+      "subprocess.Popen",
+      "os.system",
+      "os.posix_spawn",
+      "os.fork",
+      "sqlite3.connect"
+    ],
+    "live_qualified": false,
+    "mismatches": [],
+    "new_treatment_a_attempts": 0,
+    "passed": true,
+    "phase3_accepted": false,
+    "python": "3.12.6",
+    "runtime_import_policy_denied": true,
+    "scope": "NEW synthetic data only; memory SQLite captures",
+    "script_sha256": "350bc88aa3d4c0cc44b145a27e34fc2ca750f81ce1f08e96a1e618a47faff583",
+    "side_effect_guard": {
+      "blocked_side_effect_attempts": [
+        "socket.__new__",
+        "subprocess.Popen",
+        "os.system",
+        "os.posix_spawn",
+        "os.fork",
+        "sqlite3.connect"
+      ],
+      "memory_sqlite_connections": 685
+    }
+  }
+}
