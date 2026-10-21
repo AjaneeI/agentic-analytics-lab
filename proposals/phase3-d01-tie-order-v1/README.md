@@ -1,3 +1,36 @@
+## Dependency preflight successor — configuration v3
+
+The previously documented manual dependency-check limitation is corrected by
+`phase3-d01-dependency-preflight-v1`. The runner imports only standard-library
+modules until it verifies all six candidate files and all seven upstream files.
+It cross-checks the five original contract pins, rejects missing/extra/malformed
+manifest entries and missing/changed/outside-checkout files, and records the
+verified dependency hashes in each result. Two formerly unpinned dependencies,
+the upstream test module and validation runner, are now included.
+
+`synthetic-config-v3.json` is the default and explicit reviewed configuration.
+Original `synthetic-config.json` and all prior evidence remain byte-identical;
+the current runner refuses stale v1/v2 configurations before dependency imports.
+The loader compiles the retained hash-verified source bytes into fresh modules;
+unverified timestamp-valid bytecode and ambient module-cache entries are bypassed.
+Configuration v2 and the independently reproduced bytecode failure are preserved.
+Candidate/source and upstream verification is now automatic for the documented
+validation entrypoint. The bootstrap and approved configuration remain trusted
+host inputs; hashes do not authenticate a malicious Python host or authorize
+activation. The proof/verifier, original contract and frozen scorer are unchanged.
+
+Use:
+
+    python proposals/phase3-d01-tie-order-v1/run_validation.py --configuration proposals/phase3-d01-tie-order-v1/synthetic-config-v3.json --output NEW.json
+
+The initial review, receipt and validation directory below describe immutable
+historical v1 preparation. Successor validation/review are recorded separately
+locally with the executor report; old failure evidence is preserved.
+Raw successor archive publication was blocked by automatic approval review.
+Only scoped source/configuration changes and this summary are published.
+
+---
+
 # phase3-d01-tie-order-v1 — inactive offline correction
 
 This separately versioned candidate corrects D01-TIE-ORDER-01 in a copied,
@@ -47,7 +80,8 @@ Any later adapter integration or activation needs a separate reviewed version.
 
 ## Offline validation
 
-Run `run_validation.py --configuration synthetic-config.json --output NEW.json`
+Historical v1 command (refused by the current runner; use v3 above):
+`run_validation.py --configuration synthetic-config.json --output NEW.json`
 with Python3.11 or3.12. It refuses existing output paths and stale source pins
 before creating even memory SQLite. The unchanged upstream runner installs audit
 and import guards before candidate tests: no socket/network, process launch,
