@@ -1,0 +1,29 @@
+{
+  "version": "deterministic-evidence-validation-v1",
+  "status": "inactive_offline_preparation",
+  "base_commit": "15256f598e70bb09032120c0f0c0cf9e289a25fe",
+  "implementation_commit": "db5b8932fb7c25f8c0f5ada78a3b01e9789412c2",
+  "live_qualified": false,
+  "activation_authorized": false,
+  "phase_acceptance": false,
+  "new_treatment_a_attempts_authorized": 0,
+  "source_sha256": {
+    "src/evals/system_benchmark/baselines.py": "d3b0d9cd4826b45bdd1713446a7d95254bdcd6176e59a08012658f3617868e3c",
+    "tests/system_benchmark/test_deterministic_evidence_boundary.py": "eef76128d78ffc1615e2af71685b70a971af96cb05f2b8db1ebf0653adf468fd"
+  },
+  "implementation_patch_sha256": "0e066f9d0e01d7a6c023ebdcd645e491aa406fdd1498973dff7aa8201dd37dc8",
+  "preservation_manifest_sha256": "111307691490292a662bbbb19d62e6edcc74bd4d88665d656dafff3a0ede9397",
+  "intervention": "raw callback-evidence validation only at opt-in DeterministicSimpleExecutor boundary",
+  "unchanged": [
+    "shared deterministic handlers and fixed SQL",
+    "scorers, tasks, references and dataset generator",
+    "local worker prompt, model options, tools and runtime limits",
+    "all existing historical evidence and proposals"
+  ],
+  "non_goals": [
+    "new rounding, ranking, tie or metric-consistency rules",
+    "active integration",
+    "scientific acceptance",
+    "live query or model execution"
+  ]
+}
