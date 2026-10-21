@@ -1,0 +1,162 @@
+{
+  "assumptions": {
+    "blocked": "integer 0 or 1, not Boolean",
+    "snapshot": "complete host-bound rows with unique integer IDs",
+    "status": "non-null case-sensitive string"
+  },
+  "base_commit": "35ce571c448055aee8a2cbc6f841d17a69108d31",
+  "boundaries": [
+    "no activation/default import",
+    "no SQL execution in verifier",
+    "no live services/model/resource observations",
+    "no failed SQL replay",
+    "no historical rescoring",
+    "no frozen scorer/task/data/method changes",
+    "no held-out access",
+    "no future tool-call/prompt/budget changes",
+    "no statistical freeze or phase acceptance"
+  ],
+  "claim_fields": [
+    "execution_id",
+    "team",
+    "blocked_pct",
+    "unique_winner"
+  ],
+  "claim_tolerance_percentage_points": 0.2,
+  "comparison_precision": {
+    "captured_computation_absolute_and_relative_tolerance": 1e-12,
+    "claim_tolerance": "unchanged 0.2 percentage points",
+    "purpose": "floating SQLite computation reconciliation only; never used for winner selection"
+  },
+  "grammar": {
+    "ctes": "up to three acyclic single-source projection/filter or aggregate stages; no recursive/nested WITH",
+    "expressions": [
+      "column aliases and qualification",
+      "rational numeric constants",
+      "+ - * /",
+      "SUM(blocked)",
+      "COUNT(*)",
+      "COUNT(non-null binary blocked)",
+      "AVG(blocked)",
+      "SUM(CASE WHEN blocked=1 THEN 1 ELSE 0 END)",
+      "division only by nonzero constants or denominator monomials; never raw blocked or numerator factors"
+    ],
+    "predicates": [
+      "status != 'done'",
+      "status <> 'done'",
+      "'done' != status",
+      "NOT(status = 'done')",
+      "status NOT IN ('done')"
+    ],
+    "ranking": "full grouped output or ORDER BY final genuine percentage alias DESC with optional secondary output keys and LIMIT",
+    "result_aliases": "unquoted ASCII names case-insensitive in SQLite fixtures; collisions rejected; original bytes retained",
+    "sources": [
+      "delivery_work_items",
+      "agentic_analytics.delivery_work_items"
+    ],
+    "unsupported": [
+      "joins",
+      "unions",
+      "windows",
+      "subqueries",
+      "HAVING",
+      "rounding functions",
+      "arbitrary functions",
+      "comments",
+      "semicolons",
+      "SETTINGS",
+      "post-aggregate WHERE",
+      "SELECT *",
+      "pre-ranking limited CTEs",
+      "ungrouped non-key columns mixed with aggregates"
+    ]
+  },
+  "limit_boundary_ties": {
+    "activation": false,
+    "captured_rows": "Exact projected values and count; claimant team must occur in selected host capture.",
+    "claim": "Exact global co-max set unchanged; false unique claims still contradicted.",
+    "explicit_keys": "Every declared secondary/tertiary key remains binding.",
+    "live_qualified": false,
+    "selection": "All strictly preceding rows are mandatory; fill remaining positions with distinct members equal on every declared ORDER BY key at the LIMIT boundary. Exact snapshot-derived rational keys; no rounding or claim-tolerance tie grouping."
+  },
+  "metric": "100 * sum(active blocked) / count(active rows) per original team",
+  "offline_bounds": {
+    "ctes": 3,
+    "expression_depth": 32,
+    "query_characters": 8192,
+    "result_rows": 1000,
+    "serialized_capture_characters": 2097152,
+    "snapshot_rows": 10000,
+    "tokens": 1024
+  },
+  "outcomes": {
+    "contradicted": "trusted evidence conflicts with binding, population, lineage, ranking, captured result or claim",
+    "insufficient": "untrusted/missing/failed/incomplete/invalid/unsupported evidence; not a false semantic answer",
+    "proven": "supported computation in the synthetic host fixture; never live qualification"
+  },
+  "population": "status != 'done'",
+  "ranking": "exact unrounded rational ratios over every eligible team",
+  "reason_codes": [
+    "fixture_computation_proven",
+    "invalid_capture",
+    "untrusted_capture",
+    "capture_identity_mismatch",
+    "missing_binding",
+    "binding_mismatch",
+    "contract_mismatch",
+    "unsupported_origin",
+    "execution_not_successful",
+    "incomplete_result",
+    "invalid_snapshot",
+    "no_eligible_population",
+    "unsupported_sql",
+    "wrong_source",
+    "wrong_population",
+    "team_grouping_not_proven",
+    "truncated_team_domain",
+    "ranking_not_proven",
+    "team_lineage_not_proven",
+    "metric_lineage_not_proven",
+    "captured_result_mismatch",
+    "invalid_claim",
+    "claim_team_not_winner",
+    "claim_rate_mismatch",
+    "false_unique_claim"
+  ],
+  "source": "delivery_work_items",
+  "state": "inactive_proposal",
+  "supersedes_for_offline_validation_only": "phase3-d01-provenance-v1",
+  "task": "SB-D01",
+  "ties": "all exact co-max teams; unique_winner must be false for a tie",
+  "trust": {
+    "binding_fields": [
+      "execution_id",
+      "call_id",
+      "task_id",
+      "source_commit",
+      "metric_version",
+      "query_sha256",
+      "result_sha256",
+      "snapshot_sha256",
+      "config_sha256",
+      "contract_sha256"
+    ],
+    "capture_identity": "nonserializable object identity resolved independently and pinned by expected.capture_ref",
+    "entrypoint": "verify(claim, *, resolver, expected)",
+    "host_only_arguments": [
+      "resolver",
+      "expected"
+    ],
+    "limit": "Host arguments must be independently controlled. This library is not a sandbox against a malicious host/Python caller. Checksums and origin strings cannot authenticate a serialized agent envelope.",
+    "live_adapter": "not implemented or activated",
+    "supported_origin": "synthetic_sqlite only"
+  },
+  "upstream_source_sha256": {
+    "proposals/phase3-d01-capture-integration-v1/capture_adapter.py": "836e4060dc72afc837640e74f6fc4dc138b2178f06ca08f7b703d84c5c129f26",
+    "proposals/phase3-d01-capture-integration-v1/contract.json": "cbf63bd86c809a909aa97c06077dd9293534557f772d5efffec1002dc7c3a2cf",
+    "proposals/phase3-d01-provenance-v1/contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "proposals/phase3-d01-provenance-v1/sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "proposals/phase3-d01-provenance-v1/verifier.py": "857b928e02afd9209ccfa0431925c79b64706571eb40c825c41e28f1fbbceb32"
+  },
+  "version": "phase3-d01-tie-order-v1"
+}

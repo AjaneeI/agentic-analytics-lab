@@ -1,0 +1,1331 @@
+{
+  "candidate_active": false,
+  "configuration_sha256": "f016e9fb827a652e1ebffbb53b899ac1b5580734f4bd6710173bab6ebac8d88b",
+  "live_qualified": false,
+  "new_errors": 0,
+  "new_failures": 0,
+  "new_treatment_a_attempts": 0,
+  "new_unit_tests": 18,
+  "passed": true,
+  "phase3_accepted": false,
+  "python": "3.12.6",
+  "reused_errors": 0,
+  "reused_failures": 0,
+  "reused_unit_tests": 28,
+  "side_effect_guard": {
+    "blocked_side_effect_attempts": [],
+    "memory_sqlite_connections": 211
+  },
+  "tie_controls": {
+    "case_count": 16,
+    "cases": [
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "proven",
+        "id": "T01-real-sqlite-unspecified-co-max",
+        "live_qualified": false,
+        "observed": "proven",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "fixture_computation_proven",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "proven",
+        "id": "T02-peer-Dune",
+        "live_qualified": false,
+        "observed": "proven",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "fixture_computation_proven",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Dune"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "proven",
+        "id": "T02-peer-Elm",
+        "live_qualified": false,
+        "observed": "proven",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "fixture_computation_proven",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "proven",
+        "id": "T03-explicit-ASC",
+        "live_qualified": false,
+        "observed": "proven",
+        "query_sha256": "d3f96c2baca8ab097da730551e5f4c6240e803026c2988daacb1dfe7871f3e7a",
+        "reason": "fixture_computation_proven",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Dune"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC, team ASC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "contradicted",
+        "id": "N01-explicit-wrong-ASC",
+        "live_qualified": false,
+        "observed": "contradicted",
+        "query_sha256": "d3f96c2baca8ab097da730551e5f4c6240e803026c2988daacb1dfe7871f3e7a",
+        "reason": "captured_result_mismatch",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC, team ASC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "proven",
+        "id": "T03-explicit-DESC",
+        "live_qualified": false,
+        "observed": "proven",
+        "query_sha256": "76d9837818e3e7029b1c9e46e8c1db71f63dd65bf11d8837083af8be9ebbd641",
+        "reason": "fixture_computation_proven",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC, team DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "contradicted",
+        "id": "N01-explicit-wrong-DESC",
+        "live_qualified": false,
+        "observed": "contradicted",
+        "query_sha256": "76d9837818e3e7029b1c9e46e8c1db71f63dd65bf11d8837083af8be9ebbd641",
+        "reason": "captured_result_mismatch",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Dune"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC, team DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "contradicted",
+        "id": "N02-false-unique",
+        "live_qualified": false,
+        "observed": "contradicted",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "false_unique_claim",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "contradicted",
+        "id": "N03-uncaptured-winner",
+        "live_qualified": false,
+        "observed": "contradicted",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "captured_result_mismatch",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "contradicted",
+        "id": "N04-fabricated-rate",
+        "live_qualified": false,
+        "observed": "contradicted",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "captured_result_mismatch",
+        "rows": [
+          {
+            "rate": 99.9,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "proven",
+        "id": "T04-boundary-Birch",
+        "live_qualified": false,
+        "observed": "proven",
+        "query_sha256": "95f0e494edc666887f03ee691f55880b80b44ff6e517f35da4c56a36922e11e4",
+        "reason": "fixture_computation_proven",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Aster"
+          },
+          {
+            "rate": 50.0,
+            "team": "Birch"
+          }
+        ],
+        "snapshot_sha256": "1a6eb08c8af2096aaaab576a4d41d8158153e1eeba7b0f2184bb665b62e32cf5",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 2"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "proven",
+        "id": "T04-boundary-Cedar",
+        "live_qualified": false,
+        "observed": "proven",
+        "query_sha256": "95f0e494edc666887f03ee691f55880b80b44ff6e517f35da4c56a36922e11e4",
+        "reason": "fixture_computation_proven",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Aster"
+          },
+          {
+            "rate": 50.0,
+            "team": "Cedar"
+          }
+        ],
+        "snapshot_sha256": "1a6eb08c8af2096aaaab576a4d41d8158153e1eeba7b0f2184bb665b62e32cf5",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 2"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "contradicted",
+        "id": "N05-missing-strict-prefix",
+        "live_qualified": false,
+        "observed": "contradicted",
+        "query_sha256": "95f0e494edc666887f03ee691f55880b80b44ff6e517f35da4c56a36922e11e4",
+        "reason": "captured_result_mismatch",
+        "rows": [
+          {
+            "rate": 50.0,
+            "team": "Birch"
+          },
+          {
+            "rate": 50.0,
+            "team": "Cedar"
+          }
+        ],
+        "snapshot_sha256": "1a6eb08c8af2096aaaab576a4d41d8158153e1eeba7b0f2184bb665b62e32cf5",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 2"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "contradicted",
+        "id": "N06-duplicate",
+        "live_qualified": false,
+        "observed": "contradicted",
+        "query_sha256": "95f0e494edc666887f03ee691f55880b80b44ff6e517f35da4c56a36922e11e4",
+        "reason": "captured_result_mismatch",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Aster"
+          },
+          {
+            "rate": 100.0,
+            "team": "Aster"
+          }
+        ],
+        "snapshot_sha256": "1a6eb08c8af2096aaaab576a4d41d8158153e1eeba7b0f2184bb665b62e32cf5",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 2"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "insufficient",
+        "id": "I01-failed-execution",
+        "live_qualified": false,
+        "observed": "insufficient",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "execution_not_successful",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      },
+      {
+        "config_sha256": "16aaaa4accfeabf627225b6e98378b49f47fc17f0dc64b5be66323228e4c6c4e",
+        "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+        "expected": "insufficient",
+        "id": "I02-incomplete-capture",
+        "live_qualified": false,
+        "observed": "insufficient",
+        "query_sha256": "8a828eb172dc455d39818b5530f27d1aa7e1a8fe245fd1d0a9ddf1f43d13cc93",
+        "reason": "incomplete_result",
+        "rows": [
+          {
+            "rate": 100.0,
+            "team": "Elm"
+          }
+        ],
+        "snapshot_sha256": "3f61b1f1f380cb5e48aa2d2984bddd0f3481386b7f49397b05c71e655d9047f2",
+        "sql": "SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM delivery_work_items WHERE status!='done' GROUP BY team ORDER BY rate DESC LIMIT 1"
+      }
+    ],
+    "false_acceptances": [],
+    "mismatches": [],
+    "supported_valid_false_rejections": []
+  },
+  "upstream_controls_with_new_versioned_captures": {
+    "case_count": 60,
+    "cases": [
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P01-canonical-limit",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P02-full-teams",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "ddef099aabd79cfbcca788f4ba9d7995ae920893840f3eeffa92a01868da3f5d",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P03-avg",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * AVG(blocked) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "3cc331d1d05946734cba5940be359f85b46db96acf1a80760cdf190efc675615",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P04-case",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(CASE WHEN blocked=1 THEN 1 ELSE 0 END) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "57a70a1f706533c1855692799da95dcd040ff5c807be852118a38ca981a05eed",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P05-projection-cte",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "WITH active AS (SELECT team, blocked FROM delivery_work_items WHERE status!='done') SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM active GROUP BY team ORDER BY rate DESC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "6a6c2b0a522b09dd9ae8c095b5530a28052b9783a5247586382d46e7015f9f26",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P06-counts-cte",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "WITH counts AS (SELECT team, SUM(blocked) AS b, COUNT(*) AS n FROM delivery_work_items WHERE status!='done' GROUP BY team) SELECT team, 100.0*b/n AS rate FROM counts ORDER BY rate DESC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "af4ac31efc9d05f3e0f6cce782ed773a063c3e8298142e4089bf4ae6d5f5f8aa",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P07-not-in",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status NOT IN ('done') GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "70cf593a6e233000723975ae88cb146a49b9c62b15684be1b1f6df3a91170fc9",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P08-negation",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE NOT(status='done') GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "2df9824f29b7c651eaf048136d750e0a3cdbeebbbb51f33f01a5771bbb021863",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N01-literal",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 75.0 AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "metric_lineage_not_proven",
+        "result": {
+          "live_qualified": false,
+          "reason": "metric_lineage_not_proven",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N02-decorative",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 75.0+0*SUM(blocked) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "ranking_not_proven",
+        "result": {
+          "live_qualified": false,
+          "reason": "ranking_not_proven",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N03-reciprocal",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0*COUNT(*)/SUM(blocked) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "metric_lineage_not_proven",
+        "result": {
+          "live_qualified": false,
+          "reason": "metric_lineage_not_proven",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N04-wrong-denominator",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0*SUM(blocked)/SUM(blocked) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "metric_lineage_not_proven",
+        "result": {
+          "live_qualified": false,
+          "reason": "metric_lineage_not_proven",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N05-wrong-case-population",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'Done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "wrong_population",
+        "result": {
+          "live_qualified": false,
+          "reason": "wrong_population",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N06-no-filter",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "wrong_population",
+        "result": {
+          "live_qualified": false,
+          "reason": "wrong_population",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N07-picked-team",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status!='done' AND team='Amber' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "wrong_population",
+        "result": {
+          "live_qualified": false,
+          "reason": "wrong_population",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N08-ascending",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct ASC, team ASC LIMIT 1",
+        "reason": "ranking_not_proven",
+        "result": {
+          "live_qualified": false,
+          "reason": "ranking_not_proven",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N09-literal-case",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, CASE WHEN 1=1 THEN 75.0 ELSE SUM(blocked) END AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "ranking_not_proven",
+        "result": {
+          "live_qualified": false,
+          "reason": "ranking_not_proven",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N10-fabricated-result",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "captured_result_mismatch",
+        "result": {
+          "live_qualified": false,
+          "reason": "captured_result_mismatch",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N11-wrong-team-claim",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "claim_team_not_winner",
+        "result": {
+          "live_qualified": false,
+          "reason": "claim_team_not_winner",
+          "status": "contradicted",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N12-wrong-rate-claim",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "claim_rate_mismatch",
+        "result": {
+          "live_qualified": false,
+          "reason": "claim_rate_mismatch",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I01-function-outside-grammar",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * TOTAL(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "unsupported_sql",
+        "result": {
+          "live_qualified": false,
+          "reason": "unsupported_sql",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I02-equivalent-not-not-outside-grammar",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE NOT NOT(status!='done') GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "unsupported_sql",
+        "result": {
+          "live_qualified": false,
+          "reason": "unsupported_sql",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I03-failed-current-call",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "execution_not_successful",
+        "result": {
+          "live_qualified": false,
+          "reason": "execution_not_successful",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I04-incomplete-result",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "incomplete_result",
+        "result": {
+          "live_qualified": false,
+          "reason": "incomplete_result",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I05-unimplemented-live-origin",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "unsupported_origin",
+        "result": {
+          "live_qualified": false,
+          "reason": "unsupported_origin",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I06-empty",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "no_eligible_population",
+        "result": {
+          "live_qualified": false,
+          "reason": "no_eligible_population",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M01-active-blocked",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 5,
+          "live_qualified": false,
+          "numerator": 4,
+          "percentage_exact": "80",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "cf17d0c41ecedfde1f5ad817d30e3842b831158aa0cdf5c16b0305f2bb9853b4"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M02-active-unblocked",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 5,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "60",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "3d9c1524e4e9857975aade55528120a207cfc879c78520c84d9c4561bd4d2a53"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M03-competitor-flip",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 13,
+          "live_qualified": false,
+          "numerator": 10,
+          "percentage_exact": "1000/13",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Birch"
+          ]
+        },
+        "snapshot_sha256": "d3e4dae4f2a37a29f8e742eb9e9f71ae4c5ebc5d49152d002562c028f78ee3ac"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M04-excluded-completed",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "3563878acdd96a70d715027b0b999339ebe8a693b91958c0ad131c55f74e42e3"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M05-row-permutation",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "c418db316c7358456bec81c288f1f3c4960319d1cce82ba8402175601bac4179"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M06-duplication",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 8,
+          "live_qualified": false,
+          "numerator": 6,
+          "percentage_exact": "75",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "257b21387cd0cc56e5fda7b81527d04577522e94b371fe9f2c8c06f26a4984db"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M07-exact-tie-acknowledged",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber",
+            "Birch"
+          ]
+        },
+        "snapshot_sha256": "caa7ff55f7b6676f0ceb71642f0878c4348d3ea339ca46bbcd117ba6052b93ba"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "M08-exact-tie-false-unique",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "false_unique_claim",
+        "result": {
+          "live_qualified": false,
+          "reason": "false_unique_claim",
+          "status": "contradicted",
+          "winners": [
+            "Amber",
+            "Birch"
+          ]
+        },
+        "snapshot_sha256": "caa7ff55f7b6676f0ceb71642f0878c4348d3ea339ca46bbcd117ba6052b93ba"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M09-consistent-renaming",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Zulu"
+          ]
+        },
+        "snapshot_sha256": "f33aaadb85f39781befb63eb55cf5c3c60797ba53e0bf8fc8f961e30b78d419a"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "M10-unrounded-near-tie",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 125,
+          "live_qualified": false,
+          "numerator": 94,
+          "percentage_exact": "376/5",
+          "query_sha256": "e86613094e231fdc1667bf416e4b525d069cc246e6138713e57f952428623e85",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "High"
+          ]
+        },
+        "snapshot_sha256": "f1def00c039418c15efd2eb86722644726597a2d658b9ec0cd395c8fec660df4"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "M11-rounded-wrong-winner",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "claim_team_not_winner",
+        "result": {
+          "live_qualified": false,
+          "reason": "claim_team_not_winner",
+          "status": "contradicted",
+          "winners": [
+            "High"
+          ]
+        },
+        "snapshot_sha256": "f1def00c039418c15efd2eb86722644726597a2d658b9ec0cd395c8fec660df4"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P09-uppercase-rate-alias",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS RATE FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY RATE DESC, team ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "ddc0a907b0f6b7f2eebc45e45fe28031a133c07b23032bea90d895c61a5cd38f",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "proven",
+        "expected": "proven",
+        "id": "P10-uppercase-team-alias",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team AS SQUAD, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, SQUAD ASC LIMIT 1",
+        "reason": "fixture_computation_proven",
+        "result": {
+          "capture_origin": "synthetic_sqlite",
+          "contract_sha256": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+          "denominator": 4,
+          "live_qualified": false,
+          "numerator": 3,
+          "percentage_exact": "75",
+          "query_sha256": "e36f4b0d7526060000f67fe300aede91052e97d953833d11b4f1ab59b6797444",
+          "reason": "fixture_computation_proven",
+          "status": "proven",
+          "winners": [
+            "Amber"
+          ]
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I07-renamed-unsupported-predicate",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "WITH renamed AS (SELECT team, blocked, status AS state FROM delivery_work_items) SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM renamed WHERE NOT NOT(state!='done') GROUP BY team ORDER BY rate DESC LIMIT 1",
+        "reason": "unsupported_sql",
+        "result": {
+          "live_qualified": false,
+          "reason": "unsupported_sql",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N13-huge-claim",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "invalid_claim",
+        "result": {
+          "live_qualified": false,
+          "reason": "invalid_claim",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N14-huge-result",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "captured_result_mismatch",
+        "result": {
+          "live_qualified": false,
+          "reason": "captured_result_mismatch",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I08-limited-cte",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "WITH cut AS (SELECT team, blocked, status FROM delivery_work_items LIMIT 1000) SELECT team, 100.0*SUM(blocked)/COUNT(*) AS rate FROM cut WHERE status!='done' GROUP BY team",
+        "reason": "unsupported_sql",
+        "result": {
+          "live_qualified": false,
+          "reason": "unsupported_sql",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I09-quoted-case-sensitive-alias",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS \"Rate\" FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY \"Rate\" DESC, team ASC LIMIT 1",
+        "reason": "unsupported_sql",
+        "result": {
+          "live_qualified": false,
+          "reason": "unsupported_sql",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "80a7da4e8a4f15fb2e4d5e483791d37d0481cf1e413171a80d587eab8a51ccaa"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I10-invalid-binary-source",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "invalid_snapshot",
+        "result": {
+          "live_qualified": false,
+          "reason": "invalid_snapshot",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "68548061ed16b6a83d384638a9e08e4d033de3cd8023ef3119d5e33fc8cc14a0"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "N15-cancelled-wrong-denominator",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) * SUM(blocked) / SUM(blocked) AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "metric_lineage_not_proven",
+        "result": {
+          "live_qualified": false,
+          "reason": "metric_lineage_not_proven",
+          "status": "contradicted"
+        },
+        "snapshot_sha256": "031ec47dd69cd466981a0a387818c2c8df9f90521f28e60182c00509a7135732"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I11-ungrouped-column-cancellation",
+        "matches_expectation": true,
+        "origin": "new_synthetic_sqlite_fixture",
+        "query": "SELECT team, 100.0 * SUM(blocked) / COUNT(*) * blocked / blocked AS blocked_pct FROM delivery_work_items WHERE status != 'done' GROUP BY team ORDER BY blocked_pct DESC, team ASC LIMIT 1",
+        "reason": "unsupported_sql",
+        "result": {
+          "live_qualified": false,
+          "reason": "unsupported_sql",
+          "status": "insufficient"
+        },
+        "snapshot_sha256": "031ec47dd69cd466981a0a387818c2c8df9f90521f28e60182c00509a7135732"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I-malformed-result_json",
+        "matches_expectation": true,
+        "origin": "malformed_host_capture_negative_control",
+        "reason": "invalid_capture"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I-malformed-snapshot_json",
+        "matches_expectation": true,
+        "origin": "malformed_host_capture_negative_control",
+        "reason": "invalid_capture"
+      },
+      {
+        "actual": "insufficient",
+        "expected": "insufficient",
+        "id": "I-malformed-config_json",
+        "matches_expectation": true,
+        "origin": "malformed_host_capture_negative_control",
+        "reason": "invalid_capture"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-query_sha256",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-result_sha256",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-snapshot_sha256",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-config_sha256",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-source_commit",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-execution_id",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-call_id",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-metric_version",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-task_id",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      },
+      {
+        "actual": "contradicted",
+        "expected": "contradicted",
+        "id": "B-contract_sha256",
+        "matches_expectation": true,
+        "origin": "host_binding_mutation",
+        "reason": "binding_mismatch"
+      }
+    ],
+    "false_acceptances": [],
+    "reason_or_outcome_mismatches": [],
+    "supported_valid_false_rejections": []
+  },
+  "version": "phase3-d01-tie-order-v1"
+}

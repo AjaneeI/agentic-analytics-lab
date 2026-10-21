@@ -1,0 +1,41 @@
+{
+  "observations": [
+    {
+      "source_manifest": "outputs/treatment-a-20261017/sha256.json",
+      "manifest_sha256": "97cc69f4f80b2f729e41f5fb0a2c032e0bb05f3dcc32209719f892e3d90325c5",
+      "verified_files": 20,
+      "all_match": true
+    },
+    {
+      "source_manifest": "outputs/treatment-a-scope-v1-20261017/sha256.json",
+      "manifest_sha256": "2144b8dc8aed85a48825e4c8941ab78b95e6e7f7e99307a38ca3e998e0256707",
+      "verified_files": 4,
+      "all_match": true
+    },
+    {
+      "source_manifest": "outputs/treatment-a-response-format-v1-20261017/sha256.json",
+      "manifest_sha256": "cfc4c32843a5b6f51abc36484c2c978a80c9fb100cf83c683f986b2424fb8d9d",
+      "verified_files": 4,
+      "all_match": true
+    },
+    {
+      "source_manifest": "outputs/treatment-a-jit-off-v1-20261018/sha256.json",
+      "manifest_sha256": "51c53d7ae295e2a18d1bd7aefbae3d91d429defc1b7244539c7801c45e5bbf90",
+      "verified_files": 4,
+      "all_match": true
+    },
+    {
+      "source_manifest": "outputs/phase3-d01-provenance-v1-20261019/evidence-manifest.json",
+      "manifest_sha256": "c16b2c398bef6ddeea605ac5d997d3e7cc4ce48ed7aae226e2b740cfad5d6c76",
+      "verified_files": 80,
+      "all_match": true
+    },
+    {
+      "source_manifest": "outputs/phase3-d01-capture-integration-v1-20261019/evidence-manifest.json",
+      "manifest_sha256": "a063d7af4b59941f57b1301a17a46b26fc3f19e8832f2949158af891d0c0616e",
+      "verified_files": 66,
+      "all_match": true
+    }
+  ],
+  "no_replay_or_rescore": true
+}

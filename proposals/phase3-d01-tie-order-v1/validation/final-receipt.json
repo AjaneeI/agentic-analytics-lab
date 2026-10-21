@@ -1,0 +1,53 @@
+{
+  "authorized_treatment_a_attempts": 0,
+  "base_commit": "35ce571c448055aee8a2cbc6f841d17a69108d31",
+  "candidate_active": false,
+  "candidate_source_sha256": {
+    "PLAN.md": "7954ed07f0b384da0dc052b0313a59116ecd428229c56ce5e03a92714dbb63e3",
+    "README.md": "57214a46fefb4afc59f89424cc99d996786c9e851511c153115e748017eb1751",
+    "contract.json": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+    "run_validation.py": "0eb6b2ca36aa693c20403ad89b022bd8db4e43b22ad479f0f277bb2ce878ce1a",
+    "synthetic-config.json": "f016e9fb827a652e1ebffbb53b899ac1b5580734f4bd6710173bab6ebac8d88b",
+    "test_tie_order.py": "56cce39c70e36d6404301f2ab6beefbfff34be77f899243d6ac5957dbded464c",
+    "tie_sql_proof.py": "28b34617f915a454152e72fe24f9239aecde4b2e5bf026df461ff3a5ebe55462",
+    "verifier_candidate.py": "9908084bdbb7cb315b6b98840f340b86efa4ebcef24003721dd4c07c4718a3f4"
+  },
+  "dependency_pin_limitation": "upstream pins verified separately; standalone configuration preflight alone does not enforce them",
+  "implementation_source_commit": "ddbf12b9bef118f0ae74abca436242c859519ad3",
+  "independent_review": "accepted inactive preparation only; no must-fix",
+  "live_qualified": false,
+  "phase3_accepted": false,
+  "reviewed_commit": "069407889c46e0a554f25950e77c667589f3138a",
+  "schema": "phase3-d01-tie-order-offline-receipt-v1",
+  "validation_files_sha256": {
+    "FINAL-REVIEW.md": "8de8ca47971208ca94a368e026d757653fae9b1f13bc085090ec15b7e3eea0e3",
+    "README.md": "2369abb63f051ee6f3e21f4d8d0da5bf4e25e3845da0f953d6ae9ff8d5c43f39",
+    "archive-files-sha256.json": "36ae82ff12d8f0d999cd45488a2da96f457c69d4fb6073973298e5f02cbcb6f1",
+    "author-py311.json": "37cb9000ebb278f7377101b8512a07ee17fee8701b544330e234e15d143ca04f",
+    "author-py312.json": "aa7d1b8747ffc486a476732adcaac61621439587fd2658b8c395ae70037ab843",
+    "candidate-vs-upstream.diff": "8f070ca89b48474f165aa78ef77bf3f82767d6933172e6af263297de1ea0cb89",
+    "historical-evidence-preservation.json": "94abc70877e21d081982d8ac1250cf59cf4cdd67877826ee1a87b3691f58965d",
+    "independent-probes-summary.json": "023d6b59712ae5698b2b67f3f70199842cca64cee0e61d3892e602175ed2d39a",
+    "offline-validation-evidence.zip": "f8cecd144188e0cddd7744b6bf9af5f8a5288eaff29c851a6e196675fdaef26d",
+    "preflight-controls-py311.json": "c25cfa31c275a7c04638207935ecffef891e75c59575ef6d865da8891d6156b3",
+    "preflight-controls-py312.json": "c25cfa31c275a7c04638207935ecffef891e75c59575ef6d865da8891d6156b3",
+    "preservation-manifest.json": "4e64b7149f1c67886d3190b063a7540e13152c7c3b53aac75ecb0b720e6ad367"
+  },
+  "validation_summary": {
+    "base_paths_preserved": 304,
+    "broader_repository_tests_per_version": 297,
+    "historical_D01_capture_evidence_files_verified": 66,
+    "historical_D01_provenance_evidence_files_verified": 80,
+    "historical_attempt_raw_files_verified": 32,
+    "independent_probes_per_version": 688,
+    "new_methods_per_version": 18,
+    "new_tie_matrix_cases_per_version": 16,
+    "preflight_controls_per_version": 8,
+    "python_versions": [
+      "3.11.16",
+      "3.12.6"
+    ],
+    "reused_methods_per_version": 28,
+    "reused_named_controls_per_version": 60
+  }
+}
