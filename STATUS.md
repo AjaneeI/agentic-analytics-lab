@@ -1,5 +1,17 @@
 # Verified Project Status
 
+## October21 inactive deterministic evidence-boundary correction
+
+An isolated successor of PR104 validates raw callback evidence before the
+opt-in deterministic adapter's unchanged shared normalization. New synthetic
+controls reproduce malformed-team/count acceptance and unhandled conversion
+errors on the original adapter; the correction declines those inputs without
+retry. Valid outputs, fixed SQL, shared handlers, scorer, fixtures, model and
+runtime remain unchanged. Both Python3.11/3.12 suites pass332 tests. See
+`proposals/deterministic-evidence-validation-v1/` for source pins and limits.
+This is offline preparation only; Phase2 remains unqualified, Phase3 unaccepted,
+Phase4 unfrozen and Phase5 unentered. No new live authorization is inferred.
+
 _Last reviewed for branch preparation on 2026-10-17. Historical checkpoints below are retained._
 
 ## Latest Phase 5 preparation — no phase acceptance

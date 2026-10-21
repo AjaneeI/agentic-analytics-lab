@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import math
 from pathlib import Path
+import re
 import time
 
 from src.evals.system_benchmark.contracts import (
@@ -106,6 +107,39 @@ _ALL_ITEM_BLOCKER_LEADER_REQUEST = (
 )
 
 
+def _validate_raw_metric_rows(rows: object) -> None:
+    """Validate callback evidence before the shared handler can coerce it.
+
+    Preserve ordinary JSON numeric values and quoted numeric output; counts
+    must be whole numbers. Do not repair the evidence or adjudicate metric
+    consistency, population, rounding or tie semantics here.
+    """
+    numeric = ("total_items", "blocked_items", "blocker_rate", "avg_effort_ratio")
+    required = {"team", *numeric}
+    if not isinstance(rows, list) or not rows:
+        raise DeterministicBaselineDeclined("query must return a non-empty list of metric rows")
+    for row in rows:
+        if not isinstance(row, dict) or not required.issubset(row):
+            raise DeterministicBaselineDeclined("query returned an incomplete or malformed metric row")
+        if not isinstance(row["team"], str) or not row["team"].strip():
+            raise DeterministicBaselineDeclined("query returned an invalid team name")
+        for field in numeric:
+            value = row[field]
+            if isinstance(value, bool) or not isinstance(value, (int, float, str)):
+                raise DeterministicBaselineDeclined("query returned invalid numeric types")
+            try:
+                finite = math.isfinite(float(value))
+            except (ValueError, OverflowError):
+                finite = False
+            if not finite:
+                raise DeterministicBaselineDeclined("query returned invalid or non-finite metric values")
+            if field in ("total_items", "blocked_items"):
+                if ((isinstance(value, float) and not value.is_integer())
+                        or (isinstance(value, str)
+                            and re.fullmatch(r"[+-]?[0-9]+", value.strip()) is None)):
+                    raise DeterministicBaselineDeclined("query returned a non-integer count")
+
+
 class DeterministicSimpleExecutor:
     """Runner-compatible fixed-query baseline for the approved all-item request.
 
@@ -137,9 +171,14 @@ class DeterministicSimpleExecutor:
         if task.trajectory.max_tool_calls is not None and task.trajectory.max_tool_calls < 1:
             raise DeterministicBaselineDeclined("task tool-call budget does not permit a query")
 
+        def checked_query(sql: str):
+            rows = self.query_fn(sql)
+            _validate_raw_metric_rows(rows)
+            return rows
+
         try:
             result = execute_deterministic_handler(
-                HandlerKey.BLOCKER_RATE_LEADER, query_fn=self.query_fn,
+                HandlerKey.BLOCKER_RATE_LEADER, query_fn=checked_query,
             )
         except DeterministicHandlerDeclined as exc:
             raise DeterministicBaselineDeclined(str(exc)) from exc
