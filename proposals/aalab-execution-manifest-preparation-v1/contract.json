@@ -1,0 +1,54 @@
+{
+  "arms": [
+    "baseline",
+    "candidate"
+  ],
+  "cell_fields": [
+    "arm",
+    "block_id",
+    "configuration_sha256",
+    "end_utc",
+    "execution_order",
+    "family",
+    "repeat_id",
+    "run_id",
+    "seed_control",
+    "session_id",
+    "shared_block_id",
+    "start_utc",
+    "task_id",
+    "task_version",
+    "treatment_sha256"
+  ],
+  "declared_dependence": [
+    "unknown",
+    "dependent"
+  ],
+  "independence_established": false,
+  "live_qualified": false,
+  "max_cells": 32,
+  "max_input_bytes": 65536,
+  "max_receipt_bytes": 65536,
+  "max_tasks": 8,
+  "new_attempts": 0,
+  "repeat_labels": [
+    1,
+    2
+  ],
+  "root_fields": [
+    "cells",
+    "independence",
+    "synthetic",
+    "version"
+  ],
+  "scientific_ready": false,
+  "seed_control_fields": [
+    "reason",
+    "seed",
+    "state"
+  ],
+  "sequential_only": true,
+  "state": "inactive_proposal",
+  "utc_format": "YYYY-MM-DDTHH:MM:SS[.ffffff]Z",
+  "version": "aalab-execution-manifest-preparation-v1"
+}

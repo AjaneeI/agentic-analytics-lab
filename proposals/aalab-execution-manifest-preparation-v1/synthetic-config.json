@@ -1,0 +1,18 @@
+{
+  "active": false,
+  "base_published_commit": "4c985a778976755cb8e426d5b34ced7a6b48b976",
+  "base_tree": "6734d3e4d816e22bb0c621d36e0b73a8b07b35d1",
+  "c1_source_sha256": "17d79f9d986114a39edf921ada2b467ac8e356691873d52af1e8cd41258e6b37",
+  "live_qualified": false,
+  "new_attempts": 0,
+  "scientific_ready": false,
+  "source_commit": "1aae8926be6ec40b3825baabf79b237684c4b1a8",
+  "source_sha256": {
+    "README.md": "78456d5ca21fcbc13afc9f61f49b9adebe602cab85565025380c9f9a1f979a83",
+    "contract.json": "67540959ee05f4bc8aff93a6268c9f93c383fda70a9525c6d42c72f577a8a271",
+    "manifest.py": "cf3edf7fdd438ef4d422b26c6c514b63ee0d61a2764a1d5edf3b452581b63df0",
+    "run_validation.py": "7765f77a0f85e4aea6b8d2aa63d5f3fb8665cc521a153c2492e0162d609c2e55",
+    "test_manifest.py": "84145e23835f6f02180b8f92c4cc984d2e59aca42c9db5e064fe49017d80411c"
+  },
+  "version": "aalab-execution-manifest-preparation-v1"
+}
