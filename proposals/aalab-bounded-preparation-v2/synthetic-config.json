@@ -1,0 +1,36 @@
+{
+  "activation": false,
+  "approved_package_sha256": "6c4762587e35edd6d0ed6babc10949c7b0f1ad67e308d264623e963812ccce46",
+  "authorized_treatment_a_attempts": 0,
+  "dependency_sha256": {
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "proposals/phase3-d01-capture-integration-v1/capture_adapter.py": "836e4060dc72afc837640e74f6fc4dc138b2178f06ca08f7b703d84c5c129f26",
+    "proposals/phase3-d01-capture-integration-v1/contract.json": "cbf63bd86c809a909aa97c06077dd9293534557f772d5efffec1002dc7c3a2cf",
+    "proposals/phase3-d01-provenance-v1/contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "proposals/phase3-d01-provenance-v1/sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "proposals/phase3-d01-provenance-v1/verifier.py": "857b928e02afd9209ccfa0431925c79b64706571eb40c825c41e28f1fbbceb32",
+    "proposals/phase3-d01-tie-order-v1/contract.json": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+    "proposals/phase3-d01-tie-order-v1/run_validation.py": "67c89e66e72a522d4aaef8014608948efd6100b85d8b36fbf8cf67d20bde1da4",
+    "proposals/phase3-d01-tie-order-v1/synthetic-config-v3.json": "d21042e0c911a04fc166a578c51bf8fdb5f9d06a73d15a8a208b733db36a55c8",
+    "proposals/phase3-d01-tie-order-v1/tie_sql_proof.py": "28b34617f915a454152e72fe24f9239aecde4b2e5bf026df461ff3a5ebe55462",
+    "proposals/phase3-d01-tie-order-v1/verifier_candidate.py": "9908084bdbb7cb315b6b98840f340b86efa4ebcef24003721dd4c07c4718a3f4"
+  },
+  "live_qualified": false,
+  "source_commit": "38c8c0ebe80583946dc158cb7d7ee127622a448b",
+  "source_sha256": {
+    "compatibility-roster.json": "b1fffc26e0f73a255c975eada98e0ac8da0b565ba59f58423d62c4932cbd33b3",
+    "contract.json": "3532caadac0b619730f17ed8a8a5ede1a12368ea9b7e919919a43edc336122db",
+    "endpoint_contract.py": "817ebd30e89208ed9e48db24306a8dcfd4f399eae1688e3009b0eda33b6f63aa",
+    "integrated_capture.py": "625e1c0a926074bcf8d9c1df7209e91f68159318420c9b1b3068fa8f69952b8c",
+    "offline_loader.py": "76a6674a38350a4442448f994e52d8d052839db871aef3c8259911d9a2eee62c",
+    "run_validation.py": "652ed1d9b622f7a41c10cbb1329e4976415681b67c9f7710d7890c876ac4a97c",
+    "semantic_guards.py": "2aaa8cad83597ec348233bd87b290c0cac56feaa6f5ecfe53aea0e89f4e567c5",
+    "test_capture_integration.py": "9b4e118a656804f921b4f88b7a721435eb72746461a029d7293664eb919e9283",
+    "test_endpoint_contract.py": "79e969e496edb2a4e3ad2d36eff68b001fb081f9b1692bd5b5355de775eaec73",
+    "test_preflight.py": "0720f12fa49ade761e2856ab45cca3c18063d70a49947619313864a7915ce685",
+    "test_semantic_guards.py": "2e9db46a66ace7f76c74a2915644197cb6cbc558cd64babdc3cd5a27d82517b4"
+  },
+  "state": "inactive_proposal",
+  "version": "aalab-bounded-preparation-v2"
+}

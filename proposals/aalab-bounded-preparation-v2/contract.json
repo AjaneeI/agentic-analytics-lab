@@ -1,0 +1,52 @@
+{
+  "version": "aalab-bounded-preparation-v2",
+  "state": "inactive_proposal",
+  "approved_package_sha256": "6c4762587e35edd6d0ed6babc10949c7b0f1ad67e308d264623e963812ccce46",
+  "claim_tolerance_percentage_points": "0.2",
+  "d01_metric": "phase3-d01-tie-order-v1",
+  "supported_capture": "synthetic_sqlite",
+  "live_qualified": false,
+  "activation": false,
+  "authorized_treatment_a_attempts": 0,
+  "dependency_sha256": {
+    "evals/system_benchmark/development_references.json": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+    "evals/system_benchmark/development_tasks.json": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+    "proposals/phase3-d01-capture-integration-v1/capture_adapter.py": "836e4060dc72afc837640e74f6fc4dc138b2178f06ca08f7b703d84c5c129f26",
+    "proposals/phase3-d01-capture-integration-v1/contract.json": "cbf63bd86c809a909aa97c06077dd9293534557f772d5efffec1002dc7c3a2cf",
+    "proposals/phase3-d01-provenance-v1/contract.json": "7a95146b6add13c1cc2cf690019125e671f81cd74ee15e52aa678aafd95be0a7",
+    "proposals/phase3-d01-provenance-v1/sql_proof.py": "1f4849b6bd1e95a30433162fb93ff589714362549b4dcbb979a0b632fe592df5",
+    "proposals/phase3-d01-provenance-v1/verifier.py": "857b928e02afd9209ccfa0431925c79b64706571eb40c825c41e28f1fbbceb32",
+    "proposals/phase3-d01-tie-order-v1/contract.json": "b81c561d5fa35ff0fb889c00e8f7bd77517024a3b81113fbececc0140558248b",
+    "proposals/phase3-d01-tie-order-v1/run_validation.py": "67c89e66e72a522d4aaef8014608948efd6100b85d8b36fbf8cf67d20bde1da4",
+    "proposals/phase3-d01-tie-order-v1/synthetic-config-v3.json": "d21042e0c911a04fc166a578c51bf8fdb5f9d06a73d15a8a208b733db36a55c8",
+    "proposals/phase3-d01-tie-order-v1/tie_sql_proof.py": "28b34617f915a454152e72fe24f9239aecde4b2e5bf026df461ff3a5ebe55462",
+    "proposals/phase3-d01-tie-order-v1/verifier_candidate.py": "9908084bdbb7cb315b6b98840f340b86efa4ebcef24003721dd4c07c4718a3f4"
+  },
+  "capture_bounds": {
+    "calls": 2,
+    "query_characters": 8192,
+    "result_rows": 1000,
+    "serialized_capture_characters": 2097152,
+    "progress_opcodes": 100000
+  },
+  "scope": "new synthetic compatibility prototype; no scientific acceptance or live authentication",
+  "host_owned": [
+    "registry",
+    "snapshot",
+    "configuration",
+    "call token selection",
+    "expected commitments",
+    "resolver"
+  ],
+  "deferred": [
+    "active evaluator/bank/runtime replacement",
+    "calendar synonym equivalence",
+    "scientific roster/weights application",
+    "statistical interval/numerical freeze",
+    "new stochastic calibration",
+    "live resource/SQL/model/service work",
+    "Treatment A",
+    "heldout",
+    "merge/export permissions"
+  ]
+}
