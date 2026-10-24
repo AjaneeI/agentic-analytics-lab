@@ -1,0 +1,60 @@
+{
+  "version": "aalab-v2-seven-task-compatibility-v1",
+  "source_commit": "15256f598e70bb09032120c0f0c0cf9e289a25fe",
+  "source_files": {
+    "development_tasks.json": {
+      "sha256": "2287addaed6ba4f7467b74252e93064a0777b0587168a43641c6fcb125707f01",
+      "git_blob": "79935cfae7413450e3b6e7b1310f8dab47f17d18"
+    },
+    "development_references.json": {
+      "sha256": "24c73b0bb8af0bf7ccb0fd0e8c21d5b05ff523108e00d14770c668965b2aea74",
+      "git_blob": "314849e21e785bb8207500cf82404e05616d3f6a"
+    }
+  },
+  "task_ids": [
+    "SB-A01",
+    "SB-C01",
+    "SB-C02",
+    "SB-D01",
+    "SB-E01",
+    "SB-G01",
+    "SB-H01"
+  ],
+  "bank_activation": false,
+  "scientific_membership_accepted": false,
+  "purpose": "offline compatibility only; not target estimator roster",
+  "candidate_bank": "phase5-development-bank-v1",
+  "candidate_count": 24,
+  "active_count": 7,
+  "inactive_additions": 17,
+  "decision_mapping": {
+    "SB-A01": [
+      "P3-A01 all-item population/wording; do not change to active-only"
+    ],
+    "SB-C01": [
+      "policy authority/version semantic controls"
+    ],
+    "SB-C02": [
+      "P3-C02 calendar/effective version; synonym expansion deferred"
+    ],
+    "SB-D01": [
+      "synthetic-only provenance/valid SQL/tie/source-preflight integration; no live auth"
+    ],
+    "SB-E01": [
+      "ambiguity versus correct decline authority"
+    ],
+    "SB-G01": [
+      "unsupported private-source affirmative fabrication"
+    ],
+    "SB-H01": [
+      "handoff prose must not claim unauthorized approval"
+    ]
+  },
+  "existing_candidate_defects_not_reaudited": [
+    "six B/F semantic false positives",
+    "seven numeric observation mapping gaps",
+    "B03 and related precision/rounding policy",
+    "A03 ungraded requested explanation",
+    "G/H template overlap and full-bank solvability"
+  ]
+}

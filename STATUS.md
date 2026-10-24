@@ -124,3 +124,17 @@ reproducibility and blocked network/live-model/database transports. All 297
 repository tests pass on Python 3.14.7. SQLite behavior and scripted decisions
 do not qualify live ClickHouse, model behavior or Phase 2/3. A runtime SQL
 provenance remedy is separate work and requires approval before activation.
+
+## Inactive bounded preparation package v2 — 2026-10-24
+
+Owner approval6388458353 permits the five offline deliverables in issue95
+comment6374298524. The isolated additive proposal under
+`proposals/aalab-bounded-preparation-v2/` integrates synthetic D01 capture with the
+unchanged PR123 tie verifier, bounded semantic guards, the pinned seven-task
+compatibility roster, conservative null/withholding metadata and source-backed
+Phase2/Phase4 decision drafts. It activates no scorer, runtime, bank or method.
+Configuration/preservation evidence and independent review accompany delivery.
+No TreatmentA, failed SQL replay, new calibration draw or live operation follows.
+Phase2 is unqualified, Phase3 unaccepted, all12 P4 decisions unfrozen and Phase5
+unentered. The October23 Phase5-entry target was missed. See the proposal README
+and its eventual verified draft-PR receipt for preparation evidence only.

@@ -1,0 +1,191 @@
+{
+  "version": "aalab-bounded-preparation-v2-decisions",
+  "inactive": true,
+  "scientific_adoption": false,
+  "approval_receipt": "https://github.com/AjaneeI/agentic-analytics-lab/issues/95#issuecomment-6388458353",
+  "start_receipt": "https://github.com/AjaneeI/agentic-analytics-lab/issues/95#issuecomment-6388473610",
+  "phase_state": {
+    "phase2_qualified": false,
+    "phase3_accepted": false,
+    "phase4_frozen": false,
+    "phase5_entered": false
+  },
+  "new_attempts": 0,
+  "live_qualified": false,
+  "active_integration": false,
+  "compatibility_roster": {
+    "commit": "15256f598e70bb09032120c0f0c0cf9e289a25fe",
+    "tasks": [
+      "SB-A01",
+      "SB-C01",
+      "SB-C02",
+      "SB-D01",
+      "SB-E01",
+      "SB-G01",
+      "SB-H01"
+    ],
+    "purpose": "offline_compatibility_only",
+    "missing_families": [
+      "B",
+      "F"
+    ],
+    "scientific_membership_activated": false,
+    "candidate24_activated": false,
+    "candidate17_additions_activated": false
+  },
+  "decisions": [
+    {
+      "id": "P4-01",
+      "topic": "target_population",
+      "draft_direction": "Fixed declared tasks conditional on approved execution protocol; no external task/family population claim. Seven-task PR104 roster is compatibility only.",
+      "deferred": "Scientific roster activation and population signoff.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-02",
+      "topic": "weights",
+      "draft_direction": "Symbolic equal-family/equal-task 1/(8*n_family) only for complete approved synthetic A-H metadata; 1/24 only for three tasks per family.",
+      "deferred": "Actual application until membership, missingness, timeout and failures accepted.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-03",
+      "topic": "interval",
+      "draft_direction": "Compare fixed-task paired whole-block direction versus task-population task-delta and paired hierarchy candidates; preserve existing code/document mismatch as evidence.",
+      "deferred": "Interval selection, inference-code change and code/document freeze.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-04",
+      "topic": "pairing_blocks",
+      "draft_direction": "Prospective task-by-repeat paired blocks; three matched repeats planning only; predeclare AB/BA order and shared run/session/family IDs; seeds only if actually controllable.",
+      "deferred": "Independent-unit and repeat-sufficiency signoff; actual scheduling.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-05",
+      "topic": "calibration_numerics",
+      "draft_direction": "Proposed nominal95% two-sided percentile comparison, ordered synthetic scenarios and seeds, bounded screening/final options, outer/inner MC uncertainty and explicit unknown acceptance values. No draws.",
+      "deferred": "Confidence/tails/draw count/calibration pass criteria/MC precision/quantile/zero-boundary freeze and calibration execution.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-06",
+      "topic": "exclusions_membership",
+      "draft_direction": "No post-outcome deletion/substitution/renormalization; prospective authority/reference/evidence/duplicate/version reasons; lead recommends and Ajanee approves a versioned scientific roster amendment.",
+      "deferred": "Scientific roster amendment/activation or new audit.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-07",
+      "topic": "timeout",
+      "draft_direction": "Retain timeout timing/stage/artifact; actual scorer-interpretable Boolean preserved, missing/uninterpretable success null; propose lineage-preserving common model options for later feasibility review.",
+      "deferred": "Numerical common timeout/runtime budget adoption or configuration change.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-08",
+      "topic": "recovery",
+      "draft_direction": "No automatic retry/replacement; infrastructure recovery distinct from a new attempt; every failure preserved.",
+      "deferred": "Prospective recovery exception or resurrection of consumed permissions.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-09",
+      "topic": "failures_denominators",
+      "draft_direction": "Eight declared statuses; unscored null; missing/invalid/duplicate/unknown/unmatched required identities withhold primary; no observed-only replacement or zero imputation.",
+      "deferred": "Live endpoint/denominator adoption or historical rescoring.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-10",
+      "topic": "endpoint_multiplicity",
+      "draft_direction": "One proposed routed minus explicitly configured strong-single verified binary task-success primary; family/route/burden breakdowns descriptive.",
+      "deferred": "Confirmatory hierarchy/testing/multiplicity freeze until method/protocol acceptance.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-11",
+      "topic": "practical_thresholds",
+      "draft_direction": "Recommend reliability-first direction with separate quality and burden/Pareto reporting; concrete noninferiority/descriptive alternatives and gaps.",
+      "deferred": "All numerical quality gain/loss and latency/calls/tokens/cost/maintenance bounds; no weighted winner.",
+      "scientifically_accepted": false
+    },
+    {
+      "id": "P4-12",
+      "topic": "freeze",
+      "draft_direction": "Proposed signoff binds exact target/scorer/adapter/model/prompt/protocol/analysis hashes, upstream gates and Ajanee owner decision.",
+      "deferred": "Final freeze, Phase4 acceptance, held-out access and Phase5 entry.",
+      "scientifically_accepted": false
+    }
+  ],
+  "acceptance_fields": {
+    "population": false,
+    "weights": false,
+    "pairing_independence": false,
+    "repeat_sufficiency": false,
+    "interval": false,
+    "numerical_specification": false,
+    "calibration": false,
+    "missingness": false,
+    "exclusions": false,
+    "runtime_comparability": false,
+    "multiplicity": false,
+    "practical_thresholds": false,
+    "upstream_phase2": false,
+    "upstream_phase3": false,
+    "owner_freeze_signoff": false
+  },
+  "unfilled_values": {
+    "coverage_floor": null,
+    "FPR_ceiling": null,
+    "maximum_width_pp": null,
+    "simultaneous_MC_rule": null,
+    "minimum_quality_gain_pp": null,
+    "noninferiority_margin_pp": null,
+    "maximum_latency": null,
+    "maximum_calls": null,
+    "maximum_tokens": null,
+    "maximum_money": null,
+    "maximum_maintenance": null,
+    "final_common_timeout_seconds": null,
+    "future_observation_window_start": null,
+    "future_observation_window_end": null
+  },
+  "phase2_disposition": {
+    "observation_authorized": false,
+    "source_availability_tested": false,
+    "denied_source_closed": true,
+    "consumed_snapshot_reopened": false,
+    "RW01_inactive_preparation_resolved_at": "399a8cbdc3dc16d572c50ff4995557d93d539a71",
+    "current_hold": "New observation authority, permitted-source availability, prospective ownership/window/capacity and capture/remote-containment integration unresolved; no remaining must-fix RW01 core defect inferred.",
+    "resource_observations": 0,
+    "SQL_control_requests": 0,
+    "model_calls": 0,
+    "TreatmentA_attempts": 0
+  },
+  "source_sha256": {
+    "outputs/aalab-bounded-preparation-v2-20261024/approved-package-v2-exact.md": "6c4762587e35edd6d0ed6babc10949c7b0f1ad67e308d264623e963812ccce46",
+    "work/phase4-readonly-brief-prep/analytic-note.md": "8c03858f8687765913fc4c8d01307899a99d71b6c796337971bf4a13b6b489e0",
+    "work/phase4-metadata-proposal-delivery/owner-decisions.json": "9197f3af5d85dccc868dff39db25a594f66966c111db62fa09ea44c96ef78669",
+    "work/phase4/docs/phase4-analysis-plan-proposal-2026-10-17.md": "c4a77bb5bca481295bdcc82d0085c110b516e244a7d5f96ca735c674c3976d0b",
+    "work/aalab-bounded-preparation-v2/proposals/phase3-d01-capture-integration-v1/phase4-decision-update.md": "b0a1092f043966ff39378fc51fafbbd2380ae76b88c43a522266e2f7e9628d60",
+    "work/aalab-bounded-preparation-v2/src/agents/ollama_client.py": "4a716169b5ff78123ffb3956cdca9494a55bd72289d4df2a718c0769e6619812",
+    "work/aalab-bounded-preparation-v2/src/evals/system_benchmark/local_worker.py": "e2a5599d7a3c7ceb0a9378cdf818880d76ad264d996a0b6e5ab3392170199d7f",
+    "work/aalab-bounded-preparation-v2/DECISIONS.md": "0aebb99514e54fbff2ff06916dee503715018975a138d6ba3a8abb8fde6bc03c",
+    "outputs/phase2-resource-containment-v1-20261018/final-pending-source-preflight.json": "cb8ce5202835d0bdd244413ac254807b8dfb98907fd59d097dd10ec764f24e41",
+    "outputs/phase2-resource-containment-v1-20261018/coordinator-review-accepted.md": "abff94cd7cb259600323fe035a9a04fbf8fc8738be97208d67c8284a1e159edd",
+    "outputs/phase2-resource-containment-v1-20261018/coordinator-terminal-reconciliation.md": "cbde01a13bb0ed43e8993af9a1cfeab517d75f000a2354b8aa03af9295b12d4c",
+    "outputs/phase2-scheduling-control-v1-20261018/window-proposal/resource-window-protocol.json": "db05dae775b235ab4fd26365c72f19ab8686cfdb8df51dc26d6098e904253daa",
+    "work/phase2-diagnostic-readiness-proposal/proposals/phase2-scheduling-control-v1/protocol.json": "60d7b187a0c04a6f2ede43763d93859e396f130bc03b9e0a8c6379aa9d022c78",
+    "work/phase2-diagnostic-readiness-proposal/proposals/phase2-resource-containment-v1/README.md": "a0611bfda1835af32b1ec56034d6a491d722ed1d74519be3ba25e56ce79ee0e2",
+    "work/phase2-diagnostic-readiness-proposal/proposals/phase2-resource-containment-v1/validation/receipt.json": "059bdf4d35a5137181f211750cec3d1d5f434fdbb31d83735fced83c2bf665fa"
+  },
+  "preserved_source_pins": {
+    "study_sha256": "81a41a2f31cb28e0480416e63b8eba58d877f3bd866174cf5c794906ca273768",
+    "inference_sha256": "ab07c438859bfa7d272f7a24425663477eb3a611aa3832c7568793ba7702a29e",
+    "PR119_commit": "2b0a77c7522920bd8680506b585daba74e2c1baa",
+    "PR120_commit": "399a8cbdc3dc16d572c50ff4995557d93d539a71",
+    "containment_sha256": "045f9df7f32d674d9b1032d23b31f256a502c4abb0285bad0b5e07753bdc60d0"
+  }
+}
