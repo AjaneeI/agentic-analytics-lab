@@ -1,0 +1,19 @@
+{
+  "approval_source": 6529454607,
+  "approved_real_operation": "conditional-one-version-GET",
+  "authorization_ledger_name": "M1-O-6529454607-RESERVED.json",
+  "contract_sha256": "acc02148266e6d73410aa1b1963795964e4f8459d49fb4fb3cd796adedace662",
+  "default_dispatch": "DISABLED_UNTIL_VERIFIED_ADMISSION",
+  "evidence_directory_slug": "aalab-metadata-acquisition-qualification-M1-v1-20261030",
+  "helper_sha256": "3f1e6e5c8ff19ddc85c43785cf5b177ac0bb6769eb207248f36e2f78d0f07639",
+  "implementation_sha256": {
+    "proposals/aalab-metadata-acquisition-qualification-M1-v1/README.md": "fa02efc9f8670ebc58bdad2fd900a2c11582ed28ae6e9e6c72e5dc4433f348d2",
+    "proposals/aalab-metadata-acquisition-qualification-M1-v1/admission.py": "31ee63a00e15cfbe2a06c2c2dda4575ba43c2ccf0ce707ab49d4e69b47324ecd",
+    "proposals/aalab-metadata-acquisition-qualification-M1-v1/contract.json": "acc02148266e6d73410aa1b1963795964e4f8459d49fb4fb3cd796adedace662",
+    "proposals/aalab-metadata-acquisition-qualification-M1-v1/metadata.py": "123800bf555c98db0d056f41001fa7c270cc0f528d97ee64cfbe4fe8e046914b",
+    "proposals/aalab-metadata-acquisition-qualification-M1-v1/run_qualification.py": "ba3f2e30116053475539cdc001818d711ccdec081226e27e56f24ac2e527ba5f",
+    "proposals/aalab-metadata-acquisition-qualification-M1-v1/test_qualification.py": "277bf69db69590a764b4b6a39376a66518092657690fb23679d3560ab7019b64"
+  },
+  "package_sha256": "df0b62acd2f3202c9307447a88bff135fa0f51f75d3fed25250847b16a021ef6",
+  "version": "aalab-metadata-acquisition-qualification-M1-v1"
+}
