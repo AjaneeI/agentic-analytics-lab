@@ -1,0 +1,147 @@
+{
+  "C01_package_sha256": "d166cb652b1e0f8d4e1e4abd4ea9e30595f287cd9e4ea27438cfb7ccaa261d97",
+  "approved_package_sha256": "77292dc801e837544ffd7cb22a13f17039b2c4ad1b053a17abe79ee074276197",
+  "authorized_live_transactions": 0,
+  "contract_sha256": "ee954b2fb9ed28e3b19e47ba1f993b124d9a56f08dfbe3656a579d58f3577dda",
+  "external_sources": {
+    "src/__init__.py": {
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/agents/__init__.py": {
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/agents/ollama_client.py": {
+      "blob": "f2137780ebd657bb0c5229e8ca2a3e5412298923",
+      "bytes": 4640,
+      "sha256": "ddffe7ffb31c9586077b1c2160d06da88e9ef2903aa84c8c32864413ee83ecd4"
+    },
+    "src/agents/single_agent.py": {
+      "blob": "8ccf92323b9ba532ca52ba10104afb711b0a2447",
+      "bytes": 7863,
+      "sha256": "2a6aed58041b95ceaef5a32431bded19322a81e5f2981a77e0caceb5a4df5793"
+    },
+    "src/evals/__init__.py": {
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/evals/system_benchmark/__init__.py": {
+      "blob": "806a30ddfda9347b8911a806263743f62d6f5b6e",
+      "bytes": 86,
+      "sha256": "e017784728a1c816b2afc2722c1cd4677209f1ead54c17079b72994f518ac1ab"
+    },
+    "src/evals/system_benchmark/contracts.py": {
+      "blob": "bd0f0db6d423810556df4f7de022debaa47d3616",
+      "bytes": 13056,
+      "sha256": "dc3b26987725833d4a64f8b925e0813c79ee9dc7b7f600793a81a92f5773f1ed"
+    },
+    "src/evals/system_benchmark/local_worker.py": {
+      "blob": "c3509533e17c65869b319a0492b555272fa7f26f",
+      "bytes": 14910,
+      "sha256": "6792a09622514a6ee94d3ae461e0cef40dd91a6381a9045fa7dd4f58f78a18aa"
+    },
+    "src/evals/system_benchmark/references.py": {
+      "blob": "857b5c6fd71b3f4d44b944f6c29cb31982dedcc4",
+      "bytes": 7793,
+      "sha256": "a74d2ef075416110314356467fda520b199efa23c3cc79fe84e01ae04941b427"
+    },
+    "src/evals/system_benchmark/routing.py": {
+      "blob": "8cbd2b9117a828a22d3b4a7db6cc1485bd24ee35",
+      "bytes": 8905,
+      "sha256": "b3e588f7cb083de2fe7944ce71fb0421a1622963905d5daa2ba91c21b26cec35"
+    },
+    "src/evals/system_benchmark/runner.py": {
+      "blob": "5067a92f3dace7a7c326974e242b0e2063bea4a1",
+      "bytes": 5839,
+      "sha256": "88562cf4112bcc995e11e108a5c7ab105a6ecc159acb1b4abf579c9bb383fc62"
+    },
+    "src/evals/system_benchmark/scope_observation_v1.py": {
+      "blob": "13580cd2a38479aa5cbf2dd98198aa7a8da56f63",
+      "bytes": 5666,
+      "sha256": "cbd4c010d80d5c3be443412ff0558bf3231c9999073354bb7c1491598552e49f"
+    },
+    "src/evals/system_benchmark/scoring.py": {
+      "blob": "fffab0cb96a995c4183b33c861ff736f38aef106",
+      "bytes": 12255,
+      "sha256": "6d3d9c8743fabade1090a7cd9a8c428fb7bbcb5c2b5c605451ac1a6860029f7a"
+    },
+    "src/evals/system_benchmark/workers.py": {
+      "blob": "345c826db5bf30a50bdbb0511e756aedffe6049b",
+      "bytes": 3355,
+      "sha256": "6a306fa688410fe4d3e17b06c19859afe7c62de4c9a6fa4f01d55e39a4424d25"
+    },
+    "src/evals/trajectory_quality.py": {
+      "blob": "be84b884657ce2ca81ed088a246b377b04cf88a7",
+      "bytes": 5070,
+      "sha256": "e2bfd4310edb2f007fe1e4cc2d3571e0dc34959823b849a84a109b72336cab20"
+    },
+    "src/routing/__init__.py": {
+      "blob": "cd4f58272e8326fc04c861bc4db14aaf7f710768",
+      "bytes": 1418,
+      "sha256": "c86b95ea9cceaadab923d9bc32f92239499fa2d21f3ddbbcb7073673dfe6cfee"
+    },
+    "src/routing/control_plane.py": {
+      "blob": "c0557871f9e72314b0a1a56831cc64c01b317566",
+      "bytes": 4660,
+      "sha256": "fc5211ef3a05514ba8e30fc9583c132ddfc5f0a075724eef22d95b963ddfcc2f"
+    },
+    "src/routing/deterministic_handlers.py": {
+      "blob": "68333c11a33e06016995db447d0fc60f025fe242",
+      "bytes": 7580,
+      "sha256": "fa060784fb5c476c28b0a6c96121cd036927caca4ca0fcff90a18a9c1783cca8"
+    },
+    "src/routing/executor.py": {
+      "blob": "416c294aa85fffd3a1fde3bd2226486c922bc761",
+      "bytes": 9538,
+      "sha256": "ed112c0d939e0228269386b4900a3d59b1d5737b825b0aa6c551f36dcbbf9018"
+    },
+    "src/routing/natural_language_baseline.py": {
+      "blob": "71748cffdd837f292b194315215706b99cdb4801",
+      "bytes": 2974,
+      "sha256": "1ac51f4ad33f00890c57369c9248dd7b30f89059141e1e7b4a4f49d5cd264d1e"
+    },
+    "src/routing/telemetry.py": {
+      "blob": "79657ca04b2b0aaab62aac4dcea3d2328bc8ca00",
+      "bytes": 3812,
+      "sha256": "a5a1625b01faa764ae7f5ee5885d4b489c5ae1471709c5503c522d8e0a61b554"
+    },
+    "src/routing/validation.py": {
+      "blob": "6a16aa84747f213c5cac6bf8418608b00cccbbdb",
+      "bytes": 2450,
+      "sha256": "4bbc1a2386510c4b2f0e55a95c1bb6b6a48a306ac1d8e1b12564013cdc8589d3"
+    },
+    "src/tools/__init__.py": {
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/tools/clickhouse_readonly.py": {
+      "blob": "4d2ddd40c26576ad5e9eeeda16952dd011557a85",
+      "bytes": 8357,
+      "sha256": "aded909b246939168a6d3e6e3ab9c3622d7058e5fbcb02cb004a726fa3382f9c"
+    },
+    "src/tools/policy_retrieval.py": {
+      "blob": "62e99d3bde96cf0912b23e62102f122d4211fc3b",
+      "bytes": 12277,
+      "sha256": "551951170007f33fe898a6e8fe2e18fd17aa9ea7834ad992686fbeafbcd03e27"
+    }
+  },
+  "implementation_sha256": {
+    "proposals/aalab-standalone-acquisition-preparation-v1/README.md": "e6ab288be9f9ab13658346577afbe02f17100618c4254b55af3e1b8723b41c7d",
+    "proposals/aalab-standalone-acquisition-preparation-v1/adapter.py": "ee201f4505591da9fd0c8b554c08b3fff8aa7fc37e1c39d3f1a62c74195b3011",
+    "proposals/aalab-standalone-acquisition-preparation-v1/contract.json": "ee954b2fb9ed28e3b19e47ba1f993b124d9a56f08dfbe3656a579d58f3577dda",
+    "proposals/aalab-standalone-acquisition-preparation-v1/observer.py": "3f1e6e5c8ff19ddc85c43785cf5b177ac0bb6769eb207248f36e2f78d0f07639",
+    "proposals/aalab-standalone-acquisition-preparation-v1/run_validation.py": "5253bfaac1ce2695133ec771f838edc4a5cc66e520990a822c79e6aed11e1f04",
+    "proposals/aalab-standalone-acquisition-preparation-v1/test_acquisition.py": "4194b188689a1e62519010f7b41f48f4b33f31f93ba6d33864069a2fb7aa038f"
+  },
+  "inactive": true,
+  "real_dispatch_allowed": false,
+  "retained_manifest_sha256": "613d3e6f0cfce79553295eceedb34f33a8b02ec99f865af118de4f40e64d2c44",
+  "source_commit": "688f62dcedb3116e8ae46579cea0fd135eba94ce",
+  "source_tree": "2a9e004fe13e55a20ce2ebdd53aa22eed858f333",
+  "version": "aalab-standalone-acquisition-preparation-v1"
+}
