@@ -1,0 +1,27 @@
+# M1 metadata admission and response qualification
+
+Approved M1-I plus conditional M1-O; no observation admitted by implementation. One fixed HTTP version request, no general URL/provider/task/scorer API. All375basepaths/A3/H1/H2/history/seals unchanged; seven new proposal files only.
+
+The single retained project helper is unchanged A3 observer.py8535bytes/SHA3f1e6e5c8ff19ddc85c43785cf5b177ac0bb6769eb207248f36e2f78d0f07639, used only for encoded/sha/error. Four new Python modules plus that helper form the full explicit project closure; installedstdlib only. Literal/transitive project imports and hashes checked before candidate imports; filesystem bytecode caches are not loaded. No A3adapter/worker/25-source/H1/scorer/qualifier/data imports.
+
+Admission requires host-registered receipts, not agent/caller flags. Real receipt provenance is established by the trusted executor from actual supported native/GitHub records; source text/hash/identity/authority/window/reviewed pins/toolpermission/hold sources remain bound in private admission evidence. Software cannot independently cryptographically authenticate native messages or a compromised owner/OS. No real inputs are synthesized from offline receipts.
+
+The wire is fixed HTTP/1.0 GET/api/version to numeric127.0.0.1:11434, with no body/auth/cookies/customheaders/DNS/proxy/redirect/fallback. Exactly one explicit AF_INET/SOCK_STREAM socket/connect/request. Bounded recv requests never exceed remaining wire/header/body allowance. Strict Content-Length framing, no transfer/content encoding, duplicates or extra consumed body bytes. Completion uses exact declared length, not invented EOF or extra drain. Status/version is a peer assertion; no model digest/effective settings/worker/scorer/Phase2/independence evidence. Unexpected/error/partial/capped data remains preserved and unqualified; no replacement.
+
+Immutable approval6529454607 binds package6528909681/23975UTF8bytes/SHA df0b62acd2f3202c9307447a88bff135fa0f51f75d3fed25250847b16a021ef6. M1-O requires fresh actual route-owner acknowledgment/window<=10minutes, current enforcednetworkpermission, no newer hold, exact reviewed source/config/interpreter and durable one-use reservation before socket. No old lease/denied resource bundle/consumedattempt reused. No route/health/resource probe or automatic rebooking. Missing admission means BLOCKED_ADMISSION/no socket.
+
+The parent launches one isolated literal-environment observation child only on an explicit fully pinned invocation. Child has3snetworkdeadline/1smaxsocketoperation; parentkillsby9s/confirmsownedcleanupwithin10s total. Exact wire<=8192bytes/header<=4096/body<=4096; private child artifacts<=44KiB,parentoutput<=16KiB,parentterminal<=4KiB sum<=64KiB. Local close/reap is not remote handler cancellation. No inference capacity/GPU reservation/model-query cancellation requirement is invented for this metadata-only operation, while current owner/route/permission/local control evidence remains mandatory.
+
+Validation uses only scripted in-memory sockets/clocks/process handles, no actual sockets/listeners/provider/SQL/resource/credentials/subprocess inchild/PRNG.12authored controls first RED, then bothinstalled3.11.16/3.12.6; up-to4independent controls in one review, same-review narrow closure. All children/setup/failures/corrections charged to NEW600s cumulativeledger,29skill/30scleanup/64KiBcombinedoutput,16MiBnewaggregateartifacts/256KiBcontrol. No old suite/audit rerun, no hostedCI/live-model compliance claim. Actual commands/review/parity/admission/seals recorded outside checkout.
+
+## Replication disposition
+
+This operational metadata response contributes B/n=0. Reuse H2's conditional covariance frontier: Var(meanD)=B^-2sumCov(D_b,D_c); unknown crossing dependence gives no shrinking-error guarantee. Freshworkers/receipts/randomizedorder are not independence evidence. Recommend later fixed-n estimation with absolute-precision planning; defer numericconfidence/precision/assurance/utility/count/interval/method/calibration/freeze.
+
+Accepted roster/reference/evaluator/targetweights/estimand and comparablearmruntime remain deferred. Sevencompatibilitytasks/24inactivebank are not accepted membership. PR104strongsinglealreadyexists; no rebuild/re-audit. Paired nuisance/covariance, cross-block drift/carryover/dependence ranges and feasible burden/utility have not been estimated by M1. Missing inputs=>not_identifiable/infeasible/descriptive-only/withholding. No arbitraryrepeats/usefulgainfrompilot or fixturecaps-as-n. A finite nonconfirmatory feasibility/nuisance pilot would require separately accepted design/caps/authority; none queued.
+
+AllS1/S2/P4scientificdeferrals retained. Phase2DEFER/unqualified/zero newTreatmentA;Phase3unaccepted;Phase4unfrozen;Phase5unentered. Noheldout/paid/activation/automaticreview/merge.
+
+## Independent review corrections
+
+The single initial exact-head review identified early-stdout-EOF kill/reap, strictJSONconstants and reservation-consumption reporting defects. Root reproduced them in the same four bounded independent controls. Corrections keep the killdeadline independent of pipeEOF, reject JSONNaN/Infinity, and preserve consumed global authorization separately from successful local entry/socket readiness. Original review/RED evidence remains outside checkout. Same-review final finding closure and actual final validation/admission results are reported in delivery evidence. No real observation is implied by offline PASS.
